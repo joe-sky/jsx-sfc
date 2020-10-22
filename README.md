@@ -1,1 +1,1 @@
-# jsx-sfc
+# JSX Separate Functional Component (SFC)
