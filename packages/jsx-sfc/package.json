@@ -1,0 +1,35 @@
+{
+  "name": "jsx-sfc",
+  "version": "0.1.0",
+  "description": "Full typings sfc solution for jsx",
+  "main": "dist/jsx-sfc.common.js",
+  "module": "dist/jsx-sfc.esm.js",
+  "unpkg": "dist/jsx-sfc.js",
+  "jsdelivr": "dist/jsx-sfc.js",
+  "files": [
+    "dist/",
+    "lib/",
+    "src/",
+    "types/",
+    "index.d.ts",
+    "README.md"
+  ],
+  "scripts": {
+    "cjs": "cross-env NODE_ENV=cjs rollup -c -o dist/jsx-sfc.common.js",
+    "esm": "cross-env NODE_ENV=es rollup -c -o dist/jsx-sfc.esm.js",
+    "umd": "cross-env NODE_ENV=development rollup -c -o dist/jsx-sfc.js",
+    "min": "cross-env NODE_ENV=production rollup -c -o dist/jsx-sfc.min.js",
+    "lib": "babel src --out-dir lib --extensions \".js,.jsx,.ts,.tsx\" --config-file \"../../.babelrc\"",
+    "dts": "cross-env TYPE=dts NODE_ENV=es rollup -c -o types/jsx-sfc.d.ts",
+    "build": "yarn run cjs && yarn run esm && yarn run umd && yarn run min && yarn run lib && yarn run dts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joe-sky/jsx-sfc.git"
+  },
+  "bugs": {
+    "url": "https://github.com/joe-sky/jsx-sfc/issues"
+  },
+  "author": "Joe_Sky <hitomi_doax@sina.com>",
+  "license": "MIT"
+}

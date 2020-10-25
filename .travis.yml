@@ -1,0 +1,11 @@
+language: node_js
+node_js:
+  - 12
+install:
+  - npm install -g yarn
+  - yarn
+script:
+  - npm run ci
+branches:
+  only:
+    - master

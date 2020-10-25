@@ -1,0 +1,12 @@
+{
+  "packages": [
+    "packages/jsx-sfc"
+  ],
+  "command": {
+    "publish": {
+      "message": "chore(release): :bookmark: publish %s"
+    }
+  },
+  "version": "0.1.0",
+  "npmClient": "yarn"
+}

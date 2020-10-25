@@ -1,0 +1,89 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "react", "prettier"],
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended"
+  ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "jest": true,
+    "es6": true
+  },
+  "rules": {
+    "prettier/prettier": ["error"],
+    "no-undef": [0, "never"],
+    "jsx-quotes": [1, "prefer-double"],
+    "camelcase": [
+      1,
+      {
+        "properties": "always"
+      }
+    ],
+    "comma-dangle": [0, "never"],
+    "semi": [1, "always"],
+    "quotes": [
+      1,
+      "single",
+      {
+        "allowTemplateLiterals": true
+      }
+    ],
+    "strict": [1, "global"],
+    "no-multiple-empty-lines": [
+      1,
+      {
+        "max": 1
+      }
+    ],
+    "no-control-regex": 0,
+    "prefer-spread": 0,
+    "prefer-rest-params": 0,
+    "require-atomic-updates": "off",
+    "no-prototype-builtins": 0,
+    "@typescript-eslint/indent": [
+      0,
+      2,
+      {
+        "SwitchCase": 1,
+        "ignoredNodes": ["TemplateLiteral > *", "JSXOpeningElement > *"]
+      }
+    ],
+    "@typescript-eslint/interface-name-prefix": [0, "always"],
+    "@typescript-eslint/explicit-member-accessibility": 0,
+    "@typescript-eslint/explicit-function-return-type": 0,
+    "@typescript-eslint/no-unused-vars": 0,
+    "@typescript-eslint/no-var-requires": 0,
+    "@typescript-eslint/no-explicit-any": 0,
+    "@typescript-eslint/no-empty-interface": 0,
+    "@typescript-eslint/no-use-before-define": 0,
+    "@typescript-eslint/no-this-alias": 0,
+    "@typescript-eslint/no-empty-function": 0,
+    "@typescript-eslint/triple-slash-reference": 0,
+    "@typescript-eslint/no-namespace": 0,
+    "react/jsx-curly-spacing": 0,
+    "react/jsx-indent-props": 0,
+    "react/jsx-indent": [0, 2],
+    "react/jsx-no-undef": 0,
+    "react/prop-types": 0,
+    "react/display-name": 0,
+    "react/no-string-refs": 0,
+    "react/jsx-key": 0,
+    "react/react-in-jsx-scope": 0
+  }
+}
