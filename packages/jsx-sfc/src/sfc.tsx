@@ -5,11 +5,20 @@ export type SFC = <P = {}>(displayName?: string) => ComponentCreator<P>;
 
 export const sfc: SFC = (displayName?: string) => {
   return props => {
-    const { template, templates, style, styles: stylesProp, Component, ...otherProps } = props;
+    const {
+      template,
+      templates,
+      style,
+      styles: stylesProp,
+      Component,
+      components: componentsProp,
+      ...otherProps
+    } = props;
     const InnerComponent: React.FC<SfcInnerProps> = Component as any;
     const styles = style ? style() : stylesProp;
+    const components = componentsProp?.(styles);
     const tmplFn = templates
-      ? () => data => {
+      ? data => {
           const tmpls = templates(
             data,
             { styles } as any,
@@ -32,12 +41,15 @@ export const sfc: SFC = (displayName?: string) => {
 
           return mainTmplFn();
         }
-      : () => data => template(data, { styles } as any);
+      : data => template(data, { styles, components } as any);
 
     const SeparateFunctional = innerProps => {
-      return <InnerComponent {...innerProps} {...otherProps} template={tmplFn} {...{ styles }} />;
+      return <InnerComponent {...innerProps} {...otherProps} template={tmplFn} {...{ styles, components }} />;
     };
 
+    if (displayName != null) {
+      SeparateFunctional.displayName = displayName;
+    }
     return SeparateFunctional;
   };
 };

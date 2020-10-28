@@ -25,4 +25,4 @@ export type ComponentCreator<P> = <D, S, C, SP = { styles?: S }>(props: {
     others?: SP & { components?: UC },
     ...tmpls: Template.Func[]
   ) => JSX.Element;
-}) => React.FC<P extends Record<string, unknown> ? P : {}>;
+}) => React.FC<P extends {} ? P : {}>;

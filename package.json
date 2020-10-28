@@ -39,6 +39,7 @@
     "@babel/register": "^7.0.0",
     "@commitlint/cli": "^8.2.0",
     "@commitlint/config-conventional": "^8.2.0",
+    "@emotion/core": "^10.0.35",
     "@emotion/styled": "^10.0.27",
     "@types/chai": "^4.2.4",
     "@types/enzyme": "^3.10.3",

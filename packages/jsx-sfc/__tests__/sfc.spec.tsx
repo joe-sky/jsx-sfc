@@ -1,10 +1,16 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { act } from 'react-dom/test-utils';
 import { shallow, mount } from 'enzyme';
+/** @jsx jsx */
+import { jsx, css } from '@emotion/core';
 import styled from '@emotion/styled';
 import { sfc } from '../src/sfc';
 
-const App = sfc<{ test?: string }>()({
+interface AppProps {
+  test?: string;
+}
+
+const App = sfc<AppProps>()({
   template(data, { styles: { Container }, components: Sub }) {
     return (
       <Container>
@@ -20,19 +26,25 @@ const App = sfc<{ test?: string }>()({
   style: () => ({
     Container: styled.section`
       color: #fff;
+    `,
+    hl: css`
+      width: 50px;
     `
   }),
 
-  components(styles) {
-    return {
-      Hl: props => <div>{props}</div>
-    };
+  components({ hl }) {
+    const Hl: React.FC = props => (
+      <section css={hl}>
+        <div>{props.children}</div>
+      </section>
+    );
+    return { Hl };
   }
 });
 
-describe('visible attribute', function() {
+describe('basic', function() {
   const app = mount(<App test="1" />);
-  it('visible true', () => {
-    expect(app.html()).toContain('<i>test</i>');
+  it('example 1', () => {
+    expect(app.html()).toContain('<div>1</div>');
   });
 });
