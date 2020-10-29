@@ -5,6 +5,7 @@ import { shallow, mount } from 'enzyme';
 import { jsx, css } from '@emotion/core';
 import styled from '@emotion/styled';
 import { sfc } from '../src/sfc';
+import { Template } from '../src/template';
 
 interface AppProps {
   test?: string;
@@ -46,5 +47,41 @@ describe('basic', function() {
   const app = mount(<App test="1" />);
   it('example 1', () => {
     expect(app.html()).toContain('<div>1</div>');
+  });
+});
+
+const AppMultiTmpls = sfc<AppProps>()({
+  templates(data, { styles: { Container, hl } }, main) {
+    return (
+      <>
+        <Template name={main}>
+          {() => (
+            <Container>
+              <div css={hl}>{data.a}</div>
+            </Container>
+          )}
+        </Template>
+      </>
+    );
+  },
+
+  Component(props) {
+    return props.template({ a: props.test });
+  },
+
+  style: () => ({
+    Container: styled.section`
+      color: #fff;
+    `,
+    hl: css`
+      width: 50px;
+    `
+  })
+});
+
+describe('with multiple templates', function() {
+  const appMultiTmpls = mount(<AppMultiTmpls test="1" />);
+  it('example 1', () => {
+    expect(appMultiTmpls.html()).toContain('<div>1</div>');
   });
 });

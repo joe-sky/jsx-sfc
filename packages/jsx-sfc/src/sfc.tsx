@@ -1,7 +1,8 @@
 import React from 'react';
-import { SfcInnerProps, ComponentCreator } from './interface';
+import { SfcInnerProps, DefineComponent } from './defineComponent';
+import { __TEMPLATE__ } from './template';
 
-export type SFC = <P = {}>(displayName?: string) => ComponentCreator<P>;
+export type SFC = <P = {}>(displayName?: string) => DefineComponent<P>;
 
 export const sfc: SFC = (displayName?: string) => {
   return props => {
@@ -17,11 +18,13 @@ export const sfc: SFC = (displayName?: string) => {
     const InnerComponent: React.FC<SfcInnerProps> = Component as any;
     const styles = style ? style() : stylesProp;
     const components = componentsProp?.(styles);
+    const options = { styles, components } as any;
+
     const tmplFn = templates
       ? data => {
           const tmpls = templates(
             data,
-            { styles } as any,
+            options,
             ...(Object.keys(Array.apply(null, { length: 20 })).map(i => ({
               main: i === '0'
             })) as any)
@@ -41,10 +44,10 @@ export const sfc: SFC = (displayName?: string) => {
 
           return mainTmplFn();
         }
-      : data => template(data, { styles, components } as any);
+      : data => template(data, options);
 
     const SeparateFunctional = innerProps => {
-      return <InnerComponent {...innerProps} {...otherProps} template={tmplFn} {...{ styles, components }} />;
+      return <InnerComponent {...innerProps} {...otherProps} template={tmplFn} {...options} />;
     };
 
     if (displayName != null) {
