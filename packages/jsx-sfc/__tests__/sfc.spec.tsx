@@ -51,13 +51,16 @@ describe('basic', function() {
 });
 
 const AppMultiTmpls = sfc<AppProps>()({
-  templates(data, { styles: { Container, hl } }, main) {
+  templates(data, { styles: { Container } }, main, header: Template.Func<string>) {
     return (
       <>
+        <Template name={header}>{content => <header>{content}</header>}</Template>
+
         <Template name={main}>
           {() => (
             <Container>
-              <div css={hl}>{data.a}</div>
+              {header.template(data.a)}
+              <div>{data.a}</div>
             </Container>
           )}
         </Template>
@@ -72,9 +75,6 @@ const AppMultiTmpls = sfc<AppProps>()({
   style: () => ({
     Container: styled.section`
       color: #fff;
-    `,
-    hl: css`
-      width: 50px;
     `
   })
 });
@@ -82,6 +82,6 @@ const AppMultiTmpls = sfc<AppProps>()({
 describe('with multiple templates', function() {
   const appMultiTmpls = mount(<AppMultiTmpls test="1" />);
   it('example 1', () => {
-    expect(appMultiTmpls.html()).toContain('<div>1</div>');
+    expect(appMultiTmpls.html()).toContain('<header>1</header>');
   });
 });

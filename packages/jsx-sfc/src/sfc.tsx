@@ -1,6 +1,6 @@
 import React from 'react';
 import { SfcInnerProps, DefineComponent } from './defineComponent';
-import { __TEMPLATE__ } from './template';
+import { Template, isTemplate } from './template';
 
 export type SFC = <P = {}>(displayName?: string) => DefineComponent<P>;
 
@@ -30,15 +30,20 @@ export const sfc: SFC = (displayName?: string) => {
             })) as any)
           );
 
-          let children = tmpls.props.children;
-          if (!Array.isArray(children)) {
-            children = [children];
+          let tmplFcs = tmpls.props.children;
+          if (!Array.isArray(tmplFcs)) {
+            tmplFcs = [tmplFcs];
           }
 
-          let mainTmplFn;
-          children.forEach((item, index) => {
-            if (item.main) {
-              mainTmplFn = item.template;
+          let mainTmplFn: Template.Func['template'];
+          tmplFcs.forEach(item => {
+            if (isTemplate(item.type)) {
+              const { name, children } = item.props;
+              name.template = children;
+
+              if (name.main) {
+                mainTmplFn = children;
+              }
             }
           });
 
