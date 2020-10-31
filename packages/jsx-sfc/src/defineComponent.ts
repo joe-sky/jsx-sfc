@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, Ref, RefAttributes } from 'react';
 import { Template } from './template';
 
 export type SfcProps<T = {}, EX = {}> = PropsWithChildren<T> & {
@@ -9,15 +9,17 @@ export interface SfcInnerProps {
   template: (...args: any) => any;
 }
 
-export type DefineComponent<P> = <D, S, C, SP = { styles?: S }>(props: {
+export type DefineComponent<T, P = {}> = <D, S, C, SP = { styles?: S }, RP = P extends {} ? P : {}>(props: {
   style?: () => S;
   styles?: S;
   components?: (styles: S) => C;
-  Component?: <UC extends C>(props: SfcProps<P, SP & { components?: UC }>, ref?: any) => D;
+  Component?: T extends 'noRef'
+    ? <UC extends C>(props: SfcProps<P, SP & { components?: UC }>, context?: any) => D
+    : <UC extends C>(props: SfcProps<P, SP & { components?: UC }>, ref?: Ref<T>) => D;
   template?: <U extends D, UC extends C>(data: U, others?: SP & { components?: UC }) => JSX.Element;
   templates?: <U extends D, UC extends C>(
     data: U,
     others?: SP & { components?: UC },
     ...tmpls: Template.Func[]
   ) => JSX.Element;
-}) => React.FC<P extends {} ? P : {}>;
+}) => T extends 'noRef' ? React.FC<RP> : React.ForwardRefExoticComponent<RP & RefAttributes<T>>;
