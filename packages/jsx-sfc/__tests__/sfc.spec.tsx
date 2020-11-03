@@ -4,8 +4,7 @@ import { shallow, mount } from 'enzyme';
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import styled from '@emotion/styled';
-import { sfc } from '../src/sfc';
-import { Template } from '../src/template';
+import sfc, { Template } from '../src/index';
 
 interface AppProps {
   test?: string;
