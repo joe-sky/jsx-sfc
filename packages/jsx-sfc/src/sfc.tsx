@@ -1,14 +1,6 @@
-import React, { forwardRef, ForwardRefExoticComponent } from 'react';
-import { SFCInnerProps, DefineComponent } from './defineComponent';
+import React, { forwardRef as forwardRefReact, ForwardRefExoticComponent } from 'react';
+import { SFC, SFCInnerProps, ForwardRefSFC } from './defineComponent';
 import { Template, isTemplate } from './template';
-
-export type ForwardRefSFC = <T, P = {}>(displayName?: string) => DefineComponent<T, P>;
-
-export interface SFC {
-  <P = {}>(displayName?: string): DefineComponent<'noRef', P>;
-  forwardRef?: ForwardRefSFC;
-  component?: DefineComponent<'noRef', {}>;
-}
 
 function setDisplayName(component, displayName?: string) {
   if (displayName != null) {
@@ -72,8 +64,8 @@ function createSfc(isForwardRef?: boolean) {
         setDisplayName(displayName);
         return SeparateFunctional as any;
       } else {
-        const InnerComponentWithRef: ForwardRefExoticComponent<SFCInnerProps> = forwardRef(Component);
-        const SeparateFunctional = forwardRef((innerProps, ref) => {
+        const InnerComponentWithRef: ForwardRefExoticComponent<SFCInnerProps> = forwardRefReact(Component);
+        const SeparateFunctional = forwardRefReact((innerProps, ref) => {
           return <InnerComponentWithRef {...innerProps} {...otherProps} template={tmplFn} {...options} ref={ref} />;
         });
 
@@ -86,9 +78,9 @@ function createSfc(isForwardRef?: boolean) {
 
 export const sfc: SFC = createSfc();
 
-export const forwardRefSfc: ForwardRefSFC = createSfc(true);
+export const forwardRef: ForwardRefSFC = createSfc(true);
 
 export const component = sfc();
 
-sfc.forwardRef = forwardRefSfc;
+sfc.forwardRef = forwardRef;
 sfc.component = component;

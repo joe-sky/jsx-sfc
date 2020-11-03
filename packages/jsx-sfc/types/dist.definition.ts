@@ -1,5 +1,4 @@
 /// <reference path="../types/global.d.ts" />
-/// <reference path="../types/index.d.ts" />
 
 export * from '../types/jsx-sfc.d';
 export { default } from '../types/jsx-sfc.d';

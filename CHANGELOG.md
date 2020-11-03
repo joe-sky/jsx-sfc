@@ -1,5 +1,5 @@
 # CHANGELOG
 
-## [v0.1.0] 2020.08.05
+## [v0.1.0] 2020.11.03
 
-- 🌟 The first version of `@narrative/core` and `@narrative/control-statement` have been completed.
+- 🌟 The first version of `jsx-sfc` have been completed.

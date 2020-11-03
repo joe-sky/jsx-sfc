@@ -23,3 +23,11 @@ export type DefineComponent<T, P = {}> = <D, S, C, SP = { styles?: S }, RP = P e
     ...tmpls: Template.Func[]
   ) => JSX.Element;
 }) => T extends 'noRef' ? React.FC<RP> : React.ForwardRefExoticComponent<RP & RefAttributes<T>>;
+
+export type ForwardRefSFC = <T, P = {}>(displayName?: string) => DefineComponent<T, P>;
+
+export interface SFC {
+  <P = {}>(displayName?: string): DefineComponent<'noRef', P>;
+  forwardRef?: ForwardRefSFC;
+  component?: DefineComponent<'noRef', {}>;
+}
