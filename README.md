@@ -1,1 +1,1 @@
-# JSX Separate Functional Components (SFC)
+packages/jsx-sfc/README.md
