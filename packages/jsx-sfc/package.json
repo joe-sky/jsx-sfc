@@ -1,6 +1,6 @@
 {
   "name": "jsx-sfc",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Full typings sfc solution for jsx",
   "main": "dist/jsx-sfc.common.js",
   "module": "dist/jsx-sfc.esm.js",
