@@ -20,4 +20,6 @@ export namespace Template {
   }
 
   export type FC = typeof templateFc;
+
+  export type Data = Record<string, unknown>;
 }

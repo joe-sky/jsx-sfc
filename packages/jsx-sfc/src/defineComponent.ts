@@ -3,12 +3,10 @@ import { Template } from './template';
 
 type NoRef = 'noRef';
 
-type SfcTmpl = 'sfcTmpl';
-
 export type JSXElements = ReactElement<any, any> | null;
 
 export type SFCProps<T = {}, EX = {}> = PropsWithChildren<T> & {
-  template: <D>(data: D) => D & SfcTmpl;
+  template: <D extends Template.Data>(data: D) => D;
 } & EX;
 
 export interface SFCInnerProps {
@@ -16,13 +14,13 @@ export interface SFCInnerProps {
 }
 
 export type DefineComponent<T, P = {}> = {
-  <D, S, C, SP = { styles?: S }, RP = P extends {} ? P : {}>(options: {
+  <D extends Template.Data, S, C, SP = { styles?: S }, RP = P extends {} ? P : {}>(options: {
     style?: () => S;
     styles?: S;
     components?: (styles: S) => C;
     Component: T extends NoRef
-      ? <UC extends C>(props: SFCProps<P, SP & { components?: UC }>, context?: any) => D & SfcTmpl
-      : <UC extends C>(props: SFCProps<P, SP & { components?: UC }>, ref?: Ref<T>) => D & SfcTmpl;
+      ? <UC extends C>(props: SFCProps<P, SP & { components?: UC }>, context?: any) => D
+      : <UC extends C>(props: SFCProps<P, SP & { components?: UC }>, ref?: Ref<T>) => D;
     template: <U extends D, UC extends C>(data: U, others?: SP & { components?: UC }) => JSXElements;
   }): T extends NoRef ? React.FC<RP> : React.ForwardRefExoticComponent<RP & RefAttributes<T>>;
 
@@ -31,8 +29,8 @@ export type DefineComponent<T, P = {}> = {
     styles?: S;
     components?: (styles: S) => C;
     Component: T extends NoRef
-      ? <UC extends C>(props: SFCProps<P, SP & { components?: UC }>, context?: any) => D & SfcTmpl
-      : <UC extends C>(props: SFCProps<P, SP & { components?: UC }>, ref?: Ref<T>) => D & SfcTmpl;
+      ? <UC extends C>(props: SFCProps<P, SP & { components?: UC }>, context?: any) => D
+      : <UC extends C>(props: SFCProps<P, SP & { components?: UC }>, ref?: Ref<T>) => D;
     templates: <U extends D, UC extends C>(
       data: U,
       others?: SP & { components?: UC },

@@ -1,5 +1,5 @@
 /*!
- * jsx-sfc v0.1.1
+ * jsx-sfc v0.1.2
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
@@ -19,19 +19,19 @@ declare namespace Template {
         template: (arg1?: Arg1, arg2?: Arg2, arg3?: Arg3, arg4?: Arg4, arg5?: Arg5, ...args: unknown[]) => ReactNode;
     }
     type FC = typeof templateFc;
+    type Data = Record<string, unknown>;
 }
 
 declare type NoRef = 'noRef';
-declare type SfcTmpl = 'sfcTmpl';
 declare type JSXElements = ReactElement<any, any> | null;
 declare type SFCProps<T = {}, EX = {}> = PropsWithChildren<T> & {
-    template: <D>(data: D) => D & SfcTmpl;
+    template: <D extends Template.Data>(data: D) => D;
 } & EX;
 interface SFCInnerProps {
     template: (...args: any) => any;
 }
 declare type DefineComponent<T, P = {}> = {
-    <D, S, C, SP = {
+    <D extends Template.Data, S, C, SP = {
         styles?: S;
     }, RP = P extends {} ? P : {}>(options: {
         style?: () => S;
@@ -39,9 +39,9 @@ declare type DefineComponent<T, P = {}> = {
         components?: (styles: S) => C;
         Component: T extends NoRef ? <UC extends C>(props: SFCProps<P, SP & {
             components?: UC;
-        }>, context?: any) => D & SfcTmpl : <UC extends C>(props: SFCProps<P, SP & {
+        }>, context?: any) => D : <UC extends C>(props: SFCProps<P, SP & {
             components?: UC;
-        }>, ref?: Ref<T>) => D & SfcTmpl;
+        }>, ref?: Ref<T>) => D;
         template: <U extends D, UC extends C>(data: U, others?: SP & {
             components?: UC;
         }) => JSXElements;
@@ -54,9 +54,9 @@ declare type DefineComponent<T, P = {}> = {
         components?: (styles: S) => C;
         Component: T extends NoRef ? <UC extends C>(props: SFCProps<P, SP & {
             components?: UC;
-        }>, context?: any) => D & SfcTmpl : <UC extends C>(props: SFCProps<P, SP & {
+        }>, context?: any) => D : <UC extends C>(props: SFCProps<P, SP & {
             components?: UC;
-        }>, ref?: Ref<T>) => D & SfcTmpl;
+        }>, ref?: Ref<T>) => D;
         templates: <U extends D, UC extends C>(data: U, others?: SP & {
             components?: UC;
         }, ...tmpls: Template.Func[]) => JSX.Element;
