@@ -4,7 +4,7 @@
   "workspaces": [
     "packages/jsx-sfc"
   ],
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Full typings sfc solution for jsx",
   "scripts": {
     "build": "lerna run build",

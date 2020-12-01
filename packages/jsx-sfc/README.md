@@ -7,7 +7,7 @@
   <a href="https://www.npmjs.com/package/jsx-sfc"><img src="https://img.shields.io/npm/l/jsx-sfc.svg" alt="License"></a>
 </p>
 
-`JSX-Separate-Functional-Components`(abbreviated as `jsx-sfc`) is a tiny library(about 800b) that create React components with **separation of concerns** and **completely type safe**.
+`JSX-Separate-Functional-Components`(abbreviated as `jsx-sfc`) is a tiny library(about 600b) that create React components with **separation of concerns** and **completely type safe**.
 
 ## Basic Overview
 

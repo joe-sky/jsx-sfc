@@ -1,5 +1,5 @@
 /*!
- * jsx-sfc v0.1.2
+ * jsx-sfc v0.2.0
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
@@ -29,6 +29,8 @@ declare type SFCProps<T = {}, EX = {}> = PropsWithChildren<T> & {
 } & EX;
 interface SFCInnerProps {
     template: (...args: any) => any;
+    styles: Record<string, any>;
+    components: Record<string, any>;
 }
 declare type DefineComponent<T, P = {}> = {
     <D extends Template.Data, S, C, SP = {

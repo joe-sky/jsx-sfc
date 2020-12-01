@@ -11,15 +11,7 @@ function setDisplayName(component, displayName?: string) {
 function createSfc(isForwardRef?: boolean) {
   return (displayName?: string) => {
     return props => {
-      const {
-        template,
-        templates,
-        style,
-        styles: stylesProp,
-        Component,
-        components: componentsProp,
-        ...otherProps
-      } = props;
+      const { template, templates, style, styles: stylesProp, Component, components: componentsProp } = props;
       const styles = style ? style() : stylesProp;
       const components = componentsProp?.(styles);
       const options = { styles, components };
@@ -56,21 +48,25 @@ function createSfc(isForwardRef?: boolean) {
         : data => template(data, options);
 
       if (!isForwardRef) {
-        const InnerComponent: React.FC<SFCInnerProps> = Component;
-        const SeparateFunctional = innerProps => {
-          return <InnerComponent {...innerProps} {...otherProps} template={tmplFn} {...options} />;
+        const SFComponent: React.FC<SFCInnerProps> = Component;
+        SFComponent.defaultProps = {
+          template: tmplFn,
+          styles,
+          components
         };
 
-        setDisplayName(displayName);
-        return SeparateFunctional as any;
+        setDisplayName(SFComponent, displayName);
+        return SFComponent as any;
       } else {
-        const InnerComponentWithRef: ForwardRefExoticComponent<SFCInnerProps> = forwardRefReact(Component);
-        const SeparateFunctional = forwardRefReact((innerProps, ref) => {
-          return <InnerComponentWithRef {...innerProps} {...otherProps} template={tmplFn} {...options} ref={ref} />;
-        });
+        const SFComponentWithRef: ForwardRefExoticComponent<SFCInnerProps> = forwardRefReact(Component);
+        SFComponentWithRef.defaultProps = {
+          template: tmplFn,
+          styles,
+          components
+        };
 
-        setDisplayName(displayName);
-        return SeparateFunctional as any;
+        setDisplayName(SFComponentWithRef, displayName);
+        return SFComponentWithRef as any;
       }
     };
   };

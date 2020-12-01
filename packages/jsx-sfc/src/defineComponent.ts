@@ -11,6 +11,8 @@ export type SFCProps<T = {}, EX = {}> = PropsWithChildren<T> & {
 
 export interface SFCInnerProps {
   template: (...args: any) => any;
+  styles: Record<string, any>;
+  components: Record<string, any>;
 }
 
 export type DefineComponent<T, P = {}> = {
