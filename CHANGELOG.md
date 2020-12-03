@@ -1,8 +1,8 @@
 # CHANGELOG
 
-## [v0.2.0] 2020.12.01
+## [v0.2.1] 2020.12.03
 
-- 🌟 Reduce component level.
+- 🌟 Reset the data argument position of template function.
 
 ## [v0.1.2] 2020.11.11
 

@@ -11,42 +11,31 @@ export type SFCProps<T = {}, EX = {}> = PropsWithChildren<T> & {
 
 export interface SFCInnerProps {
   template: (...args: any) => any;
-  styles: Record<string, any>;
-  components: Record<string, any>;
+  style: Record<string, any>;
 }
 
 export type DefineComponent<T, P = {}> = {
-  <D extends Template.Data, S, C, SP = { styles?: S }, RP = P extends {} ? P : {}>(options: {
+  <D extends Template.Data, S, SP = { style?: S }, RP = P extends {} ? P : {}>(options: {
     style?: () => S;
-    styles?: S;
-    components?: (styles: S) => C;
     Component: T extends NoRef
-      ? <UC extends C>(props: SFCProps<P, SP & { components?: UC }>, context?: any) => D
-      : <UC extends C>(props: SFCProps<P, SP & { components?: UC }>, ref?: Ref<T>) => D;
-    template: <U extends D, UC extends C>(data: U, others?: SP & { components?: UC }) => JSXElements;
+      ? (props: SFCProps<P, SP>, context?: any) => D
+      : (props: SFCProps<P, SP>, ref?: Ref<T>) => D;
+    template: <U extends D>(args: { data: U } & SP) => JSXElements;
   }): T extends NoRef ? React.FC<RP> : React.ForwardRefExoticComponent<RP & RefAttributes<T>>;
 
-  <D, S, C, SP = { styles?: S }, RP = P extends {} ? P : {}>(options: {
+  <D, S, SP = { style?: S }, RP = P extends {} ? P : {}>(options: {
     style?: () => S;
-    styles?: S;
-    components?: (styles: S) => C;
     Component: T extends NoRef
-      ? <UC extends C>(props: SFCProps<P, SP & { components?: UC }>, context?: any) => D
-      : <UC extends C>(props: SFCProps<P, SP & { components?: UC }>, ref?: Ref<T>) => D;
-    templates: <U extends D, UC extends C>(
-      data: U,
-      others?: SP & { components?: UC },
-      ...tmpls: Template.Func[]
-    ) => JSX.Element;
+      ? (props: SFCProps<P, SP>, context?: any) => D
+      : (props: SFCProps<P, SP>, ref?: Ref<T>) => D;
+    templates: <U extends D>(args: { data: U } & SP, ...tmpls: Template.Func[]) => JSX.Element;
   }): T extends NoRef ? React.FC<RP> : React.ForwardRefExoticComponent<RP & RefAttributes<T>>;
 
-  <S, C, SP = { styles?: S }, RP = P extends {} ? P : {}>(options: {
+  <S, SP = { style?: S }, RP = P extends {} ? P : {}>(options: {
     style?: () => S;
-    styles?: S;
-    components?: (styles: S) => C;
     Component: T extends NoRef
-      ? <UC extends C>(props: SFCProps<P, SP & { components?: UC }>, context?: any) => JSXElements
-      : <UC extends C>(props: SFCProps<P, SP & { components?: UC }>, ref?: Ref<T>) => JSXElements;
+      ? (props: SFCProps<P, SP>, context?: any) => JSXElements
+      : (props: SFCProps<P, SP>, ref?: Ref<T>) => JSXElements;
   }): T extends NoRef ? React.FC<RP> : React.ForwardRefExoticComponent<RP & RefAttributes<T>>;
 };
 

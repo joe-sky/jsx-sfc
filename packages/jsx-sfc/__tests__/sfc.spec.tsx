@@ -11,10 +11,10 @@ interface AppProps {
 }
 
 const App = sfc<AppProps>()({
-  template(data, { styles: { Container }, components: Sub }) {
+  template({ data, style: { Container } }) {
     return (
       <Container>
-        <Sub.Hl>{data.a}</Sub.Hl>
+        <div>{data.a}</div>
       </Container>
     );
   },
@@ -30,16 +30,7 @@ const App = sfc<AppProps>()({
     hl: css`
       width: 50px;
     `
-  }),
-
-  components({ hl }) {
-    const Hl: React.FC = props => (
-      <section css={hl}>
-        <div>{props.children}</div>
-      </section>
-    );
-    return { Hl };
-  }
+  })
 });
 
 describe('basic', function() {
@@ -50,7 +41,7 @@ describe('basic', function() {
 });
 
 const AppMultiTmpls = sfc<AppProps>()({
-  templates(data, { styles: { Container } }, main, header: Template.Func<string>) {
+  templates({ data, style: { Container } }, main, header: Template.Func<string>) {
     return (
       <>
         <Template name={header}>{content => <header>{content}</header>}</Template>

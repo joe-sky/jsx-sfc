@@ -7,7 +7,7 @@
   <a href="https://www.npmjs.com/package/jsx-sfc"><img src="https://img.shields.io/npm/l/jsx-sfc.svg" alt="License"></a>
 </p>
 
-`JSX-Separate-Functional-Components`(abbreviated as `jsx-sfc`) is a tiny library(about 600b) that create React components with **separation of concerns** and **completely type safe**.
+`JSX-Separate-Functional-Components`(abbreviated as `jsx-sfc`) is a tiny library(about 800b) that create React components with **separation of concerns** and **completely type safe**.
 
 ## Basic Overview
 
@@ -22,13 +22,11 @@ interface Props {
 }
 
 const App = sfc<Props>()({
-  template(data, { styles: { Wrap, hl } }) {
-    return (
-      <Wrap>
-        <i className={hl}>{data.user}</i>
-      </Wrap>
-    );
-  },
+  template: ({ data, style: { Wrap, hl } }) => (
+    <Wrap>
+      <i className={hl}>{data.user}</i>
+    </Wrap>
+  ),
 
   Component(props) {
     const [user, setUser] = useState(props.user);
@@ -37,7 +35,7 @@ const App = sfc<Props>()({
       setUser('joe-sky');
     }, []);
 
-    return props.template({ user });
+    return { user };
   },
 
   style: () => ({

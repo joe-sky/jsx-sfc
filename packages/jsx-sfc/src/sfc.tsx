@@ -2,25 +2,16 @@ import React, { forwardRef as forwardRefReact, ForwardRefExoticComponent } from 
 import { SFC, SFCInnerProps, ForwardRefSFC } from './defineComponent';
 import { Template, isTemplate } from './template';
 
-function setDisplayName(component, displayName?: string) {
-  if (displayName != null) {
-    component.displayName = displayName;
-  }
-}
-
 function createSfc(isForwardRef?: boolean) {
   return (displayName?: string) => {
     return props => {
-      const { template, templates, style, styles: stylesProp, Component, components: componentsProp } = props;
-      const styles = style ? style() : stylesProp;
-      const components = componentsProp?.(styles);
-      const options = { styles, components };
+      const { template, templates, style, Component, ...otherProps } = props;
+      const options = { style: style?.() };
 
       const tmplFn = templates
         ? data => {
             const tmpls = templates(
-              data,
-              options,
+              { data, ...options },
               ...(Object.keys(Array.apply(null, { length: 20 })).map(i => ({
                 main: i === '0'
               })) as any)
@@ -45,29 +36,25 @@ function createSfc(isForwardRef?: boolean) {
 
             return mainTmplFn();
           }
-        : data => template(data, options);
+        : data => template({ data, ...options });
 
+      let SeparateFunctional;
       if (!isForwardRef) {
-        const SFComponent: React.FC<SFCInnerProps> = Component;
-        SFComponent.defaultProps = {
-          template: tmplFn,
-          styles,
-          components
+        const InnerComponent: React.FC<SFCInnerProps> = Component;
+        SeparateFunctional = innerProps => {
+          return <InnerComponent {...innerProps} {...otherProps} template={tmplFn} {...options} />;
         };
-
-        setDisplayName(SFComponent, displayName);
-        return SFComponent as any;
       } else {
-        const SFComponentWithRef: ForwardRefExoticComponent<SFCInnerProps> = forwardRefReact(Component);
-        SFComponentWithRef.defaultProps = {
-          template: tmplFn,
-          styles,
-          components
-        };
-
-        setDisplayName(SFComponentWithRef, displayName);
-        return SFComponentWithRef as any;
+        const InnerComponentWithRef: ForwardRefExoticComponent<SFCInnerProps> = forwardRefReact(Component);
+        SeparateFunctional = forwardRefReact((innerProps, ref) => {
+          return <InnerComponentWithRef {...innerProps} {...otherProps} template={tmplFn} {...options} ref={ref} />;
+        });
       }
+      if (displayName != null) {
+        SeparateFunctional.displayName = displayName;
+      }
+
+      return SeparateFunctional as any;
     };
   };
 }

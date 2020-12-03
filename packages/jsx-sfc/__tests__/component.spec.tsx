@@ -11,10 +11,10 @@ interface AppProps {
 }
 
 const App = sfc.component({
-  template(data, { styles: { Container }, components: Sub }) {
+  template({ data, style: { Container } }) {
     return (
       <Container>
-        <Sub.Hl>{data.a}</Sub.Hl>
+        <div>{data.a}</div>
       </Container>
     );
   },
@@ -30,16 +30,7 @@ const App = sfc.component({
     hl: css`
       width: 50px;
     `
-  }),
-
-  components({ hl }) {
-    const Hl: React.FC = props => (
-      <section css={hl}>
-        <div>{props.children}</div>
-      </section>
-    );
-    return { Hl };
-  }
+  })
 });
 
 describe('component basic', function() {
