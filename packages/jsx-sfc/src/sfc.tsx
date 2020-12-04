@@ -1,17 +1,26 @@
 import React, { forwardRef as forwardRefReact, ForwardRefExoticComponent } from 'react';
-import { SFC, SFCInnerProps, ForwardRefSFC } from './defineComponent';
+import { SFC, SFCInnerProps, ForwardRefSFC, FuncMap } from './defineComponent';
 import { Template, isTemplate } from './template';
+
+function funcReturnMap(extensions: FuncMap) {
+  const ret = {};
+  Object.keys(extensions).forEach(key => {
+    ret[key] = extensions[key]();
+  });
+
+  return ret;
+}
 
 function createSfc(isForwardRef?: boolean) {
   return (displayName?: string) => {
-    return props => {
-      const { template, templates, style, Component, ...otherProps } = props;
-      const options = { style: style?.() };
+    return (options, extensions = {}) => {
+      const { template, templates, style, Component } = options;
+      const stylesAndExtensions = { styles: style?.(), ...funcReturnMap(extensions) };
 
       const tmplFn = templates
         ? data => {
             const tmpls = templates(
-              { data, ...options },
+              { data, ...stylesAndExtensions },
               ...(Object.keys(Array.apply(null, { length: 20 })).map(i => ({
                 main: i === '0'
               })) as any)
@@ -36,18 +45,18 @@ function createSfc(isForwardRef?: boolean) {
 
             return mainTmplFn();
           }
-        : data => template({ data, ...options });
+        : data => template({ data, ...stylesAndExtensions });
 
       let SeparateFunctional;
       if (!isForwardRef) {
         const InnerComponent: React.FC<SFCInnerProps> = Component;
         SeparateFunctional = innerProps => {
-          return <InnerComponent {...innerProps} {...otherProps} template={tmplFn} {...options} />;
+          return <InnerComponent {...innerProps} template={tmplFn} {...stylesAndExtensions} />;
         };
       } else {
         const InnerComponentWithRef: ForwardRefExoticComponent<SFCInnerProps> = forwardRefReact(Component);
         SeparateFunctional = forwardRefReact((innerProps, ref) => {
-          return <InnerComponentWithRef {...innerProps} {...otherProps} template={tmplFn} {...options} ref={ref} />;
+          return <InnerComponentWithRef {...innerProps} template={tmplFn} ref={ref} {...stylesAndExtensions} />;
         });
       }
       if (displayName != null) {

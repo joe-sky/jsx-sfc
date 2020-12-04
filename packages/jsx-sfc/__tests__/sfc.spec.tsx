@@ -11,7 +11,7 @@ interface AppProps {
 }
 
 const App = sfc<AppProps>()({
-  template({ data, style: { Container } }) {
+  template({ data, styles: { Container } }) {
     return (
       <Container>
         <div>{data.a}</div>
@@ -41,7 +41,7 @@ describe('basic', function() {
 });
 
 const AppMultiTmpls = sfc<AppProps>()({
-  templates({ data, style: { Container } }, main, header: Template.Func<string>) {
+  templates({ data, styles: { Container } }, main, header: Template.Func<string>) {
     return (
       <>
         <Template name={header}>{content => <header>{content}</header>}</Template>

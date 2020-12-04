@@ -10,32 +10,43 @@ interface AppProps {
   test?: string;
 }
 
-const App = sfc.component({
-  template({ data, style: { Container } }) {
-    return (
-      <Container>
-        <div>{data.a}</div>
-      </Container>
-    );
-  },
+const App = sfc.component(
+  {
+    template({ data, styles: { Container }, constant: { LAST_NAME }, utils: { connectName } }) {
+      return (
+        <Container>
+          <div>{connectName(data.firstName, LAST_NAME)}</div>
+        </Container>
+      );
+    },
 
-  Component(props) {
-    return props.template({ a: 1 });
-  },
+    Component(props) {
+      return props.template({ firstName: 'joe' });
+    },
 
-  style: () => ({
-    Container: styled.section`
-      color: #fff;
-    `,
-    hl: css`
-      width: 50px;
-    `
-  })
-});
+    style: () => ({
+      Container: styled.section`
+        color: #fff;
+      `,
+      hl: css`
+        width: 50px;
+      `
+    })
+  },
+  {
+    constant: () => ({
+      LAST_NAME: 'sky'
+    }),
+
+    utils: () => ({
+      connectName: (firstName: string, lastName: string) => `${firstName}_${lastName}`
+    })
+  }
+);
 
 describe('component basic', function() {
   const app = mount(<App />);
   it('example 1', () => {
-    expect(app.html()).toContain('<div>1</div>');
+    expect(app.html()).toContain('<div>joe_sky</div>');
   });
 });

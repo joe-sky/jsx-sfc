@@ -11,19 +11,35 @@ export type SFCProps<T = {}, EX = {}> = PropsWithChildren<T> & {
 
 export interface SFCInnerProps {
   template: (...args: any) => any;
-  style: Record<string, any>;
+  styles: Record<string, any>;
+  ref: any;
 }
 
-export type DefineComponent<T, P = {}> = {
-  <D extends Template.Data, S, SP = { style?: S }, RP = P extends {} ? P : {}>(options: {
-    style?: () => S;
-    Component: T extends NoRef
-      ? (props: SFCProps<P, SP>, context?: any) => D
-      : (props: SFCProps<P, SP>, ref?: Ref<T>) => D;
-    template: <U extends D>(args: { data: U } & SP) => JSXElements;
-  }): T extends NoRef ? React.FC<RP> : React.ForwardRefExoticComponent<RP & RefAttributes<T>>;
+export type FuncMap = Record<string, () => any>;
 
-  <D, S, SP = { style?: S }, RP = P extends {} ? P : {}>(options: {
+type ReturnTypeMap<T extends FuncMap> = {
+  [P in keyof T]: ReturnType<T[P]>;
+};
+
+export type DefineComponent<T, P = {}> = {
+  <
+    D extends Template.Data,
+    S extends Record<string, any>,
+    EX extends FuncMap,
+    SE extends { styles?: S } & ReturnTypeMap<EX>,
+    RP = P extends {} ? P : {}
+  >(
+    options: {
+      style?: () => S;
+      Component: T extends NoRef
+        ? (props: SFCProps<P, SE>, context?: any) => D
+        : (props: SFCProps<P, SE>, ref?: Ref<T>) => D;
+      template: <U extends D>(args: { data: U } & SE) => JSXElements;
+    },
+    extensions?: EX
+  ): (T extends NoRef ? React.FC<RP> : React.ForwardRefExoticComponent<RP & RefAttributes<T>>) & SE;
+
+  <D, S, SP = { styles?: S }, RP = P extends {} ? P : {}>(options: {
     style?: () => S;
     Component: T extends NoRef
       ? (props: SFCProps<P, SP>, context?: any) => D
@@ -31,7 +47,7 @@ export type DefineComponent<T, P = {}> = {
     templates: <U extends D>(args: { data: U } & SP, ...tmpls: Template.Func[]) => JSX.Element;
   }): T extends NoRef ? React.FC<RP> : React.ForwardRefExoticComponent<RP & RefAttributes<T>>;
 
-  <S, SP = { style?: S }, RP = P extends {} ? P : {}>(options: {
+  <S, SP = { styles?: S }, RP = P extends {} ? P : {}>(options: {
     style?: () => S;
     Component: T extends NoRef
       ? (props: SFCProps<P, SP>, context?: any) => JSXElements

@@ -15,7 +15,7 @@ interface AppRef {
 }
 
 const App = sfc.forwardRef<AppRef, AppProps>()({
-  template({ data, style: { Container } }) {
+  template({ data, styles: { Container } }) {
     return (
       <Container>
         <div>{data.a}</div>
