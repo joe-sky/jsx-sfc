@@ -21,7 +21,7 @@ type ReturnTypeMap<T extends FuncMap> = {
   [P in keyof T]: ReturnType<T[P]>;
 };
 
-export type DefineComponent<T, P = {}> = {
+export type DefineComponent<T = NoRef, P = {}> = {
   <
     D extends Template.Data,
     S extends Record<string, any>,
@@ -55,10 +55,11 @@ export type DefineComponent<T, P = {}> = {
   }): T extends NoRef ? React.FC<RP> : React.ForwardRefExoticComponent<RP & RefAttributes<T>>;
 };
 
-export type ForwardRefSFC = <T, P = {}>(displayName?: string) => DefineComponent<T, P>;
+export interface ForwardRefSFC extends DefineComponent {
+  <T, P = {}>(): DefineComponent<T, P>;
+}
 
-export interface SFC {
-  <P = {}>(displayName?: string): DefineComponent<NoRef, P>;
+export interface SFC extends DefineComponent {
+  <P = {}>(): DefineComponent<NoRef, P>;
   forwardRef?: ForwardRefSFC;
-  component?: DefineComponent<NoRef, {}>;
 }

@@ -6,11 +6,7 @@ import { jsx, css } from '@emotion/core';
 import styled from '@emotion/styled';
 import sfc, { Template } from '../src/index';
 
-interface AppProps {
-  test?: string;
-}
-
-const App = sfc.component(
+const App = sfc(
   {
     template({ data, styles: { Container }, constant: { LAST_NAME }, utils: { connectName } }) {
       return (
