@@ -8,15 +8,13 @@ import sfc, { Template } from '../src/index';
 
 const App = sfc(
   {
-    template({ data, styles: { Container }, constant: { LAST_NAME }, utils: { connectName } }) {
-      return (
-        <Container>
-          <div>{connectName(data.firstName, LAST_NAME)}</div>
-        </Container>
-      );
-    },
+    template: ({ data, styles: { Container }, constant: { LAST_NAME }, utils: { connectName } }) => (
+      <Container>
+        <div>{connectName(data.firstName, LAST_NAME)}</div>
+      </Container>
+    ),
 
-    Component(props) {
+    Component: props => {
       return props.template({ firstName: 'joe' });
     },
 

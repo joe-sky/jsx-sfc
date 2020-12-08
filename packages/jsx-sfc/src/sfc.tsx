@@ -4,16 +4,29 @@ import { Template, isTemplate } from './template';
 
 function funcReturnMap(extensions: FuncMap) {
   const ret = {};
-  Object.keys(extensions).forEach(key => {
-    ret[key] = extensions[key]();
-  });
+  extensions &&
+    Object.keys(extensions).forEach(key => {
+      ret[key] = extensions[key]();
+    });
 
   return ret;
 }
 
 function createSfc(isForwardRef?: boolean) {
   function defineSfc(options, extensions = {}) {
+    let ActualComponent;
+    const param2IsArray = Array.isArray(extensions);
+    if (param2IsArray) {
+      ActualComponent = options;
+      options = extensions[0];
+      extensions = extensions?.[1];
+    }
+
     const { template, templates, style, Component } = options;
+    if (!param2IsArray) {
+      ActualComponent = Component;
+    }
+
     const stylesAndExtensions = { styles: style?.(), ...funcReturnMap(extensions) };
 
     const tmplFn = templates
@@ -48,12 +61,12 @@ function createSfc(isForwardRef?: boolean) {
 
     let SeparateFunctional;
     if (!isForwardRef) {
-      const InnerComponent: React.FC<SFCInnerProps> = Component;
+      const InnerComponent: React.FC<SFCInnerProps> = ActualComponent;
       SeparateFunctional = innerProps => {
         return <InnerComponent {...innerProps} template={tmplFn} {...stylesAndExtensions} />;
       };
     } else {
-      const InnerComponentWithRef: ForwardRefExoticComponent<SFCInnerProps> = forwardRefReact(Component);
+      const InnerComponentWithRef: ForwardRefExoticComponent<SFCInnerProps> = forwardRefReact(ActualComponent);
       SeparateFunctional = forwardRefReact((innerProps, ref) => {
         return <InnerComponentWithRef {...innerProps} template={tmplFn} ref={ref} {...stylesAndExtensions} />;
       });

@@ -1,6 +1,7 @@
 {
   "packages": [
-    "packages/jsx-sfc"
+    "packages/jsx-sfc",
+    "packages/babel-plugin-jsx-sfc"
   ],
   "command": {
     "publish": {

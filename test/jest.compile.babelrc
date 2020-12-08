@@ -1,0 +1,19 @@
+{
+  "presets": [["@babel/preset-typescript", { "allowNamespaces": true }], "@babel/preset-env", "@babel/preset-react"],
+  "plugins": [
+    "jsx-sfc",
+    [
+      "@babel/plugin-proposal-decorators",
+      {
+        "legacy": true
+      }
+    ],
+    [
+      "@babel/plugin-proposal-class-properties",
+      {
+        "loose": true
+      }
+    ],
+    "@babel/plugin-proposal-optional-chaining"
+  ]
+}

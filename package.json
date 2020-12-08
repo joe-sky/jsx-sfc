@@ -2,13 +2,15 @@
   "name": "jsx-sfc-build",
   "private": true,
   "workspaces": [
-    "packages/jsx-sfc"
+    "packages/jsx-sfc",
+    "packages/babel-plugin-jsx-sfc"
   ],
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Full typings sfc solution for jsx",
   "scripts": {
     "build": "lerna run build",
     "test": "jest --config=test/jest.config.js",
+    "test:compile": "yarn run jest:clear && jest --config=test/jest.config.compile.js",
     "jest:clear": "jest --clearCache",
     "cover": "jest --coverage --config=test/jest.config.js",
     "ci": "yarn run build && yarn run cover && yarn run test:compile && codecov",
