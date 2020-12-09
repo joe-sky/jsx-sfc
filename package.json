@@ -3,9 +3,10 @@
   "private": true,
   "workspaces": [
     "packages/jsx-sfc",
-    "packages/babel-plugin-jsx-sfc"
+    "packages/babel-plugin-jsx-sfc",
+    "packages/vite-plugin-jsx-sfc"
   ],
-  "version": "0.2.2",
+  "version": "0.2.2-alpha.1",
   "description": "Full typings sfc solution for jsx",
   "scripts": {
     "build": "lerna run build",

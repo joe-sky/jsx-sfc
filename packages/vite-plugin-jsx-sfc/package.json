@@ -1,0 +1,23 @@
+{
+  "name": "vite-plugin-jsx-sfc",
+  "version": "0.2.1",
+  "description": "Compile and enhance the limitation of jsx-sfc runtime code.",
+  "main": "lib/index.js",
+  "files": [
+    "lib/",
+    "src/",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joe-sky/jsx-sfc.git"
+  },
+  "bugs": {
+    "url": "https://github.com/joe-sky/jsx-sfc/issues"
+  },
+  "author": "Joe_Sky <hitomi_doax@sina.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@babel/core": "^7.7.5"
+  }
+}

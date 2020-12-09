@@ -1,7 +1,8 @@
 {
   "packages": [
     "packages/jsx-sfc",
-    "packages/babel-plugin-jsx-sfc"
+    "packages/babel-plugin-jsx-sfc",
+    "packages/vite-plugin-jsx-sfc"
   ],
   "command": {
     "publish": {
