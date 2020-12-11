@@ -33,15 +33,43 @@ const App = sfc<AppProps>()({
   })
 });
 
+const AppNoTmpl = sfc<AppProps>()({
+  Component({ test, styles: { Container } }) {
+    return (
+      <Container>
+        <div>{test}</div>
+      </Container>
+    );
+  },
+
+  style: () => ({
+    Container: styled.section`
+      color: #fff;
+    `,
+    hl: css`
+      width: 50px;
+    `
+  })
+});
+
 describe('basic', function() {
   const app = mount(<App test="1" />);
-  it('example 1', () => {
+  it('simple', () => {
     expect(app.html()).toContain('<div>1</div>');
+  });
+
+  it('export styles', () => {
+    expect(App.styles.Container).toBeDefined();
+  });
+
+  const appNoTmpl = mount(<AppNoTmpl test="1" />);
+  it('no template', () => {
+    expect(appNoTmpl.html()).toContain('<div>1</div>');
   });
 });
 
 const AppMultiTmpls = sfc<AppProps>()({
-  templates({ data, styles: { Container } }, main, header: Template.Func<string>) {
+  template({ data, styles: { Container } }, main, header: Template.Func<string>) {
     return (
       <>
         <Template name={header}>{content => <header>{content}</header>}</Template>
@@ -71,7 +99,7 @@ const AppMultiTmpls = sfc<AppProps>()({
 
 describe('with multiple templates', function() {
   const appMultiTmpls = mount(<AppMultiTmpls test="1" />);
-  it('example 1', () => {
+  it('simple', () => {
     expect(appMultiTmpls.html()).toContain('<header>1</header>');
   });
 });

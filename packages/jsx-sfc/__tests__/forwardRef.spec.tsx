@@ -41,11 +41,44 @@ const App = sfc.forwardRef<AppRef, AppProps>()({
   })
 });
 
+const AppNoGeneric = sfc.forwardRef({
+  template({ styles: { Container } }) {
+    return (
+      <Container>
+        <div>test</div>
+      </Container>
+    );
+  },
+
+  Component({ template }, ref) {
+    useImperativeHandle(ref, () => ({
+      getName: () => 'test'
+    }));
+
+    return template();
+  },
+
+  style: () => ({
+    Container: styled.section`
+      color: #fff;
+    `,
+    hl: css`
+      width: 50px;
+    `
+  })
+});
+
 describe('forward ref basic', function() {
   const ref = createRef<AppRef>();
   const app = mount(<App test="1" ref={ref} />);
 
-  it('example 1', () => {
+  it('simple', () => {
     expect(ref.current.getName()).toEqual('test');
+  });
+
+  const appNoGeneric = mount(<AppNoGeneric />);
+
+  it('no generic', () => {
+    expect(appNoGeneric.html()).toContain('<div>test</div>');
   });
 });

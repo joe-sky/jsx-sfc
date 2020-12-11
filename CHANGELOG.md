@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## [v0.3.0] 2020.12.11
+
+- 🌟 Add `babel-plugin-jsx-sfc`, the compiled code can support `React Fast Refresh`.
+- 🌟 Remove `DefineComponent#options#templates` and use `template` instead.
+
 ## [v0.2.1] 2020.12.03
 
 - 🌟 Reset the data argument position of template function.

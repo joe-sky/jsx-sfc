@@ -12,6 +12,15 @@ function funcReturnMap(extensions: FuncMap) {
   return ret;
 }
 
+// Reference by https://stackoverflow.com/questions/1007981/how-to-get-function-parameter-names-values-dynamically
+const STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/gm;
+const ARGUMENT_NAMES = /([^\s,]+)/g;
+
+function hasMultiParams(func: Function) {
+  const fnStr = func.toString().replace(STRIP_COMMENTS, '');
+  return fnStr.slice(fnStr.indexOf('(') + 1, fnStr.indexOf(')')).match(ARGUMENT_NAMES)?.length > 1;
+}
+
 function createSfc(isForwardRef?: boolean) {
   function defineSfc(options, extensions = {}) {
     let ActualComponent;
@@ -22,42 +31,44 @@ function createSfc(isForwardRef?: boolean) {
       extensions = extensions?.[1];
     }
 
-    const { template, templates, style, Component } = options;
+    const { template, style, Component } = options;
     if (!param2IsArray) {
       ActualComponent = Component;
     }
 
     const stylesAndExtensions = { styles: style?.(), ...funcReturnMap(extensions) };
 
-    const tmplFn = templates
-      ? data => {
-          const tmpls = templates(
-            { data, ...stylesAndExtensions },
-            ...(Object.keys(Array.apply(null, { length: 20 })).map(i => ({
-              main: i === '0'
-            })) as any)
-          );
+    const tmplFn =
+      template &&
+      (hasMultiParams(template)
+        ? data => {
+            const tmpls = template(
+              { data, ...stylesAndExtensions },
+              ...(Object.keys(Array.apply(null, { length: 20 })).map(i => ({
+                main: i === '0'
+              })) as any)
+            );
 
-          let tmplFcs = tmpls.props.children;
-          if (!Array.isArray(tmplFcs)) {
-            tmplFcs = [tmplFcs];
-          }
-
-          let mainTmplFn: Template.Func['template'];
-          tmplFcs.forEach(item => {
-            if (isTemplate(item.type)) {
-              const { name, children } = item.props;
-              name.template = children;
-
-              if (name.main) {
-                mainTmplFn = children;
-              }
+            let tmplFcs = tmpls.props.children;
+            if (!Array.isArray(tmplFcs)) {
+              tmplFcs = [tmplFcs];
             }
-          });
 
-          return mainTmplFn();
-        }
-      : data => template({ data, ...stylesAndExtensions });
+            let mainTmplFn: Template.Func['template'];
+            tmplFcs.forEach(item => {
+              if (isTemplate(item.type)) {
+                const { name, children } = item.props;
+                name.template = children;
+
+                if (name.main) {
+                  mainTmplFn = children;
+                }
+              }
+            });
+
+            return mainTmplFn();
+          }
+        : data => template({ data, ...stylesAndExtensions }));
 
     let SeparateFunctional;
     if (!isForwardRef) {
@@ -72,7 +83,7 @@ function createSfc(isForwardRef?: boolean) {
       });
     }
 
-    return SeparateFunctional as any;
+    return Object.assign(SeparateFunctional, stylesAndExtensions);
   }
 
   return (options?: any, extensions?: any) => {

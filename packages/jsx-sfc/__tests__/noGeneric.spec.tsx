@@ -40,7 +40,11 @@ const App = sfc(
 
 describe('component basic', function() {
   const app = mount(<App />);
-  it('example 1', () => {
+  it('simple', () => {
     expect(app.html()).toContain('<div>joe_sky</div>');
+  });
+
+  it('export extension items', () => {
+    expect(App.utils.connectName).toBeDefined();
   });
 });
