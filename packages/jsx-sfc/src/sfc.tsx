@@ -16,9 +16,9 @@ function funcReturnMap(extensions: FuncMap) {
 const STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/gm;
 const ARGUMENT_NAMES = /([^\s,]+)/g;
 
-function hasMultiParams(func: Function) {
+function funcParams(func: Function) {
   const fnStr = func.toString().replace(STRIP_COMMENTS, '');
-  return fnStr.slice(fnStr.indexOf('(') + 1, fnStr.indexOf(')')).match(ARGUMENT_NAMES)?.length > 1;
+  return fnStr.slice(fnStr.indexOf('(') + 1, fnStr.indexOf(')')).match(ARGUMENT_NAMES) || [];
 }
 
 function createSfc(isForwardRef?: boolean) {
@@ -38,37 +38,39 @@ function createSfc(isForwardRef?: boolean) {
 
     const stylesAndExtensions = { styles: style?.(), ...funcReturnMap(extensions) };
 
-    const tmplFn =
-      template &&
-      (hasMultiParams(template)
-        ? data => {
-            const tmpls = template(
-              { data, ...stylesAndExtensions },
-              ...(Object.keys(Array.apply(null, { length: 20 })).map(i => ({
-                main: i === '0'
-              })) as any)
-            );
+    let tmplFn;
+    if (template) {
+      const paramsCount = funcParams(template).length;
+      if (paramsCount > 1) {
+        tmplFn = data => {
+          const tmpls = template(
+            { data, ...stylesAndExtensions },
+            ...(Object.keys(Array.apply(null, { length: paramsCount - 1 })).map(() => ({})) as any)
+          );
 
-            let tmplFcs = tmpls.props.children;
-            if (!Array.isArray(tmplFcs)) {
-              tmplFcs = [tmplFcs];
-            }
-
-            let mainTmplFn: Template.Func['template'];
-            tmplFcs.forEach(item => {
-              if (isTemplate(item.type)) {
-                const { name, children } = item.props;
-                name.template = children;
-
-                if (name.main) {
-                  mainTmplFn = children;
-                }
-              }
-            });
-
-            return mainTmplFn();
+          let tmplFcs = tmpls.props.children;
+          if (!Array.isArray(tmplFcs)) {
+            tmplFcs = [tmplFcs];
           }
-        : data => template({ data, ...stylesAndExtensions }));
+
+          let mainTmplFn: Template.Func['template'];
+          tmplFcs.forEach(item => {
+            if (isTemplate(item.type)) {
+              const { name, children } = item.props;
+              if (name) {
+                name.template = children;
+              } else {
+                mainTmplFn = children;
+              }
+            }
+          });
+
+          return mainTmplFn();
+        };
+      } else {
+        tmplFn = data => template({ data, ...stylesAndExtensions });
+      }
+    }
 
     let SeparateFunctional;
     if (!isForwardRef) {

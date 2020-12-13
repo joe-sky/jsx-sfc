@@ -1,5 +1,5 @@
 /*!
- * jsx-sfc v0.3.0
+ * jsx-sfc v0.3.1
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
@@ -11,7 +11,7 @@ declare const templateFc: {
 };
 declare function isTemplate(templateFc: any): templateFc is Template.FC;
 declare const Template: <Arg1, Arg2, Arg3, Arg4, Arg5, T extends Template.Func<Arg1, Arg2, Arg3, Arg4, Arg5>>(props: {
-    name: T;
+    name?: T;
     children: T['template'];
 }) => JSX.Element;
 declare namespace Template {

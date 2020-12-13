@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v0.3.1] 2020.12.13
+
+- 🌟 Remove unnecessary name property of the main template on multiple templates.
+
 ## [v0.3.0] 2020.12.11
 
 - 🌟 Add `babel-plugin-jsx-sfc`, the compiled code can support `React Fast Refresh`.

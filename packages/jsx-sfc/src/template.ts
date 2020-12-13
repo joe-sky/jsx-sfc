@@ -10,7 +10,7 @@ export function isTemplate(templateFc: any): templateFc is Template.FC {
 }
 
 export const Template: <Arg1, Arg2, Arg3, Arg4, Arg5, T extends Template.Func<Arg1, Arg2, Arg3, Arg4, Arg5>>(props: {
-  name: T;
+  name?: T;
   children: T['template'];
 }) => JSX.Element = templateFc as any;
 

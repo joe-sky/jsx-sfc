@@ -69,12 +69,12 @@ describe('basic', function() {
 });
 
 const AppMultiTmpls = sfc<AppProps>()({
-  template({ data, styles: { Container } }, main, header: Template.Func<string>) {
+  template({ data, styles: { Container } }, header: Template.Func<string>) {
     return (
       <>
         <Template name={header}>{content => <header>{content}</header>}</Template>
 
-        <Template name={main}>
+        <Template>
           {() => (
             <Container>
               {header.template(data.a)}
