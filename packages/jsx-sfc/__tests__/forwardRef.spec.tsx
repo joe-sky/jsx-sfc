@@ -23,7 +23,7 @@ const App = sfc.forwardRef<AppRef, AppProps>()({
     );
   },
 
-  Component({ template, test }, ref) {
+  Component: ({ template, test }, ref) => {
     useImperativeHandle(ref, () => ({
       getName: () => 'test'
     }));

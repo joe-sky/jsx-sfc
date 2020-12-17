@@ -2,6 +2,7 @@ import traverse, { Visitor, NodePath } from '@babel/traverse';
 import * as types from '@babel/types';
 import { SFC_FUNC, SFC_COMPONENT } from './utils';
 import * as astUtil from './utils/ast';
+import generate from '@babel/generator';
 
 interface State {
   opts?: {
@@ -84,37 +85,68 @@ export default () => ({
                 // todo: has template?
 
                 /*
-                  {
-                    Component: props => {
-                      return { firstName: 'joe' };
-                    }
+                  Component: props => {
+                    return { firstName: 'joe' };
                   }
 
                   ↓ ↓ ↓ ↓ ↓ ↓ 
 
-                  {
-                    Component: props => {
-                      return props.template({ firstName: 'joe' });
-                    }
+                  Component: props => {
+                    return props.template({ firstName: 'joe' });
                   }
                 */
                 const componentFuncPath = path.get(`arguments.0.properties.${indexInProps}.value`) as NodePath<
                   types.ArrowFunctionExpression
                 >;
-                const propsParamPath = componentFuncPath.get('params.0') as NodePath<
-                  types.Identifier | types.ObjectPattern
-                >;
                 const funcBodyPath = componentFuncPath.get('body.body') as NodePath<types.Node>[];
                 const returnArgPath = funcBodyPath.find(p => p.isReturnStatement()) as NodePath<types.ReturnStatement>;
 
                 if (types.isObjectExpression(returnArgPath.node.argument)) {
+                  /*
+                    Component: () => { ... }
+  
+                    ↓ ↓ ↓ ↓ ↓ ↓ 
+  
+                    Component: (props) => { ... }
+                   */
+                  const propsParamPath = componentFuncPath.get('params') as NodePath<types.Node>[];
+                  if (!propsParamPath.length) {
+                    componentFuncPath.replaceWith(
+                      types.arrowFunctionExpression([types.identifier('props')], componentFuncPath.get('body').node)
+                    );
+                  }
+
+                  const firstPropParamPath = componentFuncPath.get('params.0') as NodePath<
+                    types.Identifier | types.ObjectPattern
+                  >;
+                  let firstPropIsObjectPattern = false;
+
+                  if (types.isObjectPattern(firstPropParamPath.node)) {
+                    firstPropIsObjectPattern = true;
+                    if (
+                      !firstPropParamPath.node.properties.find(
+                        prop =>
+                          types.isObjectProperty(prop) && types.isIdentifier(prop.key) && prop.key.name === 'template'
+                      )
+                    ) {
+                      firstPropParamPath.replaceWith(
+                        types.objectPattern([
+                          types.objectProperty(types.identifier('template'), types.identifier('template')),
+                          ...firstPropParamPath.node.properties
+                        ])
+                      );
+                    }
+                  }
+
                   returnArgPath.replaceWith(
                     types.returnStatement(
                       types.callExpression(
-                        types.memberExpression(
-                          types.identifier((propsParamPath.node as types.Identifier).name),
-                          types.identifier('template')
-                        ),
+                        firstPropIsObjectPattern
+                          ? types.identifier('template')
+                          : types.memberExpression(
+                              types.identifier((firstPropParamPath.node as types.Identifier).name),
+                              types.identifier('template')
+                            ),
                         [returnArgPath.node.argument]
                       )
                     )
@@ -129,6 +161,8 @@ export default () => ({
                     types.arrayExpression(sfcArguments)
                   ])
                 );
+
+                console.log(generate(path.node).code);
               }
             }
           }

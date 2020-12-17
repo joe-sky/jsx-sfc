@@ -19,8 +19,8 @@ const App = sfc<AppProps>()({
     );
   },
 
-  Component(props) {
-    return props.template({ a: props.test });
+  Component: props => {
+    return { a: props.test };
   },
 
   style: () => ({

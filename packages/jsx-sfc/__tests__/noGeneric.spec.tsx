@@ -14,7 +14,7 @@ const App = sfc(
       </Container>
     ),
 
-    Component: props => {
+    Component: () => {
       return { firstName: 'joe' };
     },
 
