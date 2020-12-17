@@ -15,7 +15,7 @@ const App = sfc(
     ),
 
     Component: props => {
-      return props.template({ firstName: 'joe' });
+      return { firstName: 'joe' };
     },
 
     style: () => ({
