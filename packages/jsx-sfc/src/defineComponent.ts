@@ -9,12 +9,6 @@ export type SFCProps<T = {}, EX = {}> = PropsWithChildren<T> & {
   template: <D extends Template.Data>(data?: D) => D;
 } & EX;
 
-export interface SFCInnerProps {
-  template: (...args: any) => any;
-  styles: Record<string, any>;
-  ref: any;
-}
-
 export type FuncMap = Record<string, () => any>;
 
 type ReturnTypeMap<T extends FuncMap> = {

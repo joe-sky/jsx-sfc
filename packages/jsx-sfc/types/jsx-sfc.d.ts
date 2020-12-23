@@ -27,11 +27,6 @@ declare type JSXElements = ReactElement<any, any> | null;
 declare type SFCProps<T = {}, EX = {}> = PropsWithChildren<T> & {
     template: <D extends Template.Data>(data?: D) => D;
 } & EX;
-interface SFCInnerProps {
-    template: (...args: any) => any;
-    styles: Record<string, any>;
-    ref: any;
-}
 declare type FuncMap = Record<string, () => any>;
 declare type ReturnTypeMap<T extends FuncMap> = {
     [P in keyof T]: ReturnType<T[P]>;
@@ -65,4 +60,4 @@ declare const sfc: SFC;
 declare const forwardRef: ForwardRefSFC;
 
 export default sfc;
-export { DefineComponent, ForwardRefSFC, FuncMap, JSXElements, SFC, SFCInnerProps, SFCProps, Template, forwardRef, isTemplate };
+export { DefineComponent, ForwardRefSFC, FuncMap, JSXElements, SFC, SFCProps, Template, forwardRef, isTemplate };
