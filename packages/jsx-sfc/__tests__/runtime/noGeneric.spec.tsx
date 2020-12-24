@@ -48,3 +48,35 @@ describe('component basic', function() {
     expect(App.utils.connectName).toBeDefined();
   });
 });
+
+const App2 = sfc(
+  ({ constant: { LAST_NAME }, utils: { connectName } }) => {
+    const [firstName, setFirstName] = useState('joe');
+
+    useEffect(() => {
+      setFirstName(firstName + '_');
+    }, []);
+
+    return (
+      <section>
+        <div>{connectName(firstName, LAST_NAME)}</div>
+      </section>
+    );
+  },
+  {
+    constant: () => ({
+      LAST_NAME: 'sky'
+    }),
+
+    utils: () => ({
+      connectName: (firstName: string, lastName: string) => `${firstName}_${lastName}`
+    })
+  }
+);
+
+describe('component function only', function() {
+  const app = mount(<App2 />);
+  it('simple', () => {
+    expect(app.html()).toContain('<div>joe__sky</div>');
+  });
+});

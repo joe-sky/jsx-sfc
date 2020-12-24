@@ -1,9 +1,9 @@
-import React, { forwardRef as forwardRefReact, ForwardRefExoticComponent } from 'react';
+import React, { forwardRef as forwardRefReact } from 'react';
 import { SFC, ForwardRefSFC, FuncMap } from './defineComponent';
 import { Template, isTemplate } from './template';
 import { getFuncParams, isFunc } from './utils';
 
-export function createSfcFuncResults(funcMap: FuncMap) {
+export function createFuncResults(funcMap: FuncMap, compiled?: boolean) {
   const ret: Record<string, any> = {};
   let template: Function;
 
@@ -53,32 +53,39 @@ export function createSfcFuncResults(funcMap: FuncMap) {
         : data => template({ data, ...ret });
   }
 
+  if (compiled) {
+    ret.__compiled = true;
+  }
+
   return ret;
 }
 
 function createSfc(isForwardRef?: boolean) {
   function defineSfc(options, extensions = {}) {
-    if (isFunc(options)) {
+    if (extensions['__compiled']) {
       const Component = options;
       return Object.assign(!isForwardRef ? Component : forwardRefReact(Component), extensions);
     } else {
+      if (isFunc(options)) {
+        options = { Component: options };
+      }
       const { template, style, Component } = options;
-      const sfcFuncResults = createSfcFuncResults({ ...{ template, style }, ...extensions });
+      const funcResults = createFuncResults({ ...{ template, style }, ...extensions });
 
       let SeparateFunctional;
       if (!isForwardRef) {
         const InnerComponent: React.FC = Component;
         SeparateFunctional = innerProps => {
-          return <InnerComponent {...innerProps} {...sfcFuncResults} />;
+          return <InnerComponent {...innerProps} {...funcResults} />;
         };
       } else {
         const InnerComponentWithRef = forwardRefReact(Component);
         SeparateFunctional = forwardRefReact((innerProps, ref) => {
-          return <InnerComponentWithRef {...innerProps} {...sfcFuncResults} ref={ref} />;
+          return <InnerComponentWithRef {...innerProps} {...funcResults} ref={ref} />;
         });
       }
 
-      return Object.assign(SeparateFunctional, sfcFuncResults);
+      return Object.assign(SeparateFunctional, funcResults);
     }
   }
 

@@ -3,7 +3,7 @@
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
-import React, { ReactNode, ReactElement, PropsWithChildren, Ref, RefAttributes } from 'react';
+import React, { ReactNode, ReactElement, PropsWithChildren, RefAttributes, Ref } from 'react';
 
 declare const templateFc: {
     (): void;
@@ -31,22 +31,23 @@ declare type FuncMap = Record<string, () => any>;
 declare type ReturnTypeMap<T extends FuncMap> = {
     [P in keyof T]: ReturnType<T[P]>;
 };
-declare type DefineComponent<T = NoRef, P = {}> = {
-    <D extends Template.Data, S, EX extends FuncMap, SE extends {
+declare type DefineComponent<T = NoRef, P = {}, R = T extends NoRef ? React.FC<P> : React.ForwardRefExoticComponent<P & RefAttributes<T>>> = {
+    <D extends Template.Data, S, EX extends FuncMap, FR extends {
         styles?: S;
-    } & ReturnTypeMap<EX>, RP = P extends {} ? P : {}>(options: {
+    } & ReturnTypeMap<EX>>(options: {
         style?: () => S;
-        Component: T extends NoRef ? (props: SFCProps<P, SE>, context?: any) => D : (props: SFCProps<P, SE>, ref?: Ref<T>) => D;
+        Component: T extends NoRef ? (props: SFCProps<P, FR>, context?: any) => D : (props: SFCProps<P, FR>, ref?: Ref<T>) => D;
         template: <U extends D>(args: {
             data: U;
-        } & SE, ...tmpls: Template.Func[]) => JSXElements;
-    }, extensions?: EX): (T extends NoRef ? React.FC<RP> : React.ForwardRefExoticComponent<RP & RefAttributes<T>>) & SE;
-    <S, EX extends FuncMap, SE extends {
+        } & FR, ...tmpls: Template.Func[]) => JSXElements;
+    }, extensions?: EX): R & FR;
+    <S, EX extends FuncMap, FR extends {
         styles?: S;
-    } & ReturnTypeMap<EX>, RP = P extends {} ? P : {}>(options: {
-        style?: () => S;
-        Component: T extends NoRef ? (props: SFCProps<P, SE>, context?: any) => JSXElements : (props: SFCProps<P, SE>, ref?: Ref<T>) => JSXElements;
-    }, extensions?: EX): T extends NoRef ? React.FC<RP> : React.ForwardRefExoticComponent<RP & RefAttributes<T>>;
+    } & ReturnTypeMap<EX>>(options: {
+        style: () => S;
+        Component: T extends NoRef ? (props: SFCProps<P, FR>, context?: any) => JSXElements : (props: SFCProps<P, FR>, ref?: Ref<T>) => JSXElements;
+    }, extensions?: EX): R & FR;
+    <EX extends FuncMap, FR extends ReturnTypeMap<EX>>(component: T extends NoRef ? (props: SFCProps<P, FR>, context?: any) => JSXElements : (props: SFCProps<P, FR>, ref?: Ref<T>) => JSXElements, extensions?: EX): R & FR;
 };
 interface ForwardRefSFC extends DefineComponent {
     <T, P = {}>(): DefineComponent<T, P>;
@@ -56,8 +57,9 @@ interface SFC extends DefineComponent {
     forwardRef?: ForwardRefSFC;
 }
 
+declare function createFuncResults(funcMap: FuncMap, compiled?: boolean): Record<string, any>;
 declare const sfc: SFC;
 declare const forwardRef: ForwardRefSFC;
 
 export default sfc;
-export { DefineComponent, ForwardRefSFC, FuncMap, JSXElements, SFC, SFCProps, Template, forwardRef, isTemplate };
+export { DefineComponent, ForwardRefSFC, FuncMap, JSXElements, SFC, SFCProps, Template, createFuncResults, forwardRef, isTemplate };

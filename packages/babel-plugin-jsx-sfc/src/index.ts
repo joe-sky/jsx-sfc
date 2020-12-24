@@ -26,31 +26,31 @@ export default () => ({
                 ...
               },
           
-              style: () => ({
-                ...
-              })
+              style: () => { ... }
             },
             {
-              ...
+              utils: () => { ... }
             }
           );
 
-          ↓ ↓ ↓ ↓ ↓ ↓ 
+          ↓ ↓ ↓ ↓ ↓ ↓
 
-          const App = sfc((props) => { ... }, [
-            {
-              template({ data }) {
-                ...
-              },
-          
-              style: () => ({
-                ...
-              })
-            },
-            {
+          const $sfcFuncResults_23 = sfc.createFuncResults({
+            template({ data }) {
               ...
-            }
-          ]);
+            },
+        
+            style: () => ({
+              ...
+            }),
+
+            utils: () => { ... }
+          }, 1);
+
+          const App = sfc((props) => {
+            props = { ...props, ...$sfcFuncResults_23 };
+            ...
+          }, $sfcFuncResults_23);
         */
         CallExpression: {
           enter(path) {
@@ -92,7 +92,7 @@ export default () => ({
                   ↓ ↓ ↓ ↓ ↓ ↓ 
 
                   Component: props => {
-                    return props.template({ firstName: 'joe' });
+                    return $sfcFuncResults_23.template({ firstName: 'joe' });
                   }
                 */
                 const componentFuncPath = path.get(`arguments.0.properties.${indexInProps}.value`) as NodePath<
@@ -102,7 +102,7 @@ export default () => ({
                 const returnArgPath = funcBodyPath.find(p => p.isReturnStatement()) as NodePath<types.ReturnStatement>;
 
                 if (types.isObjectExpression(returnArgPath.node.argument)) {
-                  /*
+                  /* todo: delete
                     Component: () => { ... }
   
                     ↓ ↓ ↓ ↓ ↓ ↓ 
@@ -121,6 +121,16 @@ export default () => ({
                   >;
                   let firstPropIsObjectPattern = false;
 
+                  /*
+                    Component: ({ template, styles, name }) => { ... }
+  
+                    ↓ ↓ ↓ ↓ ↓ ↓ 
+  
+                    Component: ({ name }) => {
+                      const { template, styles } = $sfcFuncResults_23;
+                      ...
+                    }
+                   */
                   if (types.isObjectPattern(firstPropParamPath.node)) {
                     firstPropIsObjectPattern = true;
                     if (

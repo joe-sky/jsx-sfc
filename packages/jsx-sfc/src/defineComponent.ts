@@ -15,33 +15,38 @@ type ReturnTypeMap<T extends FuncMap> = {
   [P in keyof T]: ReturnType<T[P]>;
 };
 
-export type DefineComponent<T = NoRef, P = {}> = {
-  <
-    D extends Template.Data,
-    S,
-    EX extends FuncMap,
-    SE extends { styles?: S } & ReturnTypeMap<EX>,
-    RP = P extends {} ? P : {}
-  >(
+export type DefineComponent<
+  T = NoRef,
+  P = {},
+  R = T extends NoRef ? React.FC<P> : React.ForwardRefExoticComponent<P & RefAttributes<T>>
+> = {
+  <D extends Template.Data, S, EX extends FuncMap, FR extends { styles?: S } & ReturnTypeMap<EX>>(
     options: {
       style?: () => S;
       Component: T extends NoRef
-        ? (props: SFCProps<P, SE>, context?: any) => D
-        : (props: SFCProps<P, SE>, ref?: Ref<T>) => D;
-      template: <U extends D>(args: { data: U } & SE, ...tmpls: Template.Func[]) => JSXElements;
+        ? (props: SFCProps<P, FR>, context?: any) => D
+        : (props: SFCProps<P, FR>, ref?: Ref<T>) => D;
+      template: <U extends D>(args: { data: U } & FR, ...tmpls: Template.Func[]) => JSXElements;
     },
     extensions?: EX
-  ): (T extends NoRef ? React.FC<RP> : React.ForwardRefExoticComponent<RP & RefAttributes<T>>) & SE;
+  ): R & FR;
 
-  <S, EX extends FuncMap, SE extends { styles?: S } & ReturnTypeMap<EX>, RP = P extends {} ? P : {}>(
+  <S, EX extends FuncMap, FR extends { styles?: S } & ReturnTypeMap<EX>>(
     options: {
-      style?: () => S;
+      style: () => S;
       Component: T extends NoRef
-        ? (props: SFCProps<P, SE>, context?: any) => JSXElements
-        : (props: SFCProps<P, SE>, ref?: Ref<T>) => JSXElements;
+        ? (props: SFCProps<P, FR>, context?: any) => JSXElements
+        : (props: SFCProps<P, FR>, ref?: Ref<T>) => JSXElements;
     },
     extensions?: EX
-  ): T extends NoRef ? React.FC<RP> : React.ForwardRefExoticComponent<RP & RefAttributes<T>>;
+  ): R & FR;
+
+  <EX extends FuncMap, FR extends ReturnTypeMap<EX>>(
+    component: T extends NoRef
+      ? (props: SFCProps<P, FR>, context?: any) => JSXElements
+      : (props: SFCProps<P, FR>, ref?: Ref<T>) => JSXElements,
+    extensions?: EX
+  ): R & FR;
 };
 
 export interface ForwardRefSFC extends DefineComponent {

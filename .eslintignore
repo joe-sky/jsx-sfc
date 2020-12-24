@@ -1,4 +1,6 @@
 /node_modules
 /packages/jsx-sfc/dist
 /packages/jsx-sfc/lib
+/packages/jsx-sfc/types/dist.definition.ts
+/packages/jsx-sfc/types/jsx-sfc.d.ts
 /packages/babel-plugin-jsx-sfc/lib
