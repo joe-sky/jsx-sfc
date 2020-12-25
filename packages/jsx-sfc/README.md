@@ -7,7 +7,23 @@
   <a href="https://www.npmjs.com/package/jsx-sfc"><img src="https://img.shields.io/npm/l/jsx-sfc.svg" alt="License"></a>
 </p>
 
-`JSX-Separate-Functional-Components`(abbreviated as `jsx-sfc`) is a tiny library(less than 1KB) that create React components with **separation of concerns** and **completely type safe**.
+`jsx-sfc`(JSX Separate Functional Components) is a 1KB tiny library for create React components with **separation of concerns** and **completely type safe**.
+
+## How to separate concerns
+
+This project was originally inspired by [Vue Single File Components](https://vuejs.org/v2/guide/single-file-components.html). The point of Vue SFCs has been recognized by many people:
+
+> Inside a component, its template, logic and styles are inherently coupled, and collocating them actually makes the component more cohesive and maintainable.
+
+Although `jsx-sfc` is similar to Vue SFCs in the form of separation of concerns, but it was originally designed to adapt the JSX(React) environment!
+
+So it's idea has the following features:
+
+- No need single file, just cohesive functions
+- Fully type inference
+- Support all React hooks
+- Support React fast refresh
+- Support React eslint plugins
 
 ## Basic Overview
 
