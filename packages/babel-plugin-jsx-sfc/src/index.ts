@@ -172,7 +172,7 @@ export default () => ({
                   ])
                 );
 
-                console.log(generate(path.node).code);
+                //console.log(generate(path.node).code);
               }
             }
           }
