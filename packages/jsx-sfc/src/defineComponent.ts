@@ -26,10 +26,10 @@ export type DefineComponent<
       Component: T extends NoRef
         ? (props: SFCProps<P, FR>, context?: any) => D
         : (props: SFCProps<P, FR>, ref?: Ref<T>) => D;
-      template: <U extends D>(args: { data: U } & FR, ...tmpls: Template.Func[]) => JSXElements;
+      template: <U extends D>(args: { data?: U } & FR, ...tmpls: Template.Func[]) => JSXElements;
     },
     extensions?: EX
-  ): R & FR;
+  ): R & { template: (data?: D) => JSXElements } & FR;
 
   <S, EX extends FuncMap, FR extends { styles?: S } & ReturnTypeMap<EX>>(
     options: {

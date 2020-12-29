@@ -30,10 +30,15 @@ const App = sfc(
 );
 `;
 
+const snapshot = `sfc(
+  props => {
+    return props.template({ firstName: 'joe' });
+  }`;
+
 describe('basic', function() {
   const compiled = transform(code);
   console.log(compiled);
   it('simple', () => {
-    expect(compiled).toContain('[{ template:');
+    expect(compiled).toContain(snapshot);
   });
 });

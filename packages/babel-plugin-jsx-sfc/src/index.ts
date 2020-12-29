@@ -2,7 +2,7 @@ import traverse, { Visitor, NodePath } from '@babel/traverse';
 import * as types from '@babel/types';
 import { SFC_FUNC, SFC_COMPONENT } from './utils';
 import * as astUtil from './utils/ast';
-import generate from '@babel/generator';
+// import generate from '@babel/generator';
 
 interface State {
   opts?: {
@@ -35,17 +35,20 @@ export default () => ({
 
           ↓ ↓ ↓ ↓ ↓ ↓
 
-          const $sfcFuncResults_23 = sfc.createFuncResults({
-            template({ data }) {
-              ...
+          const $sfcFuncResults_23 = sfc.createFuncResults([
+            {
+              template({ data }) {
+                ...
+              },
+          
+              style: () => ({
+                ...
+              })
             },
-        
-            style: () => ({
-              ...
-            }),
-
-            utils: () => { ... }
-          }, 1);
+            {
+              utils: () => { ... }
+            }
+          ], 1);
 
           const App = sfc((props) => {
             props = { ...props, ...$sfcFuncResults_23 };

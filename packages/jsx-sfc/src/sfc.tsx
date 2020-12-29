@@ -3,11 +3,11 @@ import { SFC, ForwardRefSFC, FuncMap } from './defineComponent';
 import { Template, isTemplate } from './template';
 import { getFuncParams, isFunc } from './utils';
 
-export function createFuncResults(funcMap: FuncMap, compiled?: boolean) {
+export function createFuncResults(funcMaps: FuncMap[], compiled?: boolean) {
   const ret: Record<string, any> = {};
   let template: Function;
 
-  funcMap &&
+  funcMaps.forEach(funcMap => {
     Object.keys(funcMap).forEach(key => {
       const func = funcMap[key];
       if (func == null) {
@@ -20,6 +20,7 @@ export function createFuncResults(funcMap: FuncMap, compiled?: boolean) {
         ret[key === 'style' ? 'styles' : key] = func();
       }
     });
+  });
 
   if (template) {
     const paramsCount = getFuncParams(template).length;
@@ -70,7 +71,7 @@ function createSfc(isForwardRef?: boolean) {
         options = { Component: options };
       }
       const { template, style, Component } = options;
-      const funcResults = createFuncResults({ ...{ template, style }, ...extensions });
+      const funcResults = createFuncResults([{ template, style }, extensions]);
 
       let SeparateFunctional;
       if (!isForwardRef) {
