@@ -1,8 +1,11 @@
 # CHANGELOG
 
-## [v0.3.1] 2020.12.13
+## [v0.3.1] 2020.12.30
 
 - 🌟 Remove unnecessary name property of the main template on multiple templates.
+- 🌟 support no template and style function.
+- 🌟 support export template function from sfc components.
+- 💥 remove name property of the main template
 
 ## [v0.3.0] 2020.12.11
 
@@ -11,7 +14,7 @@
 
 ## [v0.2.1] 2020.12.03
 
-- 🌟 Reset the data argument position of template function.
+- 💥 Reset the data argument position of template function.
 
 ## [v0.1.2] 2020.11.11
 

@@ -9,7 +9,7 @@
 
 `jsx-sfc`(JSX Separate Functional Components) is a 1KB tiny library for create React components with **separation of concerns** and **completely type safe**.
 
-## How to separate concerns
+<!-- ## How to separate concerns
 
 This project was originally inspired by [Vue Single File Components](https://vuejs.org/v2/guide/single-file-components.html). The point of Vue SFCs has been recognized by many people:
 
@@ -23,7 +23,7 @@ So it's idea has the following features:
 - Fully type inference
 - Support all React hooks
 - Support React fast refresh
-- Support React eslint plugins
+- Support React eslint plugins -->
 
 ## Basic Overview
 

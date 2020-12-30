@@ -38,9 +38,11 @@ declare type DefineComponent<T = NoRef, P = {}, R = T extends NoRef ? React.FC<P
         style?: () => S;
         Component: T extends NoRef ? (props: SFCProps<P, FR>, context?: any) => D : (props: SFCProps<P, FR>, ref?: Ref<T>) => D;
         template: <U extends D>(args: {
-            data: U;
+            data?: U;
         } & FR, ...tmpls: Template.Func[]) => JSXElements;
-    }, extensions?: EX): R & FR;
+    }, extensions?: EX): R & {
+        template: (data?: D) => JSXElements;
+    } & FR;
     <S, EX extends FuncMap, FR extends {
         styles?: S;
     } & ReturnTypeMap<EX>>(options: {
@@ -57,7 +59,7 @@ interface SFC extends DefineComponent {
     forwardRef?: ForwardRefSFC;
 }
 
-declare function createFuncResults(funcMap: FuncMap, compiled?: boolean): Record<string, any>;
+declare function createFuncResults(funcMaps: FuncMap[], compiled?: boolean): Record<string, any>;
 declare const sfc: SFC;
 declare const forwardRef: ForwardRefSFC;
 
