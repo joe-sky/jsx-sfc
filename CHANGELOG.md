@@ -1,11 +1,15 @@
 # CHANGELOG
 
+## [v0.3.2] 2020.12.31
+
+- 🌟 Optimize the `babel-plugin-jsx-sfc` compilation results.
+
 ## [v0.3.1] 2020.12.30
 
 - 🌟 Remove unnecessary name property of the main template on multiple templates.
-- 🌟 support no template and style function.
-- 🌟 support export template function from sfc components.
-- 💥 remove name property of the main template
+- 🌟 Support no template and style function.
+- 🌟 Support export template function from sfc components.
+- 💥 Remove name property of the main template.
 
 ## [v0.3.0] 2020.12.11
 

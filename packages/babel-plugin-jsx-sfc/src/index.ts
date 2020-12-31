@@ -1,6 +1,6 @@
 import traverse, { Visitor, NodePath } from '@babel/traverse';
 import * as types from '@babel/types';
-import { SFC_FUNC, SFC_COMPONENT } from './utils';
+import { SFC_FUNC, SFC_COMPONENT, getFuncResultsName, SFC_CREATE_FUNC_RESULTS, SFC_FORWARD_REF } from './utils';
 import * as astUtil from './utils/ast';
 // import generate from '@babel/generator';
 
@@ -35,7 +35,7 @@ export default () => ({
 
           ↓ ↓ ↓ ↓ ↓ ↓
 
-          const $sfcFuncResults_23 = sfc.createFuncResults([
+          const $sfcFuncResults_lineNo = sfc.createFuncResults([
             {
               template({ data }) {
                 ...
@@ -51,9 +51,9 @@ export default () => ({
           ], 1);
 
           const App = sfc((props) => {
-            props = { ...props, ...$sfcFuncResults_23 };
+            props = { ...props, ...$sfcFuncResults_lineNo };
             ...
-          }, $sfcFuncResults_23);
+          }, $sfcFuncResults_lineNo);
         */
         CallExpression: {
           enter(path) {
@@ -64,12 +64,30 @@ export default () => ({
              * 0: nothing
              * 1: const App = sfc()({ ... })
              * 2: const App = sfc({ ... })
+             * 3: const App = sfc.forwardRef()({ ... })
+             * 4: const App = sfc.forwardRef({ ... })
              */
-            let sfcType: 0 | 1 | 2 = 0;
+            let sfcType: 0 | 1 | 2 | 3 | 4 = 0;
             if (types.isCallExpression(callee) && astUtil.isCalleeImportedBySfc(callee.callee, path, importedLib)) {
-              sfcType++;
+              if (
+                types.isMemberExpression(callee.callee) &&
+                types.isIdentifier(callee.callee.property) &&
+                callee.callee.property.name === SFC_FORWARD_REF
+              ) {
+                sfcType = 3;
+              } else {
+                sfcType = 1;
+              }
             } else if (astUtil.isCalleeImportedBySfc(callee, path, importedLib)) {
-              sfcType++;
+              if (
+                types.isMemberExpression(callee) &&
+                types.isIdentifier(callee.property) &&
+                callee.property.name === SFC_FORWARD_REF
+              ) {
+                sfcType = 4;
+              } else {
+                sfcType = 2;
+              }
             }
 
             if (sfcType) {
@@ -83,7 +101,9 @@ export default () => ({
                 if (!ComponentProp) {
                   return;
                 }
+
                 const indexInProps = sfcArguments[0].properties.indexOf(ComponentProp);
+                const sfcFuncResultsName = getFuncResultsName(path.node.loc.start.line);
 
                 // todo: has template?
 
@@ -95,71 +115,65 @@ export default () => ({
                   ↓ ↓ ↓ ↓ ↓ ↓ 
 
                   Component: props => {
-                    return $sfcFuncResults_23.template({ firstName: 'joe' });
+                    return $sfcFuncResults_lineNo.template({ firstName: 'joe' });
                   }
                 */
                 const componentFuncPath = path.get(`arguments.0.properties.${indexInProps}.value`) as NodePath<
                   types.ArrowFunctionExpression
                 >;
-                const funcBodyPath = componentFuncPath.get('body.body') as NodePath<types.Node>[];
-                const returnArgPath = funcBodyPath.find(p => p.isReturnStatement()) as NodePath<types.ReturnStatement>;
+                const funcBlockPath = componentFuncPath.get('body') as NodePath<types.BlockStatement>;
+                const returnArgPath = componentFuncPath.get('body.body').find(p => p.isReturnStatement()) as NodePath<
+                  types.ReturnStatement
+                >;
 
-                if (types.isObjectExpression(returnArgPath.node.argument)) {
-                  /* todo: delete
-                    Component: () => { ... }
-  
-                    ↓ ↓ ↓ ↓ ↓ ↓ 
-  
-                    Component: (props) => { ... }
-                   */
-                  const propsParamPath = componentFuncPath.get('params') as NodePath<types.Node>[];
-                  if (!propsParamPath.length) {
-                    componentFuncPath.replaceWith(
-                      types.arrowFunctionExpression([types.identifier('props')], componentFuncPath.get('body').node)
+                const firstPropParamPath = componentFuncPath.get('params.0') as NodePath<
+                  types.Identifier | types.ObjectPattern
+                >;
+                if (firstPropParamPath) {
+                  if (types.isObjectPattern(firstPropParamPath.node)) {
+                    // const { styles } = { ...props, ...$sfcFuncResults_lineNo };
+                    const propsName = 'props';
+
+                    funcBlockPath.unshiftContainer(
+                      'body',
+                      types.variableDeclaration('const', [
+                        types.variableDeclarator(
+                          firstPropParamPath.node,
+                          types.objectExpression([
+                            types.spreadElement(types.identifier(propsName)),
+                            types.spreadElement(types.identifier(sfcFuncResultsName))
+                          ])
+                        )
+                      ])
+                    );
+
+                    firstPropParamPath.replaceWith(types.identifier(propsName));
+                  } else {
+                    // props = { ...props, ...$sfcFuncResults_lineNo };
+                    const propsName = (firstPropParamPath.node as types.Identifier).name;
+
+                    funcBlockPath.unshiftContainer(
+                      'body',
+                      types.expressionStatement(
+                        types.assignmentExpression(
+                          '=',
+                          types.identifier(propsName),
+                          types.objectExpression([
+                            types.spreadElement(types.identifier(propsName)),
+                            types.spreadElement(types.identifier(sfcFuncResultsName))
+                          ])
+                        )
+                      )
                     );
                   }
+                }
 
-                  const firstPropParamPath = componentFuncPath.get('params.0') as NodePath<
-                    types.Identifier | types.ObjectPattern
-                  >;
-                  let firstPropIsObjectPattern = false;
-
-                  /*
-                    Component: ({ template, styles, name }) => { ... }
-  
-                    ↓ ↓ ↓ ↓ ↓ ↓ 
-  
-                    Component: ({ name }) => {
-                      const { template, styles } = $sfcFuncResults_23;
-                      ...
-                    }
-                   */
-                  if (types.isObjectPattern(firstPropParamPath.node)) {
-                    firstPropIsObjectPattern = true;
-                    if (
-                      !firstPropParamPath.node.properties.find(
-                        prop =>
-                          types.isObjectProperty(prop) && types.isIdentifier(prop.key) && prop.key.name === 'template'
-                      )
-                    ) {
-                      firstPropParamPath.replaceWith(
-                        types.objectPattern([
-                          types.objectProperty(types.identifier('template'), types.identifier('template')),
-                          ...firstPropParamPath.node.properties
-                        ])
-                      );
-                    }
-                  }
-
+                // return $sfcFuncResults_lineNo.template({ ... });
+                if (types.isObjectExpression(returnArgPath.node.argument)) {
                   returnArgPath.replaceWith(
                     types.returnStatement(
                       types.callExpression(
-                        firstPropIsObjectPattern
-                          ? types.identifier('template')
-                          : types.memberExpression(
-                              types.identifier((firstPropParamPath.node as types.Identifier).name),
-                              types.identifier('template')
-                            ),
+                        types.memberExpression(types.identifier(sfcFuncResultsName), types.identifier('template')),
                         [returnArgPath.node.argument]
                       )
                     )
@@ -168,14 +182,34 @@ export default () => ({
 
                 sfcArguments[0].properties.splice(indexInProps, 1);
 
+                // const $sfcFuncResults_lineNo = ...
+                path
+                  .findParent(
+                    path =>
+                      path.isVariableDeclaration() || path.isExportDefaultDeclaration() || path.isExportDeclaration()
+                  )
+                  .insertBefore(
+                    types.variableDeclaration('const', [
+                      types.variableDeclarator(
+                        types.identifier(sfcFuncResultsName),
+                        types.callExpression(
+                          types.memberExpression(types.identifier(SFC_FUNC), types.identifier(SFC_CREATE_FUNC_RESULTS)),
+                          [types.arrayExpression(sfcArguments), types.numericLiteral(1)]
+                        )
+                      )
+                    ])
+                  );
+
                 path.replaceWith(
-                  types.callExpression(types.identifier(SFC_FUNC), [
-                    ComponentProp.value as types.ArrowFunctionExpression,
-                    types.arrayExpression(sfcArguments)
-                  ])
+                  types.callExpression(
+                    sfcType <= 2
+                      ? types.identifier(SFC_FUNC)
+                      : types.memberExpression(types.identifier(SFC_FUNC), types.identifier(SFC_FORWARD_REF)),
+                    [ComponentProp.value as types.ArrowFunctionExpression, types.identifier(sfcFuncResultsName)]
+                  )
                 );
 
-                //console.log(generate(path.node).code);
+                // console.log(generate(path.node).code);
               }
             }
           }

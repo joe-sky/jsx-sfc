@@ -1,5 +1,5 @@
 /*!
- * jsx-sfc v0.3.1
+ * jsx-sfc v0.3.2
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
@@ -57,6 +57,7 @@ interface ForwardRefSFC extends DefineComponent {
 interface SFC extends DefineComponent {
     <P = {}>(): DefineComponent<NoRef, P>;
     forwardRef?: ForwardRefSFC;
+    createFuncResults?: (funcMaps: FuncMap[], compiled?: boolean) => Record<string, any>;
 }
 
 declare function createFuncResults(funcMaps: FuncMap[], compiled?: boolean): Record<string, any>;

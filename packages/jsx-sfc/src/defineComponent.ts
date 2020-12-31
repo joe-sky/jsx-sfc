@@ -56,4 +56,5 @@ export interface ForwardRefSFC extends DefineComponent {
 export interface SFC extends DefineComponent {
   <P = {}>(): DefineComponent<NoRef, P>;
   forwardRef?: ForwardRefSFC;
+  createFuncResults?: (funcMaps: FuncMap[], compiled?: boolean) => Record<string, any>;
 }

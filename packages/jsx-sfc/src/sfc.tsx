@@ -100,7 +100,7 @@ function createSfc(isForwardRef?: boolean) {
 }
 
 export const sfc: SFC = createSfc();
-
 export const forwardRef: ForwardRefSFC = createSfc(true);
 
 sfc.forwardRef = forwardRef;
+sfc.createFuncResults = createFuncResults;
