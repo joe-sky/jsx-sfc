@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-jsx-sfc",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Babel plugin for compile and enhance the limitation of jsx-sfc runtime code.",
   "main": "lib/index.js",
   "files": [
