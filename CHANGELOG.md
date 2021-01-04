@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## [v0.3.3] 2021.01.04
+
+- 🌟 Add `vite-plugin-jsx-sfc`, the compiled code can support `React Fast Refresh`(**Currently only support vite v1**).
+- 🐛 Fix `utils#getFuncParams` in handling braces.
+
 ## [v0.3.2] 2020.12.31
 
 - 🌟 Optimize the `babel-plugin-jsx-sfc` compilation results.

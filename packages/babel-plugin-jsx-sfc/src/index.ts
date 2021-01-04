@@ -51,8 +51,8 @@ export default () => ({
           ], 1);
 
           const App = sfc((props) => {
-            props = { ...props, ...$sfcFuncResults_lineNo };
             ...
+            return $sfcFuncResults_lineNo.template({ ... });
           }, $sfcFuncResults_lineNo);
         */
         CallExpression: {

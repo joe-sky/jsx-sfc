@@ -1,6 +1,6 @@
 # babel-plugin-jsx-sfc
 
-Compile and enhance the limitation of `jsx-sfc` runtime code.
+Babel plugin for compile and enhance the limitation of `jsx-sfc` runtime code.
 
 ## How it works
 
@@ -10,31 +10,37 @@ const App = sfc(
     template({ data }) {
       ...
     },
+
     Component: (props) => {
       ...
     },
-    style: () => ({
-      ...
-    })
+
+    style: () => { ... }
   },
   {
-    ...
+    utils: () => { ... }
   }
 );
 
 ↓ ↓ ↓ ↓ ↓ ↓
 
-const App = sfc((props) => { ... }, [
+const $sfcFuncResults_lineNo = sfc.createFuncResults([
   {
     template({ data }) {
       ...
     },
+
     style: () => ({
       ...
     })
   },
   {
-    ...
+    utils: () => { ... }
   }
-]);
+], 1);
+
+const App = sfc((props) => {
+  ...
+  return $sfcFuncResults_lineNo.template({ ... });
+}, $sfcFuncResults_lineNo);
 ```

@@ -6,7 +6,7 @@
     "packages/babel-plugin-jsx-sfc",
     "packages/vite-plugin-jsx-sfc"
   ],
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "A tiny library that create React components with Separation of Concerns and Completely Type Safe.",
   "scripts": {
     "build": "lerna run build",
@@ -62,7 +62,6 @@
     "emotion": "^10.0.27",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
-    "esbuild": "^0.7.7",
     "eslint": "^6.5.1",
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-react": "^7.16.0",
