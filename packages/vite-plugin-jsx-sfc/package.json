@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-jsx-sfc",
-  "version": "0.3.0",
+  "version": "0.3.3",
   "description": "Vite plugin for compile and enhance the limitation of jsx-sfc runtime code.",
   "main": "lib/index.js",
   "files": [
@@ -21,7 +21,7 @@
   "license": "MIT",
   "dependencies": {
     "@babel/core": "^7.7.5",
-    "babel-plugin-jsx-sfc": "^0.3.2"
+    "babel-plugin-jsx-sfc": "^0.3.3"
   },
   "devDependencies": {
     "vite": "^2.0.0-beta.3"
