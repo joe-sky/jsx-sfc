@@ -18,7 +18,8 @@ type ReturnTypeMap<T extends FuncMap> = {
 export type DefineComponent<
   T = NoRef,
   P = {},
-  R = T extends NoRef ? React.FC<P> : React.ForwardRefExoticComponent<P & RefAttributes<T>>
+  R = T extends NoRef ? React.FC<P> : React.ForwardRefExoticComponent<P & RefAttributes<T>>,
+  O = { Origin: R }
 > = {
   <D extends Template.Data, S, EX extends FuncMap, FR extends { styles?: S } & ReturnTypeMap<EX>>(
     options: {
@@ -29,7 +30,7 @@ export type DefineComponent<
       template: <U extends D>(args: { data?: U } & FR, ...tmpls: Template.Func[]) => JSXElements;
     },
     extensions?: EX
-  ): R & { template: (data?: D) => JSXElements } & FR;
+  ): R & O & { template: (data?: D) => JSXElements } & FR;
 
   <S, EX extends FuncMap, FR extends { styles?: S } & ReturnTypeMap<EX>>(
     options: {
@@ -39,14 +40,14 @@ export type DefineComponent<
         : (props: SFCProps<P, FR>, ref?: Ref<T>) => JSXElements;
     },
     extensions?: EX
-  ): R & FR;
+  ): R & O & FR;
 
   <EX extends FuncMap, FR extends ReturnTypeMap<EX>>(
     component: T extends NoRef
       ? (props: SFCProps<P, FR>, context?: any) => JSXElements
       : (props: SFCProps<P, FR>, ref?: Ref<T>) => JSXElements,
     extensions?: EX
-  ): R & FR;
+  ): R & O & FR;
 };
 
 export interface ForwardRefSFC extends DefineComponent {

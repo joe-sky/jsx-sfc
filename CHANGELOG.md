@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v0.3.4] 2021.01.05
+
+- 🌟 Add `SfcComponent#Origin` to get origin component.
+
 ## [v0.3.3] 2021.01.04
 
 - 🌟 Add `vite-plugin-jsx-sfc`, the compiled code can support `React Fast Refresh`(**Currently only support vite v1**).

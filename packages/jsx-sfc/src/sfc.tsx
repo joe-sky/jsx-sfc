@@ -61,11 +61,23 @@ export function createFuncResults(funcMaps: FuncMap[], compiled?: boolean) {
   return ret;
 }
 
+function withOrigin(component: any) {
+  return Object.defineProperty(component, 'Origin', {
+    get: function() {
+      return component;
+    },
+    enumerable: true,
+    configurable: true
+  });
+}
+
 function createSfc(isForwardRef?: boolean) {
   function defineSfc(options, extensions = {}) {
     if (extensions['__compiled']) {
       const Component = options;
-      return Object.assign(!isForwardRef ? Component : forwardRefReact(Component), extensions);
+      const component = !isForwardRef ? Component : forwardRefReact(Component);
+
+      return Object.assign(withOrigin(component), extensions);
     } else {
       if (isFunc(options)) {
         options = { Component: options };
@@ -86,7 +98,7 @@ function createSfc(isForwardRef?: boolean) {
         });
       }
 
-      return Object.assign(SeparateFunctional, funcResults);
+      return Object.assign(withOrigin(SeparateFunctional), funcResults);
     }
   }
 

@@ -1,5 +1,5 @@
 /*!
- * jsx-sfc v0.3.3
+ * jsx-sfc v0.3.4
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
@@ -31,7 +31,9 @@ declare type FuncMap = Record<string, () => any>;
 declare type ReturnTypeMap<T extends FuncMap> = {
     [P in keyof T]: ReturnType<T[P]>;
 };
-declare type DefineComponent<T = NoRef, P = {}, R = T extends NoRef ? React.FC<P> : React.ForwardRefExoticComponent<P & RefAttributes<T>>> = {
+declare type DefineComponent<T = NoRef, P = {}, R = T extends NoRef ? React.FC<P> : React.ForwardRefExoticComponent<P & RefAttributes<T>>, O = {
+    Origin: R;
+}> = {
     <D extends Template.Data, S, EX extends FuncMap, FR extends {
         styles?: S;
     } & ReturnTypeMap<EX>>(options: {
@@ -40,7 +42,7 @@ declare type DefineComponent<T = NoRef, P = {}, R = T extends NoRef ? React.FC<P
         template: <U extends D>(args: {
             data?: U;
         } & FR, ...tmpls: Template.Func[]) => JSXElements;
-    }, extensions?: EX): R & {
+    }, extensions?: EX): R & O & {
         template: (data?: D) => JSXElements;
     } & FR;
     <S, EX extends FuncMap, FR extends {
@@ -48,8 +50,8 @@ declare type DefineComponent<T = NoRef, P = {}, R = T extends NoRef ? React.FC<P
     } & ReturnTypeMap<EX>>(options: {
         style: () => S;
         Component: T extends NoRef ? (props: SFCProps<P, FR>, context?: any) => JSXElements : (props: SFCProps<P, FR>, ref?: Ref<T>) => JSXElements;
-    }, extensions?: EX): R & FR;
-    <EX extends FuncMap, FR extends ReturnTypeMap<EX>>(component: T extends NoRef ? (props: SFCProps<P, FR>, context?: any) => JSXElements : (props: SFCProps<P, FR>, ref?: Ref<T>) => JSXElements, extensions?: EX): R & FR;
+    }, extensions?: EX): R & O & FR;
+    <EX extends FuncMap, FR extends ReturnTypeMap<EX>>(component: T extends NoRef ? (props: SFCProps<P, FR>, context?: any) => JSXElements : (props: SFCProps<P, FR>, ref?: Ref<T>) => JSXElements, extensions?: EX): R & O & FR;
 };
 interface ForwardRefSFC extends DefineComponent {
     <T, P = {}>(): DefineComponent<T, P>;

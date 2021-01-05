@@ -6,7 +6,7 @@
     "packages/babel-plugin-jsx-sfc",
     "packages/vite-plugin-jsx-sfc"
   ],
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "A tiny library that create React components with Separation of Concerns and Completely Type Safe.",
   "scripts": {
     "build": "lerna run build",

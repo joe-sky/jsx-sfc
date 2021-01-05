@@ -5,6 +5,7 @@
   "main": "lib/index.js",
   "files": [
     "lib/",
+    "index.d.ts",
     "README.md"
   ],
   "scripts": {
