@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-jsx-sfc",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "Vite plugin for compile and enhance the limitation of jsx-sfc runtime code.",
   "main": "lib/index.js",
   "files": [
