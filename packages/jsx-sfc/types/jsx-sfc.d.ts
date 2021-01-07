@@ -1,9 +1,9 @@
 /*!
- * jsx-sfc v0.3.4
+ * jsx-sfc v0.3.5
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
-import React, { ReactNode, ReactElement, PropsWithChildren, RefAttributes, Ref } from 'react';
+import React, { ReactNode, ReactElement, PropsWithChildren, RefAttributes } from 'react';
 
 declare const templateFc: {
     (): void;
@@ -22,44 +22,53 @@ declare namespace Template {
     type Data = Record<string, unknown>;
 }
 
+declare type Func = (...args: any) => any;
+declare type Obj = Record<string, any>;
+
 declare type NoRef = 'noRef';
 declare type JSXElements = ReactElement<any, any> | null;
-declare type SFCProps<T = {}, EX = {}> = PropsWithChildren<T> & {
-    template: <D extends Template.Data>(data?: D) => D;
+declare type SFCProps<Props = {}, EX = {}> = PropsWithChildren<Props> & {
+    template: <Data extends Template.Data>(data?: Data) => Data;
 } & EX;
-declare type FuncMap = Record<string, () => any>;
+declare type FuncMap = Record<string, Func>;
 declare type ReturnTypeMap<T extends FuncMap> = {
     [P in keyof T]: ReturnType<T[P]>;
 };
-declare type DefineComponent<T = NoRef, P = {}, R = T extends NoRef ? React.FC<P> : React.ForwardRefExoticComponent<P & RefAttributes<T>>, O = {
-    Origin: R;
+declare type DefineComponent<Ref = NoRef, Props = {}, ReturnComponent = Ref extends NoRef ? React.FC<Props> : React.ForwardRefExoticComponent<Props & RefAttributes<Ref>>, Origin = {
+    origin: ReturnComponent;
 }> = {
-    <D extends Template.Data, S, EX extends FuncMap, FR extends {
-        styles?: S;
+    <Data extends Template.Data, Styles, EX extends FuncMap, FR extends {
+        styles?: Styles;
     } & ReturnTypeMap<EX>>(options: {
-        style?: () => S;
-        Component: T extends NoRef ? (props: SFCProps<P, FR>, context?: any) => D : (props: SFCProps<P, FR>, ref?: Ref<T>) => D;
-        template: <U extends D>(args: {
+        /**
+         * Using the style function to define styles, you can use the most popular `CSS in JS` frameworks. (e.g. `styled-components`, `emotion`, `JSS`)
+         */
+        style?: () => Styles;
+        Component: Ref extends NoRef ? (props: SFCProps<Props, FR>, context?: any) => Data : (props: SFCProps<Props, FR>, ref?: React.Ref<Ref>) => Data;
+        template: <U extends Data>(args: {
             data?: U;
         } & FR, ...tmpls: Template.Func[]) => JSXElements;
-    }, extensions?: EX): R & O & {
-        template: (data?: D) => JSXElements;
-    } & FR;
-    <S, EX extends FuncMap, FR extends {
-        styles?: S;
+    }, extensions?: EX): ReturnComponent & {
+        template: (data?: Data) => JSXElements;
+    } & FR & Origin;
+    <Styles, EX extends FuncMap, FR extends {
+        styles?: Styles;
     } & ReturnTypeMap<EX>>(options: {
-        style: () => S;
-        Component: T extends NoRef ? (props: SFCProps<P, FR>, context?: any) => JSXElements : (props: SFCProps<P, FR>, ref?: Ref<T>) => JSXElements;
-    }, extensions?: EX): R & O & FR;
-    <EX extends FuncMap, FR extends ReturnTypeMap<EX>>(component: T extends NoRef ? (props: SFCProps<P, FR>, context?: any) => JSXElements : (props: SFCProps<P, FR>, ref?: Ref<T>) => JSXElements, extensions?: EX): R & O & FR;
+        /**
+         * Using the style function to define styles, you can use the most popular `CSS in JS` frameworks. (e.g. `styled-components`, `emotion`, `JSS`)
+         */
+        style: () => Styles;
+        Component: Ref extends NoRef ? (props: SFCProps<Props, FR>, context?: any) => JSXElements : (props: SFCProps<Props, FR>, ref?: React.Ref<Ref>) => JSXElements;
+    }, extensions?: EX): ReturnComponent & FR & Origin;
+    <EX extends FuncMap, FR extends ReturnTypeMap<EX>>(component: Ref extends NoRef ? (props: SFCProps<Props, FR>, context?: any) => JSXElements : (props: SFCProps<Props, FR>, ref?: React.Ref<Ref>) => JSXElements, extensions?: EX): ReturnComponent & FR & Origin;
 };
 interface ForwardRefSFC extends DefineComponent {
-    <T, P = {}>(): DefineComponent<T, P>;
+    <Ref, Props = {}>(): DefineComponent<Ref, Props>;
 }
 interface SFC extends DefineComponent {
-    <P = {}>(): DefineComponent<NoRef, P>;
+    <Props = {}>(): DefineComponent<NoRef, Props>;
     forwardRef?: ForwardRefSFC;
-    createFuncResults?: (funcMaps: FuncMap[], compiled?: boolean) => Record<string, any>;
+    createFuncResults?: (funcMaps: FuncMap[], compiled?: boolean) => Obj;
 }
 
 declare function createFuncResults(funcMaps: FuncMap[], compiled?: boolean): Record<string, any>;

@@ -1,11 +1,11 @@
-import React, { forwardRef as forwardRefReact } from 'react';
+import React, { forwardRef as forwardRefReact, Fragment, ReactElement } from 'react';
 import { SFC, ForwardRefSFC, FuncMap } from './defineComponent';
 import { Template, isTemplate } from './template';
-import { getFuncParams, isFunc } from './utils';
+import { getFuncParams, emptyObjs, withOrigin, Func, Obj } from './utils';
 
 export function createFuncResults(funcMaps: FuncMap[], compiled?: boolean) {
-  const ret: Record<string, any> = {};
-  let template: Function;
+  const ret: Obj = {};
+  let template: Func;
 
   funcMaps.forEach(funcMap => {
     Object.keys(funcMap).forEach(key => {
@@ -26,15 +26,15 @@ export function createFuncResults(funcMaps: FuncMap[], compiled?: boolean) {
     const paramsCount = getFuncParams(template).length;
     ret.template =
       paramsCount > 1
-        ? data => {
-            const tmpls = template(
-              { data, ...ret },
-              ...(Object.keys(Array.apply(null, { length: paramsCount - 1 })).map(() => ({})) as any)
-            );
+        ? (data?: Template.Data) => {
+            const jsxFragment: ReactElement = template({ data, ...ret }, ...emptyObjs(paramsCount - 1));
+            if (jsxFragment?.type !== Fragment) {
+              throw new TypeError('The return of template with multiple arguments must be React.Fragment type.');
+            }
 
-            let tmplFcs = tmpls.props.children;
+            const tmplFcs: ReactElement | ReactElement[] = jsxFragment.props.children;
             if (!Array.isArray(tmplFcs)) {
-              tmplFcs = [tmplFcs];
+              throw new RangeError('Must be at least 2 Template elements.');
             }
 
             let mainTmplFn: Template.Func['template'];
@@ -51,7 +51,7 @@ export function createFuncResults(funcMaps: FuncMap[], compiled?: boolean) {
 
             return mainTmplFn();
           }
-        : data => template({ data, ...ret });
+        : (data?: Template.Data) => template({ data, ...ret });
   }
 
   if (compiled) {
@@ -61,31 +61,27 @@ export function createFuncResults(funcMaps: FuncMap[], compiled?: boolean) {
   return ret;
 }
 
-function withOrigin(component: any) {
-  return Object.defineProperty(component, 'Origin', {
-    get: function() {
-      return component;
-    },
-    enumerable: true,
-    configurable: true
-  });
+interface SFCOptions {
+  template?: Func;
+  Component?: Func;
+  style?: Func;
 }
 
 function createSfc(isForwardRef?: boolean) {
-  function defineSfc(options, extensions = {}) {
-    if (extensions['__compiled']) {
-      const Component = options;
+  function defineSfc(options: SFCOptions, extensions: Obj = {}) {
+    if (extensions.__compiled) {
+      const Component = options as Func;
       const component = !isForwardRef ? Component : forwardRefReact(Component);
 
       return Object.assign(withOrigin(component), extensions);
     } else {
-      if (isFunc(options)) {
-        options = { Component: options };
+      if (typeof options === 'function') {
+        options = { Component: options as Func };
       }
       const { template, style, Component } = options;
       const funcResults = createFuncResults([{ template, style }, extensions]);
 
-      let SeparateFunctional;
+      let SeparateFunctional: Func;
       if (!isForwardRef) {
         const InnerComponent: React.FC = Component;
         SeparateFunctional = innerProps => {

@@ -84,7 +84,7 @@ todo: styled-components, emotion, jss example
 
 ### More Cohesive components
 
-todo: utils, gql example
+todo: custom hooks, utils, gql example
 
 ### Why no side effects
 
@@ -113,6 +113,14 @@ todo: compiler, component members can be tested individually
 ## Why designed like this
 
 todo: ts limitation based
+
+## Projects using jsx-sfc
+
+todo: set some large code blocks
+
+## Known Issues
+
+todo: strictNullChecks
 
 ## Roadmap
 

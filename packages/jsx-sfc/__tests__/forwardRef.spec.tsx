@@ -23,12 +23,12 @@ const App = sfc.forwardRef<AppRef, AppProps>()({
     );
   },
 
-  Component: ({ template, test }, ref) => {
+  Component: ({ test }, ref) => {
     useImperativeHandle(ref, () => ({
       getName: () => 'test'
     }));
 
-    return template({ a: test });
+    return { a: test };
   },
 
   style: () => ({
@@ -41,32 +41,32 @@ const App = sfc.forwardRef<AppRef, AppProps>()({
   })
 });
 
-// const AppNoGeneric = sfc.forwardRef({
-//   template({ styles: { Container } }) {
-//     return (
-//       <Container>
-//         <div>test</div>
-//       </Container>
-//     );
-//   },
+const AppNoGeneric = sfc.forwardRef({
+  template({ styles: { Container } }) {
+    return (
+      <Container>
+        <div>test</div>
+      </Container>
+    );
+  },
 
-//   Component({ template }, ref) {
-//     useImperativeHandle(ref, () => ({
-//       getName: () => 'test'
-//     }));
+  Component({ template }, ref) {
+    useImperativeHandle(ref, () => ({
+      getName: () => 'test'
+    }));
 
-//     return template();
-//   },
+    return template();
+  },
 
-//   style: () => ({
-//     Container: styled.section`
-//       color: #fff;
-//     `,
-//     hl: css`
-//       width: 50px;
-//     `
-//   })
-// });
+  style: () => ({
+    Container: styled.section`
+      color: #fff;
+    `,
+    hl: css`
+      width: 50px;
+    `
+  })
+});
 
 describe('forward ref basic', function() {
   const ref = createRef<AppRef>();
@@ -76,9 +76,9 @@ describe('forward ref basic', function() {
     expect(ref.current.getName()).toEqual('test');
   });
 
-  // const appNoGeneric = mount(<AppNoGeneric />);
+  const appNoGeneric = mount(<AppNoGeneric />);
 
-  // it('no generic', () => {
-  //   expect(appNoGeneric.html()).toContain('<div>test</div>');
-  // });
+  it('no generic', () => {
+    expect(appNoGeneric.html()).toContain('<div>test</div>');
+  });
 });

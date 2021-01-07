@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v0.3.5] 2021.01.07
+
+- 🌟 Type optimization of internal implementation.
+
 ## [v0.3.4] 2021.01.05
 
 - 🌟 Add `SfcComponent#Origin` to get origin component.
