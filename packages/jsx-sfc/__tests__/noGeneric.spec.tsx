@@ -6,9 +6,13 @@ import { jsx, css } from '@emotion/core';
 import styled from '@emotion/styled';
 import sfc, { Template } from '../src/index';
 
-const App = sfc(
+const {
+  FC: App,
+  constant: { LAST_NAME },
+  utils: { connectName }
+} = sfc(
   {
-    template: ({ data, styles: { Container }, constant: { LAST_NAME }, utils: { connectName } }) => (
+    template: ({ data, styles: { Container } }) => (
       <Container>
         <div>{connectName(data.firstName, LAST_NAME)}</div>
       </Container>
@@ -45,6 +49,6 @@ describe('component basic', function() {
   });
 
   it('export extension items', () => {
-    expect(App.utils.connectName).toBeDefined();
+    expect(connectName).toBeDefined();
   });
 });

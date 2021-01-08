@@ -27,7 +27,7 @@ export function getFuncParams(func: Func) {
 }
 
 export function withOrigin(component: Func) {
-  return Object.defineProperty(component, 'Origin', {
+  return Object.defineProperty(component, 'FC', {
     get: function() {
       return component;
     },

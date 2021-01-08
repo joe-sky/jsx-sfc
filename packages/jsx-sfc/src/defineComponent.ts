@@ -20,9 +20,9 @@ export type DefineComponent<
   Ref = NoRef,
   Props = {},
   ReturnComponent = Ref extends NoRef ? React.FC<Props> : React.ForwardRefExoticComponent<Props & RefAttributes<Ref>>,
-  Origin = { origin: ReturnComponent }
+  FC = { FC: ReturnComponent }
 > = {
-  <Data extends Template.Data, Styles, EX extends FuncMap, FR extends { styles?: Styles } & ReturnTypeMap<EX>>(
+  <Styles, Data extends Template.Data, EX extends FuncMap, FR extends { styles?: Styles } & ReturnTypeMap<EX>>(
     options: {
       /**
        * Using the style function to define styles, you can use the most popular `CSS in JS` frameworks. (e.g. `styled-components`, `emotion`, `JSS`)
@@ -34,7 +34,7 @@ export type DefineComponent<
       template: <U extends Data>(args: { data?: U } & FR, ...tmpls: Template.Func[]) => JSXElements;
     },
     extensions?: EX
-  ): ReturnComponent & { template: (data?: Data) => JSXElements } & FR & Origin;
+  ): ReturnComponent & FC & { template: (data?: Data) => JSXElements; styles?: Styles } & ReturnTypeMap<EX>;
 
   <Styles, EX extends FuncMap, FR extends { styles?: Styles } & ReturnTypeMap<EX>>(
     options: {
@@ -47,14 +47,14 @@ export type DefineComponent<
         : (props: SFCProps<Props, FR>, ref?: React.Ref<Ref>) => JSXElements;
     },
     extensions?: EX
-  ): ReturnComponent & FR & Origin;
+  ): ReturnComponent & FC & { styles?: Styles } & ReturnTypeMap<EX>;
 
   <EX extends FuncMap, FR extends ReturnTypeMap<EX>>(
     component: Ref extends NoRef
       ? (props: SFCProps<Props, FR>, context?: any) => JSXElements
       : (props: SFCProps<Props, FR>, ref?: React.Ref<Ref>) => JSXElements,
     extensions?: EX
-  ): ReturnComponent & FR & Origin;
+  ): ReturnComponent & FC & ReturnTypeMap<EX>;
 };
 
 export interface ForwardRefSFC extends DefineComponent {
