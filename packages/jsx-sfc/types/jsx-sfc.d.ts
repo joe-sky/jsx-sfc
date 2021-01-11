@@ -34,8 +34,8 @@ declare type FuncMap = Record<string, Func>;
 declare type ReturnTypeMap<T extends FuncMap> = {
     [P in keyof T]: ReturnType<T[P]>;
 };
-declare type DefineComponent<Ref = NoRef, Props = {}, ReturnComponent = Ref extends NoRef ? React.FC<Props> : React.ForwardRefExoticComponent<Props & RefAttributes<Ref>>, FC = {
-    FC: ReturnComponent;
+declare type DefineComponent<Ref = NoRef, Props = {}, ReturnComponent = Ref extends NoRef ? React.FC<Props> : React.ForwardRefExoticComponent<Props & RefAttributes<Ref>>, Origin = {
+    Component: ReturnComponent;
 }> = {
     <Styles, Data extends Template.Data, EX extends FuncMap, FR extends {
         styles?: Styles;
@@ -48,7 +48,7 @@ declare type DefineComponent<Ref = NoRef, Props = {}, ReturnComponent = Ref exte
         template: <U extends Data>(args: {
             data?: U;
         } & FR, ...tmpls: Template.Func[]) => JSXElements;
-    }, extensions?: EX): ReturnComponent & FC & {
+    }, extensions?: EX): ReturnComponent & Origin & {
         template: (data?: Data) => JSXElements;
         styles?: Styles;
     } & ReturnTypeMap<EX>;
@@ -60,10 +60,10 @@ declare type DefineComponent<Ref = NoRef, Props = {}, ReturnComponent = Ref exte
          */
         style: () => Styles;
         Component: Ref extends NoRef ? (props: SFCProps<Props, FR>, context?: any) => JSXElements : (props: SFCProps<Props, FR>, ref?: React.Ref<Ref>) => JSXElements;
-    }, extensions?: EX): ReturnComponent & FC & {
+    }, extensions?: EX): ReturnComponent & Origin & {
         styles?: Styles;
     } & ReturnTypeMap<EX>;
-    <EX extends FuncMap, FR extends ReturnTypeMap<EX>>(component: Ref extends NoRef ? (props: SFCProps<Props, FR>, context?: any) => JSXElements : (props: SFCProps<Props, FR>, ref?: React.Ref<Ref>) => JSXElements, extensions?: EX): ReturnComponent & FC & ReturnTypeMap<EX>;
+    <EX extends FuncMap, FR extends ReturnTypeMap<EX>>(component: Ref extends NoRef ? (props: SFCProps<Props, FR>, context?: any) => JSXElements : (props: SFCProps<Props, FR>, ref?: React.Ref<Ref>) => JSXElements, extensions?: EX): ReturnComponent & Origin & ReturnTypeMap<EX>;
 };
 interface ForwardRefSFC extends DefineComponent {
     <Ref, Props = {}>(): DefineComponent<Ref, Props>;

@@ -7,7 +7,7 @@ import styled from '@emotion/styled';
 import sfc, { Template } from '../../src/index';
 
 const {
-  FC: App,
+  Component: App,
   constant: { LAST_NAME },
   utils
 } = sfc(

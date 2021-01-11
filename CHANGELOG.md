@@ -1,9 +1,9 @@
 # CHANGELOG
 
-## [v0.4.0] 2021.01.08
+## [v0.4.0] 2021.01.11
 
 - 🌟 Type optimization of internal implementation.
-- 💥 Change `SfcComponent#Origin` to `SfcComponent#FC`.
+- 💥 Change `SfcComponent#Origin` to `SfcComponent#Component`.
 
 ## [v0.3.4] 2021.01.05
 
