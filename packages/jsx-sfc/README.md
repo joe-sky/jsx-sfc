@@ -9,7 +9,7 @@
 </h1>
 
 <p align="center">
-  <img alt="jsx-sfc demo" src="https://raw.githubusercontent.com/joe-sky/jsx-sfc/master/public/images/sfc.gif" width="450" />
+  <img alt="jsx-sfc demo" src="https://github.com/joe-sky/jsx-sfc/blob/main/public/images/sfc.gif?raw=true" width="500" />
 </p>
 
 `jsx-sfc`(JSX Separate Functional Components) is a tiny library(about 1KB) for create React components with **separation of concerns** and **completely type safe**.
