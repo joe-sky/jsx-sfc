@@ -1,10 +1,15 @@
-# JSX Separate Functional Components
+<h1 align="center">
+  JSX Separate Functional Components
+  <div>
+    <!-- <a href="https://travis-ci.org/joe-sky/jsx-sfc"><img src="https://travis-ci.org/joe-sky/jsx-sfc.svg?branch=master" alt="Travis   CI   Status"></a>
+    <a href="https://codecov.io/gh/joe-sky/jsx-sfc"><img src="https://codecov.io/gh/joe-sky/jsx-sfc/branch/master/graph/badge.svg"     alt="Codecov"></a> -->
+    <a href="https://www.npmjs.org/package/jsx-sfc"><img src="https://img.shields.io/npm/v/jsx-sfc.svg" alt="NPM Version"></a> <a     href="https://www.npmjs.org/package/jsx-sfc"><img src="https://img.shields.io/npm/dm/jsx-sfc.svg" alt="NPM Downloads"></a> <a     href="https://bundlephobia.com/result?p=jsx-sfc"><img src="https://img.shields.io/bundlephobia/minzip/jsx-sfc.svg?style=flat"     alt="Minzipped Size"></a>
+    <a href="https://www.npmjs.com/package/jsx-sfc"><img src="https://img.shields.io/npm/l/jsx-sfc.svg" alt="License"></a>
+  </div>
+</h1>
 
-<p>
-  <!-- <a href="https://travis-ci.org/joe-sky/jsx-sfc"><img src="https://travis-ci.org/joe-sky/jsx-sfc.svg?branch=master" alt="Travis CI Status"></a>
-  <a href="https://codecov.io/gh/joe-sky/jsx-sfc"><img src="https://codecov.io/gh/joe-sky/jsx-sfc/branch/master/graph/badge.svg" alt="Codecov"></a> -->
-  <a href="https://www.npmjs.org/package/jsx-sfc"><img src="https://img.shields.io/npm/v/jsx-sfc.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/jsx-sfc"><img src="https://img.shields.io/npm/dm/jsx-sfc.svg" alt="NPM Downloads"></a> <a href="https://bundlephobia.com/result?p=jsx-sfc"><img src="https://img.shields.io/bundlephobia/minzip/jsx-sfc.svg?style=flat" alt="Minzipped Size"></a>
-  <a href="https://www.npmjs.com/package/jsx-sfc"><img src="https://img.shields.io/npm/l/jsx-sfc.svg" alt="License"></a>
+<p align="center">
+  <img alt="jsx-sfc demo" src="https://raw.githubusercontent.com/joe-sky/jsx-sfc/master/public/images/sfc.gif" width="450" />
 </p>
 
 `jsx-sfc`(JSX Separate Functional Components) is a tiny library(about 1KB) for create React components with **separation of concerns** and **completely type safe**.
@@ -30,11 +35,11 @@ So `jsx-sfc` has the following features:
 
 - 🌟 No need single file, still functional components
 - ✨ Clearly isolate **template**, **logic**, and **styles**
-- 💫 Fully type inference by TypeScript design
+- 💫 Fully type inference by TypeScript
 - 🔥 Support all React hooks
 - ⚡ Support React fast refresh
 - 🔧 Support React eslint plugins
-- 🚀 High performance and no side effects
+- 🚀 No dependencies and no side effects
 
 ## Features Introduction
 
@@ -49,7 +54,7 @@ import styled from '@emotion/styled';
 import sfc from 'jsx-sfc';
 
 const App = sfc({
-  template: ({ data, style: { Wrap, hl } }) => (
+  template: ({ data, styles: { Wrap, hl } }) => (
     <Wrap>
       <i className={hl}>{data.user}</i>
     </Wrap>
@@ -100,6 +105,16 @@ todo: compiler, component members can be tested individually
 
 ## Installation
 
+```bash
+npm install jsx-sfc babel-plugin-jsx-sfc
+```
+
+Using Vite:
+
+```bash
+npm install jsx-sfc vite-plugin-jsx-sfc
+```
+
 ## Usage
 
 ### sfc
@@ -114,7 +129,7 @@ todo: compiler, component members can be tested individually
 
 todo: ts limitation based
 
-## Projects using jsx-sfc
+## Who is using jsx-sfc
 
 todo: set some large code blocks
 
