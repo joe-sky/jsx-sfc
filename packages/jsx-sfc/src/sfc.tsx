@@ -3,7 +3,9 @@ import { SFC, ForwardRefSFC, FuncMap } from './defineComponent';
 import { Template, isTemplate } from './template';
 import { getFuncParams, emptyObjs, withOrigin, Func, Obj } from './utils';
 
-export function createFuncResults(funcMaps: FuncMap[], compiled?: boolean) {
+const COMPILED_SIGN = '__cs';
+
+export function createFuncResults(funcMaps: FuncMap[], isRuntime?: boolean) {
   const ret: Obj = {};
   let template: Func;
 
@@ -54,8 +56,8 @@ export function createFuncResults(funcMaps: FuncMap[], compiled?: boolean) {
         : (data?: Template.Data) => template({ data, ...ret });
   }
 
-  if (compiled) {
-    ret.__compiled = true;
+  if (!isRuntime) {
+    ret[COMPILED_SIGN] = true;
   }
 
   return ret;
@@ -69,7 +71,8 @@ interface SFCOptions {
 
 function createSfc(isForwardRef?: boolean) {
   function defineSfc(options: SFCOptions, extensions: Obj = {}) {
-    if (extensions.__compiled) {
+    if (extensions[COMPILED_SIGN]) {
+      delete extensions[COMPILED_SIGN];
       const Component = options as Func;
       const component = !isForwardRef ? Component : forwardRefReact(Component);
 
@@ -79,7 +82,7 @@ function createSfc(isForwardRef?: boolean) {
         options = { Component: options as Func };
       }
       const { template, style, Component } = options;
-      const funcResults = createFuncResults([{ template, style }, extensions]);
+      const funcResults = createFuncResults([{ template, style }, extensions], true);
 
       let SeparateFunctional: Func;
       if (!isForwardRef) {

@@ -194,7 +194,7 @@ export default () => ({
                         types.identifier(sfcFuncResultsName),
                         types.callExpression(
                           types.memberExpression(types.identifier(SFC_FUNC), types.identifier(SFC_CREATE_FUNC_RESULTS)),
-                          [types.arrayExpression(sfcArguments), types.numericLiteral(1)]
+                          [types.arrayExpression(sfcArguments)]
                         )
                       )
                     ])

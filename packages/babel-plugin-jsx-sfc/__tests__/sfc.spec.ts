@@ -106,19 +106,22 @@ const snapshot = `sfc(() => {
 
 describe('basic', function() {
   const compiledConst = transform(codeConst);
-  console.log(compiledConst);
+  //console.log(compiledConst);
+
   it('const', () => {
     expect(compiledConst).toContain(snapshotRedefineProps);
   });
 
   const compiledExportDefault = transform(codeExportDefault);
-  console.log(compiledExportDefault);
+  //console.log(compiledExportDefault);
+
   it('export default', () => {
     expect(compiledExportDefault).toContain(snapshotObjectPattern);
   });
 
   const compiledExportConst = transform(codeExportConst);
-  console.log(compiledExportConst);
+  //console.log(compiledExportConst);
+
   it('export const', () => {
     expect(compiledExportConst).toContain(snapshot);
   });

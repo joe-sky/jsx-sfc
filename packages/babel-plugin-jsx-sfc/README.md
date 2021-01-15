@@ -7,40 +7,31 @@ Babel plugin for compile and enhance the limitation of `jsx-sfc` runtime code.
 ```tsx
 const App = sfc(
   {
-    template({ data }) {
-      ...
-    },
-
-    Component: (props) => {
-      ...
-    },
-
+    template({ data }) { ... },
+    Component: (props) => { ... },
     style: () => { ... }
   },
   {
+    hooks: () => { ... },
     utils: () => { ... }
   }
 );
 
 ↓ ↓ ↓ ↓ ↓ ↓
 
-const $sfcFuncResults_lineNo = sfc.createFuncResults([
+const $sfcFuncResults_123 = sfc.createFuncResults([
   {
-    template({ data }) {
-      ...
-    },
-
-    style: () => ({
-      ...
-    })
+    template({ data }) { ... },
+    style: () => ({ ... })
   },
   {
+    hooks: () => { ... },
     utils: () => { ... }
   }
-], 1);
+]);
 
 const App = sfc((props) => {
   ...
-  return $sfcFuncResults_lineNo.template({ ... });
-}, $sfcFuncResults_lineNo);
+  return $sfcFuncResults_123.template({ ... });
+}, $sfcFuncResults_123);
 ```

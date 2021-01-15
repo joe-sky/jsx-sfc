@@ -74,7 +74,7 @@ interface SFC extends DefineComponent {
     createFuncResults?: (funcMaps: FuncMap[], compiled?: boolean) => Obj;
 }
 
-declare function createFuncResults(funcMaps: FuncMap[], compiled?: boolean): Record<string, any>;
+declare function createFuncResults(funcMaps: FuncMap[], isRuntime?: boolean): Record<string, any>;
 declare const sfc: SFC;
 declare const forwardRef: ForwardRefSFC;
 

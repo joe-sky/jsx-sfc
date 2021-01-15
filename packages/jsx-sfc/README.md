@@ -12,7 +12,7 @@
   <img alt="jsx-sfc demo" src="https://github.com/joe-sky/jsx-sfc/blob/main/public/images/sfc.gif?raw=true" width="500" />
 </p>
 
-`jsx-sfc`(JSX Separate Functional Components) is a tiny library(about 1KB) for create React components with **separation of concerns** and **completely type safe**.
+`jsx-sfc`(JSX Separate Functional Components) is a tiny tool(~1kb) for create React components with **separation of concerns** and **completely type inference**.
 
 ## Inspiration
 
@@ -39,7 +39,7 @@ So `jsx-sfc` has the following features:
 - 🔥 Support all React hooks
 - ⚡ Support React fast refresh
 - 🔧 Support React eslint plugins
-- 🚀 No dependencies and no side effects
+- 🚀 No dependencies and side effects
 
 ## Features Introduction
 
