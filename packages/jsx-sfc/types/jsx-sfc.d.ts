@@ -5,6 +5,9 @@
  */
 import React, { ReactNode, ReactElement, PropsWithChildren, RefAttributes } from 'react';
 
+declare type Func = (...args: any) => any;
+declare type Obj = Record<string, unknown>;
+
 declare const templateFc: {
     (): void;
     __type: number;
@@ -19,11 +22,8 @@ declare namespace Template {
         template: (arg1?: Arg1, arg2?: Arg2, arg3?: Arg3, arg4?: Arg4, arg5?: Arg5, ...args: unknown[]) => ReactNode;
     }
     type FC = typeof templateFc;
-    type Data = Record<string, unknown>;
+    type Data = Obj;
 }
-
-declare type Func = (...args: any) => any;
-declare type Obj = Record<string, any>;
 
 declare type NoRef = 'noRef';
 declare type JSXElements = ReactElement<any, any> | null;
@@ -34,7 +34,7 @@ declare type FuncMap = Record<string, Func>;
 declare type DefineComponent<Ref = NoRef, Props = {}, ReturnComponent = Ref extends NoRef ? React.FC<Props> : React.ForwardRefExoticComponent<Props & RefAttributes<Ref>>, Origin = {
     Component: ReturnComponent;
 }> = {
-    <Styles, Data extends Template.Data, EX extends Obj, FR extends {
+    <Data extends Template.Data, Styles extends Obj, EX extends Obj, FR extends {
         styles?: Styles;
     } & EX>(options: {
         /**
@@ -49,7 +49,7 @@ declare type DefineComponent<Ref = NoRef, Props = {}, ReturnComponent = Ref exte
         template: (data?: Data) => JSXElements;
         styles?: Styles;
     } & EX;
-    <Styles, EX extends Obj, FR extends {
+    <Styles extends Obj, EX extends Obj, FR extends {
         styles?: Styles;
     } & EX>(options: {
         /**
@@ -77,7 +77,7 @@ interface SFCOptions {
 }
 declare type SFCExtensions = Obj;
 
-declare function createFuncResults(options: FuncMap, extensions?: Func, isRuntime?: boolean): Record<string, any>;
+declare function createFuncResults(options: FuncMap, extensions?: Func, isRuntime?: boolean): Record<string, unknown>;
 declare const sfc: SFC;
 declare const forwardRef: ForwardRefSFC;
 

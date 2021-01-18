@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { Obj } from './utils';
 
 const __TEMPLATE__ = 0x5fc;
 
@@ -21,5 +22,5 @@ export namespace Template {
 
   export type FC = typeof templateFc;
 
-  export type Data = Record<string, unknown>;
+  export type Data = Obj;
 }

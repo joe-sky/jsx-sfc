@@ -1,6 +1,6 @@
 export type Func = (...args: any) => any;
 
-export type Obj = Record<string, any>;
+export type Obj = Record<string, unknown>;
 
 export function emptyObjs(length: number) {
   return Object.keys(Array.apply(null, { length })).map(() => ({}));

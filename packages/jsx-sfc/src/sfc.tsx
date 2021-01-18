@@ -73,7 +73,7 @@ function createSfc(isForwardRef?: boolean) {
         options = { Component: options as Func };
       }
       const { template, style, Component } = options;
-      const funcResults = createFuncResults({ template, style }, extensions as Func, true);
+      const funcResults = createFuncResults({ template, style }, (extensions as any) as Func, true);
 
       let SeparateFunctional: Func;
       if (!isForwardRef) {

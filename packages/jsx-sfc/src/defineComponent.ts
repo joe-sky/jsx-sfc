@@ -18,7 +18,7 @@ export type DefineComponent<
   ReturnComponent = Ref extends NoRef ? React.FC<Props> : React.ForwardRefExoticComponent<Props & RefAttributes<Ref>>,
   Origin = { Component: ReturnComponent }
 > = {
-  <Styles, Data extends Template.Data, EX extends Obj, FR extends { styles?: Styles } & EX>(
+  <Data extends Template.Data, Styles extends Obj, EX extends Obj, FR extends { styles?: Styles } & EX>(
     options: {
       /**
        * Using the style function to define styles, you can use the most popular `CSS in JS` frameworks. (e.g. `styled-components`, `emotion`, `JSS`)
@@ -32,7 +32,7 @@ export type DefineComponent<
     extensions?: () => EX
   ): ReturnComponent & Origin & { template: (data?: Data) => JSXElements; styles?: Styles } & EX;
 
-  <Styles, EX extends Obj, FR extends { styles?: Styles } & EX>(
+  <Styles extends Obj, EX extends Obj, FR extends { styles?: Styles } & EX>(
     options: {
       /**
        * Using the style function to define styles, you can use the most popular `CSS in JS` frameworks. (e.g. `styled-components`, `emotion`, `JSS`)
