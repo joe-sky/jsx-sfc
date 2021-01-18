@@ -8,19 +8,18 @@ import sfc, { Template } from '../src/index';
 
 const {
   Component: App,
-  constant: { LAST_NAME },
   utils: { connectName },
-  styles: { Container }
+  styles: { Container, hl }
 } = sfc(
   {
-    template: ({ data }) => (
+    template: ({ data, utils: { connectName } }) => (
       <Container>
-        <div>{connectName(data.firstName, LAST_NAME)}</div>
+        <div>{connectName(data.firstName, data.LAST_NAME)}</div>
       </Container>
     ),
 
-    Component: () => {
-      return { firstName: 'joe' };
+    Component: ({ constant: { LAST_NAME } }) => {
+      return { firstName: 'joe', LAST_NAME };
     },
 
     style: () => ({
@@ -32,15 +31,15 @@ const {
       `
     })
   },
-  {
-    constant: () => ({
+  () => ({
+    constant: {
       LAST_NAME: 'sky'
-    }),
+    },
 
-    utils: () => ({
+    utils: {
       connectName: (firstName: string, lastName: string) => `${firstName}_${lastName}`
-    })
-  }
+    }
+  })
 );
 
 describe('component basic', function() {
@@ -57,8 +56,8 @@ describe('component basic', function() {
 
 const WithHooks = sfc(
   {
-    template: ({ data }) => (
-      <Container>
+    template: ({ data, styles }) => (
+      <Container css={styles.hl}>
         <i>{data.count}</i>
         <button className="add" onClick={data.onClickAdd}>
           Add
@@ -69,7 +68,7 @@ const WithHooks = sfc(
       </Container>
     ),
 
-    Component: ({ localState: { useCount } }) => {
+    Component: ({ useCount }) => {
       const { count, increase, reset } = useCount(0);
 
       return {
@@ -83,27 +82,29 @@ const WithHooks = sfc(
       };
     }
   },
-  {
-    localState: () => ({
-      useCount: (initial: number) => {
-        const [count, setCount] = useState(initial);
+  () => ({
+    useCount: (initial: number) => {
+      const [count, setCount] = useState(initial);
 
-        useEffect(() => {
+      useEffect(() => {
+        setCount(count + 1);
+      }, []);
+
+      return {
+        count,
+        increase() {
           setCount(count + 1);
-        }, []);
+        },
+        reset() {
+          setCount(initial);
+        }
+      };
+    },
 
-        return {
-          count,
-          increase() {
-            setCount(count + 1);
-          },
-          reset() {
-            setCount(initial);
-          }
-        };
-      }
-    })
-  }
+    styles: {
+      hl
+    }
+  })
 );
 
 describe('with custom hooks', function() {

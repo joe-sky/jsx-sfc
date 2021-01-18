@@ -28,14 +28,14 @@ export default () => ({
           
               style: () => { ... }
             },
-            {
-              utils: () => { ... }
-            }
+            () => ({
+              utils: { ... }
+            })
           );
 
           ↓ ↓ ↓ ↓ ↓ ↓
 
-          const $sfcFuncResults_lineNo = sfc.createFuncResults([
+          const $sfcFuncResults_lineNo = sfc.createFuncResults(
             {
               template({ data }) {
                 ...
@@ -45,10 +45,10 @@ export default () => ({
                 ...
               })
             },
-            {
-              utils: () => { ... }
-            }
-          ], 1);
+            () => ({
+              utils: { ... }
+            })
+          );
 
           const App = sfc((props) => {
             ...
@@ -183,22 +183,21 @@ export default () => ({
                 sfcArguments[0].properties.splice(indexInProps, 1);
 
                 // const $sfcFuncResults_lineNo = ...
-                path
-                  .findParent(
-                    path =>
-                      path.isVariableDeclaration() || path.isExportDefaultDeclaration() || path.isExportDeclaration()
-                  )
-                  .insertBefore(
-                    types.variableDeclaration('const', [
-                      types.variableDeclarator(
-                        types.identifier(sfcFuncResultsName),
-                        types.callExpression(
-                          types.memberExpression(types.identifier(SFC_FUNC), types.identifier(SFC_CREATE_FUNC_RESULTS)),
-                          [types.arrayExpression(sfcArguments)]
-                        )
+                const componentVariable = path.findParent(
+                  path =>
+                    path.isVariableDeclaration() || path.isExportDefaultDeclaration() || path.isExportDeclaration()
+                );
+                const sfcFuncResultsPath = componentVariable.insertBefore(
+                  types.variableDeclaration('const', [
+                    types.variableDeclarator(
+                      types.identifier(sfcFuncResultsName),
+                      types.callExpression(
+                        types.memberExpression(types.identifier(SFC_FUNC), types.identifier(SFC_CREATE_FUNC_RESULTS)),
+                        sfcArguments
                       )
-                    ])
-                  );
+                    )
+                  ])
+                );
 
                 path.replaceWith(
                   types.callExpression(
@@ -210,6 +209,7 @@ export default () => ({
                 );
 
                 // console.log(generate(path.node).code);
+                // console.log(generate(sfcFuncResultsPath[0].node).code);
               }
             }
           }

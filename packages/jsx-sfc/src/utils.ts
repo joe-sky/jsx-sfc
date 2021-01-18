@@ -28,7 +28,7 @@ export function getFuncParams(func: Func) {
 
 export function withOrigin(component: Func) {
   return Object.defineProperty(component, 'Component', {
-    get: function() {
+    get() {
       return component;
     },
     enumerable: true,

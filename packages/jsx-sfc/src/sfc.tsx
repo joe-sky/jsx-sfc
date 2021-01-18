@@ -1,28 +1,25 @@
 import React, { forwardRef as forwardRefReact, Fragment, ReactElement } from 'react';
-import { SFC, ForwardRefSFC, FuncMap } from './defineComponent';
+import { SFC, ForwardRefSFC, FuncMap, SFCOptions, SFCExtensions } from './defineComponent';
 import { Template, isTemplate } from './template';
 import { getFuncParams, emptyObjs, withOrigin, Func, Obj } from './utils';
 
 const COMPILED_SIGN = '__cs';
 
-export function createFuncResults(funcMaps: FuncMap[], isRuntime?: boolean) {
+export function createFuncResults(options: FuncMap, extensions?: Func, isRuntime?: boolean) {
   const ret: Obj = {};
   let template: Func;
 
-  funcMaps.forEach(funcMap => {
-    Object.keys(funcMap).forEach(key => {
-      const func = funcMap[key];
-      if (func == null) {
-        return;
-      }
-
-      if (key === 'template') {
-        template = func;
-      } else {
-        ret[key === 'style' ? 'styles' : key] = func();
-      }
-    });
+  Object.keys(options).forEach(key => {
+    const func = options[key];
+    if (key === 'template') {
+      template = func;
+    } else {
+      ret[key === 'style' ? 'styles' : key] = func?.();
+    }
   });
+
+  const ex = extensions?.();
+  ex && Object.assign(ret, ex);
 
   if (template) {
     const paramsCount = getFuncParams(template).length;
@@ -63,15 +60,9 @@ export function createFuncResults(funcMaps: FuncMap[], isRuntime?: boolean) {
   return ret;
 }
 
-interface SFCOptions {
-  template?: Func;
-  Component?: Func;
-  style?: Func;
-}
-
 function createSfc(isForwardRef?: boolean) {
-  function defineSfc(options: SFCOptions, extensions: Obj = {}) {
-    if (extensions[COMPILED_SIGN]) {
+  function defineSfc(options: SFCOptions, extensions?: SFCExtensions) {
+    if (extensions?.[COMPILED_SIGN]) {
       delete extensions[COMPILED_SIGN];
       const Component = options as Func;
       const component = !isForwardRef ? Component : forwardRefReact(Component);
@@ -82,7 +73,7 @@ function createSfc(isForwardRef?: boolean) {
         options = { Component: options as Func };
       }
       const { template, style, Component } = options;
-      const funcResults = createFuncResults([{ template, style }, extensions], true);
+      const funcResults = createFuncResults({ template, style }, extensions as Func, true);
 
       let SeparateFunctional: Func;
       if (!isForwardRef) {

@@ -31,15 +31,15 @@ const {
       `
     })
   },
-  {
-    constant: () => ({
+  () => ({
+    constant: {
       LAST_NAME: 'sky'
-    }),
+    },
 
-    utils: () => ({
+    utils: {
       connectName: (firstName: string, lastName: string) => `${firstName}_${lastName}`
-    })
-  }
+    }
+  })
 );
 
 describe('component basic', function() {
@@ -67,15 +67,15 @@ const App2 = sfc(
       </section>
     );
   },
-  {
-    constant: () => ({
+  () => ({
+    constant: {
       LAST_NAME: 'sky'
-    }),
+    },
 
-    utils: () => ({
+    utils: {
       connectName: (firstName: string, lastName: string) => `${firstName}_${lastName}`
-    })
-  }
+    }
+  })
 );
 
 describe('component function only', function() {

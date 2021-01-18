@@ -1,9 +1,10 @@
 # CHANGELOG
 
-## [v0.4.0] 2021.01.11
+## [v0.4.0] 2021.01.18
 
 - 🌟 Type optimization of internal implementation.
 - 💥 Change `SfcComponent#Origin` to `SfcComponent#Component`.
+- 💥 Change the second parameter of `sfc` to a function which can be return any extension members.
 
 ## [v0.3.4] 2021.01.05
 

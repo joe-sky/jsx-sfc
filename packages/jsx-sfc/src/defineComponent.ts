@@ -12,17 +12,13 @@ export type SFCProps<Props = {}, EX = {}> = PropsWithChildren<Props> & {
 
 export type FuncMap = Record<string, Func>;
 
-type ReturnTypeMap<T extends FuncMap> = {
-  [P in keyof T]: ReturnType<T[P]>;
-};
-
 export type DefineComponent<
   Ref = NoRef,
   Props = {},
   ReturnComponent = Ref extends NoRef ? React.FC<Props> : React.ForwardRefExoticComponent<Props & RefAttributes<Ref>>,
   Origin = { Component: ReturnComponent }
 > = {
-  <Styles, Data extends Template.Data, EX extends FuncMap, FR extends { styles?: Styles } & ReturnTypeMap<EX>>(
+  <Styles, Data extends Template.Data, EX extends Obj, FR extends { styles?: Styles } & EX>(
     options: {
       /**
        * Using the style function to define styles, you can use the most popular `CSS in JS` frameworks. (e.g. `styled-components`, `emotion`, `JSS`)
@@ -33,10 +29,10 @@ export type DefineComponent<
         : (props: SFCProps<Props, FR>, ref?: React.Ref<Ref>) => Data;
       template: <U extends Data>(args: { data?: U } & FR, ...tmpls: Template.Func[]) => JSXElements;
     },
-    extensions?: EX
-  ): ReturnComponent & Origin & { template: (data?: Data) => JSXElements; styles?: Styles } & ReturnTypeMap<EX>;
+    extensions?: () => EX
+  ): ReturnComponent & Origin & { template: (data?: Data) => JSXElements; styles?: Styles } & EX;
 
-  <Styles, EX extends FuncMap, FR extends { styles?: Styles } & ReturnTypeMap<EX>>(
+  <Styles, EX extends Obj, FR extends { styles?: Styles } & EX>(
     options: {
       /**
        * Using the style function to define styles, you can use the most popular `CSS in JS` frameworks. (e.g. `styled-components`, `emotion`, `JSS`)
@@ -46,15 +42,15 @@ export type DefineComponent<
         ? (props: SFCProps<Props, FR>, context?: any) => JSXElements
         : (props: SFCProps<Props, FR>, ref?: React.Ref<Ref>) => JSXElements;
     },
-    extensions?: EX
-  ): ReturnComponent & Origin & { styles?: Styles } & ReturnTypeMap<EX>;
+    extensions?: () => EX
+  ): ReturnComponent & Origin & { styles?: Styles } & EX;
 
-  <EX extends FuncMap, FR extends ReturnTypeMap<EX>>(
+  <EX extends Obj>(
     component: Ref extends NoRef
-      ? (props: SFCProps<Props, FR>, context?: any) => JSXElements
-      : (props: SFCProps<Props, FR>, ref?: React.Ref<Ref>) => JSXElements,
-    extensions?: EX
-  ): ReturnComponent & Origin & ReturnTypeMap<EX>;
+      ? (props: SFCProps<Props, EX>, context?: any) => JSXElements
+      : (props: SFCProps<Props, EX>, ref?: React.Ref<Ref>) => JSXElements,
+    extensions?: () => EX
+  ): ReturnComponent & Origin & EX;
 };
 
 export interface ForwardRefSFC extends DefineComponent {
@@ -64,5 +60,13 @@ export interface ForwardRefSFC extends DefineComponent {
 export interface SFC extends DefineComponent {
   <Props = {}>(): DefineComponent<NoRef, Props>;
   forwardRef?: ForwardRefSFC;
-  createFuncResults?: (funcMaps: FuncMap[], compiled?: boolean) => Obj;
+  createFuncResults?: (options: FuncMap, extensions?: Func, isRuntime?: boolean) => Obj;
 }
+
+export interface SFCOptions {
+  template?: Func;
+  Component?: Func;
+  style?: Func;
+}
+
+export type SFCExtensions = Obj;
