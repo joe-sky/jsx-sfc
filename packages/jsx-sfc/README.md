@@ -1,5 +1,5 @@
 <h1 align="center">
-  JSX Separate Functional Components
+  JSX Separate Function Components
   <div>
     <!-- <a href="https://travis-ci.org/joe-sky/jsx-sfc"><img src="https://travis-ci.org/joe-sky/jsx-sfc.svg?branch=master" alt="Travis   CI   Status"></a>
     <a href="https://codecov.io/gh/joe-sky/jsx-sfc"><img src="https://codecov.io/gh/joe-sky/jsx-sfc/branch/master/graph/badge.svg"     alt="Codecov"></a> -->
@@ -12,13 +12,13 @@
   <img alt="jsx-sfc demo" src="https://github.com/joe-sky/jsx-sfc/blob/main/public/images/sfc.gif?raw=true" width="500" />
 </p>
 
-`jsx-sfc`(JSX Separate Functional Components) is a tiny tool(~1kb) for create React functional components with **separation of concerns** and **completely type inference**.
+`jsx-sfc`(JSX Separate Function Components) is a tiny tool(~1kb) for create React function components with **separation of concerns** and **completely type inference**.
 
 [Live demo is here.]()
 
 ## Features
 
-- 🌟 Easy to write **separation of concerns** functional components
+- 🌟 Easy to write **separation of concerns** function components
 - ✨ Clearly isolate **template**, **logic**, and **styles**
 - 💫 Fully type inference by TypeScript
 - 🔥 Support all React hooks
@@ -45,12 +45,40 @@ However, the separation of concerns idea is very rare in the JSX(React) environm
 - [one-loader](https://github.com/digitalie/one-loader)
 - [react-sfc-swyx](https://github.com/react-sfc/react-sfc-swyx)
 
-But the idea of `jsx-sfc` is quite different from the above implementations, basic overview:
+But the idea of `jsx-sfc` is quite different from the above implementations. A simple demo, when we write a function component module like this:
 
 ```tsx
 import React, { useState, useEffect } from 'react';
 import { css } from 'emotion';
 import styled from '@emotion/styled';
+
+const App = props => {
+  const [user, setUser] = useState(props.user);
+
+  useEffect(() => {
+    setUser('joe-sky');
+  }, []);
+
+  return (
+    <Wrap>
+      <i
+        className={css`
+          width: 50px;
+        `}>
+        {user}
+      </i>
+    </Wrap>
+  );
+};
+
+const Wrap = styled.section`
+  color: #fff;
+`;
+```
+
+Now, we can use `jsx-sfc` to rewrite it:
+
+```tsx
 import sfc from 'jsx-sfc';
 
 const App = sfc({
@@ -123,6 +151,10 @@ todo: with generics
 ## Why designed like this
 
 todo: ts limitation based
+
+## FAQ
+
+todo: defferent from class component
 
 ## Who is using jsx-sfc
 
