@@ -1,7 +1,7 @@
 import React, { forwardRef as forwardRefReact, Fragment, ReactElement } from 'react';
-import { SFC, ForwardRefSFC, FuncMap, SFCOptions, SFCExtensions } from './defineComponent';
+import { SFC, ForwardRefSFC, SFCOptions, SFCExtensions } from './defineComponent';
 import { Template, isTemplate } from './template';
-import { getFuncParams, emptyObjs, withOrigin, Func, Obj } from './utils';
+import { getFuncParams, emptyObjs, withOrigin, Func, Obj, FuncMap } from './utils';
 
 const COMPILED_SIGN = '__cs';
 

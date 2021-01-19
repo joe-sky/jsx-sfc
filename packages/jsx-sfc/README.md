@@ -12,7 +12,27 @@
   <img alt="jsx-sfc demo" src="https://github.com/joe-sky/jsx-sfc/blob/main/public/images/sfc.gif?raw=true" width="500" />
 </p>
 
-`jsx-sfc`(JSX Separate Functional Components) is a tiny tool(~1kb) for create React components with **separation of concerns** and **completely type inference**.
+`jsx-sfc`(JSX Separate Functional Components) is a tiny tool(~1kb) for create React functional components with **separation of concerns** and **completely type inference**.
+
+[Live demo is here.]()
+
+## Features
+
+- 🌟 Easy to write **separation of concerns** functional components
+- ✨ Clearly isolate **template**, **logic**, and **styles**
+- 💫 Fully type inference by TypeScript
+- 🔥 Support all React hooks
+- ⚡ Support React fast refresh
+- 🔧 Support React eslint plugins
+- 🚀 No dependencies and side effects
+
+## Packages
+
+| Package                                                                                              | Badges                                                                                                                                                                                                                                                                                                                                                                                                              |
+| ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/master/packages/jsx-sfc)                           | <a href="https://www.npmjs.org/package/jsx-sfc"><img src="https://img.shields.io/npm/v/jsx-sfc.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/jsx-sfc"><img src="https://img.shields.io/npm/dm/jsx-sfc.svg" alt="NPM Downloads"></a> <a href="https://bundlephobia.com/result?p=jsx-sfc"><img src="https://img.shields.io/bundlephobia/minzip/jsx-sfc.svg?style=flat" alt="Minzipped Size"></a> |
+| [babel-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/master/packages/babel-plugin-jsx-sfc) | <a href="https://www.npmjs.org/package/babel-plugin-jsx-sfc"><img src="https://img.shields.io/npm/v/babel-plugin-jsx-sfc.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/babel-plugin-jsx-sfc"><img src="https://img.shields.io/npm/dm/babel-plugin-jsx-sfc.svg" alt="NPM Downloads"></a>                                                                                                        |
+| [vite-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/master/packages/vite-plugin-jsx-sfc)   | <a href="https://www.npmjs.org/package/vite-plugin-jsx-sfc"><img src="https://img.shields.io/npm/v/vite-plugin-jsx-sfc.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/vite-plugin-jsx-sfc"><img src="https://img.shields.io/npm/dm/vite-plugin-jsx-sfc.svg" alt="NPM Downloads"></a>                                                                                                            |
 
 ## Inspiration
 
@@ -25,32 +45,7 @@ However, the separation of concerns idea is very rare in the JSX(React) environm
 - [one-loader](https://github.com/digitalie/one-loader)
 - [react-sfc-swyx](https://github.com/react-sfc/react-sfc-swyx)
 
-But the idea of `jsx-sfc` is quite different from the above implementations:
-
-- Not single file, just separate js functions
-- Extracting separate template function
-- Extending any separate members(styles, stores, qraphqls, etc.)
-- Completely type inference by ts
-
-<!-- tips: What features are needed to adapt to JSX environment -->
-
-Although `jsx-sfc` is similar to Vue SFCs in the form of separation of concerns, but it was originally designed to adapt the JSX(TSX) environment!
-
-So `jsx-sfc` has the following features:
-
-- 🌟 No need single file, still functional components
-- ✨ Clearly isolate **template**, **logic**, and **styles**
-- 💫 Fully type inference by TypeScript
-- 🔥 Support all React hooks
-- ⚡ Support React fast refresh
-- 🔧 Support React eslint plugins
-- 🚀 No dependencies and side effects
-
-## Features Introduction
-
-### Basic Overview
-
-[The live demo is here.]()
+But the idea of `jsx-sfc` is quite different from the above implementations, basic overview:
 
 ```tsx
 import React, { useState, useEffect } from 'react';
@@ -86,49 +81,44 @@ const App = sfc({
 });
 ```
 
-### Strong Type template
+See the demo, the main design ideas of `jsx-sfc`:
 
-### Optional CSS in JS styles
+- Not single file, just separate functions.
+- Extracting a separate template function.
+- CSS in JS can be used in a separate style function.
+- Extending any separate members(stores, graphqls, etc.).
+- Exporting all separate members for reusing and testing.
+- All of above support completely type inference.
 
-todo: styled-components, emotion, jss example
+<!-- tips: What features are needed to adapt to JSX environment -->
 
-### More Cohesive components
+So `jsx-sfc` is similar to Vue SFCs in the form of separation of concerns, but it was originally designed to adapt the JSX(TSX) environment!
 
-todo: custom hooks, utils, gql example
+## Getting Started
 
-### Why no side effects
-
-todo: compiler, component members can be tested individually
-
-## Packages
-
-| Package                                                                                              | Badges                                                                                                                                                                                                                                                                                                                                                                                                              |
-| ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/master/packages/jsx-sfc)                           | <a href="https://www.npmjs.org/package/jsx-sfc"><img src="https://img.shields.io/npm/v/jsx-sfc.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/jsx-sfc"><img src="https://img.shields.io/npm/dm/jsx-sfc.svg" alt="NPM Downloads"></a> <a href="https://bundlephobia.com/result?p=jsx-sfc"><img src="https://img.shields.io/bundlephobia/minzip/jsx-sfc.svg?style=flat" alt="Minzipped Size"></a> |
-| [babel-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/master/packages/babel-plugin-jsx-sfc) | <a href="https://www.npmjs.org/package/babel-plugin-jsx-sfc"><img src="https://img.shields.io/npm/v/babel-plugin-jsx-sfc.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/babel-plugin-jsx-sfc"><img src="https://img.shields.io/npm/dm/babel-plugin-jsx-sfc.svg" alt="NPM Downloads"></a>                                                                                                        |
-| [vite-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/master/packages/vite-plugin-jsx-sfc)   | <a href="https://www.npmjs.org/package/vite-plugin-jsx-sfc"><img src="https://img.shields.io/npm/v/vite-plugin-jsx-sfc.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/vite-plugin-jsx-sfc"><img src="https://img.shields.io/npm/dm/vite-plugin-jsx-sfc.svg" alt="NPM Downloads"></a>                                                                                                            |
-
-## Installation
+### Installation
 
 ```bash
 npm install jsx-sfc babel-plugin-jsx-sfc
 ```
 
-Using Vite:
+Using in Vite:
 
 ```bash
 npm install jsx-sfc vite-plugin-jsx-sfc
 ```
 
-## Usage
+### Usage
 
-### sfc
+## APIs
 
-### sfc with generics
+### `sfc`
 
-### sfc.forwardRef
+todo: with generics
 
-### Export component members
+### `sfc.forwardRef`
+
+### Export separate members
 
 ## Why designed like this
 
@@ -147,3 +137,19 @@ todo: strictNullChecks
 ## License
 
 MIT
+
+<!-- ## Introduction of separate members
+
+### Strong Type template
+
+### Optional CSS in JS styles
+
+todo: styled-components, emotion, jss example
+
+### More Cohesive components
+
+todo: custom hooks, utils, gql example
+
+### Why no side effects
+
+todo: compiler, component members can be tested individually -->

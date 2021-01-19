@@ -1,6 +1,6 @@
 import React, { PropsWithChildren, RefAttributes, ReactElement } from 'react';
 import { Template } from './template';
-import { Func, Obj } from './utils';
+import { Func, Obj, FuncMap } from './utils';
 
 type NoRef = 'noRef';
 
@@ -9,8 +9,6 @@ export type JSXElements = ReactElement<any, any> | null;
 export type SFCProps<Props = {}, EX = {}> = PropsWithChildren<Props> & {
   template: <Data extends Template.Data>(data?: Data) => Data;
 } & EX;
-
-export type FuncMap = Record<string, Func>;
 
 export type DefineComponent<
   Ref = NoRef,

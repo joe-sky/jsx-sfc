@@ -7,6 +7,7 @@ import React, { ReactNode, ReactElement, PropsWithChildren, RefAttributes } from
 
 declare type Func = (...args: any) => any;
 declare type Obj = Record<string, unknown>;
+declare type FuncMap = Record<string, Func>;
 
 declare const templateFc: {
     (): void;
@@ -30,7 +31,6 @@ declare type JSXElements = ReactElement<any, any> | null;
 declare type SFCProps<Props = {}, EX = {}> = PropsWithChildren<Props> & {
     template: <Data extends Template.Data>(data?: Data) => Data;
 } & EX;
-declare type FuncMap = Record<string, Func>;
 declare type DefineComponent<Ref = NoRef, Props = {}, ReturnComponent = Ref extends NoRef ? React.FC<Props> : React.ForwardRefExoticComponent<Props & RefAttributes<Ref>>, Origin = {
     Component: ReturnComponent;
 }> = {
@@ -82,4 +82,4 @@ declare const sfc: SFC;
 declare const forwardRef: ForwardRefSFC;
 
 export default sfc;
-export { DefineComponent, ForwardRefSFC, FuncMap, JSXElements, SFC, SFCExtensions, SFCOptions, SFCProps, Template, createFuncResults, forwardRef, isTemplate };
+export { DefineComponent, ForwardRefSFC, JSXElements, SFC, SFCExtensions, SFCOptions, SFCProps, Template, createFuncResults, forwardRef, isTemplate };
