@@ -22,7 +22,7 @@ const {
       return props.template({ firstName: 'joe' });
     },
 
-    style: () => ({
+    styles: () => ({
       Container: styled.section`
         color: #fff;
       `,

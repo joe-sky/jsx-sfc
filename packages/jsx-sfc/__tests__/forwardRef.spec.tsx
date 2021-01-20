@@ -31,7 +31,7 @@ const App = sfc.forwardRef<AppRef, AppProps>()({
     return { a: test };
   },
 
-  style: () => ({
+  styles: () => ({
     Container: styled.section`
       color: #fff;
     `,
@@ -58,7 +58,7 @@ const AppNoGeneric = sfc.forwardRef({
     return template();
   },
 
-  style: () => ({
+  styles: () => ({
     Container: styled.section`
       color: #fff;
     `,

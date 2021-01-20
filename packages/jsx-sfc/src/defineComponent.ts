@@ -10,45 +10,60 @@ export type SFCProps<Props = {}, EX = {}> = PropsWithChildren<Props> & {
   template: <Data extends Template.Data>(data?: Data) => Data;
 } & EX;
 
+type ExtractOptions<T> = T extends () => infer R ? R : T extends Obj ? T : {};
+
 export type DefineComponent<
   Ref = NoRef,
   Props = {},
   ReturnComponent = Ref extends NoRef ? React.FC<Props> : React.ForwardRefExoticComponent<Props & RefAttributes<Ref>>,
   Origin = { Component: ReturnComponent }
 > = {
-  <Data extends Template.Data, Styles extends Obj, EX extends Obj, FR extends { styles?: Styles } & EX>(
+  <
+    Data extends Template.Data,
+    Styles,
+    InferStyles extends ExtractOptions<Styles>,
+    EX,
+    InferEX extends ExtractOptions<EX>,
+    FR extends { styles?: InferStyles } & InferEX
+  >(
     options: {
       /**
-       * Using the style function to define styles, you can use the most popular `CSS in JS` frameworks. (e.g. `styled-components`, `emotion`, `JSS`)
+       * Using the styles property or function to define styles, you can use the most popular `CSS in JS` frameworks. (e.g. `styled-components`, `emotion`, `JSS`)
        */
-      style?: () => Styles;
+      styles?: Styles;
       Component: Ref extends NoRef
         ? (props: SFCProps<Props, FR>, context?: any) => Data
         : (props: SFCProps<Props, FR>, ref?: React.Ref<Ref>) => Data;
       template: <U extends Data>(args: { data?: U } & FR, ...tmpls: Template.Func[]) => JSXElements;
     },
-    extensions?: () => EX
-  ): ReturnComponent & Origin & { template: (data?: Data) => JSXElements; styles?: Styles } & EX;
+    extensions?: EX
+  ): ReturnComponent & Origin & { template: (data?: Data) => JSXElements; styles?: InferStyles } & InferEX;
 
-  <Styles extends Obj, EX extends Obj, FR extends { styles?: Styles } & EX>(
+  <
+    Styles,
+    InferStyles extends ExtractOptions<Styles>,
+    EX,
+    InferEX extends ExtractOptions<EX>,
+    FR extends { styles?: InferStyles } & InferEX
+  >(
     options: {
       /**
-       * Using the style function to define styles, you can use the most popular `CSS in JS` frameworks. (e.g. `styled-components`, `emotion`, `JSS`)
+       * Using the styles property or function to define styles, you can use the most popular `CSS in JS` frameworks. (e.g. `styled-components`, `emotion`, `JSS`)
        */
-      style: () => Styles;
+      styles: Styles;
       Component: Ref extends NoRef
         ? (props: SFCProps<Props, FR>, context?: any) => JSXElements
         : (props: SFCProps<Props, FR>, ref?: React.Ref<Ref>) => JSXElements;
     },
-    extensions?: () => EX
-  ): ReturnComponent & Origin & { styles?: Styles } & EX;
+    extensions?: EX
+  ): ReturnComponent & Origin & { styles?: InferStyles } & InferEX;
 
-  <EX extends Obj>(
+  <EX, InferEX extends ExtractOptions<EX>>(
     component: Ref extends NoRef
-      ? (props: SFCProps<Props, EX>, context?: any) => JSXElements
-      : (props: SFCProps<Props, EX>, ref?: React.Ref<Ref>) => JSXElements,
-    extensions?: () => EX
-  ): ReturnComponent & Origin & EX;
+      ? (props: SFCProps<Props, InferEX>, context?: any) => JSXElements
+      : (props: SFCProps<Props, InferEX>, ref?: React.Ref<Ref>) => JSXElements,
+    extensions?: EX
+  ): ReturnComponent & Origin & InferEX;
 };
 
 export interface ForwardRefSFC extends DefineComponent {

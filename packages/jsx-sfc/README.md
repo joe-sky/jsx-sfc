@@ -12,15 +12,15 @@
   <img alt="jsx-sfc demo" src="https://github.com/joe-sky/jsx-sfc/blob/main/public/images/sfc.gif?raw=true" width="500" />
 </p>
 
-`jsx-sfc`(JSX Separate Function Components) is a tiny tool(~1kb) for create React function components with **separation of concerns** and **completely type inference**.
+`jsx-sfc`(JSX Separate Function Components) is a tiny tool(~1kb) for create React function components with **separation of concerns** and **completely type inference**. It can be defined as a `JSX syntax tool` or `TSX type tool` 🧙🏼‍♂️.
 
 [Live demo is here.]()
 
 ## Features
 
-- 🌟 Easy to write **separation of concerns** function components
-- ✨ Clearly isolate **template**, **logic**, and **styles**
-- 💫 Fully type inference by TypeScript
+- 🌟 Easy to write function components with **separation of concerns**
+- ✨ Clearly isolate **template**, **logic**, **styles** and **any other concerns**
+- 💫 **Completely type inference** design by TypeScript
 - 🔥 Support all React hooks
 - ⚡ Support React fast refresh
 - 🔧 Support React eslint plugins
@@ -122,23 +122,52 @@ See the demo, the main design ideas of `jsx-sfc`:
 
 So `jsx-sfc` is similar to Vue SFCs in the form of separation of concerns, but it was originally designed to adapt the JSX(TSX) environment!
 
-## Getting Started
+## Benefit
 
-### Installation
+<!-- tips: Use large code components examples, collapse code in md; like .vue, more cohesive components but can separate export members yet.; Compound components tree -->
+
+## Installation
+
+### Using with Webpack
+
+You can use `jsx-sfc` with any bundle tools which can be use Babel(e.g. Webpack, Rollup):
 
 ```bash
 npm install jsx-sfc babel-plugin-jsx-sfc
 ```
 
-Using in Vite:
+Configure Babel:
+
+```js
+// .babelrc
+{
+  ...
+  plugins: ["jsx-sfc"]
+}
+```
+
+### Using with Vite
+
+Because Vite uses esbuild to transform JSX/TSX, so `jsx-sfc` provides a vite plugin:
 
 ```bash
 npm install jsx-sfc vite-plugin-jsx-sfc
 ```
 
-### Usage
+Configure Vite(v1.x):
 
-## APIs
+```js
+// vite.config.js
+import reactPlugin from 'vite-plugin-react';
+import sfcPlugin from 'vite-plugin-jsx-sfc';
+
+const config = {
+  ...
+  plugins: [sfcPlugin, reactPlugin]
+}
+```
+
+## Usage
 
 ### `sfc`
 

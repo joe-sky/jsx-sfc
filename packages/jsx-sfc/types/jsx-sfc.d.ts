@@ -1,5 +1,5 @@
 /*!
- * jsx-sfc v0.4.0
+ * jsx-sfc v1.0.0-alpha.1
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
@@ -31,36 +31,37 @@ declare type JSXElements = ReactElement<any, any> | null;
 declare type SFCProps<Props = {}, EX = {}> = PropsWithChildren<Props> & {
     template: <Data extends Template.Data>(data?: Data) => Data;
 } & EX;
+declare type ObjOrFuncReturn<T> = T extends () => infer R ? R : T extends Obj ? T : never;
 declare type DefineComponent<Ref = NoRef, Props = {}, ReturnComponent = Ref extends NoRef ? React.FC<Props> : React.ForwardRefExoticComponent<Props & RefAttributes<Ref>>, Origin = {
     Component: ReturnComponent;
 }> = {
-    <Data extends Template.Data, Styles extends Obj, EX extends Obj, FR extends {
-        styles?: Styles;
-    } & EX>(options: {
+    <Data extends Template.Data, Styles, InferStyles extends ObjOrFuncReturn<Styles>, EX, InferEX extends ObjOrFuncReturn<EX>, FR extends {
+        styles?: InferStyles;
+    } & InferEX>(options: {
         /**
          * Using the style function to define styles, you can use the most popular `CSS in JS` frameworks. (e.g. `styled-components`, `emotion`, `JSS`)
          */
-        style?: () => Styles;
+        style?: Styles;
         Component: Ref extends NoRef ? (props: SFCProps<Props, FR>, context?: any) => Data : (props: SFCProps<Props, FR>, ref?: React.Ref<Ref>) => Data;
         template: <U extends Data>(args: {
             data?: U;
         } & FR, ...tmpls: Template.Func[]) => JSXElements;
-    }, extensions?: () => EX): ReturnComponent & Origin & {
+    }, extensions?: EX): ReturnComponent & Origin & {
         template: (data?: Data) => JSXElements;
-        styles?: Styles;
-    } & EX;
-    <Styles extends Obj, EX extends Obj, FR extends {
-        styles?: Styles;
-    } & EX>(options: {
+        styles?: InferStyles;
+    } & InferEX;
+    <Styles, InferStyles extends ObjOrFuncReturn<Styles>, EX, InferEX extends ObjOrFuncReturn<EX>, FR extends {
+        styles?: InferStyles;
+    } & InferEX>(options: {
         /**
          * Using the style function to define styles, you can use the most popular `CSS in JS` frameworks. (e.g. `styled-components`, `emotion`, `JSS`)
          */
-        style: () => Styles;
+        style: Styles;
         Component: Ref extends NoRef ? (props: SFCProps<Props, FR>, context?: any) => JSXElements : (props: SFCProps<Props, FR>, ref?: React.Ref<Ref>) => JSXElements;
-    }, extensions?: () => EX): ReturnComponent & Origin & {
-        styles?: Styles;
-    } & EX;
-    <EX extends Obj>(component: Ref extends NoRef ? (props: SFCProps<Props, EX>, context?: any) => JSXElements : (props: SFCProps<Props, EX>, ref?: React.Ref<Ref>) => JSXElements, extensions?: () => EX): ReturnComponent & Origin & EX;
+    }, extensions?: EX): ReturnComponent & Origin & {
+        styles?: InferStyles;
+    } & InferEX;
+    <EX, InferEX extends ObjOrFuncReturn<EX>>(component: Ref extends NoRef ? (props: SFCProps<Props, InferEX>, context?: any) => JSXElements : (props: SFCProps<Props, InferEX>, ref?: React.Ref<Ref>) => JSXElements, extensions?: EX): ReturnComponent & Origin & InferEX;
 };
 interface ForwardRefSFC extends DefineComponent {
     <Ref, Props = {}>(): DefineComponent<Ref, Props>;

@@ -22,7 +22,7 @@ const {
       return { firstName: 'joe', LAST_NAME };
     },
 
-    style: () => ({
+    styles: () => ({
       Container: styled.section`
         color: #fff;
       `,
@@ -31,7 +31,7 @@ const {
       `
     })
   },
-  () => ({
+  {
     constant: {
       LAST_NAME: 'sky'
     },
@@ -39,7 +39,7 @@ const {
     utils: {
       connectName: (firstName: string, lastName: string) => `${firstName}_${lastName}`
     }
-  })
+  }
 );
 
 describe('component basic', function() {

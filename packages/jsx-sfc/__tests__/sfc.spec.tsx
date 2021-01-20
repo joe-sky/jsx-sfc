@@ -23,7 +23,7 @@ const App = sfc<AppProps>()({
     return { a: props.test };
   },
 
-  style: () => ({
+  styles: () => ({
     Container: styled.section`
       color: #fff;
     `,
@@ -42,7 +42,7 @@ const AppNoTmpl = sfc<AppProps>()({
     );
   },
 
-  style: () => ({
+  styles: () => ({
     Container: styled.section`
       color: #fff;
     `,
@@ -90,7 +90,7 @@ const AppMultiTmpls = sfc<AppProps>()({
     return props.template({ a: props.test });
   },
 
-  style: () => ({
+  styles: () => ({
     Container: styled.section`
       color: #fff;
     `

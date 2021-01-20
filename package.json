@@ -6,15 +6,15 @@
     "packages/babel-plugin-jsx-sfc",
     "packages/vite-plugin-jsx-sfc"
   ],
-  "version": "0.4.0",
-  "description": "A tiny library that create React components with Separation of Concerns and Completely Type Safe.",
+  "version": "1.0.0-alpha.1",
+  "description": "A tiny library for create React function components with Separation of Concerns and completely Type Inference.",
   "scripts": {
     "build": "lerna run build",
     "test": "jest --config=test/jest.config.js",
     "test:compile": "yarn run jest:clear && jest --config=test/jest.config.compile.js",
     "test:babel": "yarn run jest:clear && jest --config=test/jest.config.babel.js",
     "jest:clear": "jest --clearCache",
-    "cover": "jest --coverage --config=test/jest.config.js",
+    "cover": "yarn run jest:clear && jest --coverage --config=test/jest.config.compile.js",
     "ci": "yarn run build && yarn run cover && yarn run test:compile && codecov",
     "release": "lerna publish",
     "release:next": "lerna publish --dist-tag next"
