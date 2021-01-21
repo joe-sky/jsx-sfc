@@ -1,24 +1,24 @@
 import React, { forwardRef as forwardRefReact, Fragment, ReactElement } from 'react';
 import { SFC, ForwardRefSFC, SFCOptions, SFCExtensions } from './defineComponent';
 import { Template, isTemplate } from './template';
-import { getFuncParams, emptyObjs, withOrigin, Func, Obj, FuncMap } from './utils';
+import { isFunc, getFuncParams, emptyObjs, withOrigin, Func, Obj, FuncMap } from './utils';
 
 const COMPILED_SIGN = '__cs';
 
-export function createFuncResults(options: FuncMap, extensions?: Func, isRuntime?: boolean) {
+export function createFuncResults(options: FuncMap, extensions?: Func | Obj, isRuntime?: boolean) {
   const ret: Obj = {};
   let template: Func;
 
   Object.keys(options).forEach(key => {
-    const func = options[key];
+    const item = options[key];
     if (key === 'template') {
-      template = func;
-    } else {
-      ret[key === 'style' ? 'styles' : key] = func?.();
+      template = item as Func;
+    } else if (key === 'styles') {
+      ret[key] = isFunc(item) ? item() : item;
     }
   });
 
-  const ex = extensions?.();
+  const ex = isFunc(extensions) ? extensions() : extensions;
   ex && Object.assign(ret, ex);
 
   if (template) {
@@ -69,11 +69,11 @@ function createSfc(isForwardRef?: boolean) {
 
       return Object.assign(withOrigin(component), extensions);
     } else {
-      if (typeof options === 'function') {
-        options = { Component: options as Func };
+      if (isFunc(options)) {
+        options = { Component: options };
       }
-      const { template, style, Component } = options;
-      const funcResults = createFuncResults({ template, style }, (extensions as any) as Func, true);
+      const { template, styles, Component } = options;
+      const funcResults = createFuncResults({ template, styles }, (extensions as any) as Func, true);
 
       let SeparateFunctional: Func;
       if (!isForwardRef) {

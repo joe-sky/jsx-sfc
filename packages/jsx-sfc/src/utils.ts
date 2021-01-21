@@ -2,7 +2,11 @@ export type Func = (...args: any) => any;
 
 export type Obj = Record<string, unknown>;
 
-export type FuncMap = Record<string, Func>;
+export type FuncMap = Record<string, Func | Obj>;
+
+export function isFunc(value: any): value is Func {
+  return typeof value === 'function';
+}
 
 export function emptyObjs(length: number) {
   return Object.keys(Array.apply(null, { length })).map(() => ({}));

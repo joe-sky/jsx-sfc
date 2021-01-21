@@ -12,7 +12,7 @@
   <img alt="jsx-sfc demo" src="https://github.com/joe-sky/jsx-sfc/blob/main/public/images/sfc.gif?raw=true" width="500" />
 </p>
 
-`jsx-sfc`(JSX Separate Function Components) is a tiny tool(~1kb) for create React function components with **separation of concerns** and **completely type inference**. It can be defined as a `JSX syntax tool` or `TSX type tool` 🧙🏼‍♂️.
+`jsx-sfc`(JSX Separate Function Components) is a tiny tool(~1kb) for create React function components with **separation of concerns** and **completely type inference**. It's actually a JSX/TSX syntax or type tool, very simple🧙🏼‍♂️.
 
 [Live demo is here.]()
 

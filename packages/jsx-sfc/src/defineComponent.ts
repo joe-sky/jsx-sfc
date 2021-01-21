@@ -10,7 +10,7 @@ export type SFCProps<Props = {}, EX = {}> = PropsWithChildren<Props> & {
   template: <Data extends Template.Data>(data?: Data) => Data;
 } & EX;
 
-type ExtractOptions<T> = T extends () => infer R ? R : T extends Obj ? T : {};
+type ExtractOptions<T> = T extends () => infer R ? (R extends Obj ? R : never) : T extends Obj ? T : unknown;
 
 export type DefineComponent<
   Ref = NoRef,
@@ -73,13 +73,13 @@ export interface ForwardRefSFC extends DefineComponent {
 export interface SFC extends DefineComponent {
   <Props = {}>(): DefineComponent<NoRef, Props>;
   forwardRef?: ForwardRefSFC;
-  createFuncResults?: (options: FuncMap, extensions?: Func, isRuntime?: boolean) => Obj;
+  createFuncResults?: (options: FuncMap, extensions?: Func | Obj, isRuntime?: boolean) => Obj;
 }
 
 export interface SFCOptions {
   template?: Func;
   Component?: Func;
-  style?: Func;
+  styles?: Func | Obj;
 }
 
-export type SFCExtensions = Obj;
+export type SFCExtensions = Func | Obj;

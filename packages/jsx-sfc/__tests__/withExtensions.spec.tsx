@@ -82,29 +82,35 @@ const WithHooks = sfc(
       };
     }
   },
-  () => ({
-    useCount: (initial: number) => {
-      const [count, setCount] = useState(initial);
+  () => {
+    const INCREASE_NUM = 1;
 
-      useEffect(() => {
-        setCount(count + 1);
-      }, []);
+    return {
+      INCREASE_NUM,
 
-      return {
-        count,
-        increase() {
-          setCount(count + 1);
-        },
-        reset() {
-          setCount(initial);
-        }
-      };
-    },
+      useCount: (initial: number) => {
+        const [count, setCount] = useState(initial);
 
-    styles: {
-      hl
-    }
-  })
+        useEffect(() => {
+          setCount(count + INCREASE_NUM);
+        }, []);
+
+        return {
+          count,
+          increase() {
+            setCount(count + INCREASE_NUM);
+          },
+          reset() {
+            setCount(initial);
+          }
+        };
+      },
+
+      styles: {
+        hl
+      }
+    };
+  }
 );
 
 describe('with custom hooks', function() {
