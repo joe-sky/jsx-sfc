@@ -12,7 +12,7 @@ const {
   styles: { Container, hl }
 } = sfc(
   {
-    template: ({ data, utils: { connectName } }) => (
+    template: ({ data, styles, utils: { connectName } }) => (
       <Container>
         <div>{connectName(data.firstName, data.LAST_NAME)}</div>
       </Container>
@@ -88,7 +88,7 @@ const WithHooks = sfc(
     return {
       INCREASE_NUM,
 
-      useCount: (initial: number) => {
+      useCount: (initial = 0) => {
         const [count, setCount] = useState(initial);
 
         useEffect(() => {

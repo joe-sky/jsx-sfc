@@ -7,7 +7,7 @@
     "outDir": "./built",
     "allowSyntheticDefaultImports": true,
     "allowJs": true,
-    // "strictNullChecks": true,
+    "strict": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "noImplicitThis": true

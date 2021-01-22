@@ -73,7 +73,7 @@ describe('forward ref basic', function() {
   const app = mount(<App test="1" ref={ref} />);
 
   it('simple', () => {
-    expect(ref.current.getName()).toEqual('test');
+    expect(ref.current?.getName()).toEqual('test');
   });
 
   const appNoGeneric = mount(<AppNoGeneric />);

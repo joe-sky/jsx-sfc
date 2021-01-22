@@ -24,7 +24,7 @@ export type DefineComponent<
     InferStyles extends ExtractOptions<Styles>,
     EX,
     InferEX extends ExtractOptions<EX>,
-    FR extends { styles?: InferStyles } & InferEX
+    FR extends { styles: InferStyles } & InferEX
   >(
     options: {
       /**
@@ -34,17 +34,17 @@ export type DefineComponent<
       Component: Ref extends NoRef
         ? (props: SFCProps<Props, FR>, context?: any) => Data
         : (props: SFCProps<Props, FR>, ref?: React.Ref<Ref>) => Data;
-      template: <U extends Data>(args: { data?: U } & FR, ...tmpls: Template.Func[]) => JSXElements;
+      template: <U extends Data>(args: { data: U } & FR, ...tmpls: Template.Func[]) => JSXElements;
     },
     extensions?: EX
-  ): ReturnComponent & Origin & { template: (data?: Data) => JSXElements; styles?: InferStyles } & InferEX;
+  ): ReturnComponent & Origin & { template: (data?: Data) => JSXElements; styles: InferStyles } & InferEX;
 
   <
     Styles,
     InferStyles extends ExtractOptions<Styles>,
     EX,
     InferEX extends ExtractOptions<EX>,
-    FR extends { styles?: InferStyles } & InferEX
+    FR extends { styles: InferStyles } & InferEX
   >(
     options: {
       /**
@@ -56,7 +56,7 @@ export type DefineComponent<
         : (props: SFCProps<Props, FR>, ref?: React.Ref<Ref>) => JSXElements;
     },
     extensions?: EX
-  ): ReturnComponent & Origin & { styles?: InferStyles } & InferEX;
+  ): ReturnComponent & Origin & { styles: InferStyles } & InferEX;
 
   <EX, InferEX extends ExtractOptions<EX>>(
     component: Ref extends NoRef
@@ -72,14 +72,17 @@ export interface ForwardRefSFC extends DefineComponent {
 
 export interface SFC extends DefineComponent {
   <Props = {}>(): DefineComponent<NoRef, Props>;
-  forwardRef?: ForwardRefSFC;
-  createFuncResults?: (options: FuncMap, extensions?: Func | Obj, isRuntime?: boolean) => Obj;
+  forwardRef: ForwardRefSFC;
+  createFuncResults: (options: FuncMap, extensions?: Func | Obj, isRuntime?: boolean) => Obj;
 }
 
 export interface SFCOptions {
   template?: Func;
-  Component?: Func;
+  Component: Func;
   styles?: Func | Obj;
 }
 
-export type SFCExtensions = Func | Obj;
+export type SFCExtensions = {
+  __cs?: boolean;
+  [key: string]: any;
+};

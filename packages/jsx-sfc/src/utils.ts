@@ -2,14 +2,21 @@ export type Func = (...args: any) => any;
 
 export type Obj = Record<string, unknown>;
 
-export type FuncMap = Record<string, Func | Obj>;
+export type FuncMap = Record<string, Func | Obj | undefined>;
 
 export function isFunc(value: any): value is Func {
   return typeof value === 'function';
 }
 
+export interface Noop {
+  (): any;
+  [key: string]: any;
+}
+
+export const noop: Noop = () => {};
+
 export function emptyObjs(length: number) {
-  return Object.keys(Array.apply(null, { length })).map(() => ({}));
+  return Object.keys(Array.apply(null, { length } as Array<any>)).map(() => ({}));
 }
 
 /**

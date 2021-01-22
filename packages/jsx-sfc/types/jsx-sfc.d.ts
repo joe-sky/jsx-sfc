@@ -7,14 +7,15 @@ import React, { ReactNode, ReactElement, PropsWithChildren, RefAttributes } from
 
 declare type Func = (...args: any) => any;
 declare type Obj = Record<string, unknown>;
-declare type FuncMap = Record<string, Func | Obj>;
+declare type FuncMap = Record<string, Func | Obj | undefined>;
+interface Noop {
+    (): any;
+    [key: string]: any;
+}
 
-declare const templateFc: {
-    (): void;
-    __type: number;
-};
+declare const templateFc: Noop;
 declare function isTemplate(templateFc: any): templateFc is Template.FC;
-declare const Template: <Arg1, Arg2, Arg3, Arg4, Arg5, T extends Template.Func<Arg1, Arg2, Arg3, Arg4, Arg5>>(props: {
+declare const Template: <Arg1 = any, Arg2 = any, Arg3 = any, Arg4 = any, Arg5 = any, T extends Template.Func<Arg1, Arg2, Arg3, Arg4, Arg5> = Template.Func>(props: {
     name?: T;
     children: T['template'];
 }) => JSX.Element;
@@ -36,7 +37,7 @@ declare type DefineComponent<Ref = NoRef, Props = {}, ReturnComponent = Ref exte
     Component: ReturnComponent;
 }> = {
     <Data extends Template.Data, Styles, InferStyles extends ExtractOptions<Styles>, EX, InferEX extends ExtractOptions<EX>, FR extends {
-        styles?: InferStyles;
+        styles: InferStyles;
     } & InferEX>(options: {
         /**
          * Using the styles property or function to define styles, you can use the most popular `CSS in JS` frameworks. (e.g. `styled-components`, `emotion`, `JSS`)
@@ -44,14 +45,14 @@ declare type DefineComponent<Ref = NoRef, Props = {}, ReturnComponent = Ref exte
         styles?: Styles;
         Component: Ref extends NoRef ? (props: SFCProps<Props, FR>, context?: any) => Data : (props: SFCProps<Props, FR>, ref?: React.Ref<Ref>) => Data;
         template: <U extends Data>(args: {
-            data?: U;
+            data: U;
         } & FR, ...tmpls: Template.Func[]) => JSXElements;
     }, extensions?: EX): ReturnComponent & Origin & {
         template: (data?: Data) => JSXElements;
-        styles?: InferStyles;
+        styles: InferStyles;
     } & InferEX;
     <Styles, InferStyles extends ExtractOptions<Styles>, EX, InferEX extends ExtractOptions<EX>, FR extends {
-        styles?: InferStyles;
+        styles: InferStyles;
     } & InferEX>(options: {
         /**
          * Using the styles property or function to define styles, you can use the most popular `CSS in JS` frameworks. (e.g. `styled-components`, `emotion`, `JSS`)
@@ -59,7 +60,7 @@ declare type DefineComponent<Ref = NoRef, Props = {}, ReturnComponent = Ref exte
         styles: Styles;
         Component: Ref extends NoRef ? (props: SFCProps<Props, FR>, context?: any) => JSXElements : (props: SFCProps<Props, FR>, ref?: React.Ref<Ref>) => JSXElements;
     }, extensions?: EX): ReturnComponent & Origin & {
-        styles?: InferStyles;
+        styles: InferStyles;
     } & InferEX;
     <EX, InferEX extends ExtractOptions<EX>>(component: Ref extends NoRef ? (props: SFCProps<Props, InferEX>, context?: any) => JSXElements : (props: SFCProps<Props, InferEX>, ref?: React.Ref<Ref>) => JSXElements, extensions?: EX): ReturnComponent & Origin & InferEX;
 };
@@ -68,15 +69,18 @@ interface ForwardRefSFC extends DefineComponent {
 }
 interface SFC extends DefineComponent {
     <Props = {}>(): DefineComponent<NoRef, Props>;
-    forwardRef?: ForwardRefSFC;
-    createFuncResults?: (options: FuncMap, extensions?: Func | Obj, isRuntime?: boolean) => Obj;
+    forwardRef: ForwardRefSFC;
+    createFuncResults: (options: FuncMap, extensions?: Func | Obj, isRuntime?: boolean) => Obj;
 }
 interface SFCOptions {
     template?: Func;
-    Component?: Func;
+    Component: Func;
     styles?: Func | Obj;
 }
-declare type SFCExtensions = Func | Obj;
+declare type SFCExtensions = {
+    __cs?: boolean;
+    [key: string]: any;
+};
 
 declare function createFuncResults(options: FuncMap, extensions?: Func | Obj, isRuntime?: boolean): Record<string, unknown>;
 declare const sfc: SFC;

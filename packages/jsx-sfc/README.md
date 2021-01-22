@@ -12,9 +12,9 @@
   <img alt="jsx-sfc demo" src="https://github.com/joe-sky/jsx-sfc/blob/main/public/images/sfc.gif?raw=true" width="500" />
 </p>
 
-`jsx-sfc`(JSX Separate Function Components) is a tiny tool(~1kb) for create React function components with **separation of concerns** and **completely type inference**. It's actually a JSX/TSX syntax or type tool, very simple🧙🏼‍♂️.
+`jsx-sfc`(JSX Separate Function Components) is a tiny tool(~1kb) for create React function components with **separation of concerns** and **completely type inference**. It can be seen as a JSX/TSX syntax or type tool, very simple to use🧙🏼‍♂️.
 
-[Live demo is here.]()
+[Live demo is here.](https://codesandbox.io/s/jsx-sfc-demo-wwgd4)
 
 ## Features
 
@@ -177,6 +177,10 @@ todo: with generics
 
 ### Export separate members
 
+## Type Safe
+
+todo: difference in strict mode
+
 ## Why designed like this
 
 todo: ts limitation based
@@ -191,7 +195,7 @@ todo: set some large code blocks
 
 ## Known Issues
 
-todo: strictNullChecks
+todo: { data: { xxx } }
 
 ## Roadmap
 

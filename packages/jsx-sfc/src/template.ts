@@ -1,19 +1,26 @@
 import { ReactNode } from 'react';
-import { Obj } from './utils';
+import { noop, Obj, Func } from './utils';
 
 const __TEMPLATE__ = 0x5fc;
 
-const templateFc = () => {};
+const templateFc = noop;
 templateFc.__type = __TEMPLATE__;
 
 export function isTemplate(templateFc: any): templateFc is Template.FC {
   return templateFc.__type === __TEMPLATE__;
 }
 
-export const Template: <Arg1, Arg2, Arg3, Arg4, Arg5, T extends Template.Func<Arg1, Arg2, Arg3, Arg4, Arg5>>(props: {
+export const Template: <
+  Arg1 = any,
+  Arg2 = any,
+  Arg3 = any,
+  Arg4 = any,
+  Arg5 = any,
+  T extends Template.Func<Arg1, Arg2, Arg3, Arg4, Arg5> = Template.Func
+>(props: {
   name?: T;
   children: T['template'];
-}) => JSX.Element = templateFc as any;
+}) => JSX.Element = templateFc as Func;
 
 export namespace Template {
   export interface Func<Arg1 = unknown, Arg2 = unknown, Arg3 = unknown, Arg4 = unknown, Arg5 = unknown> {

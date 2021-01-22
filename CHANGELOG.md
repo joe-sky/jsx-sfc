@@ -5,6 +5,7 @@
 - 🌟 Type optimization of internal implementation.
 - 💥 Change `SfcComponent#Origin` to `SfcComponent#Component`.
 - 💥 Change the second parameter of `sfc` to a function which can be return any extension members.
+- 🐛 Fix some type safe features in `strict mode`.
 
 ## [v0.3.4] 2021.01.05
 
