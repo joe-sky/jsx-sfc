@@ -8,6 +8,6 @@ export const SFC_CREATE_FUNC_RESULTS = 'createFuncResults';
 
 export const SFC_FORWARD_REF = 'forwardRef';
 
-export function getFuncResultsName(line: number) {
+export function getFuncResultsName(line = 0) {
   return `$sfcFuncResults_${line}`;
 }

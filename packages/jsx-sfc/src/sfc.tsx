@@ -75,20 +75,20 @@ function createSfc(isForwardRef?: boolean) {
       const { template, styles, Component } = options;
       const funcResults = createFuncResults({ template, styles }, extensions as Func, true);
 
-      let SeparateFunctional: Func;
+      let SeparateFunction: Func;
       if (!isForwardRef) {
         const InnerComponent: React.FC = Component;
-        SeparateFunctional = innerProps => {
+        SeparateFunction = innerProps => {
           return <InnerComponent {...innerProps} {...funcResults} />;
         };
       } else {
         const InnerComponentWithRef = forwardRefReact(Component);
-        SeparateFunctional = forwardRefReact((innerProps, ref) => {
+        SeparateFunction = forwardRefReact((innerProps, ref) => {
           return <InnerComponentWithRef {...innerProps} {...funcResults} ref={ref} />;
         });
       }
 
-      return Object.assign(withOrigin(SeparateFunctional), funcResults);
+      return Object.assign(withOrigin(SeparateFunction), funcResults);
     }
   }
 

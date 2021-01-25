@@ -103,7 +103,7 @@ export default () => ({
                 }
 
                 const indexInProps = sfcArguments[0].properties.indexOf(ComponentProp);
-                const sfcFuncResultsName = getFuncResultsName(path.node.loc.start.line);
+                const sfcFuncResultsName = getFuncResultsName(path?.node?.loc?.start.line);
 
                 // todo: has template?
 
@@ -187,7 +187,7 @@ export default () => ({
                   path =>
                     path.isVariableDeclaration() || path.isExportDefaultDeclaration() || path.isExportDeclaration()
                 );
-                const sfcFuncResultsPath = componentVariable.insertBefore(
+                const sfcFuncResultsPath = componentVariable?.insertBefore(
                   types.variableDeclaration('const', [
                     types.variableDeclarator(
                       types.identifier(sfcFuncResultsName),

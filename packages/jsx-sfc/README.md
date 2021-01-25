@@ -14,6 +14,8 @@
 
 `jsx-sfc`(JSX Separate Function Components) is a tiny tool(~1kb) for create React function components with **separation of concerns** and **completely type inference**. It can be seen as a JSX/TSX syntax or type tool, very simple to use🧙🏼‍♂️.
 
+## Demo
+
 [Live demo is here.](https://codesandbox.io/s/jsx-sfc-demo-wwgd4)
 
 ## Features
@@ -33,6 +35,23 @@
 | [jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/master/packages/jsx-sfc)                           | <a href="https://www.npmjs.org/package/jsx-sfc"><img src="https://img.shields.io/npm/v/jsx-sfc.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/jsx-sfc"><img src="https://img.shields.io/npm/dm/jsx-sfc.svg" alt="NPM Downloads"></a> <a href="https://bundlephobia.com/result?p=jsx-sfc"><img src="https://img.shields.io/bundlephobia/minzip/jsx-sfc.svg?style=flat" alt="Minzipped Size"></a> |
 | [babel-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/master/packages/babel-plugin-jsx-sfc) | <a href="https://www.npmjs.org/package/babel-plugin-jsx-sfc"><img src="https://img.shields.io/npm/v/babel-plugin-jsx-sfc.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/babel-plugin-jsx-sfc"><img src="https://img.shields.io/npm/dm/babel-plugin-jsx-sfc.svg" alt="NPM Downloads"></a>                                                                                                        |
 | [vite-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/master/packages/vite-plugin-jsx-sfc)   | <a href="https://www.npmjs.org/package/vite-plugin-jsx-sfc"><img src="https://img.shields.io/npm/v/vite-plugin-jsx-sfc.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/vite-plugin-jsx-sfc"><img src="https://img.shields.io/npm/dm/vite-plugin-jsx-sfc.svg" alt="NPM Downloads"></a>                                                                                                            |
+
+## Table of Contents
+
+- [Demo](#demo)
+- [Features](#features)
+- [Packages](#packages)
+- [Inspiration](#inspiration)
+- [Installation](#installation)
+  - [Using with Webpack](#using-with-webpack)
+  - [Using with Vite](#using-with-vite)
+- [Usage](#usage)
+  - [`sfc`](#sfc)
+  - [`sfc.forwardRef`](#sfc.forwardRef)
+  - [Using with TypeScript](#using-with-typescript)
+- [API design rules of jsx-sfc](#api-design-rules-of-jsx-sfc)
+- [FAQ](#faq)
+- [Roadmap](#roadmap)
 
 ## Inspiration
 
@@ -122,7 +141,7 @@ See the demo, the main design ideas of `jsx-sfc`:
 
 So `jsx-sfc` is similar to Vue SFCs in the form of separation of concerns, but it was originally designed to adapt the JSX(TSX) environment!
 
-## Benefit
+<!-- ## Benefit -->
 
 <!-- tips: Use large code components examples, collapse code in md; like .vue, more cohesive components but can separate export members yet.; Compound components tree -->
 
@@ -171,33 +190,71 @@ const config = {
 
 ### `sfc`
 
+`sfc` used to create separate function components.
+
+- Type definition of `sfc`
+
+```ts
+function sfc<Data, Styles, EX>(options: {
+  template?: (args: { data: Data; styles: Styles } & EX) => JSX.Element;
+  Component: (props?: SFCProps) => Data;
+  styles?: Styles;
+}): React.FC;
+```
+
+> Only a rough type definition is put here for API documentation. [Actual type definition is here.](https://github.com/joe-sky/jsx-sfc/blob/main/packages/jsx-sfc/src/defineComponent.ts#L15)
+
+#### Basic: Isolate template function:
+
+```tsx
+import React, { useState } from 'react';
+import sfc from 'jsx-sfc';
+
+const App = sfc({
+  template: ({ data }) => (
+    <div>
+      <button onClick={data.onClick}>{data.user}</button>
+    </div>
+  ),
+
+  Component() {
+    const [user, setUser] = useState('foo');
+    return { user, onClick: () => setUser('bar') };
+  }
+});
+```
+
+- `Component function` is the actual function component. It requires to return an object, pass to the template function for rendering;
+
+- The data object in the first parameter of the `template function`, is the return value of the `Component function`. And their types are consistent via dynamic inference.
+
+> The type inferences are also type safe in TSX. For example, if you don't return an object from `Component function`, you will receive a type error.
+
 todo: with generics
 
 ### `sfc.forwardRef`
 
 ### Export separate members
 
-## Type Safe
+### Using with TypeScript
 
 todo: difference in strict mode
 
-## Why designed like this
+## API design rules of jsx-sfc
 
 todo: ts limitation based
 
 ## FAQ
 
+todo: { data: { xxx } }
+
 todo: defferent from class component
+
+## Roadmap
 
 ## Who is using jsx-sfc
 
 todo: set some large code blocks
-
-## Known Issues
-
-todo: { data: { xxx } }
-
-## Roadmap
 
 ## License
 
