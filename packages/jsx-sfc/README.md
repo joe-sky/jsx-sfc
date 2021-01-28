@@ -117,14 +117,14 @@ const App = sfc({
     return { user };
   },
 
-  style: () => ({
+  styles: {
     Wrap: styled.section`
       color: #fff;
     `,
     hl: css`
       width: 50px;
     `
-  })
+  }
 });
 ```
 
@@ -195,11 +195,14 @@ const config = {
 - Type definition of `sfc`
 
 ```ts
-function sfc<Data, Styles, EX>(options: {
-  template?: (args: { data: Data; styles: Styles } & EX) => JSX.Element;
-  Component: (props?: SFCProps) => Data;
-  styles?: Styles;
-}): React.FC;
+function sfc<TemplateData, Styles, EX>(
+  options: {
+    template?: (args: { data: TemplateData; styles: Styles } & EX) => JSX.Element;
+    Component: (props?: SFCProps) => TemplateData;
+    styles?: Styles;
+  },
+  extensions?: EX
+): React.FC;
 ```
 
 > Only a rough type definition is put here for API documentation. [Actual type definition is here.](https://github.com/joe-sky/jsx-sfc/blob/main/packages/jsx-sfc/src/defineComponent.ts#L15)
@@ -224,9 +227,9 @@ const App = sfc({
 });
 ```
 
-- `Component function` is the actual function component. It requires to return an object, pass to the template function for rendering;
+- `Component function` is the actual React component function. It requires to return an object that pass to the `template function` for rendering;
 
-- The data object in the first parameter of the `template function`, is the return value of the `Component function`. And their types are consistent via dynamic inference.
+- The data object in the first parameter of the `template function` is the return value of the `Component function`. And their types are consistent via dynamic inference.
 
 > The type inferences are also type safe in TSX. For example, if you don't return an object from `Component function`, you will receive a type error.
 

@@ -1,8 +1,12 @@
+import { ReactElement } from 'react';
+
 export type Func = (...args: any) => any;
 
 export type Obj = Record<string, unknown>;
 
 export type FuncMap = Record<string, Func | Obj | undefined>;
+
+export type JSXElements = ReactElement<any, any> | null;
 
 export function isFunc(value: any): value is Func {
   return typeof value === 'function';

@@ -69,25 +69,23 @@ describe('basic', function() {
 });
 
 const AppMultiTmpls = sfc<AppProps>()({
-  template({ data, styles: { Container } }, header: Template.Func<string>) {
-    return (
-      <>
-        <Template name={header}>{content => <header>{content}</header>}</Template>
+  template: ({ data, styles: { Container } }, header: Template.Func<string>) => (
+    <>
+      <Template name={header}>{content => <header>{content}</header>}</Template>
 
-        <Template>
-          {() => (
-            <Container>
-              {header.template(data.a)}
-              <div>{data.a}</div>
-            </Container>
-          )}
-        </Template>
-      </>
-    );
-  },
+      <Template>
+        {() => (
+          <Container>
+            {header.template(data.a)}
+            <div>{data.a}</div>
+          </Container>
+        )}
+      </Template>
+    </>
+  ),
 
-  Component(props) {
-    return props.template({ a: props.test });
+  Component: props => {
+    return { a: props.test };
   },
 
   styles: () => ({
@@ -101,5 +99,36 @@ describe('with multiple templates', function() {
   const appMultiTmpls = mount(<AppMultiTmpls test="1" />);
   it('simple', () => {
     expect(appMultiTmpls.html()).toContain('<header>1</header>');
+  });
+});
+
+const AppButton = sfc({
+  template({ data }) {
+    return <button onClick={data.onClick}>{data.name}</button>;
+  },
+
+  Component() {
+    return {} as { name: string; onClick: () => void };
+  }
+});
+
+const AppButton1: React.FC = () => <AppButton.Template name="joe_sky" onClick={() => console.log('click!')} />;
+
+const AppButton2: React.FC = () => {
+  const [user, setUser] = useState('joe_sky');
+
+  return (
+    <ul>
+      <li>
+        <AppButton.Template name={user} onClick={() => setUser(`${user} click!`)} />
+      </li>
+    </ul>
+  );
+};
+
+describe('reusing template', function() {
+  const appButton2 = mount(<AppButton2 />);
+  it('simple', () => {
+    expect(appButton2.html()).toContain('joe_sky');
   });
 });

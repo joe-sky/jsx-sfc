@@ -31,24 +31,25 @@ export function createFuncResults(options: FuncMap, extensions?: Func | Obj, isR
               throw new TypeError('The return of template with multiple arguments must be React.Fragment type.');
             }
 
-            const tmplFcs: ReactElement | ReactElement[] = jsxFragment.props.children;
+            const tmplFcs: ReactElement<{ name?: Template.Func; children: Template.Func['template'] }>[] =
+              jsxFragment.props.children;
             if (!Array.isArray(tmplFcs)) {
               throw new RangeError('Must be at least 2 Template elements.');
             }
 
-            let mainTmplFn: Template.Func['template'] = noop;
+            let mainTemplate: Template.Func['template'] = noop;
             tmplFcs.forEach(item => {
               if (isTemplate(item.type)) {
                 const { name, children } = item.props;
                 if (name) {
                   name.template = children;
                 } else {
-                  mainTmplFn = children;
+                  mainTemplate = children;
                 }
               }
             });
 
-            return mainTmplFn();
+            return mainTemplate();
           }
         : (data?: Template.Data) => template({ data, ...ret });
   }
@@ -60,6 +61,12 @@ export function createFuncResults(options: FuncMap, extensions?: Func | Obj, isR
   return ret;
 }
 
+function assignToComponent(component: Func, extensions: Obj) {
+  const { template } = extensions;
+
+  return Object.assign(withOrigin(component), extensions, template ? { Template: template } : {});
+}
+
 function createSfc(isForwardRef?: boolean) {
   function defineSfc(options: SFCOptions, extensions?: SFCExtensions) {
     if (extensions?.[COMPILED_SIGN]) {
@@ -67,13 +74,13 @@ function createSfc(isForwardRef?: boolean) {
       const Component = (options as any) as Func;
       const component = !isForwardRef ? Component : forwardRefReact(Component);
 
-      return Object.assign(withOrigin(component), extensions);
+      return assignToComponent(component, extensions);
     } else {
       if (isFunc(options)) {
         options = { Component: options };
       }
       const { template, styles, Component } = options;
-      const funcResults = createFuncResults({ template, styles }, extensions as Func, true);
+      const funcResults = createFuncResults({ template, styles }, extensions, true);
 
       let SeparateFunction: Func;
       if (!isForwardRef) {
@@ -88,7 +95,7 @@ function createSfc(isForwardRef?: boolean) {
         });
       }
 
-      return Object.assign(withOrigin(SeparateFunction), funcResults);
+      return assignToComponent(SeparateFunction, funcResults);
     }
   }
 
