@@ -6,6 +6,7 @@
 - 💥 Change `SfcComponent#Origin` to `SfcComponent#Component`.
 - 💥 Change the second parameter of `sfc` to a function which can be return any extension members.
 - 🐛 Fix some type safe features in `strict mode`.
+- 🌟 Add `SfcComponent#Template` to render template as react components in jsx.
 
 ## [v0.3.4] 2021.01.05
 

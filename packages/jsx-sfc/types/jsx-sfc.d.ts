@@ -22,11 +22,10 @@ declare const Template: <Arg1 = any, Arg2 = any, Arg3 = any, Arg4 = any, Arg5 = 
 }) => JSXElements;
 declare namespace Template {
     interface Func<Arg1 = unknown, Arg2 = unknown, Arg3 = unknown, Arg4 = unknown, Arg5 = unknown> {
-        __required(arg1: Arg1, arg2: Arg2, arg3: Arg3, arg4: Arg4, arg5: Arg5, ...args: unknown[]): ReactNode;
+        (arg1?: Arg1, arg2?: Arg2, arg3?: Arg3, arg4?: Arg4, arg5?: Arg5, ...args: unknown[]): ReactNode;
         template: (arg1?: Arg1, arg2?: Arg2, arg3?: Arg3, arg4?: Arg4, arg5?: Arg5, ...args: unknown[]) => ReactNode;
-        Template: FC<Arg1>;
+        __required(arg1: Arg1, arg2: Arg2, arg3: Arg3, arg4: Arg4, arg5: Arg5, ...args: unknown[]): ReactNode;
     }
-    type FC<P = {}> = (props: P, context?: any) => JSXElements;
     type EL = typeof templateElement;
     type Data = Obj;
     type InternalFunc = <D extends Data>(data?: D) => D;
@@ -53,7 +52,7 @@ declare type DefineComponent<Ref = NoRef, Props = {}, ReturnComponent = Ref exte
         } & FR, ...tmpls: Template.Func[]) => JSXElements;
     }, extensions?: EX): ReturnComponent & Origin & {
         template: (data?: Data) => JSXElements;
-        Template: Template.FC<Data>;
+        Template: React.FC<Data>;
         styles: InferStyles;
     } & ExtractOptions<EX>;
     <Styles, InferStyles extends ExtractOptions<Styles>, EX, InferEX extends ExtractOptions<EX>, FR extends {

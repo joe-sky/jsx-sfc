@@ -69,22 +69,18 @@ describe('basic', function() {
 });
 
 const AppMultiTmpls = sfc<AppProps>()({
-  template: (
-    { data, styles: { Container } },
-    header: Template.Func<string>,
-    Footer: Template.Func<{ content?: string }>
-  ) => (
+  template: ({ data, styles: { Container } }, header: Template.Func<string>, footer: Template.Func<string>) => (
     <>
       <Template name={header}>{content => <header>{content}</header>}</Template>
 
-      <Template name={Footer}>{({ content }) => <footer>{content}</footer>}</Template>
+      <Template name={footer}>{content => <footer>{content}</footer>}</Template>
 
       <Template>
         {() => (
           <Container>
             {header.template(data.a)}
             <div>{data.a}</div>
-            <Footer.Template content={data.a} />
+            {footer.template(data.a)}
           </Container>
         )}
       </Template>
@@ -119,7 +115,7 @@ const AppButton = sfc({
   }
 });
 
-const AppButton1: React.FC = () => <AppButton.Template name="joe_sky" onClick={() => console.log('click!')} />;
+const AppButton1: React.FC = () => AppButton.template({ name: 'joe_sky', onClick: () => console.log('click!') });
 
 const AppButton2: React.FC = () => {
   const [user, setUser] = useState('joe_sky');

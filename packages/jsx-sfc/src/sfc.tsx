@@ -42,7 +42,7 @@ export function createFuncResults(options: FuncMap, extensions?: Func | Obj, isR
               if (isTemplate(item.type)) {
                 const { name, children } = item.props;
                 if (name) {
-                  name.Template = (name.template = children) as Template.FC<unknown>;
+                  name.template = children;
                 } else {
                   mainTemplate = children;
                 }
