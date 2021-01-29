@@ -18,13 +18,15 @@ declare const templateElement: Noop;
 declare function isTemplate(templateElement: any): templateElement is Template.EL;
 declare const Template: <Arg1 = any, Arg2 = any, Arg3 = any, Arg4 = any, Arg5 = any, T extends Template.Func<Arg1, Arg2, Arg3, Arg4, Arg5> = Template.Func>(props: {
     name?: T;
-    children: T['template'];
+    children: T['__required'];
 }) => JSXElements;
 declare namespace Template {
     interface Func<Arg1 = unknown, Arg2 = unknown, Arg3 = unknown, Arg4 = unknown, Arg5 = unknown> {
-        (arg1?: Arg1, arg2?: Arg2, arg3?: Arg3, arg4?: Arg4, arg5?: Arg5, ...args: unknown[]): ReactNode;
+        __required(arg1: Arg1, arg2: Arg2, arg3: Arg3, arg4: Arg4, arg5: Arg5, ...args: unknown[]): ReactNode;
         template: (arg1?: Arg1, arg2?: Arg2, arg3?: Arg3, arg4?: Arg4, arg5?: Arg5, ...args: unknown[]) => ReactNode;
+        Template: FC<Arg1>;
     }
+    type FC<P = {}> = (props: P, context?: any) => JSXElements;
     type EL = typeof templateElement;
     type Data = Obj;
     type InternalFunc = <D extends Data>(data?: D) => D;
@@ -51,7 +53,7 @@ declare type DefineComponent<Ref = NoRef, Props = {}, ReturnComponent = Ref exte
         } & FR, ...tmpls: Template.Func[]) => JSXElements;
     }, extensions?: EX): ReturnComponent & Origin & {
         template: (data?: Data) => JSXElements;
-        Template: React.FC<Data>;
+        Template: Template.FC<Data>;
         styles: InferStyles;
     } & ExtractOptions<EX>;
     <Styles, InferStyles extends ExtractOptions<Styles>, EX, InferEX extends ExtractOptions<EX>, FR extends {

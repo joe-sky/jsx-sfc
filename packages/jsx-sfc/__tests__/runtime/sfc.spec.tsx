@@ -77,7 +77,7 @@ const AppMultiTmpls = sfc<AppProps>()({
         <Template>
           {() => (
             <Container>
-              {header.render(data.a)}
+              {header.template(data.a)}
               <div>{data.a}</div>
             </Container>
           )}

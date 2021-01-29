@@ -31,18 +31,18 @@ export function createFuncResults(options: FuncMap, extensions?: Func | Obj, isR
               throw new TypeError('The return of template with multiple arguments must be React.Fragment type.');
             }
 
-            const tmplFcs: ReactElement<{ name?: Template.Func; children: Template.Func['render'] }>[] =
+            const tmplFcs: ReactElement<{ name?: Template.Func; children: Template.Func['template'] }>[] =
               jsxFragment.props.children;
             if (!Array.isArray(tmplFcs)) {
               throw new RangeError('Must be at least 2 Template elements.');
             }
 
-            let mainTemplate: Template.Func['render'] = noop;
+            let mainTemplate: Template.Func['template'] = noop;
             tmplFcs.forEach(item => {
               if (isTemplate(item.type)) {
                 const { name, children } = item.props;
                 if (name) {
-                  name.render = children;
+                  name.Template = (name.template = children) as Template.FC<unknown>;
                 } else {
                   mainTemplate = children;
                 }

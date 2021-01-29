@@ -36,9 +36,11 @@ export type DefineComponent<
     },
     extensions?: EX
   ): ReturnComponent &
-    Origin & { template: (data?: Data) => JSXElements; Template: React.FC<Data>; styles: InferStyles } & ExtractOptions<
-      EX
-    >;
+    Origin & {
+      template: (data?: Data) => JSXElements;
+      Template: Template.FC<Data>;
+      styles: InferStyles;
+    } & ExtractOptions<EX>;
 
   <
     Styles,
