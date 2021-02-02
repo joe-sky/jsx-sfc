@@ -1,6 +1,6 @@
 {
   "name": "jsx-sfc",
-  "version": "0.3.4",
+  "version": "0.3.5-1.0.0-alpha.1.0",
   "description": "A tiny library that create React components with Separation of Concerns and Completely Type Safe.",
   "main": "dist/jsx-sfc.common.js",
   "module": "dist/jsx-sfc.esm.js",
