@@ -14,6 +14,8 @@
 
 `jsx-sfc`(JSX Separate Function Components) is a tiny tool(~1kb) for create React function components with **separation of concerns** and **completely type inference**. It can be seen as a JSX/TSX syntax or type tool, very simple to use🧙🏼‍♂️.
 
+> The complete documentation will be completed soon.
+
 ## Demo
 
 [Live demo is here.](https://codesandbox.io/s/jsx-sfc-demo-wwgd4)
@@ -128,18 +130,18 @@ const App = sfc({
 });
 ```
 
-See the demo, the main design ideas of `jsx-sfc`:
+<!-- See the demo, the main design ideas of `jsx-sfc`:
 
 - Not single file, just separate functions.
 - Extracting a separate template function.
 - CSS in JS can be used in a separate style function.
 - Extending any separate members(stores, graphqls, etc.).
 - Exporting all separate members for reusing and testing.
-- All of above support completely type inference.
+- All of above support completely type inference. -->
 
 <!-- tips: What features are needed to adapt to JSX environment -->
 
-So `jsx-sfc` is similar to Vue SFCs in the form of separation of concerns, but it was originally designed to adapt the JSX(TSX) environment!
+<!-- So `jsx-sfc` is similar to Vue SFCs in the form of separation of concerns, but it was originally designed to adapt the JSX(TSX) environment! -->
 
 <!-- ## Benefit -->
 
@@ -233,31 +235,127 @@ const App = sfc({
 
 > The type inferences are also type safe in TSX. For example, if you don't return an object from `Component function`, you will receive a type error.
 
-todo: with generics
+#### With styles
+
+`jsx-sfc` allows you to choose a CSS in JS framework to define the style of components, such as [styled-components](https://github.com/styled-components/styled-components), [Emotion](https://github.com/emotion-js/emotion). A styled-components example:
+
+```tsx
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import sfc from 'jsx-sfc';
+
+const App = sfc({
+  template: ({ data, styles: { Wrapper } }) => (
+    <Wrapper>
+      <button onClick={data.onClick}>{data.user}</button>
+    </Wrapper>
+  ),
+
+  Component() {
+    const [user, setUser] = useState('foo');
+    return { user, onClick: () => setUser('bar') };
+  },
+
+  styles: {
+    Wrapper: styled.div`
+      background-color: #fff;
+    `
+  }
+});
+```
+
+- Define styles in a function:
+
+If you need to extend components when using styled-components, you can also define styles as a function:
+
+```tsx
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import sfc from 'jsx-sfc';
+
+const App = sfc({
+  template: ({ data, styles: { Wrapper } }) => (
+    <Wrapper>
+      <button onClick={data.onClick}>{data.user}</button>
+    </Wrapper>
+  ),
+
+  Component() {
+    const [user, setUser] = useState('foo');
+    return { user, onClick: () => setUser('bar') };
+  },
+
+  styles: () => {
+    const WrapperBase = styled.div`
+      background-color: #fff;
+    `;
+
+    return {
+      Wrapper: styled(WrapperBase)`
+        background-color: #fff;
+      `
+    };
+  }
+});
+```
+
+#### With generics
+
+`jsx-sfc` components can also pass generics:
+
+```tsx
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import sfc from 'jsx-sfc';
+
+interface Props {
+  userName: string;
+}
+
+// Notice: there's a pair of extra brackets after the generics!
+const App = sfc<Props>()({
+  template: ({ data, styles: { Wrapper } }) => (
+    <Wrapper>
+      <button onClick={data.onClick}>{data.user}</button>
+    </Wrapper>
+  ),
+
+  Component(props) {
+    const [user, setUser] = useState(props.userName);
+    return { user, onClick: () => setUser('bar') };
+  },
+
+  styles: {
+    Wrapper: styled.div`
+      background-color: #fff;
+    `
+  }
+});
+```
 
 ### `sfc.forwardRef`
 
-### Export separate members
+### Export members
 
-### Using with TypeScript
+<!-- ### Using with TypeScript -->
 
-todo: difference in strict mode
+<!-- todo: difference in strict mode -->
 
 ## API design rules of jsx-sfc
 
-todo: ts limitation based
+<!-- todo: ts limitation based -->
 
 ## FAQ
 
-todo: { data: { xxx } }
+<!-- todo: { data: { xxx } } -->
 
-todo: defferent from class component
+<!-- todo: defferent from class component -->
 
 ## Roadmap
 
 ## Who is using jsx-sfc
 
-todo: set some large code blocks
+<!-- todo: set some large code blocks -->
 
 ## License
 
