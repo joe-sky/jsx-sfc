@@ -50,7 +50,9 @@
 - [Usage](#usage)
   - [`sfc`](#sfc)
   - [`sfc.forwardRef`](#sfc.forwardRef)
-  - [Using with TypeScript](#using-with-typescript)
+  - [Multiple templates](#multiple-templates)
+  - [Extensions](#extensions)
+  - [Export members](#export-members)
 - [API design rules of jsx-sfc](#api-design-rules-of-jsx-sfc)
 - [FAQ](#faq)
 - [Roadmap](#roadmap)
@@ -301,19 +303,19 @@ const App = sfc({
 
 #### With generics
 
-`jsx-sfc` components can also pass generics:
+`jsx-sfc` can also pass generics:
 
 ```tsx
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import sfc from 'jsx-sfc';
 
-interface Props {
+interface AppProps {
   userName: string;
 }
 
 // Notice: there's a pair of extra brackets after the generics!
-const App = sfc<Props>()({
+const App = sfc<AppProps>()({
   template: ({ data, styles: { Wrapper } }) => (
     <Wrapper>
       <button onClick={data.onClick}>{data.user}</button>
@@ -335,7 +337,181 @@ const App = sfc<Props>()({
 
 ### `sfc.forwardRef`
 
+`jsx-sfc` also support `forward ref components`:
+
+```tsx
+import React, { useState, useImperativeHandle, useRef } from 'react';
+import styled from 'styled-components';
+import sfc from 'jsx-sfc';
+
+interface AppProps {
+  userName: string;
+}
+
+interface AppRef {
+  getUserName: () => string;
+}
+
+const App = sfc.forwardRef<AppRef, AppProps>()({
+  template: ({ data, styles: { Wrapper } }) => (
+    <Wrapper>
+      <button onClick={data.onClick}>{data.user}</button>
+    </Wrapper>
+  ),
+
+  Component(props, ref) {
+    const [user, setUser] = useState(props.userName);
+
+    useImperativeHandle(ref, () => ({
+      getUserName: () => user
+    }));
+
+    return { user, onClick: () => setUser('bar') };
+  },
+
+  styles: {
+    Wrapper: styled.div`
+      background-color: #fff;
+    `
+  }
+});
+
+function TestApp() {
+  const appRef = useRef();
+
+  return (
+    <>
+      <App ref={appRef} />
+      <button onClick={() => console.log(appRef.current.getUserName())}>user name</button>
+    </>
+  );
+}
+```
+
+### Multiple templates
+
+In the template function of `jsx-sfc` components, we can also create reusable sub template functions:
+
+```tsx
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import sfc, { Template } from 'jsx-sfc';
+
+const App = sfc({
+  template: ({ data, styles: { Wrapper } }, btn, text: Template.Func<number>) => (
+    <>
+      <Template name={btn}>{() => <button onClick={data.onClick}>{data.user}</button>}</Template>
+
+      <Template name={text}>{(num: number) => <i key={num}>{data.user}</i>}</Template>
+
+      <Template>
+        <Wrapper>
+          {btn.template()}
+          {[1, 2, 3].map(num => text.template())}
+        </Wrapper>
+      </Template>
+    </>
+  ),
+
+  Component() {
+    const [user, setUser] = useState('foo');
+    return { user, onClick: () => setUser('bar') };
+  },
+
+  styles: () => {
+    const WrapperBase = styled.div`
+      background-color: #fff;
+    `;
+
+    return {
+      Wrapper: styled(WrapperBase)`
+        background-color: #fff;
+      `
+    };
+  }
+});
+```
+
+### Extensions
+
+Except template and styles, other extensions for `jsx-sfc` components are also supported:
+
+```tsx
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import sfc from 'jsx-sfc';
+
+const App = sfc({
+  template: ({ data, styles: { Wrapper }, utils: { trimWithPrefix } }) => (
+    <Wrapper>
+      <button onClick={data.onClick}>{trimWithPrefix(data.user)}</button>
+    </Wrapper>
+  ),
+
+  Component() {
+    const [user, setUser] = useState('  foo  ');
+    return { user, onClick: () => setUser('bar') };
+  },
+
+  styles: () => {
+    const WrapperBase = styled.div`
+      background-color: #fff;
+    `;
+
+    return {
+      Wrapper: styled(WrapperBase)`
+        background-color: #fff;
+      `
+    };
+  },
+  // Notice: you need to pass in the second parameter.
+  {
+    utils: {
+      trimWithPrefix(str: string) {
+        return ('prefix_' + str.trim());
+      }
+    }
+  }
+});
+```
+
 ### Export members
+
+All members support exporting from `jsx-sfc` components(except `Component`):
+
+```tsx
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import sfc from 'jsx-sfc';
+
+const App = sfc({
+  template: ({ data, styles: { Wrapper } }) => (
+    <Wrapper>
+      <button onClick={data.onClick}>{data.user}</button>
+    </Wrapper>
+  ),
+
+  Component() {
+    const [user, setUser] = useState('foo');
+    return { user, onClick: () => setUser('bar') };
+  },
+
+  styles: () => {
+    const WrapperBase = styled.div`
+      background-color: #fff;
+    `;
+
+    return {
+      Wrapper: styled(WrapperBase)`
+        background-color: #fff;
+      `
+    };
+  }
+});
+
+console.log(App.template);
+console.log(App.styles);
+```
 
 <!-- ### Using with TypeScript -->
 
@@ -353,7 +529,7 @@ const App = sfc<Props>()({
 
 ## Roadmap
 
-## Who is using jsx-sfc
+## Who is using
 
 <!-- todo: set some large code blocks -->
 
