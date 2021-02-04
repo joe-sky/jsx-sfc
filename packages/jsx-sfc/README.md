@@ -14,19 +14,21 @@
 
 `jsx-sfc`(JSX Separate Function Components) is a tiny tool(~1kb) for create React function components with **separation of concerns** and **completely type inference**. It can be seen as a JSX/TSX syntax or type tool, very simple to use🧙🏼‍♂️.
 
-> The complete documentation will be completed soon.
+> Currently version is v1.0.0-alpha.x, the v1 version and full documents will be completed soon.
 
 ## Demo
 
 [Live demo is here.](https://codesandbox.io/s/jsx-sfc-demo-wwgd4)
 
+> Currently this demo is a runtime syntax version, and will be changed to a compiled version later.
+
 ## Features
 
-- 🌟 Easy to write function components with **separation of concerns**
+- 🌟 Easy way to define function components with **separation of concerns**
 - ✨ Clearly isolate **template**, **logic**, **styles** and **any other concerns**
 - 💫 **Completely type inference** design by TypeScript
 - 🔥 Support all React hooks
-- ⚡ Support React fast refresh
+- ⚡ Support React Fast Refresh
 - 🔧 Support React eslint plugins
 - 🚀 No dependencies and side effects
 
@@ -50,12 +52,12 @@
 - [Usage](#usage)
   - [`sfc`](#sfc)
   - [`sfc.forwardRef`](#sfc.forwardRef)
-  - [Multiple templates](#multiple-templates)
+  - [Multiple Templates](#multiple-templates)
   - [Extensions](#extensions)
-  - [Export members](#export-members)
-- [API design rules of jsx-sfc](#api-design-rules-of-jsx-sfc)
-- [FAQ](#faq)
+  - [Export Members](#export-members)
+- [API Design Principle](#api-design-principle)
 - [Roadmap](#roadmap)
+- [Who is using](#who-is-using)
 
 ## Inspiration
 
@@ -99,7 +101,7 @@ const Wrap = styled.section`
 `;
 ```
 
-Now, we can use `jsx-sfc` to rewrite it:
+Now, we can use `jsx-sfc` to rewrite it with **separation of concerns** and **type safe**:
 
 ```tsx
 import sfc from 'jsx-sfc';
@@ -131,6 +133,45 @@ const App = sfc({
   }
 });
 ```
+
+And if you configure the `eslint-plugin-react-hooks`, it also can check where you can use hooks:
+
+```tsx
+import sfc from 'jsx-sfc';
+
+const App = sfc({
+  template: ({ data, styles: { Wrap, hl } }) => {
+    // Eslint check error, hooks can't appear inside the template function.
+    useEffect(() => ...);
+
+    return (
+      <Wrap>
+        <i className={hl}>{data.user}</i>
+      </Wrap>
+    );
+  },
+
+  Component(props) {
+    const [user, setUser] = useState(props.user);
+
+    useEffect(
+      () => console.log(user),
+      // Eslint check warning, missing deps.
+      []
+    );
+
+    useEffect(() => {
+      setUser('joe-sky');
+    }, []);
+
+    return { user };
+  }
+
+  ...
+});
+```
+
+Finally, `jsx-sfc` can also support `React Fast Refresh` perfectly. Because it has a `babel-plugin-jsx-sfc` to transform the runtime code into a format recognized by the `Babel plugin of React Fast Refresh` 😉.
 
 <!-- See the demo, the main design ideas of `jsx-sfc`:
 
@@ -388,7 +429,7 @@ function TestApp() {
 }
 ```
 
-### Multiple templates
+### Multiple Templates
 
 In the template function of `jsx-sfc` components, we can also create reusable sub template functions:
 
@@ -475,7 +516,7 @@ const App = sfc({
 });
 ```
 
-### Export members
+### Export Members
 
 All members support exporting from `jsx-sfc` components(except `Component`):
 
@@ -517,11 +558,19 @@ console.log(App.styles);
 
 <!-- todo: difference in strict mode -->
 
-## API design rules of jsx-sfc
+## API Design Principle
+
+The API design principle of `jsx-sfc` can be defined as `Type First`.
+
+### What is Type First
+
+It can be explained in this way:
+
+> If the type design can match the requirements, the corresponding logic implementation can be done.
 
 <!-- todo: ts limitation based -->
 
-## FAQ
+<!-- ## FAQ -->
 
 <!-- todo: { data: { xxx } } -->
 
@@ -529,7 +578,11 @@ console.log(App.styles);
 
 ## Roadmap
 
+At present only React is supported. However, other framework versions will not be excluded in the future(e.g. Vue v3).
+
 ## Who is using
+
+The author `Joe_Sky` and his front-end team in jd.com.
 
 <!-- todo: set some large code blocks -->
 
