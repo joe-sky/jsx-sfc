@@ -1,8 +1,8 @@
 <h1 align="center">
   JSX Separate Function Components
   <div>
-    <!-- <a href="https://travis-ci.org/joe-sky/jsx-sfc"><img src="https://travis-ci.org/joe-sky/jsx-sfc.svg?branch=master" alt="Travis   CI   Status"></a>
-    <a href="https://codecov.io/gh/joe-sky/jsx-sfc"><img src="https://codecov.io/gh/joe-sky/jsx-sfc/branch/master/graph/badge.svg"     alt="Codecov"></a> -->
+    <a href="https://travis-ci.org/joe-sky/jsx-sfc"><img src="https://travis-ci.org/joe-sky/jsx-sfc.svg?branch=master" alt="Travis CI Status"></a>
+    <a href="https://codecov.io/gh/joe-sky/jsx-sfc"><img src="https://codecov.io/gh/joe-sky/jsx-sfc/branch/master/graph/badge.svg"     alt="Codecov"></a>
     <a href="https://www.npmjs.org/package/jsx-sfc"><img src="https://img.shields.io/npm/v/jsx-sfc.svg" alt="NPM Version"></a> <a     href="https://www.npmjs.org/package/jsx-sfc"><img src="https://img.shields.io/npm/dm/jsx-sfc.svg" alt="NPM Downloads"></a> <a     href="https://bundlephobia.com/result?p=jsx-sfc"><img src="https://img.shields.io/bundlephobia/minzip/jsx-sfc.svg?style=flat"     alt="Minzipped Size"></a>
     <a href="https://www.npmjs.com/package/jsx-sfc"><img src="https://img.shields.io/npm/l/jsx-sfc.svg" alt="License"></a>
   </div>
@@ -448,7 +448,7 @@ const App = sfc({
       <Template>
         <Wrapper>
           {btn.template()}
-          {[1, 2, 3].map(num => text.template())}
+          {[1, 2, 3].map(num => text.template(num))}
         </Wrapper>
       </Template>
     </>
