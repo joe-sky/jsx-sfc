@@ -15,7 +15,7 @@
     "test:babel": "yarn run jest:clear && jest --config=test/jest.config.babel.js",
     "jest:clear": "jest --clearCache",
     "cover": "yarn run jest:clear && jest --coverage --config=test/jest.config.compile.js",
-    "ci": "yarn run build && yarn run cover && yarn run test:compile && codecov",
+    "ci": "yarn run build && yarn run cover && codecov",
     "release": "lerna publish",
     "release:next": "lerna publish --dist-tag next"
   },
