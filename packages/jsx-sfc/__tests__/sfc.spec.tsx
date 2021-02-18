@@ -69,18 +69,22 @@ describe('basic', function() {
 });
 
 const AppMultiTmpls = sfc<AppProps>()({
-  template: ({ data, styles: { Container } }, header: Template.Func<string>, footer: Template.Func<string>) => (
+  template: (
+    { data, styles: { Container } },
+    header: Template.Func<string>,
+    Footer: Template.Func<{ content?: string }>
+  ) => (
     <>
       <Template name={header}>{content => <header>{content}</header>}</Template>
 
-      <Template name={footer}>{content => <footer>{content}</footer>}</Template>
+      <Template name={Footer}>{({ content }) => <footer>{content}</footer>}</Template>
 
       <Template>
         {() => (
           <Container>
             {header.template(data.a)}
             <div>{data.a}</div>
-            {footer.template(data.a)}
+            <Footer.template content={data.a} />
           </Container>
         )}
       </Template>
@@ -123,7 +127,7 @@ const AppButton2: React.FC = () => {
   return (
     <ul>
       <li>
-        <AppButton.Template name={user} onClick={() => setUser(`${user} click!`)} />
+        <AppButton.template name={user} onClick={() => setUser(`${user} click!`)} />
       </li>
     </ul>
   );

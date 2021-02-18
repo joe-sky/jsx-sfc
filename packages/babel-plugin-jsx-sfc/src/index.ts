@@ -26,7 +26,7 @@ export default () => ({
                 ...
               },
           
-              style: () => { ... }
+              styles: () => { ... }
             },
             () => ({
               utils: { ... }
@@ -41,7 +41,7 @@ export default () => ({
                 ...
               },
           
-              style: () => ({
+              styles: () => ({
                 ...
               })
             },

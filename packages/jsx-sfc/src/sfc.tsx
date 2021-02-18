@@ -62,9 +62,7 @@ export function createFuncResults(options: FuncMap, extensions?: Func | Obj, isR
 }
 
 function assignToComponent(component: Func, extensions: Obj) {
-  const { template } = extensions;
-
-  return Object.assign(withOrigin(component), extensions, template ? { Template: template } : {});
+  return Object.assign(withOrigin(component), extensions);
 }
 
 function createSfc(isForwardRef?: boolean) {

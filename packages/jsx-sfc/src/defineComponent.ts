@@ -26,19 +26,44 @@ export type DefineComponent<
   >(
     options: {
       /**
-       * Using the styles property or function to define styles, you can use the most popular `CSS in JS` frameworks. (e.g. `styled-components`, `emotion`, `JSS`)
+       * Using the `styles property or function` to define styles, you can use the most popular `CSS in JS` frameworks. (e.g. `styled-components`, `emotion`, `JSS`)
        */
       styles?: Styles;
+      /**
+       * Using the `Component function` to define actual components, example:
+       * ```tsx
+       * const App = sfc({
+       *   template: ({ data, styles: { Wrapper } }) => <Wrapper>{data.user}</Wrapper>,
+       *   Component: (props) => {
+       *     useEffect(() => console.log(props.user), []);
+       *     return { user: props.user };
+       *   },
+       *   styles: { Wrapper: styled.div`font-size:14px` }
+       * });
+       * ```
+       */
       Component: Ref extends NoRef
         ? (props: SFCProps<Props, FR>, context?: any) => Data
         : (props: SFCProps<Props, FR>, ref?: React.Ref<Ref>) => Data;
+      /**
+       * Using the `template function` to return JSX elements, example:
+       * ```tsx
+       * const App = sfc({
+       *   template: ({ data, styles: { Wrapper } }) => <Wrapper>{data.user}</Wrapper>,
+       *   Component: (props) => {
+       *     useEffect(() => console.log(props.user), []);
+       *     return { user: props.user };
+       *   },
+       *   styles: { Wrapper: styled.div`font-size:14px` }
+       * });
+       * ```
+       */
       template: <U extends Data>(args: { data: U } & FR, ...tmpls: Template.Func[]) => JSXElements;
     },
     extensions?: EX
   ): ReturnComponent &
     Origin & {
       template: (data?: Data) => JSXElements;
-      Template: React.FC<Data>;
       styles: InferStyles;
     } & ExtractOptions<EX>;
 
@@ -51,9 +76,22 @@ export type DefineComponent<
   >(
     options: {
       /**
-       * Using the styles property or function to define styles, you can use the most popular `CSS in JS` frameworks. (e.g. `styled-components`, `emotion`, `JSS`)
+       * Using the `styles property or function` to define styles, you can use the most popular `CSS in JS` frameworks. (e.g. `styled-components`, `emotion`, `JSS`)
        */
       styles: Styles;
+      /**
+       * Using the `Component function` to define actual components, example:
+       * ```tsx
+       * const App = sfc({
+       *   template: ({ data, styles: { Wrapper } }) => <Wrapper>{data.user}</Wrapper>,
+       *   Component: (props) => {
+       *     useEffect(() => console.log(props.user), []);
+       *     return { user: props.user };
+       *   },
+       *   styles: { Wrapper: styled.div`font-size:14px` }
+       * });
+       * ```
+       */
       Component: Ref extends NoRef
         ? (props: SFCProps<Props, FR>, context?: any) => JSXElements
         : (props: SFCProps<Props, FR>, ref?: React.Ref<Ref>) => JSXElements;

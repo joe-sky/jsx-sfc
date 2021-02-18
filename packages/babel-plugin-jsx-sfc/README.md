@@ -9,7 +9,7 @@ const App = sfc(
   {
     template({ data }) { ... },
     Component: (props) => { ... },
-    style: () => ({ ... })
+    styles: () => ({ ... })
   },
   () => ({
     hooks: { ... },
@@ -22,7 +22,7 @@ const App = sfc(
 const $sfcFuncResults_123 = sfc.createFuncResults(
   {
     template({ data }) { ... },
-    style: () => ({ ... })
+    styles: () => ({ ... })
   },
   () => ({
     hooks: { ... },

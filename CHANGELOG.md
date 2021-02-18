@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v1.0.0-alpha.3] 2021.02.18
+
+- 🌟 Restrict the return value type of multiple templates.
+
 ## [v1.0.0-alpha.1] 2021.02.02
 
 - 🌟 Type optimization of internal implementation.

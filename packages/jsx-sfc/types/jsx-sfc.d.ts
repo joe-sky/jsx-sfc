@@ -1,9 +1,9 @@
 /*!
- * jsx-sfc v1.0.0-alpha.2
+ * jsx-sfc v1.0.0-alpha.3
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
-import React, { ReactElement, ReactNode, PropsWithChildren, RefAttributes } from 'react';
+import React, { ReactElement, PropsWithChildren, RefAttributes } from 'react';
 
 declare type Func = (...args: any) => any;
 declare type Obj = Record<string, unknown>;
@@ -22,9 +22,9 @@ declare const Template: <Arg1 = any, Arg2 = any, Arg3 = any, Arg4 = any, Arg5 = 
 }) => JSXElements;
 declare namespace Template {
     interface Func<Arg1 = unknown, Arg2 = unknown, Arg3 = unknown, Arg4 = unknown, Arg5 = unknown> {
-        (arg1?: Arg1, arg2?: Arg2, arg3?: Arg3, arg4?: Arg4, arg5?: Arg5, ...args: unknown[]): ReactNode;
-        template: (arg1?: Arg1, arg2?: Arg2, arg3?: Arg3, arg4?: Arg4, arg5?: Arg5, ...args: unknown[]) => ReactNode;
-        __required(arg1: Arg1, arg2: Arg2, arg3: Arg3, arg4: Arg4, arg5: Arg5, ...args: unknown[]): ReactNode;
+        (arg1?: Arg1, arg2?: Arg2, arg3?: Arg3, arg4?: Arg4, arg5?: Arg5, ...args: unknown[]): JSXElements;
+        template: (arg1?: Arg1, arg2?: Arg2, arg3?: Arg3, arg4?: Arg4, arg5?: Arg5, ...args: unknown[]) => JSXElements;
+        __required(arg1: Arg1, arg2: Arg2, arg3: Arg3, arg4: Arg4, arg5: Arg5, ...args: unknown[]): JSXElements;
     }
     type EL = typeof templateElement;
     type Data = Obj;
@@ -43,25 +43,63 @@ declare type DefineComponent<Ref = NoRef, Props = {}, ReturnComponent = Ref exte
         styles: InferStyles;
     } & InferEX>(options: {
         /**
-         * Using the styles property or function to define styles, you can use the most popular `CSS in JS` frameworks. (e.g. `styled-components`, `emotion`, `JSS`)
+         * Using the `styles property or function` to define styles, you can use the most popular `CSS in JS` frameworks. (e.g. `styled-components`, `emotion`, `JSS`)
          */
         styles?: Styles;
+        /**
+         * Using the `Component function` to define actual components, example:
+         * ```tsx
+         * const App = sfc({
+         *   template: ({ data, styles: { Wrapper } }) => <Wrapper>{data.user}</Wrapper>,
+         *   Component: (props) => {
+         *     useEffect(() => console.log(props.user), []);
+         *     return { user: props.user };
+         *   },
+         *   styles: { Wrapper: styled.div`font-size:14px` }
+         * });
+         * ```
+         */
         Component: Ref extends NoRef ? (props: SFCProps<Props, FR>, context?: any) => Data : (props: SFCProps<Props, FR>, ref?: React.Ref<Ref>) => Data;
+        /**
+         * Using the `template function` to return JSX elements, example:
+         * ```tsx
+         * const App = sfc({
+         *   template: ({ data, styles: { Wrapper } }) => <Wrapper>{data.user}</Wrapper>,
+         *   Component: (props) => {
+         *     useEffect(() => console.log(props.user), []);
+         *     return { user: props.user };
+         *   },
+         *   styles: { Wrapper: styled.div`font-size:14px` }
+         * });
+         * ```
+         */
         template: <U extends Data>(args: {
             data: U;
         } & FR, ...tmpls: Template.Func[]) => JSXElements;
     }, extensions?: EX): ReturnComponent & Origin & {
         template: (data?: Data) => JSXElements;
-        Template: React.FC<Data>;
         styles: InferStyles;
     } & ExtractOptions<EX>;
     <Styles, InferStyles extends ExtractOptions<Styles>, EX, InferEX extends ExtractOptions<EX>, FR extends {
         styles: InferStyles;
     } & InferEX>(options: {
         /**
-         * Using the styles property or function to define styles, you can use the most popular `CSS in JS` frameworks. (e.g. `styled-components`, `emotion`, `JSS`)
+         * Using the `styles property or function` to define styles, you can use the most popular `CSS in JS` frameworks. (e.g. `styled-components`, `emotion`, `JSS`)
          */
         styles: Styles;
+        /**
+         * Using the `Component function` to define actual components, example:
+         * ```tsx
+         * const App = sfc({
+         *   template: ({ data, styles: { Wrapper } }) => <Wrapper>{data.user}</Wrapper>,
+         *   Component: (props) => {
+         *     useEffect(() => console.log(props.user), []);
+         *     return { user: props.user };
+         *   },
+         *   styles: { Wrapper: styled.div`font-size:14px` }
+         * });
+         * ```
+         */
         Component: Ref extends NoRef ? (props: SFCProps<Props, FR>, context?: any) => JSXElements : (props: SFCProps<Props, FR>, ref?: React.Ref<Ref>) => JSXElements;
     }, extensions?: EX): ReturnComponent & Origin & {
         styles: InferStyles;
