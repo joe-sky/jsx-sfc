@@ -8,7 +8,9 @@
     "README.md"
   ],
   "scripts": {
-    "build": "babel src --out-dir lib --extensions \".js,.jsx,.ts,.tsx\" --config-file \"../../.babelrc\""
+    "lib": "babel src --out-dir lib --extensions \".js,.jsx,.ts,.tsx\" --config-file \"../../.babelrc\"",
+    "dts": "rollup -c -o index.d.ts",
+    "build": "yarn run lib && yarn run dts"
   },
   "repository": {
     "type": "git",

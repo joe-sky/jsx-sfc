@@ -1,8 +1,13 @@
 import { transformSync } from '@babel/core';
 import babelPluginJsxSfc from 'babel-plugin-jsx-sfc';
 
+interface Args {
+  code: string;
+  path: string;
+}
+
 export const sfcTransform = {
-  test: ({ path }) => {
+  test: ({ path }: Args) => {
     if (!/\.(t|j)sx?$/.test(path)) {
       return false;
     }
@@ -13,14 +18,14 @@ export const sfcTransform = {
     return true;
   },
 
-  transform: ({ code, path }) => {
+  transform: ({ code, path }: Args) => {
     const result = transformSync(code, {
       plugins: [babelPluginJsxSfc],
       sourceMaps: true,
       sourceFileName: path
     });
 
-    if (!/\$sfcFuncResults/.test(result.code)) {
+    if (result?.code == null || !/\$sfcFuncResults/.test(result.code)) {
       // no component detected in the file
       return code;
     }

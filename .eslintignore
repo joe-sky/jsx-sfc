@@ -4,4 +4,7 @@
 /packages/jsx-sfc/types/dist.definition.ts
 /packages/jsx-sfc/types/jsx-sfc.d.ts
 /packages/babel-plugin-jsx-sfc/lib
+/packages/babel-plugin-jsx-sfc/index.d.ts
 /packages/vite-plugin-jsx-sfc/lib
+/packages/vite-plugin-jsx-sfc/legacy
+/packages/vite-plugin-jsx-sfc/index.d.ts

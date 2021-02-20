@@ -1,2 +1,4 @@
 /node_modules/
 /lib/
+/legacy/index.js
+/legacy/transform.js

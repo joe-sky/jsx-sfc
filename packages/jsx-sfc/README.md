@@ -16,7 +16,7 @@
 
 `jsx-sfc`(JSX Separate Function Components) is a tiny tool(~1kb) for create React function components with **separation of concerns** and **completely type inference**. It can be seen as a JSX/TSX syntax or type tool, very simple to use🧙🏼‍♂️.
 
-> Currently version is v1.0.0-alpha.x, the v1 version and full documents will be completed soon.
+> Currently version is v1.0.0-alpha.x, the v1 version and full documentation will be completed soon.
 
 ## Demo
 

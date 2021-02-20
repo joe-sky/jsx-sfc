@@ -5,11 +5,15 @@
   "main": "lib/index.js",
   "files": [
     "lib/",
+    "legacy/",
     "index.d.ts",
     "README.md"
   ],
   "scripts": {
-    "build": "babel src --out-dir lib --extensions \".js,.jsx,.ts,.tsx\" --config-file \"../../.babelrc\""
+    "legacy": "babel src/legacy --out-dir legacy --extensions \".js,.jsx,.ts,.tsx\" --config-file \"../../.babelrc\"",
+    "lib": "babel src/index.ts --out-dir lib/index.js --extensions \".js,.jsx,.ts,.tsx\" --config-file \"../../.babelrc\"",
+    "dts": "rollup -c -o index.d.ts",
+    "build": "yarn run lib && yarn run legacy && yarn run dts"
   },
   "repository": {
     "type": "git",
