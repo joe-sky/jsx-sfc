@@ -30,9 +30,9 @@ export type DefineComponent<
        */
       styles?: Styles;
       /**
-       * Using the `Component function` to define actual components, example:
+       * Using the `Component function` to define actual component, example:
        * ```tsx
-       * const App = sfc({
+       * const App = sfc<{ user: string }>()({
        *   template: ({ data, styles: { Wrapper } }) => <Wrapper>{data.user}</Wrapper>,
        *   Component: (props) => {
        *     useEffect(() => console.log(props.user), []);
@@ -48,7 +48,7 @@ export type DefineComponent<
       /**
        * Using the `template function` to return JSX elements, example:
        * ```tsx
-       * const App = sfc({
+       * const App = sfc<{ user: string }>()({
        *   template: ({ data, styles: { Wrapper } }) => <Wrapper>{data.user}</Wrapper>,
        *   Component: (props) => {
        *     useEffect(() => console.log(props.user), []);
@@ -80,13 +80,12 @@ export type DefineComponent<
        */
       styles: Styles;
       /**
-       * Using the `Component function` to define actual components, example:
+       * Using the `Component function` to define actual component, example:
        * ```tsx
-       * const App = sfc({
-       *   template: ({ data, styles: { Wrapper } }) => <Wrapper>{data.user}</Wrapper>,
-       *   Component: (props) => {
-       *     useEffect(() => console.log(props.user), []);
-       *     return { user: props.user };
+       * const App = sfc<{ user: string }>()({
+       *   Component: ({ user, styles: { Wrapper } }) => {
+       *     useEffect(() => console.log(user), []);
+       *     return <Wrapper>{user}</Wrapper>;
        *   },
        *   styles: { Wrapper: styled.div`font-size:14px` }
        * });

@@ -1,5 +1,5 @@
 /*!
- * jsx-sfc v1.0.0-alpha.3
+ * jsx-sfc v1.0.0-alpha.4
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
@@ -47,9 +47,9 @@ declare type DefineComponent<Ref = NoRef, Props = {}, ReturnComponent = Ref exte
          */
         styles?: Styles;
         /**
-         * Using the `Component function` to define actual components, example:
+         * Using the `Component function` to define actual component, example:
          * ```tsx
-         * const App = sfc({
+         * const App = sfc<{ user: string }>()({
          *   template: ({ data, styles: { Wrapper } }) => <Wrapper>{data.user}</Wrapper>,
          *   Component: (props) => {
          *     useEffect(() => console.log(props.user), []);
@@ -63,7 +63,7 @@ declare type DefineComponent<Ref = NoRef, Props = {}, ReturnComponent = Ref exte
         /**
          * Using the `template function` to return JSX elements, example:
          * ```tsx
-         * const App = sfc({
+         * const App = sfc<{ user: string }>()({
          *   template: ({ data, styles: { Wrapper } }) => <Wrapper>{data.user}</Wrapper>,
          *   Component: (props) => {
          *     useEffect(() => console.log(props.user), []);
@@ -88,13 +88,12 @@ declare type DefineComponent<Ref = NoRef, Props = {}, ReturnComponent = Ref exte
          */
         styles: Styles;
         /**
-         * Using the `Component function` to define actual components, example:
+         * Using the `Component function` to define actual component, example:
          * ```tsx
-         * const App = sfc({
-         *   template: ({ data, styles: { Wrapper } }) => <Wrapper>{data.user}</Wrapper>,
-         *   Component: (props) => {
-         *     useEffect(() => console.log(props.user), []);
-         *     return { user: props.user };
+         * const App = sfc<{ user: string }>()({
+         *   Component: ({ user, styles: { Wrapper } }) => {
+         *     useEffect(() => console.log(user), []);
+         *     return <Wrapper>{user}</Wrapper>;
          *   },
          *   styles: { Wrapper: styled.div`font-size:14px` }
          * });

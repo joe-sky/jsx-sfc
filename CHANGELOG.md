@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v1.0.0-alpha.4] 2021.02.23
+
+- 🌟 `vite-plugin-jsx-sfc` supported Vite v2.
+
 ## [v1.0.0-alpha.3] 2021.02.18
 
 - 🌟 Restrict the return value type of multiple templates.
