@@ -1,6 +1,7 @@
 import { Plugin } from 'vite';
 import { transformSync } from '@babel/core';
 import babelPluginJsxSfc from 'babel-plugin-jsx-sfc';
+import babelPluginTransformReactJsx from '@babel/plugin-transform-react-jsx';
 
 export interface Options {}
 
@@ -24,7 +25,7 @@ export default function jsxSfcPlugin(opts?: Options) {
       const result = transformSync(code, {
         configFile: false,
         filename: id,
-        plugins: [babelPluginJsxSfc],
+        plugins: [babelPluginTransformReactJsx, babelPluginJsxSfc],
         sourceMaps: true,
         sourceFileName: id
       });
