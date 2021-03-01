@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v1.0.0-alpha.5] 2021.03.01
+
+- 🐛 Add @babel/plugin-transform-react-jsx to `babel-plugin-jsx-sfc` dependencies.
+
 ## [v1.0.0-alpha.4] 2021.02.23
 
 - 🌟 `vite-plugin-jsx-sfc` supported Vite v2.

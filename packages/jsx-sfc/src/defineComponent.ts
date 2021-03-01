@@ -26,7 +26,7 @@ export type DefineComponent<
   >(
     options: {
       /**
-       * Using the `styles property or function` to define styles, you can use the most popular `CSS in JS` frameworks. (e.g. `styled-components`, `emotion`, `JSS`)
+       * Using the `styles property or function` to define styles, you can use the most popular `CSS in JS` frameworks. (e.g. `styled-components`, `Emotion`)
        */
       styles?: Styles;
       /**
@@ -76,7 +76,7 @@ export type DefineComponent<
   >(
     options: {
       /**
-       * Using the `styles property or function` to define styles, you can use the most popular `CSS in JS` frameworks. (e.g. `styled-components`, `emotion`, `JSS`)
+       * Using the `styles property or function` to define styles, you can use the most popular `CSS in JS` frameworks. (e.g. `styled-components`, `emotion`)
        */
       styles: Styles;
       /**

@@ -7,18 +7,17 @@
     "serve": "vite preview"
   },
   "dependencies": {
-    "jsx-sfc": "^1.0.0-alpha.4",
+    "jsx-sfc": "^1.0.0-alpha.5",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "react-jss": "^10.5.1"
   },
   "devDependencies": {
-    "@babel/plugin-transform-react-jsx": "^7.12.17",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@vitejs/plugin-react-refresh": "^1.1.0",
     "typescript": "^4.1.2",
     "vite": "^2.0.1",
-    "vite-plugin-jsx-sfc": "^1.0.0-alpha.4"
+    "vite-plugin-jsx-sfc": "^1.0.0-alpha.5"
   }
 }

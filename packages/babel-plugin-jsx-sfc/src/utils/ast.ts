@@ -15,7 +15,8 @@ export function isImportedByLib(
 
   const bindingPath = path.scope.getBinding(identifier)?.path;
   if (types.isImportDeclaration(bindingPath?.parent)) {
-    return libName.includes(bindingPath.parent.source.value);
+    const sourceValue = bindingPath?.parent.source.value;
+    return sourceValue != null ? libName.includes(sourceValue) : false;
   }
 }
 
