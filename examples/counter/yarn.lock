@@ -197,7 +197,7 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.12.13"
 
-"@babel/plugin-transform-react-jsx@^7.12.17":
+"@babel/plugin-transform-react-jsx@^7.7.5":
   version "7.12.17"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-react-jsx/-/plugin-transform-react-jsx-7.12.17.tgz#dd2c1299f5e26de584939892de3cfc1807a38f24"
   integrity sha512-mwaVNcXV+l6qJOuRhpdTEj8sT/Z0owAVWf9QujTZ0d2ye9X/K+MTOTSizcgKOj18PGnTc/7g1I4+cIUjsKhBcw==
@@ -297,12 +297,13 @@ ansi-styles@^3.2.1:
   dependencies:
     color-convert "^1.9.0"
 
-babel-plugin-jsx-sfc@^1.0.0-alpha.4:
-  version "1.0.0-alpha.4"
-  resolved "https://registry.yarnpkg.com/babel-plugin-jsx-sfc/-/babel-plugin-jsx-sfc-1.0.0-alpha.4.tgz#7b73869fd1217b9c0901509d932b08b9abd7b963"
-  integrity sha512-v5oS+Kx8rYJDvmlXqGTH6WKgwteUaGHZmDC+gJQbYZDnOZYu1+vl6aWVPWPdZ4T7fEt8jS6ubiRCB3uPuKIDYg==
+babel-plugin-jsx-sfc@^1.0.0-alpha.5:
+  version "1.0.0-alpha.5"
+  resolved "https://registry.yarnpkg.com/babel-plugin-jsx-sfc/-/babel-plugin-jsx-sfc-1.0.0-alpha.5.tgz#ad88aded1279df95ef31d04e2aaef5edef9d2a14"
+  integrity sha512-aDIX7vLMNhAQQBwAZA4kEf9EBiBzMqveSeAgUx/OlwQc00igJ4g3Rxa3hLfIYTiNKSjMVL1ISFqJT07m3V6HRQ==
   dependencies:
     "@babel/core" "^7.7.5"
+    "@babel/plugin-transform-react-jsx" "^7.7.5"
 
 browserslist@^4.14.5:
   version "4.16.3"
@@ -617,10 +618,10 @@ jss@10.5.1:
     is-in-browser "^1.1.3"
     tiny-warning "^1.0.2"
 
-jsx-sfc@^1.0.0-alpha.4:
-  version "1.0.0-alpha.4"
-  resolved "https://registry.yarnpkg.com/jsx-sfc/-/jsx-sfc-1.0.0-alpha.4.tgz#b355b4487115e485f9646382ee6d03a394053b0e"
-  integrity sha512-MA2Qy0PxigK0CWc46MIyx14RX1+PinF0jraKlR/+kJp2s+Uk5oKkMSebCxj2/dkUa389gRDIsqmMauYAfgk4Pg==
+jsx-sfc@^1.0.0-alpha.5:
+  version "1.0.0-alpha.5"
+  resolved "https://registry.yarnpkg.com/jsx-sfc/-/jsx-sfc-1.0.0-alpha.5.tgz#d11c08cc65913c019891c403ecf2b7db3acfb5d1"
+  integrity sha512-zEKpOnLHEoV7JtjBqpc3f+s/MQ0Co1B8psWHO+qfbPUQwdJzU8gBjs7oQ7tNXuzaypNViPq8cuN4MliKlqP6Zg==
 
 lodash@^4.17.19:
   version "4.17.21"
@@ -821,13 +822,12 @@ typescript@^4.1.2:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.2.2.tgz#1450f020618f872db0ea17317d16d8da8ddb8c4c"
   integrity sha512-tbb+NVrLfnsJy3M59lsDgrzWIflR4d4TIUjz+heUnHZwdF7YsrMTKoRERiIvI2lvBG95dfpLxB21WZhys1bgaQ==
 
-vite-plugin-jsx-sfc@^1.0.0-alpha.4:
-  version "1.0.0-alpha.4"
-  resolved "https://registry.yarnpkg.com/vite-plugin-jsx-sfc/-/vite-plugin-jsx-sfc-1.0.0-alpha.4.tgz#a15e838d3c1bf4b2d7bae65bc1d3f4dbb2821094"
-  integrity sha512-gOkK94Ldxp/DrAYLh3xOQ2u+YrVAG6OjMKX8RHDsClRozr1nnMS6Tupo2uFuT28c/rC+s2DySCwy+kXNOoEAlA==
+vite-plugin-jsx-sfc@^1.0.0-alpha.5:
+  version "1.0.0-alpha.5"
+  resolved "https://registry.yarnpkg.com/vite-plugin-jsx-sfc/-/vite-plugin-jsx-sfc-1.0.0-alpha.5.tgz#d0603cad9617f3c1a428952d0fdd4ae0733d40c3"
+  integrity sha512-1jlPdmb24+rCoDd9MR9FnkFDSq3ky9do8wjQAiAiT9kyVHF6ncv3kXrDw22z57scNZN+bDnZxRbF5fLAWqMwDA==
   dependencies:
-    "@babel/core" "^7.7.5"
-    babel-plugin-jsx-sfc "^1.0.0-alpha.4"
+    babel-plugin-jsx-sfc "^1.0.0-alpha.5"
 
 vite@^2.0.1:
   version "2.0.4"
