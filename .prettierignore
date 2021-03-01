@@ -1,4 +1,5 @@
 /node_modules
+/examples/**/node_modules
 /packages/jsx-sfc/dist
 /packages/jsx-sfc/lib
 /packages/babel-plugin-jsx-sfc/lib

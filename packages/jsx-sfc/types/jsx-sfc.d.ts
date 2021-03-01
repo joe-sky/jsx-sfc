@@ -1,5 +1,5 @@
 /*!
- * jsx-sfc v1.0.0-alpha.6
+ * jsx-sfc v1.0.0-alpha.7
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
@@ -39,9 +39,9 @@ declare type ExtractOptions<T> = T extends () => infer R ? (R extends Obj ? R : 
 declare type DefineComponent<Ref = NoRef, Props = {}, ReturnComponent = Ref extends NoRef ? React.FC<Props> : React.ForwardRefExoticComponent<Props & RefAttributes<Ref>>, Origin = {
     Component: ReturnComponent;
 }> = {
-    <Data extends Template.Data, Styles, InferStyles extends ExtractOptions<Styles>, EX, InferEX extends ExtractOptions<EX>, FR extends {
+    <Data extends Template.Data, InferStyles extends ExtractOptions<Styles>, InferEX extends ExtractOptions<EX>, FR extends {
         styles: InferStyles;
-    } & InferEX>(options: {
+    } & InferEX, Styles = {}, EX = {}>(options: {
         /**
          * Using the `styles property or function` to define styles, you can use the most popular `CSS in JS` frameworks. (e.g. `styled-components`, `Emotion`)
          */
@@ -80,9 +80,9 @@ declare type DefineComponent<Ref = NoRef, Props = {}, ReturnComponent = Ref exte
         template: (data?: Data) => JSXElements;
         styles: InferStyles;
     } & ExtractOptions<EX>;
-    <Styles, InferStyles extends ExtractOptions<Styles>, EX, InferEX extends ExtractOptions<EX>, FR extends {
+    <InferStyles extends ExtractOptions<Styles>, InferEX extends ExtractOptions<EX>, FR extends {
         styles: InferStyles;
-    } & InferEX>(options: {
+    } & InferEX, Styles = {}, EX = {}>(options: {
         /**
          * Using the `styles property or function` to define styles, you can use the most popular `CSS in JS` frameworks. (e.g. `styled-components`, `emotion`)
          */
@@ -103,7 +103,7 @@ declare type DefineComponent<Ref = NoRef, Props = {}, ReturnComponent = Ref exte
     }, extensions?: EX): ReturnComponent & Origin & {
         styles: InferStyles;
     } & ExtractOptions<EX>;
-    <EX, InferEX extends ExtractOptions<EX>>(component: Ref extends NoRef ? (props: SFCProps<Props, InferEX>, context?: any) => JSXElements : (props: SFCProps<Props, InferEX>, ref?: React.Ref<Ref>) => JSXElements, extensions?: EX): ReturnComponent & Origin & ExtractOptions<EX>;
+    <InferEX extends ExtractOptions<EX>, EX = {}>(component: Ref extends NoRef ? (props: SFCProps<Props, InferEX>, context?: any) => JSXElements : (props: SFCProps<Props, InferEX>, ref?: React.Ref<Ref>) => JSXElements, extensions?: EX): ReturnComponent & Origin & ExtractOptions<EX>;
 };
 interface ForwardRefSFC extends DefineComponent {
     <Ref, Props = {}>(): DefineComponent<Ref, Props>;

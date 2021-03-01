@@ -297,10 +297,10 @@ ansi-styles@^3.2.1:
   dependencies:
     color-convert "^1.9.0"
 
-babel-plugin-jsx-sfc@^1.0.0-alpha.5:
-  version "1.0.0-alpha.5"
-  resolved "https://registry.yarnpkg.com/babel-plugin-jsx-sfc/-/babel-plugin-jsx-sfc-1.0.0-alpha.5.tgz#ad88aded1279df95ef31d04e2aaef5edef9d2a14"
-  integrity sha512-aDIX7vLMNhAQQBwAZA4kEf9EBiBzMqveSeAgUx/OlwQc00igJ4g3Rxa3hLfIYTiNKSjMVL1ISFqJT07m3V6HRQ==
+babel-plugin-jsx-sfc@^1.0.0-alpha.6:
+  version "1.0.0-alpha.6"
+  resolved "https://registry.yarnpkg.com/babel-plugin-jsx-sfc/-/babel-plugin-jsx-sfc-1.0.0-alpha.6.tgz#cd620bc181e16f6d24b9f6d12f0b39674465d56b"
+  integrity sha512-YMY2plOc7a0nCndzs3lPtkKZLnvGZgjpoT950YZNFCqNsySTfUAzHCGjHExHTpD/FdM8YDk7UIwUAL4fAODGlA==
   dependencies:
     "@babel/core" "^7.7.5"
     "@babel/plugin-transform-react-jsx" "^7.7.5"
@@ -618,10 +618,10 @@ jss@10.5.1:
     is-in-browser "^1.1.3"
     tiny-warning "^1.0.2"
 
-jsx-sfc@^1.0.0-alpha.5:
-  version "1.0.0-alpha.5"
-  resolved "https://registry.yarnpkg.com/jsx-sfc/-/jsx-sfc-1.0.0-alpha.5.tgz#d11c08cc65913c019891c403ecf2b7db3acfb5d1"
-  integrity sha512-zEKpOnLHEoV7JtjBqpc3f+s/MQ0Co1B8psWHO+qfbPUQwdJzU8gBjs7oQ7tNXuzaypNViPq8cuN4MliKlqP6Zg==
+jsx-sfc@^1.0.0-alpha.6:
+  version "1.0.0-alpha.6"
+  resolved "https://registry.yarnpkg.com/jsx-sfc/-/jsx-sfc-1.0.0-alpha.6.tgz#4033ccd6b05743778ab07859ae72acb2aefce2ba"
+  integrity sha512-A9dp99pXO6YmgTnNxu0vPSLQvJ5+o+i4uG5lCuEmWUtJQ756Ueg4daiXUyfeqAO1pMfeVakMZ3YHwh3q0oBQQQ==
 
 lodash@^4.17.19:
   version "4.17.21"
@@ -822,12 +822,12 @@ typescript@^4.1.2:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.2.2.tgz#1450f020618f872db0ea17317d16d8da8ddb8c4c"
   integrity sha512-tbb+NVrLfnsJy3M59lsDgrzWIflR4d4TIUjz+heUnHZwdF7YsrMTKoRERiIvI2lvBG95dfpLxB21WZhys1bgaQ==
 
-vite-plugin-jsx-sfc@^1.0.0-alpha.5:
-  version "1.0.0-alpha.5"
-  resolved "https://registry.yarnpkg.com/vite-plugin-jsx-sfc/-/vite-plugin-jsx-sfc-1.0.0-alpha.5.tgz#d0603cad9617f3c1a428952d0fdd4ae0733d40c3"
-  integrity sha512-1jlPdmb24+rCoDd9MR9FnkFDSq3ky9do8wjQAiAiT9kyVHF6ncv3kXrDw22z57scNZN+bDnZxRbF5fLAWqMwDA==
+vite-plugin-jsx-sfc@^1.0.0-alpha.6:
+  version "1.0.0-alpha.6"
+  resolved "https://registry.yarnpkg.com/vite-plugin-jsx-sfc/-/vite-plugin-jsx-sfc-1.0.0-alpha.6.tgz#3508ef58930c5be52b3e35940b3c8f4be6ef5c7d"
+  integrity sha512-u7wlegv5YSj9C+dsbuCWP9Vu7VKGUdVxlmqaqyHtDF4z+7GYs8ibvP1HrY0A0iSmymu5HieaUfhoUQEHHYAfHw==
   dependencies:
-    babel-plugin-jsx-sfc "^1.0.0-alpha.5"
+    babel-plugin-jsx-sfc "^1.0.0-alpha.6"
 
 vite@^2.0.1:
   version "2.0.4"

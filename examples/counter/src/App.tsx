@@ -11,7 +11,7 @@ const App = sfc(
           <img src={logo} className={data.classes.AppLogo} alt="logo" />
           <p>Hello Vite + React!</p>
           <p>
-            <button className={data.classes.AppButton} onClick={() => data.setCount(count => count + 1)}>
+            <button className={data.classes.AppButton} onClick={data.onClick}>
               count is: {data.count}
             </button>
           </p>
@@ -39,7 +39,12 @@ const App = sfc(
       const [count, setCount] = useState(0);
       const classes = useStyles();
 
-      return { count, setCount, classes };
+      return {
+        count,
+        setCount,
+        classes,
+        onClick: () => setCount(count => count + 1)
+      };
     }
   },
 
@@ -49,11 +54,15 @@ const App = sfc(
     },
     AppLogo: {
       height: '40vmin',
-      pointerEvents: 'none'
+      pointerEvents: 'none',
+      animation: '$App-logo-spin infinite 20s linear'
     },
-    '@media (prefers-reduced-motion: no-preference)': {
-      AppLogo: {
-        animation: '$App-logo-spin infinite 20s linear'
+    '@keyframes App-logo-spin': {
+      from: {
+        transform: 'rotate(0deg)'
+      },
+      to: {
+        transform: 'rotate(360deg)'
       }
     },
     AppHeader: {
@@ -68,14 +77,6 @@ const App = sfc(
     },
     AppLink: {
       color: '#61dafb'
-    },
-    '@keyframes App-logo-spin': {
-      from: {
-        transform: 'rotate(0deg)'
-      },
-      to: {
-        transform: 'rotate(360deg)'
-      }
     },
     AppButton: {
       fontSize: 'calc(10px + 2vmin)'

@@ -18,11 +18,11 @@ export type DefineComponent<
 > = {
   <
     Data extends Template.Data,
-    Styles,
     InferStyles extends ExtractOptions<Styles>,
-    EX,
     InferEX extends ExtractOptions<EX>,
-    FR extends { styles: InferStyles } & InferEX
+    FR extends { styles: InferStyles } & InferEX,
+    Styles = {},
+    EX = {}
   >(
     options: {
       /**
@@ -68,11 +68,11 @@ export type DefineComponent<
     } & ExtractOptions<EX>;
 
   <
-    Styles,
     InferStyles extends ExtractOptions<Styles>,
-    EX,
     InferEX extends ExtractOptions<EX>,
-    FR extends { styles: InferStyles } & InferEX
+    FR extends { styles: InferStyles } & InferEX,
+    Styles = {},
+    EX = {}
   >(
     options: {
       /**
@@ -98,7 +98,7 @@ export type DefineComponent<
     extensions?: EX
   ): ReturnComponent & Origin & { styles: InferStyles } & ExtractOptions<EX>;
 
-  <EX, InferEX extends ExtractOptions<EX>>(
+  <InferEX extends ExtractOptions<EX>, EX = {}>(
     component: Ref extends NoRef
       ? (props: SFCProps<Props, InferEX>, context?: any) => JSXElements
       : (props: SFCProps<Props, InferEX>, ref?: React.Ref<Ref>) => JSXElements,
