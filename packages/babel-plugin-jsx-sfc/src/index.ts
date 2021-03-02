@@ -187,8 +187,7 @@ export default () => ({
 
                 // const $sfcOptions_lineNo = ...
                 const componentVariable = path.findParent(
-                  path =>
-                    path.isVariableDeclaration() || path.isExportDefaultDeclaration() || path.isExportDeclaration()
+                  path => path.isVariableDeclaration() || path.isExportDefaultDeclaration()
                 );
 
                 const sfcOptionsPath = componentVariable?.insertBefore(
@@ -214,6 +213,22 @@ export default () => ({
                       )
                     ])
                   );
+
+                  if (types.isVariableDeclaration(componentVariable?.node)) {
+                    const declarationId = componentVariable?.node.declarations?.[0]?.id;
+                    if (types.isIdentifier(declarationId)) {
+                      const componentName = declarationId.name;
+                      componentVariable?.insertBefore(
+                        types.expressionStatement(
+                          types.assignmentExpression(
+                            '=',
+                            types.memberExpression(types.identifier(sfcName), types.identifier('displayName')),
+                            types.stringLiteral(componentName)
+                          )
+                        )
+                      );
+                    }
+                  }
 
                   path.replaceWith(
                     types.callExpression(types.identifier(SFC_FUNC), [
