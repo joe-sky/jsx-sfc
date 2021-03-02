@@ -25,7 +25,7 @@ export const sfcTransform = {
       sourceFileName: path
     });
 
-    if (result?.code == null || !/\$sfcFuncResults/.test(result.code)) {
+    if (result?.code == null || !/\$sfcOptions/.test(result.code)) {
       // no component detected in the file
       return code;
     }

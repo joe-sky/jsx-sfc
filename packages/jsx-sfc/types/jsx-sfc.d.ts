@@ -1,5 +1,5 @@
 /*!
- * jsx-sfc v1.0.0-alpha.7
+ * jsx-sfc v1.0.0-alpha.8
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
@@ -111,7 +111,7 @@ interface ForwardRefSFC extends DefineComponent {
 interface SFC extends DefineComponent {
     <Props = {}>(): DefineComponent<NoRef, Props>;
     forwardRef: ForwardRefSFC;
-    createFuncResults: (options: FuncMap, extensions?: Func | Obj, isRuntime?: boolean) => Obj;
+    createOptions: (options: FuncMap, extensions?: Func | Obj, isRuntime?: boolean) => Obj;
 }
 interface SFCOptions {
     template?: Func;
@@ -123,9 +123,9 @@ declare type SFCExtensions = {
     [key: string]: any;
 };
 
-declare function createFuncResults(options: FuncMap, extensions?: Func | Obj, isRuntime?: boolean): Record<string, unknown>;
+declare function createOptions(options: FuncMap, extensions?: Func | Obj, isRuntime?: boolean): Record<string, unknown>;
 declare const sfc: SFC;
 declare const forwardRef: ForwardRefSFC;
 
 export default sfc;
-export { DefineComponent, ForwardRefSFC, SFC, SFCExtensions, SFCOptions, SFCProps, Template, createFuncResults, forwardRef, isTemplate };
+export { DefineComponent, ForwardRefSFC, SFC, SFCExtensions, SFCOptions, SFCProps, Template, createOptions, forwardRef, isTemplate };

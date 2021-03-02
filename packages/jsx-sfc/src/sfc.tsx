@@ -5,7 +5,7 @@ import { isFunc, noop, getFuncParams, emptyObjs, withOrigin, Func, Obj, FuncMap 
 
 const COMPILED_SIGN = '__cs';
 
-export function createFuncResults(options: FuncMap, extensions?: Func | Obj, isRuntime?: boolean) {
+export function createOptions(options: FuncMap, extensions?: Func | Obj, isRuntime?: boolean) {
   const ret: Obj = {};
   let template: Func = noop;
 
@@ -78,22 +78,22 @@ function createSfc(isForwardRef?: boolean) {
         options = { Component: options };
       }
       const { template, styles, Component } = options;
-      const funcResults = createFuncResults({ template, styles }, extensions, true);
+      const sfcOptions = createOptions({ template, styles }, extensions, true);
 
       let SeparateFunction: Func;
       if (!isForwardRef) {
         const InnerComponent: React.FC = Component;
         SeparateFunction = innerProps => {
-          return <InnerComponent {...innerProps} {...funcResults} />;
+          return <InnerComponent {...innerProps} {...sfcOptions} />;
         };
       } else {
         const InnerComponentWithRef = forwardRefReact(Component);
         SeparateFunction = forwardRefReact((innerProps, ref) => {
-          return <InnerComponentWithRef {...innerProps} {...funcResults} ref={ref} />;
+          return <InnerComponentWithRef {...innerProps} {...sfcOptions} ref={ref} />;
         });
       }
 
-      return assignToComponent(SeparateFunction, funcResults);
+      return assignToComponent(SeparateFunction, sfcOptions);
     }
   }
 
@@ -110,4 +110,4 @@ export const sfc: SFC = createSfc() as any;
 export const forwardRef: ForwardRefSFC = createSfc(true);
 
 sfc.forwardRef = forwardRef;
-sfc.createFuncResults = createFuncResults;
+sfc.createOptions = createOptions;

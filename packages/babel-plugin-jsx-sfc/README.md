@@ -19,7 +19,7 @@ const App = sfc(
 
 ↓ ↓ ↓ ↓ ↓ ↓
 
-const $sfcFuncResults_123 = sfc.createFuncResults(
+const $sfcOptions_123 = sfc.createOptions(
   {
     template({ data }) { ... },
     styles: () => ({ ... })
@@ -30,8 +30,10 @@ const $sfcFuncResults_123 = sfc.createFuncResults(
   })
 );
 
-const App = sfc((props) => {
+const Sfc_123 = (props) => {
   ...
-  return $sfcFuncResults_123.template({ ... });
-}, $sfcFuncResults_123);
+  return $sfcOptions_123.template({ ... });
+};
+
+const App = sfc(Sfc_123, $sfcOptions_123);
 ```

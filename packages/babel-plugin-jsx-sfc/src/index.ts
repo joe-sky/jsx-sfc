@@ -1,6 +1,6 @@
 import traverse, { Visitor, NodePath } from '@babel/traverse';
 import * as types from '@babel/types';
-import { SFC_FUNC, SFC_COMPONENT, getFuncResultsName, SFC_CREATE_FUNC_RESULTS, SFC_FORWARD_REF } from './utils';
+import { SFC_FUNC, SFC_COMPONENT, getOptionsName, getSfcName, SFC_CREATE_OPTIONS, SFC_FORWARD_REF } from './utils';
 import * as astUtil from './utils/ast';
 // import generate from '@babel/generator';
 
@@ -35,7 +35,7 @@ export default () => ({
 
           ↓ ↓ ↓ ↓ ↓ ↓
 
-          const $sfcFuncResults_lineNo = sfc.createFuncResults(
+          const $sfcOptions_lineNo = sfc.createOptions(
             {
               template({ data }) {
                 ...
@@ -50,10 +50,12 @@ export default () => ({
             })
           );
 
-          const App = sfc((props) => {
+          const Sfc_lineNo = (props) => {
             ...
-            return $sfcFuncResults_lineNo.template({ ... });
-          }, $sfcFuncResults_lineNo);
+            return $sfcOptions_lineNo.template({ ... });
+          };
+
+          const App = sfc(Sfc_lineNo, $sfcOptions_lineNo);
         */
         CallExpression: {
           enter(path) {
@@ -103,7 +105,8 @@ export default () => ({
                 }
 
                 const indexInProps = sfcArguments[0].properties.indexOf(ComponentProp);
-                const sfcFuncResultsName = getFuncResultsName(path?.node?.loc?.start.line);
+                const lineNo = path?.node?.loc?.start.line;
+                const sfcOptionsName = getOptionsName(lineNo);
 
                 // todo: has template?
 
@@ -115,7 +118,7 @@ export default () => ({
                   ↓ ↓ ↓ ↓ ↓ ↓ 
 
                   Component: props => {
-                    return $sfcFuncResults_lineNo.template({ firstName: 'joe' });
+                    return $sfcOptions_lineNo.template({ firstName: 'joe' });
                   }
                 */
                 const componentFuncPath = path.get(`arguments.0.properties.${indexInProps}.value`) as NodePath<
@@ -131,7 +134,7 @@ export default () => ({
                 >;
                 if (firstPropParamPath) {
                   if (types.isObjectPattern(firstPropParamPath.node)) {
-                    // const { styles } = { ...props, ...$sfcFuncResults_lineNo };
+                    // const { styles } = { ...props, ...$sfcOptions_lineNo };
                     const propsName = 'props';
 
                     funcBlockPath.unshiftContainer(
@@ -141,7 +144,7 @@ export default () => ({
                           firstPropParamPath.node,
                           types.objectExpression([
                             types.spreadElement(types.identifier(propsName)),
-                            types.spreadElement(types.identifier(sfcFuncResultsName))
+                            types.spreadElement(types.identifier(sfcOptionsName))
                           ])
                         )
                       ])
@@ -149,7 +152,7 @@ export default () => ({
 
                     firstPropParamPath.replaceWith(types.identifier(propsName));
                   } else {
-                    // props = { ...props, ...$sfcFuncResults_lineNo };
+                    // props = { ...props, ...$sfcOptions_lineNo };
                     const propsName = (firstPropParamPath.node as types.Identifier).name;
 
                     funcBlockPath.unshiftContainer(
@@ -160,7 +163,7 @@ export default () => ({
                           types.identifier(propsName),
                           types.objectExpression([
                             types.spreadElement(types.identifier(propsName)),
-                            types.spreadElement(types.identifier(sfcFuncResultsName))
+                            types.spreadElement(types.identifier(sfcOptionsName))
                           ])
                         )
                       )
@@ -168,12 +171,12 @@ export default () => ({
                   }
                 }
 
-                // return $sfcFuncResults_lineNo.template({ ... });
+                // return $sfcOptions_lineNo.template({ ... });
                 if (types.isObjectExpression(returnArgPath.node.argument)) {
                   returnArgPath.replaceWith(
                     types.returnStatement(
                       types.callExpression(
-                        types.memberExpression(types.identifier(sfcFuncResultsName), types.identifier('template')),
+                        types.memberExpression(types.identifier(sfcOptionsName), types.identifier('template')),
                         [returnArgPath.node.argument]
                       )
                     )
@@ -182,34 +185,53 @@ export default () => ({
 
                 sfcArguments[0].properties.splice(indexInProps, 1);
 
-                // const $sfcFuncResults_lineNo = ...
+                // const $sfcOptions_lineNo = ...
                 const componentVariable = path.findParent(
                   path =>
                     path.isVariableDeclaration() || path.isExportDefaultDeclaration() || path.isExportDeclaration()
                 );
-                const sfcFuncResultsPath = componentVariable?.insertBefore(
+
+                const sfcOptionsPath = componentVariable?.insertBefore(
                   types.variableDeclaration('const', [
                     types.variableDeclarator(
-                      types.identifier(sfcFuncResultsName),
+                      types.identifier(sfcOptionsName),
                       types.callExpression(
-                        types.memberExpression(types.identifier(SFC_FUNC), types.identifier(SFC_CREATE_FUNC_RESULTS)),
+                        types.memberExpression(types.identifier(SFC_FUNC), types.identifier(SFC_CREATE_OPTIONS)),
                         sfcArguments
                       )
                     )
                   ])
                 );
 
-                path.replaceWith(
-                  types.callExpression(
-                    sfcType <= 2
-                      ? types.identifier(SFC_FUNC)
-                      : types.memberExpression(types.identifier(SFC_FUNC), types.identifier(SFC_FORWARD_REF)),
-                    [ComponentProp.value as types.ArrowFunctionExpression, types.identifier(sfcFuncResultsName)]
-                  )
-                );
+                if (sfcType <= 2) {
+                  const sfcName = getSfcName(lineNo);
+
+                  componentVariable?.insertBefore(
+                    types.variableDeclaration('const', [
+                      types.variableDeclarator(
+                        types.identifier(sfcName),
+                        ComponentProp.value as types.ArrowFunctionExpression
+                      )
+                    ])
+                  );
+
+                  path.replaceWith(
+                    types.callExpression(types.identifier(SFC_FUNC), [
+                      types.identifier(sfcName),
+                      types.identifier(sfcOptionsName)
+                    ])
+                  );
+                } else {
+                  path.replaceWith(
+                    types.callExpression(
+                      types.memberExpression(types.identifier(SFC_FUNC), types.identifier(SFC_FORWARD_REF)),
+                      [ComponentProp.value as types.ArrowFunctionExpression, types.identifier(sfcOptionsName)]
+                    )
+                  );
+                }
 
                 // console.log(generate(path.node).code);
-                // console.log(generate(sfcFuncResultsPath[0].node).code);
+                // console.log(generate(sfcOptionsPath[0].node).code);
               }
             }
           }

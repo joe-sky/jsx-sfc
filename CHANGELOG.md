@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v1.0.0-alpha.8] 2021.03.02
+
+- 💥 Change `sfc.createFuncResults` to `sfc.createOptions`.
+
 ## [v1.0.0-alpha.7] 2021.03.01
 
 - 🐛 Fix type inference in jsx environment.

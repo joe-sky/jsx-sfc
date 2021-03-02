@@ -113,7 +113,7 @@ export interface ForwardRefSFC extends DefineComponent {
 export interface SFC extends DefineComponent {
   <Props = {}>(): DefineComponent<NoRef, Props>;
   forwardRef: ForwardRefSFC;
-  createFuncResults: (options: FuncMap, extensions?: Func | Obj, isRuntime?: boolean) => Obj;
+  createOptions: (options: FuncMap, extensions?: Func | Obj, isRuntime?: boolean) => Obj;
 }
 
 export interface SFCOptions {

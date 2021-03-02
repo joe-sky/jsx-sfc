@@ -19,13 +19,13 @@ const App = sfc(
     style: () => ({})
   },
   {
-    constant: () => ({
+    constant: {
       LAST_NAME: 'sky'
-    }),
+    },
 
-    utils: () => ({
+    utils: {
       connectName: (firstName: string, lastName: string) => firstName + lastName
-    })
+    }
   }
 );
 `;
@@ -49,13 +49,13 @@ export default sfc(
     style: () => ({})
   },
   {
-    constant: () => ({
+    constant: {
       LAST_NAME: 'sky'
-    }),
+    },
 
-    utils: () => ({
+    utils: {
       connectName: (firstName: string, lastName: string) => firstName + lastName
-    })
+    }
   }
 );
 `;
@@ -79,29 +79,29 @@ export const App = sfc(
     style: () => ({})
   },
   {
-    constant: () => ({
+    constant: {
       LAST_NAME: 'sky'
-    }),
+    },
 
-    utils: () => ({
+    utils: {
       connectName: (firstName: string, lastName: string) => firstName + lastName
-    })
+    }
   }
 );
 `;
 
-const snapshotRedefineProps = `sfc(props => {
-  props = { ...props, ...$sfcFuncResults_5 };
-  return $sfcFuncResults_5.template({ firstName: 'joe', styles: props.styles });
+const snapshotRedefineProps = `const Sfc_5 = props => {
+  props = { ...props, ...$sfcOptions_5 };
+  return $sfcOptions_5.template({ firstName: 'joe', styles: props.styles });
 }`;
 
-const snapshotObjectPattern = `sfc(props => {
-  const { styles } = { ...props, ...$sfcFuncResults_5 };
-  return $sfcFuncResults_5.template({ firstName: 'joe', styles });
+const snapshotObjectPattern = `const Sfc_5 = props => {
+  const { styles } = { ...props, ...$sfcOptions_5 };
+  return $sfcOptions_5.template({ firstName: 'joe', styles });
 }`;
 
-const snapshot = `sfc(() => {
-  return $sfcFuncResults_5.template({ firstName: 'joe' });
+const snapshot = `const Sfc_5 = () => {
+  return $sfcOptions_5.template({ firstName: 'joe' });
 }`;
 
 describe('basic', function() {

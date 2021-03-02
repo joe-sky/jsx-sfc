@@ -1,5 +1,5 @@
 /*!
- * vite-plugin-jsx-sfc v1.0.0-alpha.7
+ * vite-plugin-jsx-sfc v1.0.0-alpha.8
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
