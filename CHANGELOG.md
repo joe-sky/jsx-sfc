@@ -1,8 +1,9 @@
 # CHANGELOG
 
-## [v1.0.0-alpha.8] 2021.03.02
+## [v1.0.0-alpha.9] 2021.03.02
 
 - 💥 Change `sfc.createFuncResults` to `sfc.createOptions`.
+- 🐛 Fix `sfc.forwardRef` export type in jsx environment.
 
 ## [v1.0.0-alpha.7] 2021.03.01
 

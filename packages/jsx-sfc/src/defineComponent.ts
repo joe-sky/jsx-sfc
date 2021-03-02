@@ -106,8 +106,8 @@ export type DefineComponent<
   ): ReturnComponent & Origin & ExtractOptions<EX>;
 };
 
-export interface ForwardRefSFC extends DefineComponent {
-  <Ref, Props = {}>(): DefineComponent<Ref, Props>;
+export interface ForwardRefSFC<Ref = unknown> extends DefineComponent<Ref> {
+  <Ref = unknown, Props = {}>(): DefineComponent<Ref, Props>;
 }
 
 export interface SFC extends DefineComponent {

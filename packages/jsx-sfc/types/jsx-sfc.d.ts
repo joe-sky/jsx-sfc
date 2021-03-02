@@ -1,5 +1,5 @@
 /*!
- * jsx-sfc v1.0.0-alpha.8
+ * jsx-sfc v1.0.0-alpha.9
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
@@ -105,8 +105,8 @@ declare type DefineComponent<Ref = NoRef, Props = {}, ReturnComponent = Ref exte
     } & ExtractOptions<EX>;
     <InferEX extends ExtractOptions<EX>, EX = {}>(component: Ref extends NoRef ? (props: SFCProps<Props, InferEX>, context?: any) => JSXElements : (props: SFCProps<Props, InferEX>, ref?: React.Ref<Ref>) => JSXElements, extensions?: EX): ReturnComponent & Origin & ExtractOptions<EX>;
 };
-interface ForwardRefSFC extends DefineComponent {
-    <Ref, Props = {}>(): DefineComponent<Ref, Props>;
+interface ForwardRefSFC<Ref = unknown> extends DefineComponent<Ref> {
+    <Ref = unknown, Props = {}>(): DefineComponent<Ref, Props>;
 }
 interface SFC extends DefineComponent {
     <Props = {}>(): DefineComponent<NoRef, Props>;
