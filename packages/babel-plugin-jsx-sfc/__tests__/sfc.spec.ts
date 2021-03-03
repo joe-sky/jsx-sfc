@@ -104,12 +104,15 @@ const snapshot = `const Sfc_5 = () => {
   return $sfcOptions_5.template({ firstName: 'joe' });
 }`;
 
+const snapshotDisplayName = `Sfc_5.displayName = 'App'`;
+
 describe('basic', function() {
   const compiledConst = transform(codeConst);
   //console.log(compiledConst);
 
   it('const', () => {
     expect(compiledConst).toContain(snapshotRedefineProps);
+    expect(compiledConst).toContain(snapshotDisplayName);
   });
 
   const compiledExportDefault = transform(codeExportDefault);
@@ -124,5 +127,6 @@ describe('basic', function() {
 
   it('export const', () => {
     expect(compiledExportConst).toContain(snapshot);
+    expect(compiledExportConst).toContain(snapshotDisplayName);
   });
 });
