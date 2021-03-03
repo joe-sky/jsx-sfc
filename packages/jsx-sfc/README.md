@@ -37,6 +37,7 @@
 ## Examples
 
 - [Simple Counter](https://github.com/joe-sky/jsx-sfc/tree/main/examples/counter)
+- [Tailwind Starter](https://github.com/joe-sky/jsx-sfc/tree/main/examples/tailwind-starter)
 
 ## Packages
 
@@ -225,12 +226,24 @@ Because Vite uses esbuild to transform JSX/TSX, so `jsx-sfc` provides a vite plu
 npm install jsx-sfc vite-plugin-jsx-sfc
 ```
 
-Configure Vite(v1.x):
+- Configure Vite(v2.x):
+
+```js
+import { defineConfig } from 'vite';
+import reactRefresh from '@vitejs/plugin-react-refresh';
+import jsxSfc from 'vite-plugin-jsx-sfc';
+
+export default defineConfig({
+  plugins: [jsxSfc(), reactRefresh()]
+});
+```
+
+- Configure Vite(v1.x):
 
 ```js
 // vite.config.js
 import reactPlugin from 'vite-plugin-react';
-import sfcPlugin from 'vite-plugin-jsx-sfc';
+import sfcPlugin from 'vite-plugin-jsx-sfc/legacy';
 
 const config = {
   ...
