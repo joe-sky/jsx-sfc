@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v1.0.0-alpha.11] 2021.03.05
+
+- 🐛 Fix `ObjectMethod` case for `babel-plugin-jsx-sfc`.
+
 ## [v1.0.0-alpha.10] 2021.03.02
 
 - 💥 Change `sfc.createFuncResults` to `sfc.createOptions`.

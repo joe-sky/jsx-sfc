@@ -15,11 +15,16 @@ const {
     template: ({ data, styles, utils: { connectName } }) => (
       <Container>
         <div>{connectName(data.firstName, data.LAST_NAME)}</div>
+        <input onChange={data.onChange} />
       </Container>
     ),
 
-    Component: ({ utils, constant: { LAST_NAME } }) => {
-      return { firstName: 'joe', LAST_NAME };
+    Component({ utils, constant: { LAST_NAME } }) {
+      return {
+        firstName: 'joe',
+        LAST_NAME,
+        onChange: e => console.log(e.target.value)
+      };
     },
 
     styles: () => ({

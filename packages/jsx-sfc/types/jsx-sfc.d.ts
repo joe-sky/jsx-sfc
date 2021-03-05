@@ -1,5 +1,5 @@
 /*!
- * jsx-sfc v1.0.0-alpha.10
+ * jsx-sfc v1.0.0-alpha.11
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */

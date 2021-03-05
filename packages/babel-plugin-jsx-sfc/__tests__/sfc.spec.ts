@@ -42,7 +42,7 @@ export default sfc(
       </Container>
     ),
 
-    Component: ({ styles }) => {
+    Component({ styles }) {
       return { firstName: 'joe', styles };
     },
 
@@ -72,7 +72,7 @@ export const App = sfc(
       </Container>
     ),
 
-    Component: () => {
+    Component() {
       return { firstName: 'joe' };
     },
 

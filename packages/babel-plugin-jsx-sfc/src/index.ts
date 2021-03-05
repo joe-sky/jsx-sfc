@@ -95,16 +95,21 @@ export default () => ({
             if (sfcType) {
               const sfcArguments = path.node.arguments as types.ObjectExpression[];
               if (types.isObjectExpression(sfcArguments?.[0])) {
-                const ComponentProp = sfcArguments[0].properties.find(
+                const componentProp = sfcArguments[0].properties.find(
                   prop =>
                     types.isObjectProperty(prop) && types.isIdentifier(prop.key) && prop.key.name === SFC_COMPONENT
                 ) as types.ObjectProperty;
+                const componentMethod = sfcArguments[0].properties.find(
+                  prop => types.isObjectMethod(prop) && types.isIdentifier(prop.key) && prop.key.name === SFC_COMPONENT
+                ) as types.ObjectMethod;
 
-                if (!ComponentProp) {
+                if (!componentProp && !componentMethod) {
                   return;
                 }
 
-                const indexInProps = sfcArguments[0].properties.indexOf(ComponentProp);
+                const indexInProps = sfcArguments[0].properties.indexOf(
+                  componentProp ? componentProp : componentMethod
+                );
                 const lineNo = path?.node?.loc?.start.line;
                 const sfcOptionsName = getOptionsName(lineNo);
 
@@ -121,9 +126,17 @@ export default () => ({
                     return $sfcOptions_lineNo.template({ firstName: 'joe' });
                   }
                 */
-                const componentFuncPath = path.get(`arguments.0.properties.${indexInProps}.value`) as NodePath<
-                  types.ArrowFunctionExpression
-                >;
+                let componentFuncPath: NodePath<types.ArrowFunctionExpression> | NodePath<types.ObjectMethod>;
+                if (componentProp) {
+                  componentFuncPath = path.get(`arguments.0.properties.${indexInProps}.value`) as NodePath<
+                    types.ArrowFunctionExpression
+                  >;
+                } else {
+                  componentFuncPath = path.get(`arguments.0.properties.${indexInProps}`) as NodePath<
+                    types.ObjectMethod
+                  >;
+                }
+
                 const funcBlockPath = componentFuncPath.get('body') as NodePath<types.BlockStatement>;
                 const returnArgPath = componentFuncPath.get('body.body').find(p => p.isReturnStatement()) as NodePath<
                   types.ReturnStatement
@@ -202,15 +215,19 @@ export default () => ({
                   ])
                 );
 
+                let actualComponentFunc: types.ArrowFunctionExpression;
+                if (componentProp) {
+                  actualComponentFunc = componentProp.value as types.ArrowFunctionExpression;
+                } else {
+                  actualComponentFunc = types.arrowFunctionExpression(componentMethod.params, componentMethod.body);
+                }
+
                 if (sfcType <= 2) {
                   const sfcName = getSfcName(lineNo);
 
                   componentVariable?.insertBefore(
                     types.variableDeclaration('const', [
-                      types.variableDeclarator(
-                        types.identifier(sfcName),
-                        ComponentProp.value as types.ArrowFunctionExpression
-                      )
+                      types.variableDeclarator(types.identifier(sfcName), actualComponentFunc)
                     ])
                   );
 
@@ -240,7 +257,7 @@ export default () => ({
                   path.replaceWith(
                     types.callExpression(
                       types.memberExpression(types.identifier(SFC_FUNC), types.identifier(SFC_FORWARD_REF)),
-                      [ComponentProp.value as types.ArrowFunctionExpression, types.identifier(sfcOptionsName)]
+                      [actualComponentFunc, types.identifier(sfcOptionsName)]
                     )
                   );
                 }
