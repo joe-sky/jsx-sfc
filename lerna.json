@@ -9,6 +9,6 @@
       "message": "chore(release): :bookmark: publish %s"
     }
   },
-  "version": "1.0.0-alpha.10",
+  "version": "1.0.0-alpha.11",
   "npmClient": "yarn"
 }
