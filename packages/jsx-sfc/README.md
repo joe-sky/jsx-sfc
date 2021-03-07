@@ -37,7 +37,8 @@
 ## Examples
 
 - [Simple Counter](https://github.com/joe-sky/jsx-sfc/tree/main/examples/counter)
-- [Tailwind Starter](https://github.com/joe-sky/jsx-sfc/tree/main/examples/tailwind-starter)
+- [Redux Todo List](https://github.com/joe-sky/jsx-sfc/tree/main/examples/redux-todos)
+- [TailwindCss Starter](https://github.com/joe-sky/jsx-sfc/tree/main/examples/tailwind-starter)
 
 ## Packages
 
