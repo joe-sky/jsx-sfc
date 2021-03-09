@@ -55,6 +55,7 @@
 - [Examples](#examples)
 - [Packages](#packages)
 - [Inspiration](#inspiration)
+- [Benefits](#benefits)
 - [Installation](#installation)
   - [Using with Webpack](#using-with-webpack)
   - [Using with Vite](#using-with-vite)
@@ -94,18 +95,18 @@ const App = props => {
   }, []);
 
   return (
-    <Wrap>
+    <Wrapper>
       <i
         className={css`
           width: 50px;
         `}>
         {user}
       </i>
-    </Wrap>
+    </Wrapper>
   );
 };
 
-const Wrap = styled.section`
+const Wrapper = styled.section`
   color: #fff;
 `;
 ```
@@ -116,10 +117,10 @@ Now, we can use `jsx-sfc` to rewrite it with **separation of concerns** and **ty
 import sfc from 'jsx-sfc';
 
 const App = sfc({
-  template: ({ data, styles: { Wrap, hl } }) => (
-    <Wrap>
+  template: ({ data, styles: { Wrapper, hl } }) => (
+    <Wrapper>
       <i className={hl}>{data.user}</i>
-    </Wrap>
+    </Wrapper>
   ),
 
   Component(props) {
@@ -133,7 +134,7 @@ const App = sfc({
   },
 
   styles: {
-    Wrap: styled.section`
+    Wrapper: styled.section`
       color: #fff;
     `,
     hl: css`
@@ -149,14 +150,14 @@ And if you configure the `eslint-plugin-react-hooks`, it also can check where yo
 import sfc from 'jsx-sfc';
 
 const App = sfc({
-  template: ({ data, styles: { Wrap, hl } }) => {
+  template: ({ data, styles: { Wrapper, hl } }) => {
     // Eslint check error, hooks can't appear inside the template function.
     useEffect(() => ...);
 
     return (
-      <Wrap>
+      <Wrapper>
         <i className={hl}>{data.user}</i>
-      </Wrap>
+      </Wrapper>
     );
   },
 
@@ -195,9 +196,240 @@ Finally, `jsx-sfc` can also support `React Fast Refresh` perfectly. Because it h
 
 <!-- So `jsx-sfc` is similar to Vue SFCs in the form of separation of concerns, but it was originally designed to adapt the JSX(TSX) environment! -->
 
-<!-- ## Benefit -->
+## Benefits
 
 <!-- tips: Use large code components examples, collapse code in md; like .vue, more cohesive components but can separate export members yet.; Compound components tree -->
+
+Compared with the original React function components, `jsx-sfc` has these benefits:
+
+### Clearer visual isolation
+
+<details>
+<summary>
+For example: Components with complex logic (Click to expand)
+</summary>
+
+```tsx
+const QueryForm: React.FC = () => {
+  const { contractStore } = useStore();
+
+  const getContractTypeChildren = () => {
+    return contractStore.contractTypeList.map((element, index) => (
+      <Select.Option key={index} value={element.value} label={element.label}>
+        {element.label}
+      </Select.Option>
+    ));
+  };
+
+  const getContractStatusChildren = () => {
+    return contractStore.contractStatusList.map((el, index) => (
+      <Select.Option key={index} value={el.value} label={el.label}>
+        {el.label}
+      </Select.Option>
+    ));
+  };
+
+  const onProjectNameChange = (e: any) => {
+    contractStore.setContractQueryFormItem({ projectName: e.target.value });
+  };
+
+  const onContractCodeChange = (e: any) => {
+    contractStore.setContractQueryFormItem({ contractCode: e.target.value });
+  };
+
+  const onContractTypeChange = (value: number) => {
+    contractStore.setContractQueryFormItem({ contractType: value });
+  };
+
+  const onContractStatusChange = (value: number) => {
+    contractStore.setContractQueryFormItem({ contractStatus: value });
+  };
+
+  const onQueryHandle = () => {
+    contractStore.resetSelectedKeys();
+    contractStore.setMirrorContractQueryForm();
+    contractStore.setPaginationItem({ pageNum: 1 });
+    contractStore.getContractList();
+  };
+
+  const onResetHandle = () => {
+    contractStore.resetQueryForm();
+  };
+
+  return (
+    <div>
+      <Row className="item-list">
+        <Col span={8}>
+          <Select
+            className="item-input"
+            value={contractStore.contractQueryForm.contractType}
+            onChange={onContractTypeChange}>
+            {getContractTypeChildren()}
+          </Select>
+        </Col>
+        <Col span={8}>
+          <Select
+            className="item-input"
+            value={contractStore.contractQueryForm.contractStatus}
+            onChange={onContractStatusChange}>
+            {getContractStatusChildren()}
+          </Select>
+        </Col>
+      </Row>
+      <Row className="item-list">
+        <Col span={8}>
+          <Input
+            value={contractStore.contractQueryForm.projectName}
+            onChange={onProjectNameChange}
+            className="item-input"
+          />
+        </Col>
+        <Col span={8}>
+          <Input
+            value={contractStore.contractQueryForm.contractCode}
+            onChange={onContractCodeChange}
+            className="item-input"
+          />
+        </Col>
+      </Row>
+      <div className="item-buttons">
+        <Button onClick={onQueryHandle} type="primary" className="btn" ghost>
+          Search
+        </Button>
+        <Button onClick={onResetHandle} className="btn">
+          Reset
+        </Button>
+      </div>
+    </div>
+  );
+};
+```
+
+</details>
+
+Undeniably, components like the above are very common in actual development. We can use `jsx-sfc` to rewrite it:
+
+```tsx
+const QueryForm = sfc({
+  template: ({ data }, typeChildren, statusChildren) => (
+    <>
+      <Template name={typeChildren}>
+        {() =>
+          data.store.contractTypeList.map((element, index) => (
+            <Select.Option key={index} value={element.value} label={element.label}>
+              {element.label}
+            </Select.Option>
+          ))
+        }
+      </Template>
+
+      <Template name={statusChildren}>
+        {() =>
+          data.store.contractStatusList.map((el, index) => {
+            return (
+              <Select.Option key={index} value={el.value} label={el.label}>
+                {el.label}
+              </Select.Option>
+            );
+          })
+        }
+      </Template>
+
+      <Template>
+        {() => (
+          <div>
+            <Row className="item-list">
+              <Col span={8}>
+                <Select
+                  className="item-input"
+                  value={data.store.contractQueryForm.contractType}
+                  onChange={data.onContractTypeChange}>
+                  {typeChildren.template()}
+                </Select>
+              </Col>
+              <Col span={8}>
+                <Select
+                  className="item-input"
+                  value={data.store.contractQueryForm.contractStatus}
+                  onChange={data.onContractStatusChange}>
+                  {statusChildren.template()}
+                </Select>
+              </Col>
+            </Row>
+            <Row className="item-list">
+              <Col span={8}>
+                <Input
+                  value={data.store.contractQueryForm.projectName}
+                  onChange={data.onProjectNameChange}
+                  className="item-input"
+                />
+              </Col>
+              <Col span={8}>
+                <Input
+                  value={data.store.contractQueryForm.contractCode}
+                  onChange={data.onContractCodeChange}
+                  className="item-input"
+                />
+              </Col>
+            </Row>
+            <div className="item-buttons">
+              <Button onClick={data.onQueryHandle} type="primary" className="btn" ghost>
+                Search
+              </Button>
+              <Button onClick={data.onResetHandle} className="btn">
+                Reset
+              </Button>
+            </div>
+          </div>
+        )}
+      </Template>
+    </>
+  ),
+
+  Component() {
+    const { contractStore } = useStore();
+
+    return {
+      store: contractStore,
+
+      onProjectNameChange(e: any) {
+        contractStore.setContractQueryFormItem({ projectName: e.target.value });
+      },
+
+      onContractCodeChange(e: any) {
+        contractStore.setContractQueryFormItem({ contractCode: e.target.value });
+      },
+
+      onContractTypeChange(value: number) {
+        contractStore.setContractQueryFormItem({ contractType: value });
+      },
+
+      onContractStatusChange(value: number) {
+        contractStore.setContractQueryFormItem({ contractStatus: value });
+      },
+
+      onQueryHandle() {
+        contractStore.resetSelectedKeys();
+        contractStore.setMirrorContractQueryForm();
+        contractStore.setPaginationItem({ pageNum: 1 });
+        contractStore.getContractList();
+      },
+
+      onResetHandle() {
+        contractStore.resetQueryForm();
+      }
+    };
+  }
+});
+```
+
+### Better single file experience
+
+<details>
+<summary>
+For example: Multiple components in a single file (Click to expand)
+</summary>
+</details>
 
 ## Installation
 
