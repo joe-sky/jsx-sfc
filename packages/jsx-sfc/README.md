@@ -211,94 +211,85 @@ For example: Components with complex logic (Click to expand)
 
 ```tsx
 const QueryForm: React.FC = () => {
-  const { contractStore } = useStore();
+  const store = useStore();
 
-  const getContractTypeChildren = () => {
-    return contractStore.contractTypeList.map((element, index) => (
-      <Select.Option key={index} value={element.value} label={element.label}>
+  const getTypes = () => {
+    return store.typeList.map((element, index) => (
+      <Option key={index} value={element.value} label={element.label}>
         {element.label}
-      </Select.Option>
+      </Option>
     ));
   };
 
-  const getContractStatusChildren = () => {
-    return contractStore.contractStatusList.map((el, index) => (
-      <Select.Option key={index} value={el.value} label={el.label}>
+  const getStatus = () => {
+    return store.statusList.map((el, index) => (
+      <Option key={index} value={el.value} label={el.label}>
         {el.label}
-      </Select.Option>
+      </Option>
     ));
   };
 
-  const onProjectNameChange = (e: any) => {
-    contractStore.setContractQueryFormItem({ projectName: e.target.value });
+  const typesData = getTypes();
+  const statusData = getStatus();
+
+  if (typesData.length < 1) {
+    return <div className="empty">No type data</div>;
+  } else if (statusData.length < 1) {
+    return <div className="empty">No status data</div>;
+  }
+
+  const onProjectNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    store.setQueryFormItem({ projectName: e.target.value });
   };
 
-  const onContractCodeChange = (e: any) => {
-    contractStore.setContractQueryFormItem({ contractCode: e.target.value });
+  const onCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    store.setQueryFormItem({ code: e.target.value });
   };
 
-  const onContractTypeChange = (value: number) => {
-    contractStore.setContractQueryFormItem({ contractType: value });
+  const onTypeChange = (value: number) => {
+    store.setQueryFormItem({ type: value });
   };
 
-  const onContractStatusChange = (value: number) => {
-    contractStore.setContractQueryFormItem({ contractStatus: value });
+  const onStatusChange = (value: number) => {
+    store.setQueryFormItem({ status: value });
   };
 
   const onQueryHandle = () => {
-    contractStore.resetSelectedKeys();
-    contractStore.setMirrorContractQueryForm();
-    contractStore.setPaginationItem({ pageNum: 1 });
-    contractStore.getContractList();
+    store.resetSelectedKeys();
+    store.setMirrorQueryForm();
+    store.setPaginationItem({ pageNum: 1 });
+    store.getList();
   };
 
   const onResetHandle = () => {
-    contractStore.resetQueryForm();
+    store.resetQueryForm();
   };
 
   return (
     <div>
       <Row className="item-list">
         <Col span={8}>
-          <Select
-            className="item-input"
-            value={contractStore.contractQueryForm.contractType}
-            onChange={onContractTypeChange}>
-            {getContractTypeChildren()}
+          <Select value={store.queryForm.type} onChange={onTypeChange}>
+            {typesData}
           </Select>
         </Col>
         <Col span={8}>
-          <Select
-            className="item-input"
-            value={contractStore.contractQueryForm.contractStatus}
-            onChange={onContractStatusChange}>
-            {getContractStatusChildren()}
+          <Select value={store.queryForm.status} onChange={onStatusChange}>
+            {statusData}
           </Select>
         </Col>
       </Row>
       <Row className="item-list">
         <Col span={8}>
-          <Input
-            value={contractStore.contractQueryForm.projectName}
-            onChange={onProjectNameChange}
-            className="item-input"
-          />
+          <Input value={store.queryForm.projectName} onChange={onProjectNameChange} />
         </Col>
         <Col span={8}>
-          <Input
-            value={contractStore.contractQueryForm.contractCode}
-            onChange={onContractCodeChange}
-            className="item-input"
-          />
+          <Input value={store.queryForm.code} onChange={onCodeChange} />
         </Col>
       </Row>
       <div className="item-buttons">
-        <Button onClick={onQueryHandle} type="primary" className="btn" ghost>
-          Search
-        </Button>
-        <Button onClick={onResetHandle} className="btn">
-          Reset
-        </Button>
+        <Button onClick={onQueryHandle}>Search</Button>
+        <Button onClick={onResetHandle}>Reset</Button>
       </div>
     </div>
   );
@@ -311,117 +302,117 @@ Undeniably, components like the above are very common in actual development. We 
 
 ```tsx
 const QueryForm = sfc({
-  template: ({ data }, typeChildren, statusChildren) => (
+  template: ({ data }, types, status) => (
     <>
-      <Template name={typeChildren}>
+      <Template name={types}>
         {() =>
-          data.store.contractTypeList.map((element, index) => (
-            <Select.Option key={index} value={element.value} label={element.label}>
+          data.store.typeList.map((element, index) => (
+            <Option key={index} value={element.value} label={element.label}>
               {element.label}
-            </Select.Option>
+            </Option>
           ))
         }
       </Template>
 
-      <Template name={statusChildren}>
+      <Template name={status}>
         {() =>
-          data.store.contractStatusList.map((el, index) => {
+          data.store.statusList.map((el, index) => {
             return (
-              <Select.Option key={index} value={el.value} label={el.label}>
+              <Option key={index} value={el.value} label={el.label}>
                 {el.label}
-              </Select.Option>
+              </Option>
             );
           })
         }
       </Template>
 
       <Template>
-        {() => (
-          <div>
-            <Row className="item-list">
-              <Col span={8}>
-                <Select
-                  className="item-input"
-                  value={data.store.contractQueryForm.contractType}
-                  onChange={data.onContractTypeChange}>
-                  {typeChildren.template()}
-                </Select>
-              </Col>
-              <Col span={8}>
-                <Select
-                  className="item-input"
-                  value={data.store.contractQueryForm.contractStatus}
-                  onChange={data.onContractStatusChange}>
-                  {statusChildren.template()}
-                </Select>
-              </Col>
-            </Row>
-            <Row className="item-list">
-              <Col span={8}>
-                <Input
-                  value={data.store.contractQueryForm.projectName}
-                  onChange={data.onProjectNameChange}
-                  className="item-input"
-                />
-              </Col>
-              <Col span={8}>
-                <Input
-                  value={data.store.contractQueryForm.contractCode}
-                  onChange={data.onContractCodeChange}
-                  className="item-input"
-                />
-              </Col>
-            </Row>
-            <div className="item-buttons">
-              <Button onClick={data.onQueryHandle} type="primary" className="btn" ghost>
-                Search
-              </Button>
-              <Button onClick={data.onResetHandle} className="btn">
-                Reset
-              </Button>
+        {() => {
+          const typesData = types.template();
+          const statusData = status.template();
+
+          if (typesData.length < 1) {
+            return <div className="empty">No type data</div>;
+          } else if (statusData.length < 1) {
+            return <div className="empty">No status data</div>;
+          }
+
+          return (
+            <div>
+              <Row className="item-list">
+                <Col span={8}>
+                  <Select value={data.store.queryForm.type} onChange={data.onTypeChange}>
+                    {typesData}
+                  </Select>
+                </Col>
+                <Col span={8}>
+                  <Select value={data.store.queryForm.status} onChange={data.onStatusChange}>
+                    {statusData}
+                  </Select>
+                </Col>
+              </Row>
+              <Row className="item-list">
+                <Col span={8}>
+                  <Input value={data.store.queryForm.projectName} onChange={data.onProjectNameChange} />
+                </Col>
+                <Col span={8}>
+                  <Input value={data.store.queryForm.code} onChange={data.onCodeChange} />
+                </Col>
+              </Row>
+              <div className="item-buttons">
+                <Button onClick={data.onQueryHandle}>Search</Button>
+                <Button onClick={data.onResetHandle}>Reset</Button>
+              </div>
             </div>
-          </div>
-        )}
+          );
+        }}
       </Template>
     </>
   ),
 
   Component() {
-    const { contractStore } = useStore();
+    const store = useStore();
 
     return {
-      store: contractStore,
+      store,
 
-      onProjectNameChange(e: any) {
-        contractStore.setContractQueryFormItem({ projectName: e.target.value });
+      onProjectNameChange(e: React.ChangeEvent<HTMLInputElement>) {
+        store.setQueryFormItem({ projectName: e.target.value });
       },
 
-      onContractCodeChange(e: any) {
-        contractStore.setContractQueryFormItem({ contractCode: e.target.value });
+      onCodeChange(e: React.ChangeEvent<HTMLInputElement>) {
+        store.setQueryFormItem({ code: e.target.value });
       },
 
-      onContractTypeChange(value: number) {
-        contractStore.setContractQueryFormItem({ contractType: value });
+      onTypeChange(value: number) {
+        store.setQueryFormItem({ type: value });
       },
 
-      onContractStatusChange(value: number) {
-        contractStore.setContractQueryFormItem({ contractStatus: value });
+      onStatusChange(value: number) {
+        store.setQueryFormItem({ status: value });
       },
 
       onQueryHandle() {
-        contractStore.resetSelectedKeys();
-        contractStore.setMirrorContractQueryForm();
-        contractStore.setPaginationItem({ pageNum: 1 });
-        contractStore.getContractList();
+        store.resetSelectedKeys();
+        store.setMirrorQueryForm();
+        store.setPaginationItem({ pageNum: 1 });
+        store.getList();
       },
 
       onResetHandle() {
-        contractStore.resetQueryForm();
+        store.resetQueryForm();
       }
     };
   }
 });
 ```
+
+In this way:
+
+- We can put all the logic codes into the `Component function` and manage it separately;
+- Then we can put all the JSX codes into the `template function`, and support `sub template tags` to manage JSX codes that need to be reused.
+
+**When the component code is large and the logic is complex, the benefits of visual isolation are obvious.**
 
 ### Better single file experience
 
