@@ -18,11 +18,27 @@
 
 > Currently version is v1.0.0-alpha.x, the v1 version and full documentation will be completed soon.
 
-## Demo
+[Live Demo is here.](https://codesandbox.io/s/jsx-sfc-demo-wwgd4)
 
-[Live demo is here.](https://codesandbox.io/s/jsx-sfc-demo-wwgd4)
+## Table of Contents
 
-> Currently this live demo is a runtime syntax version, and will be changed to a compiled version later.
+- [Features](#features)
+- [Packages](#packages)
+- [Examples](#examples)
+- [Inspiration](#inspiration)
+- [Installation](#installation)
+  - [Using with Webpack](#using-with-webpack)
+  - [Using with Vite](#using-with-vite)
+- [Usage](#usage)
+  - [`sfc`](#sfc)
+  - [`sfc.forwardRef`](#sfc.forwardRef)
+  - [Sub Templates](#sub-templates)
+  - [Extensions](#extensions)
+  - [Export Members](#export-members)
+- [Benefits](#benefits)
+- [API Design Principle](#api-design-principle)
+- [Roadmap](#roadmap)
+- [Who is using](#who-is-using)
 
 ## Features
 
@@ -34,12 +50,6 @@
 - 🔧 Support React eslint plugins
 - 🚀 No dependencies and side effects
 
-## Examples
-
-- [Simple Counter](https://github.com/joe-sky/jsx-sfc/tree/main/examples/counter)
-- [Redux Todo List](https://github.com/joe-sky/jsx-sfc/tree/main/examples/redux-todos)
-- [TailwindCss Starter](https://github.com/joe-sky/jsx-sfc/tree/main/examples/tailwind-starter)
-
 ## Packages
 
 | Package                                                                                            | Badges                                                                                                                                                                                                                                                                                                                                                                                                              |
@@ -48,26 +58,11 @@
 | [babel-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/babel-plugin-jsx-sfc) | <a href="https://www.npmjs.org/package/babel-plugin-jsx-sfc"><img src="https://img.shields.io/npm/v/babel-plugin-jsx-sfc.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/babel-plugin-jsx-sfc"><img src="https://img.shields.io/npm/dm/babel-plugin-jsx-sfc.svg" alt="NPM Downloads"></a>                                                                                                        |
 | [vite-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/vite-plugin-jsx-sfc)   | <a href="https://www.npmjs.org/package/vite-plugin-jsx-sfc"><img src="https://img.shields.io/npm/v/vite-plugin-jsx-sfc.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/vite-plugin-jsx-sfc"><img src="https://img.shields.io/npm/dm/vite-plugin-jsx-sfc.svg" alt="NPM Downloads"></a>                                                                                                            |
 
-## Table of Contents
+## Examples
 
-- [Demo](#demo)
-- [Features](#features)
-- [Examples](#examples)
-- [Packages](#packages)
-- [Inspiration](#inspiration)
-- [Benefits](#benefits)
-- [Installation](#installation)
-  - [Using with Webpack](#using-with-webpack)
-  - [Using with Vite](#using-with-vite)
-- [Usage](#usage)
-  - [`sfc`](#sfc)
-  - [`sfc.forwardRef`](#sfc.forwardRef)
-  - [Multiple Templates](#multiple-templates)
-  - [Extensions](#extensions)
-  - [Export Members](#export-members)
-- [API Design Principle](#api-design-principle)
-- [Roadmap](#roadmap)
-- [Who is using](#who-is-using)
+- [Simple Counter](https://github.com/joe-sky/jsx-sfc/tree/main/examples/counter)
+- [Redux Todo List](https://github.com/joe-sky/jsx-sfc/tree/main/examples/redux-todos)
+- [TailwindCss Starter](https://github.com/joe-sky/jsx-sfc/tree/main/examples/tailwind-starter)
 
 ## Inspiration
 
@@ -195,232 +190,6 @@ Finally, `jsx-sfc` can also support `React Fast Refresh` perfectly. Because it h
 <!-- tips: What features are needed to adapt to JSX environment -->
 
 <!-- So `jsx-sfc` is similar to Vue SFCs in the form of separation of concerns, but it was originally designed to adapt the JSX(TSX) environment! -->
-
-## Benefits
-
-<!-- tips: Use large code components examples, collapse code in md; like .vue, more cohesive components but can separate export members yet.; Compound components tree -->
-
-Compared with the original React function components, `jsx-sfc` has these benefits:
-
-### Clearer visual isolation
-
-<details>
-<summary>
-For example: Components with complex logic (Click to expand)
-</summary>
-
-```tsx
-const QueryForm: React.FC = () => {
-  const store = useStore();
-
-  const getTypes = () => {
-    return store.typeList.map((element, index) => (
-      <Option key={index} value={element.value} label={element.label}>
-        {element.label}
-      </Option>
-    ));
-  };
-
-  const getStatus = () => {
-    return store.statusList.map((el, index) => (
-      <Option key={index} value={el.value} label={el.label}>
-        {el.label}
-      </Option>
-    ));
-  };
-
-  const typesData = getTypes();
-  const statusData = getStatus();
-
-  if (typesData.length < 1) {
-    return <div className="empty">No type data</div>;
-  } else if (statusData.length < 1) {
-    return <div className="empty">No status data</div>;
-  }
-
-  const onProjectNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    store.setQueryFormItem({ projectName: e.target.value });
-  };
-
-  const onCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    store.setQueryFormItem({ code: e.target.value });
-  };
-
-  const onTypeChange = (value: number) => {
-    store.setQueryFormItem({ type: value });
-  };
-
-  const onStatusChange = (value: number) => {
-    store.setQueryFormItem({ status: value });
-  };
-
-  const onQueryHandle = () => {
-    store.resetSelectedKeys();
-    store.setMirrorQueryForm();
-    store.setPaginationItem({ pageNum: 1 });
-    store.getList();
-  };
-
-  const onResetHandle = () => {
-    store.resetQueryForm();
-  };
-
-  return (
-    <div>
-      <Row className="item-list">
-        <Col span={8}>
-          <Select value={store.queryForm.type} onChange={onTypeChange}>
-            {typesData}
-          </Select>
-        </Col>
-        <Col span={8}>
-          <Select value={store.queryForm.status} onChange={onStatusChange}>
-            {statusData}
-          </Select>
-        </Col>
-      </Row>
-      <Row className="item-list">
-        <Col span={8}>
-          <Input value={store.queryForm.projectName} onChange={onProjectNameChange} />
-        </Col>
-        <Col span={8}>
-          <Input value={store.queryForm.code} onChange={onCodeChange} />
-        </Col>
-      </Row>
-      <div className="item-buttons">
-        <Button onClick={onQueryHandle}>Search</Button>
-        <Button onClick={onResetHandle}>Reset</Button>
-      </div>
-    </div>
-  );
-};
-```
-
-</details>
-
-Undeniably, components like the above are very common in actual development. We can use `jsx-sfc` to rewrite it:
-
-```tsx
-const QueryForm = sfc({
-  template: ({ data }, types, status) => (
-    <>
-      <Template name={types}>
-        {() =>
-          data.store.typeList.map((element, index) => (
-            <Option key={index} value={element.value} label={element.label}>
-              {element.label}
-            </Option>
-          ))
-        }
-      </Template>
-
-      <Template name={status}>
-        {() =>
-          data.store.statusList.map((el, index) => {
-            return (
-              <Option key={index} value={el.value} label={el.label}>
-                {el.label}
-              </Option>
-            );
-          })
-        }
-      </Template>
-
-      <Template>
-        {() => {
-          const typesData = types.template();
-          const statusData = status.template();
-
-          if (typesData.length < 1) {
-            return <div className="empty">No type data</div>;
-          } else if (statusData.length < 1) {
-            return <div className="empty">No status data</div>;
-          }
-
-          return (
-            <div>
-              <Row className="item-list">
-                <Col span={8}>
-                  <Select value={data.store.queryForm.type} onChange={data.onTypeChange}>
-                    {typesData}
-                  </Select>
-                </Col>
-                <Col span={8}>
-                  <Select value={data.store.queryForm.status} onChange={data.onStatusChange}>
-                    {statusData}
-                  </Select>
-                </Col>
-              </Row>
-              <Row className="item-list">
-                <Col span={8}>
-                  <Input value={data.store.queryForm.projectName} onChange={data.onProjectNameChange} />
-                </Col>
-                <Col span={8}>
-                  <Input value={data.store.queryForm.code} onChange={data.onCodeChange} />
-                </Col>
-              </Row>
-              <div className="item-buttons">
-                <Button onClick={data.onQueryHandle}>Search</Button>
-                <Button onClick={data.onResetHandle}>Reset</Button>
-              </div>
-            </div>
-          );
-        }}
-      </Template>
-    </>
-  ),
-
-  Component() {
-    const store = useStore();
-
-    return {
-      store,
-
-      onProjectNameChange(e: React.ChangeEvent<HTMLInputElement>) {
-        store.setQueryFormItem({ projectName: e.target.value });
-      },
-
-      onCodeChange(e: React.ChangeEvent<HTMLInputElement>) {
-        store.setQueryFormItem({ code: e.target.value });
-      },
-
-      onTypeChange(value: number) {
-        store.setQueryFormItem({ type: value });
-      },
-
-      onStatusChange(value: number) {
-        store.setQueryFormItem({ status: value });
-      },
-
-      onQueryHandle() {
-        store.resetSelectedKeys();
-        store.setMirrorQueryForm();
-        store.setPaginationItem({ pageNum: 1 });
-        store.getList();
-      },
-
-      onResetHandle() {
-        store.resetQueryForm();
-      }
-    };
-  }
-});
-```
-
-In this way:
-
-- We can put all the logic codes into the `Component function` and manage it separately;
-- Then we can put all the JSX codes into the `template function`, and support `sub template tags` to manage JSX codes that need to be reused.
-
-**When the component code is large and the logic is complex, the benefits of visual isolation are obvious.**
-
-### Better single file experience
-
-<details>
-<summary>
-For example: Multiple components in a single file (Click to expand)
-</summary>
-</details>
 
 ## Installation
 
@@ -673,7 +442,7 @@ function TestApp() {
 }
 ```
 
-### Multiple Templates
+### Sub Templates
 
 In the template function of `jsx-sfc` components, we can also create reusable sub template functions:
 
@@ -801,6 +570,198 @@ console.log(App.styles);
 <!-- ### Using with TypeScript -->
 
 <!-- todo: difference in strict mode -->
+
+## Benefits
+
+<!-- tips: Use large code components examples, collapse code in md; like .vue, more cohesive components but can separate export members yet.; Compound components tree -->
+
+Compared with the original React function components, `jsx-sfc` has these benefits:
+
+### Clearer visual isolation
+
+<details>
+<summary>
+For example: Components with complex logic (Click to expand)
+</summary>
+
+```tsx
+const QueryForm: React.FC = () => {
+  const store = useStore();
+
+  const getTypes = () => {
+    return store.typeList.map((element, index) => (
+      <Option key={index} value={element.value} label={element.label}>
+        {element.label}
+      </Option>
+    ));
+  };
+
+  const getStatus = () => {
+    return store.statusList.map((el, index) => (
+      <Option key={index} value={el.value} label={el.label}>
+        {el.label}
+      </Option>
+    ));
+  };
+
+  const typesData = getTypes();
+  const statusData = getStatus();
+
+  if (typesData.length < 1) {
+    return <div className="empty">No type data</div>;
+  } else if (statusData.length < 1) {
+    return <div className="empty">No status data</div>;
+  }
+
+  const onTypeChange = (value: number) => {
+    store.setQueryFormItem({ type: value });
+  };
+
+  const onStatusChange = (value: number) => {
+    store.setQueryFormItem({ status: value });
+  };
+
+  const onQuery = () => {
+    store.setPaginationItem({ pageNum: 1 });
+    store.getList();
+  };
+
+  const onReset = () => {
+    store.resetQueryForm();
+  };
+
+  return (
+    <div>
+      <Row className="item-list">
+        <Col span={8}>
+          <Select value={store.queryForm.type} onChange={onTypeChange}>
+            {typesData}
+          </Select>
+        </Col>
+        <Col span={8}>
+          <Select value={store.queryForm.status} onChange={onStatusChange}>
+            {statusData}
+          </Select>
+        </Col>
+      </Row>
+      <div className="item-buttons">
+        <Button onClick={onQuery}>Search</Button>
+        <Button onClick={onReset}>Reset</Button>
+      </div>
+    </div>
+  );
+};
+```
+
+</details>
+
+Undeniably, components like the above are very common in actual development. We can use `jsx-sfc` to rewrite it:
+
+```tsx
+const QueryForm = sfc({
+  template: ({ data }, types, status) => (
+    <>
+      <Template name={types}>
+        {() =>
+          data.store.typeList.map((element, index) => (
+            <Option key={index} value={element.value} label={element.label}>
+              {element.label}
+            </Option>
+          ))
+        }
+      </Template>
+
+      <Template name={status}>
+        {() =>
+          data.store.statusList.map((el, index) => {
+            return (
+              <Option key={index} value={el.value} label={el.label}>
+                {el.label}
+              </Option>
+            );
+          })
+        }
+      </Template>
+
+      <Template>
+        {() => {
+          const typesData = types.template();
+          const statusData = status.template();
+
+          if (typesData.length < 1) {
+            return <div className="empty">No type data</div>;
+          } else if (statusData.length < 1) {
+            return <div className="empty">No status data</div>;
+          }
+
+          return (
+            <div>
+              <Row className="item-list">
+                <Col span={8}>
+                  <Select value={data.store.queryForm.type} onChange={data.events.onTypeChange}>
+                    {typesData}
+                  </Select>
+                </Col>
+                <Col span={8}>
+                  <Select value={data.store.queryForm.status} onChange={data.events.onStatusChange}>
+                    {statusData}
+                  </Select>
+                </Col>
+              </Row>
+              <div className="item-buttons">
+                <Button onClick={data.events.onQuery}>Search</Button>
+                <Button onClick={data.events.onReset}>Reset</Button>
+              </div>
+            </div>
+          );
+        }}
+      </Template>
+    </>
+  ),
+
+  Component() {
+    const store = useStore();
+
+    return {
+      store,
+
+      events: {
+        onTypeChange(value: number) {
+          store.setQueryFormItem({ type: value });
+        },
+
+        onStatusChange(value: number) {
+          store.setQueryFormItem({ status: value });
+        },
+
+        onQuery() {
+          store.setPaginationItem({ pageNum: 1 });
+          store.getList();
+        },
+
+        onReset() {
+          store.resetQueryForm();
+        }
+      }
+    };
+  }
+});
+```
+
+In this way:
+
+- We can put all the logic codes into the `Component function` and manage it separately;
+- Then we can put all the JSX codes into the `template function`, and support `sub template tags` to manage JSX codes that need to be reused.
+
+**When the component code is large and the logic is complex, the benefits of visual isolation are obvious.**
+
+### Better single file experience
+
+<details>
+<summary>
+For example: Multiple components in a single file (Click to expand)
+</summary>
+</details>
 
 ## API Design Principle
 
