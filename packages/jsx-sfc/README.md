@@ -198,7 +198,7 @@ Finally, `jsx-sfc` can also support `React Fast Refresh` perfectly. Because it h
 You can use `jsx-sfc` with any bundle tools which can be use Babel(e.g. Webpack, Rollup):
 
 ```bash
-npm install jsx-sfc babel-plugin-jsx-sfc
+npm install jsx-sfc@next babel-plugin-jsx-sfc@next
 ```
 
 Configure Babel:
@@ -216,7 +216,7 @@ Configure Babel:
 Because Vite uses esbuild to transform JSX/TSX, so `jsx-sfc` provides a vite plugin:
 
 ```bash
-npm install jsx-sfc vite-plugin-jsx-sfc
+npm install jsx-sfc@next vite-plugin-jsx-sfc@next
 ```
 
 - Configure Vite(v2.x):
@@ -761,7 +761,143 @@ In this way:
 <summary>
 For example: Multiple components in a single file (Click to expand)
 </summary>
+
+```tsx
+const svgProps = {
+  xmlns: 'http://www.w3.org/2000/svg',
+  width: '24',
+  height: '24',
+  viewBox: '0 0 24 24',
+  fill: 'none',
+  stroke: 'currentColor',
+  strokeWidth: '2',
+  strokeLinecap: 'round',
+  strokeLinejoin: 'round'
+};
+
+const Todo = ({ onClick, completed, text }) => (
+  <TodoWrapper onClick={onClick}>
+    {completed ? (
+      <svg {...svgProps}>
+        <polyline points="9 11 12 14 23 3"></polyline>
+        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+      </svg>
+    ) : (
+      <svg {...svgProps}>
+        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+      </svg>
+    )}
+    <span className="text">{text}</span>
+  </TodoWrapper>
+);
+
+const TodoList = ({ todos, onTodoClick }) => (
+  <TodoListWrapper>
+    {todos.map(todo => (
+      <Todo key={todo.id} {...todo} onClick={() => onTodoClick(todo.id)} />
+    ))}
+  </TodoListWrapper>
+);
+
+const TodoWrapper = styled.li`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 4px;
+  border-bottom: 1px solid #eee;
+  line-height: 24px;
+  font-size: 110%;
+
+  &:hover {
+    background: #efefef;
+  }
+`;
+
+const TodoListWrapper = styled.ul`
+  margin: 20px 0;
+  padding: 0;
+`;
+```
+
 </details>
+
+Then we use `jsx-sfc` to rewrite it:
+
+```tsx
+const Todo = sfc(
+  {
+    Component({ onClick, completed, text, styles: { Wrapper }, svgProps }) {
+      return (
+        <Wrapper onClick={onClick}>
+          {completed ? (
+            <svg {...svgProps}>
+              <polyline points="9 11 12 14 23 3"></polyline>
+              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+            </svg>
+          ) : (
+            <svg {...svgProps}>
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            </svg>
+          )}
+          <span className="text">{text}</span>
+        </Wrapper>
+      );
+    },
+
+    styles: {
+      Wrapper: styled.li`
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 4px;
+        border-bottom: 1px solid #eee;
+        line-height: 24px;
+        font-size: 110%;
+
+        &:hover {
+          background: #efefef;
+        }
+      `
+    }
+  },
+  {
+    svgProps: {
+      xmlns: 'http://www.w3.org/2000/svg',
+      width: '24',
+      height: '24',
+      viewBox: '0 0 24 24',
+      fill: 'none',
+      stroke: 'currentColor',
+      strokeWidth: '2',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round'
+    }
+  }
+);
+
+const TodoList = sfc({
+  Component({ todos, onTodoClick, styles: { Wrapper } }) {
+    return (
+      <Wrapper>
+        {todos.map(todo => (
+          <Todo key={todo.id} {...todo} onClick={() => onTodoClick(todo.id)} />
+        ))}
+      </Wrapper>
+    );
+  },
+
+  styles: {
+    Wrapper: styled.ul`
+      margin: 20px 0;
+      padding: 0;
+    `
+  }
+});
+```
+
+As you can see, we can **organize their own members with component dimension** to achieve better visual isolation effect.
+
+When we organize component codes, we often have to divide it into multiple files, and sometimes the file switching action will cause a little upset. At this time, `jsx-sfc` can help you make this scene much easier. **We can still organize the code clearly, even without a lot of fragmented files** 😊.
 
 ## API Design Principle
 
