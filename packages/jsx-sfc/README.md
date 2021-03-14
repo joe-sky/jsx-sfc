@@ -895,9 +895,9 @@ const TodoList = sfc({
 });
 ```
 
-As you can see, we can **organize their own members with component dimension** to achieve better visual isolation effect.
+As you can see, we can **organize codes with component granularity** to achieve better visual isolation effect.
 
-When we organize component codes, we often have to divide it into multiple files, and sometimes the file switching action will cause a little upset. At this time, `jsx-sfc` can help you make this scene much easier. **We can still organize the code clearly, even without a lot of fragmented files** 😊.
+When we organize component codes, we often have to divide them into multiple files, and sometimes the file switching action will cause a little upset. At this time, `jsx-sfc` can help you make this scene much easier. **We can still organize the code clearly even without a lot of fragmented files** 😊.
 
 ## API Design Principle
 

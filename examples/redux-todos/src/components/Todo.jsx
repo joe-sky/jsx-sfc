@@ -5,11 +5,11 @@ import sfc, { Template } from 'jsx-sfc';
 
 const Todo = sfc(
   {
-    template: ({ data, styles: { Wrapper }, svgProps }, Icon) => (
+    template: ({ data, styles: { Wrapper }, svgProps }, icon) => (
       <>
-        <Template name={Icon}>
-          {({ completed }) =>
-            completed ? (
+        <Template name={icon}>
+          {() =>
+            data.completed ? (
               <svg {...svgProps}>
                 <polyline points="9 11 12 14 23 3"></polyline>
                 <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
@@ -25,7 +25,7 @@ const Todo = sfc(
         <Template>
           {() => (
             <Wrapper onClick={data.onClick}>
-              <Icon.template completed={data.completed} />
+              {icon.template()}
               <span className="text">{data.text}</span>
             </Wrapper>
           )}
