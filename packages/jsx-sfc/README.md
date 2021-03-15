@@ -16,7 +16,7 @@
 
 `jsx-sfc`(JSX Separate Function Components) is a tiny tool(~1kb) for create React function components with **separation of concerns** and **completely type inference**. It can be seen as a JSX/TSX syntax or type tool, very simple to use🧙🏼‍♂️.
 
-> Currently version is v1.0.0-alpha.x, the v1 version and full documentation will be completed soon.
+<!-- > Currently version is v1.0.0-alpha.x, the v1 version and full documentation will be completed soon. -->
 
 [Live Demo is here.](https://codesandbox.io/s/jsx-sfc-demo-wwgd4)
 
@@ -198,7 +198,7 @@ Finally, `jsx-sfc` can also support `React Fast Refresh` perfectly. Because it h
 You can use `jsx-sfc` with any bundle tools which can be use Babel(e.g. Webpack, Rollup):
 
 ```bash
-npm install jsx-sfc@next babel-plugin-jsx-sfc@next
+npm install jsx-sfc babel-plugin-jsx-sfc
 ```
 
 Configure Babel:
@@ -216,7 +216,7 @@ Configure Babel:
 Because Vite uses esbuild to transform JSX/TSX, so `jsx-sfc` provides a vite plugin:
 
 ```bash
-npm install jsx-sfc@next vite-plugin-jsx-sfc@next
+npm install jsx-sfc vite-plugin-jsx-sfc
 ```
 
 - Configure Vite(v2.x):
@@ -919,7 +919,10 @@ It can be explained in this way:
 
 ## Roadmap
 
-At present only React is supported. However, other framework versions will not be excluded in the future(e.g. Vue v3).
+- Optimize runtime size
+- Optimize compiled code
+
+<!-- At present only React is supported. However, other framework versions will not be excluded in the future(e.g. Vue v3). -->
 
 ## Who is using
 

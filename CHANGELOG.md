@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v1.0.0] 2020.03.15
+
+- 🤟 The first stable version of `jsx-sfc` released.
+
 ## [v1.0.0-alpha.11] 2021.03.05
 
 - 🐛 Fix `ObjectMethod` case for `babel-plugin-jsx-sfc`.
