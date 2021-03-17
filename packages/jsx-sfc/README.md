@@ -20,9 +20,18 @@
 
 [Live Demo is here.](https://codesandbox.io/s/jsx-sfc-demo-wwgd4)
 
+## Features
+
+- 🌟 Easy way to define function components with **separation of concerns**
+- ✨ Clearly isolate **template**, **logic**, **styles** and **any other concerns**
+- 💫 **Completely type inference** design by TypeScript
+- 🔥 Support all React hooks
+- ⚡ Support React Fast Refresh
+- 🔧 Support React eslint plugins
+- 🚀 No dependencies and side effects
+
 ## Table of Contents
 
-- [Features](#features)
 - [Packages](#packages)
 - [Examples](#examples)
 - [Inspiration](#inspiration)
@@ -39,16 +48,6 @@
 - [API Design Principle](#api-design-principle)
 - [Roadmap](#roadmap)
 - [Who is using](#who-is-using)
-
-## Features
-
-- 🌟 Easy way to define function components with **separation of concerns**
-- ✨ Clearly isolate **template**, **logic**, **styles** and **any other concerns**
-- 💫 **Completely type inference** design by TypeScript
-- 🔥 Support all React hooks
-- ⚡ Support React Fast Refresh
-- 🔧 Support React eslint plugins
-- 🚀 No dependencies and side effects
 
 ## Packages
 

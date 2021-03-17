@@ -69,26 +69,28 @@ describe('basic', function() {
 });
 
 const AppMultiTmpls = sfc<AppProps>()({
-  template: ({ data, styles: { Container } }, header: Template.Func<string>, footer: Template.Func<string>) => (
+  template: ({ data, styles: { Container } }, header: Template.Func<string>, footer: Template.Func<string>, noop) => (
     <>
       <Template name={header}>{content => <header>{content}</header>}</Template>
 
       <Template name={footer}>{content => <footer>{content}</footer>}</Template>
 
+      {false && <Template name={noop}>{() => <></>}</Template>}
+
       <Template>
         {() => (
           <Container>
-            {header.template(data.a)}
-            <div>{data.a}</div>
-            {footer.template(data.a)}
+            {header.template(data.test)}
+            <div>{data.test}</div>
+            {footer.template(data.test)}
           </Container>
         )}
       </Template>
     </>
   ),
 
-  Component: props => {
-    return { a: props.test };
+  Component(props) {
+    return { test: props.test };
   },
 
   styles: () => ({

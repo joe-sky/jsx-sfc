@@ -77,8 +77,8 @@ const AppMultiTmpls = sfc<AppProps>()({
         <Template>
           {() => (
             <Container>
-              {header.template(data.a)}
-              <div>{data.a}</div>
+              {header.template(data.test)}
+              <div>{data.test}</div>
             </Container>
           )}
         </Template>
@@ -87,7 +87,7 @@ const AppMultiTmpls = sfc<AppProps>()({
   },
 
   Component(props) {
-    return props.template({ a: props.test });
+    return props.template({ test: props.test });
   },
 
   styles: () => ({

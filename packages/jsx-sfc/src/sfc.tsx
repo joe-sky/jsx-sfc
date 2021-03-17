@@ -39,7 +39,7 @@ export function createOptions(options: FuncMap, extensions?: Func | Obj, isRunti
 
             let mainTemplate: Template.Func['template'] = noop;
             tmplFcs.forEach(item => {
-              if (isTemplate(item.type)) {
+              if (item && isTemplate(item.type)) {
                 const { name, children } = item.props;
                 if (name) {
                   name.template = children;

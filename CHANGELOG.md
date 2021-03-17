@@ -1,6 +1,10 @@
 # CHANGELOG
 
-## [v1.0.0] 2020.03.15
+## [v1.0.1] 2021.03.17
+
+- 🐛 Support rendering null value of sub template.
+
+## [v1.0.0] 2021.03.15
 
 - 🤟 The first stable version of `jsx-sfc` released.
 

@@ -6,7 +6,7 @@
     "packages/babel-plugin-jsx-sfc",
     "packages/vite-plugin-jsx-sfc"
   ],
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A tiny library for create React function components with Separation of Concerns and completely Type Inference.",
   "scripts": {
     "build": "lerna run build",

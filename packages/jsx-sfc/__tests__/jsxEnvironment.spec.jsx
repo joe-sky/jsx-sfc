@@ -75,7 +75,7 @@ const WithHooks = sfc(
       </Container>
     ),
 
-    Component: ({ useCount }) => {
+    Component({ useCount }) {
       const { count, increase, reset } = useCount(0);
 
       return {
