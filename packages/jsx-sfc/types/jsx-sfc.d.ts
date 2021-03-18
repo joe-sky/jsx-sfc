@@ -1,5 +1,5 @@
 /*!
- * jsx-sfc v1.0.1
+ * jsx-sfc v1.0.2
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
@@ -77,7 +77,7 @@ declare type DefineComponent<Ref = NoRef, Props = {}, ReturnComponent = Ref exte
             data: U;
         } & FR, ...tmpls: Template.Func[]) => JSXElements;
     }, extensions?: EX): ReturnComponent & Origin & {
-        template: (data?: Data) => JSXElements;
+        template: (data?: Partial<Data>) => JSXElements;
         styles: InferStyles;
     } & ExtractOptions<EX>;
     <InferStyles extends ExtractOptions<Styles>, InferEX extends ExtractOptions<EX>, FR extends {

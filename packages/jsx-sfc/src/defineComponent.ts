@@ -63,7 +63,7 @@ export type DefineComponent<
     extensions?: EX
   ): ReturnComponent &
     Origin & {
-      template: (data?: Data) => JSXElements;
+      template: (data?: Partial<Data>) => JSXElements;
       styles: InferStyles;
     } & ExtractOptions<EX>;
 

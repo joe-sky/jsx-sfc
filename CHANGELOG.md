@@ -1,8 +1,12 @@
 # CHANGELOG
 
+## [v1.0.2] 2021.03.18
+
+- 👆 The parameter type of the export template function by the component is changed to optional.
+
 ## [v1.0.1] 2021.03.17
 
-- 🐛 Support rendering null value of sub template.
+- 👆 Support rendering null value of sub template.
 
 ## [v1.0.0] 2021.03.15
 
