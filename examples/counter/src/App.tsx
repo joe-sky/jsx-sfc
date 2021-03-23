@@ -5,35 +5,39 @@ import { styles } from './utils';
 
 const App = sfc(
   {
-    template: ({ data }) => (
-      <div className={data.classes.App}>
-        <header className={data.classes.AppHeader}>
-          <img src={logo} className={data.classes.AppLogo} alt="logo" />
-          <p>Hello Vite + React!</p>
-          <p>
-            <button className={data.classes.AppButton} onClick={data.onClick}>
-              count is: {data.count}
-            </button>
-          </p>
-          <p>
-            Edit <code>App.tsx</code> and save to test HMR updates.
-          </p>
-          <p>
-            <a className={data.classes.AppLink} href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-              Learn React
-            </a>
-            {' | '}
-            <a
-              className={data.classes.AppLink}
-              href="https://vitejs.dev/guide/features.html"
-              target="_blank"
-              rel="noopener noreferrer">
-              Vite Docs
-            </a>
-          </p>
-        </header>
-      </div>
-    ),
+    template: ({ data }) => {
+      const { classes } = data;
+
+      return (
+        <div className={classes.App}>
+          <header className={classes.AppHeader}>
+            <img src={logo} className={classes.AppLogo} alt="logo" />
+            <p>Hello Vite + React!</p>
+            <p>
+              <button className={classes.AppButton} onClick={data.onClick}>
+                count is: {data.count}
+              </button>
+            </p>
+            <p>
+              Edit <code>App.tsx</code> and save to test HMR updates.
+            </p>
+            <p>
+              <a className={classes.AppLink} href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
+                Learn React
+              </a>
+              {' | '}
+              <a
+                className={classes.AppLink}
+                href="https://vitejs.dev/guide/features.html"
+                target="_blank"
+                rel="noopener noreferrer">
+                Vite Docs
+              </a>
+            </p>
+          </header>
+        </div>
+      );
+    },
 
     Component: ({ useStyles }) => {
       const [count, setCount] = useState(0);

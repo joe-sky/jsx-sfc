@@ -32,8 +32,8 @@
 
 ## Table of Contents
 
-- [Packages](#packages)
 - [Examples](#examples)
+- [Packages](#packages)
 - [Inspiration](#inspiration)
 - [Installation](#installation)
   - [Using with Webpack](#using-with-webpack)
@@ -49,6 +49,13 @@
 - [Roadmap](#roadmap)
 - [Who is using](#who-is-using)
 
+## Examples
+
+- [Redux Todo List (styles use Styled-Components)](https://github.com/joe-sky/jsx-sfc/tree/main/examples/redux-todos)
+- [React-i18next Example (styles use Emotion)](https://github.com/joe-sky/jsx-sfc/tree/main/examples/react-i18next)
+- [Simple Counter (styles use Jss)](https://github.com/joe-sky/jsx-sfc/tree/main/examples/counter)
+- [TailwindCss Starter (styles use TailwindCss)](https://github.com/joe-sky/jsx-sfc/tree/main/examples/tailwind-starter)
+
 ## Packages
 
 | Package                                                                                            | Badges                                                                                                                                                                                                                                                                                                                                                                                                              |
@@ -56,12 +63,6 @@
 | [jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/jsx-sfc)                           | <a href="https://www.npmjs.org/package/jsx-sfc"><img src="https://img.shields.io/npm/v/jsx-sfc.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/jsx-sfc"><img src="https://img.shields.io/npm/dm/jsx-sfc.svg" alt="NPM Downloads"></a> <a href="https://bundlephobia.com/result?p=jsx-sfc"><img src="https://img.shields.io/bundlephobia/minzip/jsx-sfc.svg?style=flat" alt="Minzipped Size"></a> |
 | [babel-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/babel-plugin-jsx-sfc) | <a href="https://www.npmjs.org/package/babel-plugin-jsx-sfc"><img src="https://img.shields.io/npm/v/babel-plugin-jsx-sfc.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/babel-plugin-jsx-sfc"><img src="https://img.shields.io/npm/dm/babel-plugin-jsx-sfc.svg" alt="NPM Downloads"></a>                                                                                                        |
 | [vite-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/vite-plugin-jsx-sfc)   | <a href="https://www.npmjs.org/package/vite-plugin-jsx-sfc"><img src="https://img.shields.io/npm/v/vite-plugin-jsx-sfc.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/vite-plugin-jsx-sfc"><img src="https://img.shields.io/npm/dm/vite-plugin-jsx-sfc.svg" alt="NPM Downloads"></a>                                                                                                            |
-
-## Examples
-
-- [Simple Counter](https://github.com/joe-sky/jsx-sfc/tree/main/examples/counter)
-- [Redux Todo List](https://github.com/joe-sky/jsx-sfc/tree/main/examples/redux-todos)
-- [TailwindCss Starter](https://github.com/joe-sky/jsx-sfc/tree/main/examples/tailwind-starter)
 
 ## Inspiration
 
