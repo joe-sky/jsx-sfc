@@ -147,7 +147,7 @@ export default () => ({
                 >;
                 if (firstPropParamPath) {
                   if (types.isObjectPattern(firstPropParamPath.node)) {
-                    // const { styles } = { ...props, ...$sfcOptions_lineNo };
+                    // const { styles, originalProps } = { ...props, ...$sfcOptions_lineNo, originalProps: props };
                     const propsName = 'props';
 
                     funcBlockPath.unshiftContainer(
@@ -157,7 +157,8 @@ export default () => ({
                           firstPropParamPath.node,
                           types.objectExpression([
                             types.spreadElement(types.identifier(propsName)),
-                            types.spreadElement(types.identifier(sfcOptionsName))
+                            types.spreadElement(types.identifier(sfcOptionsName)),
+                            types.objectProperty(types.identifier('originalProps'), types.identifier(propsName))
                           ])
                         )
                       ])

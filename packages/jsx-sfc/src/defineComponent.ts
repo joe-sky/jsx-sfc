@@ -6,6 +6,7 @@ type NoRef = 'noRef';
 
 export type SFCProps<Props = {}, EX = {}> = PropsWithChildren<Props> & {
   template: Template.InternalFunc;
+  originalProps: PropsWithChildren<Props>;
 } & EX;
 
 type ExtractOptions<T> = T extends () => infer R ? (R extends Obj ? R : never) : T extends Obj ? T : unknown;

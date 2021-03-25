@@ -1,5 +1,5 @@
 /*!
- * jsx-sfc v1.0.2
+ * jsx-sfc v1.1.0
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
@@ -34,6 +34,7 @@ declare namespace Template {
 declare type NoRef = 'noRef';
 declare type SFCProps<Props = {}, EX = {}> = PropsWithChildren<Props> & {
     template: Template.InternalFunc;
+    originalProps: PropsWithChildren<Props>;
 } & EX;
 declare type ExtractOptions<T> = T extends () => infer R ? (R extends Obj ? R : never) : T extends Obj ? T : unknown;
 declare type DefineComponent<Ref = NoRef, Props = {}, ReturnComponent = Ref extends NoRef ? React.FC<Props> : React.ForwardRefExoticComponent<Props & RefAttributes<Ref>>, Origin = {

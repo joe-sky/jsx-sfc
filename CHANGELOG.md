@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## [v1.1.0] 2021.03.25
+
+- 🌟 Add `originalProps` property for `SFCProps`.
+- 🐛 Published the `index.d.ts` for `babel-plugin-jsx-sfc`.
+
 ## [v1.0.2] 2021.03.18
 
 - 👆 The parameter type of the export template function by the component is changed to optional.
