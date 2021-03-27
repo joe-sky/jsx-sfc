@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v1.1.1] 2021.03.27
+
+- 🌟 Add `parserPlugins` option for `vite-plugin-jsx-sfc`.
+
 ## [v1.1.0] 2021.03.25
 
 - 🌟 Add `originalProps` property for `SFCProps`.

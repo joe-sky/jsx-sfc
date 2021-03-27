@@ -3,17 +3,18 @@ import './i18n/config';
 import { useTranslation } from 'react-i18next';
 import sfc from 'jsx-sfc';
 import styled from '@emotion/styled';
+import { css } from '@emotion/react';
 import { locales } from './utils';
 
 const App = sfc(
   {
-    Component({ styles: { Wrapper } }) {
+    Component({ styles: { Wrapper, ...styles } }) {
       const { t, i18n } = useTranslation();
 
       return (
         <Wrapper>
           <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo" />
+            <img src={logo} css={styles.appLogo} alt="logo" />
             <select value={i18n.language} onChange={e => i18n.changeLanguage(e.target.value)}>
               <option value="en">English</option>
               <option value="ja">日本語</option>
@@ -30,11 +31,6 @@ const App = sfc(
     styles: {
       Wrapper: styled.div`
         text-align: center;
-
-        .App-logo {
-          height: 40vmin;
-          pointer-events: none;
-        }
 
         @media (prefers-reduced-motion: no-preference) {
           .App-logo {
@@ -65,6 +61,11 @@ const App = sfc(
             transform: rotate(360deg);
           }
         }
+      `,
+
+      appLogo: css`
+        height: 40vmin;
+        pointer-events: none;
       `
     }
   },

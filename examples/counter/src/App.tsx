@@ -3,7 +3,11 @@ import logo from './logo.svg';
 import sfc from 'jsx-sfc';
 import { styles } from './utils';
 
-const App = sfc(
+interface AppProps {
+  title?: string;
+}
+
+const App = sfc<AppProps>()(
   {
     template: ({ data }) => {
       const { classes } = data;
@@ -12,7 +16,7 @@ const App = sfc(
         <div className={classes.App}>
           <header className={classes.AppHeader}>
             <img src={logo} className={classes.AppLogo} alt="logo" />
-            <p>Hello Vite + React!</p>
+            <p>{data.title}</p>
             <p>
               <button className={classes.AppButton} onClick={data.onClick}>
                 count is: {data.count}
@@ -39,11 +43,12 @@ const App = sfc(
       );
     },
 
-    Component: ({ useStyles }) => {
+    Component: ({ title, useStyles }) => {
       const [count, setCount] = useState(0);
       const classes = useStyles();
 
       return {
+        title,
         count,
         setCount,
         classes,
@@ -87,5 +92,9 @@ const App = sfc(
     }
   })
 );
+
+App.defaultProps = {
+  title: 'Hello Vite + React!'
+};
 
 export default App;
