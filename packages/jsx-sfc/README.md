@@ -3,9 +3,9 @@
   <div>
     <a href="https://travis-ci.org/joe-sky/jsx-sfc"><img src="https://travis-ci.org/joe-sky/jsx-sfc.svg?branch=main" alt="Travis CI Status"></a>
     <a href="https://codecov.io/gh/joe-sky/jsx-sfc"><img src="https://codecov.io/gh/joe-sky/jsx-sfc/branch/main/graph/badge.svg" alt="Codecov"></a>
-    <a href="https://www.npmjs.org/package/jsx-sfc"><img src="https://img.shields.io/npm/v/jsx-sfc.svg" alt="NPM Version"></a>
+    <!-- <a href="https://www.npmjs.org/package/jsx-sfc"><img src="https://img.shields.io/npm/v/jsx-sfc.svg" alt="NPM Version"></a> -->
     <!-- <a href="https://www.npmjs.org/package/jsx-sfc"><img src="https://img.shields.io/npm/dm/jsx-sfc.svg" alt="NPM Downloads"></a> -->
-    <a href="https://bundlephobia.com/result?p=jsx-sfc"><img src="https://img.shields.io/bundlephobia/minzip/jsx-sfc.svg?style=flat" alt="Minzipped Size"></a>
+    <!-- <a href="https://bundlephobia.com/result?p=jsx-sfc"><img src="https://img.shields.io/bundlephobia/minzip/jsx-sfc.svg?style=flat" alt="Minzipped Size"></a> -->
     <a href="https://www.npmjs.com/package/jsx-sfc"><img src="https://img.shields.io/npm/l/jsx-sfc.svg" alt="License"></a>
   </div>
 </h1>
@@ -13,6 +13,14 @@
 <p align="center">
   <img alt="jsx-sfc demo" src="https://github.com/joe-sky/jsx-sfc/blob/main/public/images/sfc.gif?raw=true" width="500" />
 </p>
+
+| Package                                                                                            | Badges                                                                                                                                                                                                                                                                                                                                                                                                              |
+| -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/jsx-sfc)                           | <a href="https://www.npmjs.org/package/jsx-sfc"><img src="https://img.shields.io/npm/v/jsx-sfc.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/jsx-sfc"><img src="https://img.shields.io/npm/dm/jsx-sfc.svg" alt="NPM Downloads"></a> <a href="https://bundlephobia.com/result?p=jsx-sfc"><img src="https://img.shields.io/bundlephobia/minzip/jsx-sfc.svg?style=flat" alt="Minzipped Size"></a> |
+| [babel-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/babel-plugin-jsx-sfc) | <a href="https://www.npmjs.org/package/babel-plugin-jsx-sfc"><img src="https://img.shields.io/npm/v/babel-plugin-jsx-sfc.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/babel-plugin-jsx-sfc"><img src="https://img.shields.io/npm/dm/babel-plugin-jsx-sfc.svg" alt="NPM Downloads"></a>                                                                                                        |
+| [vite-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/vite-plugin-jsx-sfc)   | <a href="https://www.npmjs.org/package/vite-plugin-jsx-sfc"><img src="https://img.shields.io/npm/v/vite-plugin-jsx-sfc.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/vite-plugin-jsx-sfc"><img src="https://img.shields.io/npm/dm/vite-plugin-jsx-sfc.svg" alt="NPM Downloads"></a>                                                                                                            |
+
+## Introduction
 
 `jsx-sfc`(JSX Separate Function Components) is a tiny tool(~1kb) for create React function components with **separation of concerns** and **completely type inference**. It can be seen as a JSX/TSX syntax or type tool, very simple to use🧙🏼‍♂️.
 
@@ -32,12 +40,13 @@
 
 ## Table of Contents
 
+- [Inspiration & Motivation](#inspiration-&-motivation)
+- [Performance](#performance)
+- [Quick Start](#quick-start)
+  - [Installation with Webpack](#installation-with-webpack)
+  - [Installation with Vite](#installation-with-vite)
+  - [Simple Steps](#simple-steps)
 - [Examples](#examples)
-- [Packages](#packages)
-- [Inspiration](#inspiration)
-- [Installation](#installation)
-  - [Using with Webpack](#using-with-webpack)
-  - [Using with Vite](#using-with-vite)
 - [Usage](#usage)
   - [`sfc`](#sfc)
   - [`sfc.forwardRef`](#sfc.forwardRef)
@@ -49,38 +58,34 @@
 - [Roadmap](#roadmap)
 - [Who is using](#who-is-using)
 
-## Examples
-
-- [Redux Todo List (styles use Styled-Components)](https://github.com/joe-sky/jsx-sfc/tree/main/examples/redux-todos)
-- [React-i18next Example (styles use Emotion)](https://github.com/joe-sky/jsx-sfc/tree/main/examples/react-i18next)
-- [Simple Counter (styles use Jss)](https://github.com/joe-sky/jsx-sfc/tree/main/examples/counter)
-- [TailwindCss Starter (styles use TailwindCss)](https://github.com/joe-sky/jsx-sfc/tree/main/examples/tailwind-starter)
-
-## Packages
-
-| Package                                                                                            | Badges                                                                                                                                                                                                                                                                                                                                                                                                              |
-| -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/jsx-sfc)                           | <a href="https://www.npmjs.org/package/jsx-sfc"><img src="https://img.shields.io/npm/v/jsx-sfc.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/jsx-sfc"><img src="https://img.shields.io/npm/dm/jsx-sfc.svg" alt="NPM Downloads"></a> <a href="https://bundlephobia.com/result?p=jsx-sfc"><img src="https://img.shields.io/bundlephobia/minzip/jsx-sfc.svg?style=flat" alt="Minzipped Size"></a> |
-| [babel-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/babel-plugin-jsx-sfc) | <a href="https://www.npmjs.org/package/babel-plugin-jsx-sfc"><img src="https://img.shields.io/npm/v/babel-plugin-jsx-sfc.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/babel-plugin-jsx-sfc"><img src="https://img.shields.io/npm/dm/babel-plugin-jsx-sfc.svg" alt="NPM Downloads"></a>                                                                                                        |
-| [vite-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/vite-plugin-jsx-sfc)   | <a href="https://www.npmjs.org/package/vite-plugin-jsx-sfc"><img src="https://img.shields.io/npm/v/vite-plugin-jsx-sfc.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/vite-plugin-jsx-sfc"><img src="https://img.shields.io/npm/dm/vite-plugin-jsx-sfc.svg" alt="NPM Downloads"></a>                                                                                                            |
-
-## Inspiration
+## Inspiration & Motivation
 
 This project was originally inspired by [Vue Single File Components](https://vuejs.org/v2/guide/single-file-components.html). The point of Vue SFCs has been recognized by many people:
 
 > Inside a component, it's template, logic and styles are inherently coupled, and collocating them actually makes the component more cohesive and maintainable.
 
-However, the separation of concerns idea is very rare in the JSX(React) environment, only a few implementations from community:
+However, the **separation of concerns** idea is very rare in the JSX(React) environment, only a few implementations from community:
 
 - [one-loader](https://github.com/digitalie/one-loader)
 - [react-sfc-swyx](https://github.com/react-sfc/react-sfc-swyx)
 
-But the idea of `jsx-sfc` is quite different from the above implementations. A simple demo, when we write a function component module like this:
+On the whole, the above two solutions are to create a new file type for React to implement the idea similar to Vue SFCs.
+But the idea of this project is quite different from the above implementations. Considering that the original design principle of JSX is a syntax extension of the existing JavaScript, so I want to create a new SFC solution that is more accord with the existing React and JSX development habits.
+
+### Extending Function Component Syntax
+
+Since the birth of react hooks, function component has been the main way to write React components. My overall idea is to create an as simple as possible extension syntax for the existing function components that conforms to the idea of **separation of concerns**, and without creating any new tool chains(e.g. IDE syntax highlight plugin).
+
+So it named: `Separate Function Components`(package named `jsx-sfc`), abbreviated as SFC also ✌️. It's implementation makes full use of **TypeScript generic inference**, and support the use of all React existing tool chains(e.g. CSS-in-JS/Eslint/HMR).
+
+> Why not named react-sfc? In fact, the npm package name of react-sfc has been occupied([react-sfc-swyx](https://github.com/react-sfc/react-sfc-swyx))😅.
+
+A simple demo, when we write a function component module like this:
 
 ```tsx
 import React, { useState, useEffect } from 'react';
-import { css } from 'emotion';
 import styled from '@emotion/styled';
+import { css } from '@emotion/react';
 
 const App = props => {
   const [user, setUser] = useState(props.user);
@@ -106,7 +111,7 @@ const Wrapper = styled.section`
 `;
 ```
 
-Now, we can use `jsx-sfc` to rewrite it with **separation of concerns** and **type safe**:
+Now, we can use `jsx-sfc` to rewrite it with **separation of concerns**, and TypeScript will inferred all types correctly:
 
 ```tsx
 import sfc from 'jsx-sfc';
@@ -138,6 +143,10 @@ const App = sfc({
   }
 });
 ```
+
+Such this component structure at first glance, we can immediately distinguish the responsibilities of each part of the code~
+
+### Hooks Eslint Plugin
 
 And if you configure the `eslint-plugin-react-hooks`, it also can check where you can use hooks:
 
@@ -176,6 +185,8 @@ const App = sfc({
 });
 ```
 
+### React Fast Refresh
+
 Finally, `jsx-sfc` can also support `React Fast Refresh` perfectly. Because it has a `babel-plugin-jsx-sfc` to transform the runtime code into a format recognized by the `Babel plugin of React Fast Refresh` 😉.
 
 <!-- See the demo, the main design ideas of `jsx-sfc`:
@@ -191,9 +202,11 @@ Finally, `jsx-sfc` can also support `React Fast Refresh` perfectly. Because it h
 
 <!-- So `jsx-sfc` is similar to Vue SFCs in the form of separation of concerns, but it was originally designed to adapt the JSX(TSX) environment! -->
 
-## Installation
+## Performance
 
-### Using with Webpack
+## Quick Start
+
+### Installation with Webpack
 
 You can use `jsx-sfc` with any bundle tools which can be use Babel(e.g. Webpack, Rollup):
 
@@ -211,7 +224,7 @@ Configure Babel:
 }
 ```
 
-### Using with Vite
+### Installation with Vite
 
 Because Vite uses esbuild to transform JSX/TSX, so `jsx-sfc` provides a vite plugin:
 
@@ -243,6 +256,15 @@ const config = {
   plugins: [sfcPlugin, reactPlugin]
 }
 ```
+
+### Simple Steps
+
+## Examples
+
+- [Redux Todo List (styles use Styled-Components)](https://github.com/joe-sky/jsx-sfc/tree/main/examples/redux-todos)
+- [React-i18next Example (styles use Emotion)](https://github.com/joe-sky/jsx-sfc/tree/main/examples/react-i18next)
+- [Simple Counter (styles use Jss)](https://github.com/joe-sky/jsx-sfc/tree/main/examples/counter)
+- [TailwindCss Starter (styles use TailwindCss)](https://github.com/joe-sky/jsx-sfc/tree/main/examples/tailwind-starter)
 
 ## Usage
 
