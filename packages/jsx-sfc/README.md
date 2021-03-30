@@ -45,10 +45,10 @@
   - [Adapt Eslint Plugin](#adapt-eslint-plugin)
   - [Adapt Hot Reloading](#adapt-hot-reloading)
   - [Performance](#performance)
-- [Quick Start](#quick-start)
-  - [Installation with Webpack](#installation-with-webpack)
-  - [Installation with Vite](#installation-with-vite)
 - [Examples](#examples)
+- [Installation](#installation)
+  - [Using with Babel](#using-with-babel)
+  - [Using with Vite](#using-with-vite)
 - [Usage](#usage)
   - [`sfc`](#sfc)
   - [`sfc.forwardRef`](#sfc.forwardRef)
@@ -79,9 +79,13 @@ _Considering that the original design principle of JSX is a syntax extension of 
 
 Since the birth of react hooks, function component has been the main way to write React components. My main idea is to create an as simple as possible extension syntax for the existing function components that conforms to the idea of **separation of concerns**, and without creating any new tool chains(e.g. IDE syntax highlight plugin).
 
-So it named: `Separate Function Components`(package named `jsx-sfc`), abbreviated as SFC also ✌️. It's implementation makes full use of **TypeScript generic inference**, and support the use of all React existing tool chains(e.g. CSS-in-JS/Eslint/HMR).
+So I named it:
 
-> Why not named react-sfc? In fact, the npm package name of react-sfc has been occupied([react-sfc-swyx](https://github.com/react-sfc/react-sfc-swyx))😅.
+`Separate Function Components` (npm package named `jsx-sfc`, abbreviated as SFC also 😅)
+
+It's implementation makes full use of **TypeScript generic inference**, and support the use of all React existing tool chains(e.g. CSS-in-JS/Eslint/HMR).
+
+> Why not named react-sfc? In fact, the npm package name of react-sfc has been occupied([react-sfc-swyx](https://github.com/react-sfc/react-sfc-swyx)).
 
 A simple demo, when we write a function component module like this:
 
@@ -205,13 +209,22 @@ Finally, `jsx-sfc` can also support `React Fast Refresh` perfectly. Because it h
 
 <!-- So `jsx-sfc` is similar to Vue SFCs in the form of separation of concerns, but it was originally designed to adapt the JSX(TSX) environment! -->
 
-### About Performance
+### Performance
 
 `jsx-sfc` is a tool that supports compiler optimization, so it's performance is almost the same as that of normal React function components ⚡️.
 
-## Quick Start
+## Examples
 
-### Installation with Webpack
+Here are some examples of **using different CSS in JS Solutions**, which basically cover all the current usage of `jsx-sfc`:
+
+- [Redux Todo List (styles use Styled-Components)](https://github.com/joe-sky/jsx-sfc/tree/main/examples/redux-todos)
+- [React-i18next Example (styles use Emotion)](https://github.com/joe-sky/jsx-sfc/tree/main/examples/react-i18next)
+- [Simple Counter (styles use Jss)](https://github.com/joe-sky/jsx-sfc/tree/main/examples/counter)
+- [TailwindCss Starter (styles use TailwindCss)](https://github.com/joe-sky/jsx-sfc/tree/main/examples/tailwind-starter)
+
+## Installation
+
+### Using with Babel
 
 You can use `jsx-sfc` with any bundle tools which can be use Babel(e.g. Webpack, Rollup):
 
@@ -229,7 +242,7 @@ Configure Babel:
 }
 ```
 
-### Installation with Vite
+### Using with Vite
 
 Because Vite uses esbuild to transform JSX/TSX, so `jsx-sfc` provides a vite plugin:
 
@@ -261,13 +274,6 @@ const config = {
   plugins: [sfcPlugin, reactPlugin]
 }
 ```
-
-## Examples
-
-- [Redux Todo List (styles use Styled-Components)](https://github.com/joe-sky/jsx-sfc/tree/main/examples/redux-todos)
-- [React-i18next Example (styles use Emotion)](https://github.com/joe-sky/jsx-sfc/tree/main/examples/react-i18next)
-- [Simple Counter (styles use Jss)](https://github.com/joe-sky/jsx-sfc/tree/main/examples/counter)
-- [TailwindCss Starter (styles use TailwindCss)](https://github.com/joe-sky/jsx-sfc/tree/main/examples/tailwind-starter)
 
 ## Usage
 
@@ -318,7 +324,7 @@ const App = sfc({
 
 #### With styles
 
-`jsx-sfc` allows you to choose a CSS in JS framework to define the style of components, such as [styled-components](https://github.com/styled-components/styled-components), [Emotion](https://github.com/emotion-js/emotion). A styled-components example:
+`jsx-sfc` allows you to choose a **CSS in JS framework** to define the style of components, such as [styled-components](https://github.com/styled-components/styled-components), [Emotion](https://github.com/emotion-js/emotion). A styled-components example:
 
 ```tsx
 import React, { useState } from 'react';
