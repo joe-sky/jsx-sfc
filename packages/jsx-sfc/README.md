@@ -944,13 +944,47 @@ When we organize component codes, we often have to divide them into multiple fil
 
 ## API Design Principle
 
-The API design principle of `jsx-sfc` can be defined as `Type First`.
+Before I decided on `jsx-sfc v1.0 API`, I actually made a lot of different attempts. Here are some of my summaries:
 
-### What is Type First
+### Why Type First
 
 It can be explained in this way:
 
 > If the type design can match the requirements, the corresponding logic implementation can be done.
+
+For example, I thought about to put generics directly into `sfc function` like this:
+
+```tsx
+interface Props {
+  title: string;
+}
+
+const App = sfc<Props>({
+  template: ({ data, styles }) => ...,
+  Component: (props) => ...,
+  styles: ...
+});
+```
+
+However, this doesn't work because the parameters of template and Component contain dynamically inferred generics(e.g. `data` and `styles`). If they are defined in the same function together with `Props` generic, then you pass in `Props` generic manually, the type inference errors will appear.
+
+This is limited to the fact that TS is not yet implemented **Partial Type Argument Inference**, you can refer to the following information for details: https://stackoverflow.com/questions/60377365/typescript-infer-type-of-generic-after-optional-first-generic. So I can only define `Props` generic in a separate function, and the API changes like this:
+
+```tsx
+interface Props {
+  title: string;
+}
+
+const App = sfc<Props>()({ // There's a pair of extra brackets after the generics
+  template: ({ data, styles }) => ...,
+  Component: (props) => ...,
+  styles: ...
+});
+```
+
+### Why not use JSX Wrapper
+
+### Why JSX Tags named Template
 
 <!-- todo: ts limitation based -->
 
