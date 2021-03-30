@@ -33,19 +33,21 @@
 - 🌟 Easy way to define function components with **separation of concerns**
 - ✨ Clearly isolate **template**, **logic**, **styles** and **any other concerns**
 - 💫 **Completely type inference** design by TypeScript
-- 🔥 Support all React hooks
-- ⚡ Support React Fast Refresh
+- 🎉 Support all React hooks
+- 🔥 Support React Fast Refresh
 - 🔧 Support React eslint plugins
-- 🚀 No dependencies and side effects
+- ⚡ Performance equivalent to original function components
+- 🚀 No any dependencies
 
 ## Table of Contents
 
-- [Inspiration & Motivation](#inspiration-&-motivation)
-- [Performance](#performance)
+- [Inspiration & Motivation](#inspiration--motivation)
+  - [Adapt Eslint Plugin](#adapt-eslint-plugin)
+  - [Adapt Hot Reloading](#adapt-hot-reloading)
+  - [Performance](#performance)
 - [Quick Start](#quick-start)
   - [Installation with Webpack](#installation-with-webpack)
   - [Installation with Vite](#installation-with-vite)
-  - [Simple Steps](#simple-steps)
 - [Examples](#examples)
 - [Usage](#usage)
   - [`sfc`](#sfc)
@@ -69,12 +71,13 @@ However, the **separation of concerns** idea is very rare in the JSX(React) envi
 - [one-loader](https://github.com/digitalie/one-loader)
 - [react-sfc-swyx](https://github.com/react-sfc/react-sfc-swyx)
 
-On the whole, the above two solutions are to create a new file type for React to implement the idea similar to Vue SFCs.
-But the idea of this project is quite different from the above implementations. Considering that the original design principle of JSX is a syntax extension of the existing JavaScript, so I want to create a new SFC solution that is more accord with the existing React and JSX development habits.
+Overall, the above two solutions are to create a new file type for React to implement the idea similar to Vue SFCs. But the idea of this project is quite different from the above implementations:
+
+_Considering that the original design principle of JSX is a syntax extension of the existing JavaScript, so I want to create a new SFC solution that is more accord with the existing JSX(React) development habits._
 
 ### Extending Function Component Syntax
 
-Since the birth of react hooks, function component has been the main way to write React components. My overall idea is to create an as simple as possible extension syntax for the existing function components that conforms to the idea of **separation of concerns**, and without creating any new tool chains(e.g. IDE syntax highlight plugin).
+Since the birth of react hooks, function component has been the main way to write React components. My main idea is to create an as simple as possible extension syntax for the existing function components that conforms to the idea of **separation of concerns**, and without creating any new tool chains(e.g. IDE syntax highlight plugin).
 
 So it named: `Separate Function Components`(package named `jsx-sfc`), abbreviated as SFC also ✌️. It's implementation makes full use of **TypeScript generic inference**, and support the use of all React existing tool chains(e.g. CSS-in-JS/Eslint/HMR).
 
@@ -146,7 +149,7 @@ const App = sfc({
 
 Such this component structure at first glance, we can immediately distinguish the responsibilities of each part of the code~
 
-### Hooks Eslint Plugin
+### Adapt Eslint Plugin
 
 And if you configure the `eslint-plugin-react-hooks`, it also can check where you can use hooks:
 
@@ -185,7 +188,7 @@ const App = sfc({
 });
 ```
 
-### React Fast Refresh
+### Adapt Hot Reloading
 
 Finally, `jsx-sfc` can also support `React Fast Refresh` perfectly. Because it has a `babel-plugin-jsx-sfc` to transform the runtime code into a format recognized by the `Babel plugin of React Fast Refresh` 😉.
 
@@ -202,7 +205,9 @@ Finally, `jsx-sfc` can also support `React Fast Refresh` perfectly. Because it h
 
 <!-- So `jsx-sfc` is similar to Vue SFCs in the form of separation of concerns, but it was originally designed to adapt the JSX(TSX) environment! -->
 
-## Performance
+### About Performance
+
+`jsx-sfc` is a tool that supports compiler optimization, so it's performance is almost the same as that of normal React function components ⚡️.
 
 ## Quick Start
 
@@ -256,8 +261,6 @@ const config = {
   plugins: [sfcPlugin, reactPlugin]
 }
 ```
-
-### Simple Steps
 
 ## Examples
 
@@ -677,7 +680,12 @@ const QueryForm: React.FC = () => {
 
 </details>
 
-Undeniably, components like the above are very common in actual development. We can use `jsx-sfc` to rewrite it:
+Undeniably, components like the above are very common in actual development.
+
+<details>
+<summary>
+We can use jsx-sfc to rewrite it (Click to expand)
+</summary>
 
 ```tsx
 const QueryForm = sfc({
@@ -770,6 +778,8 @@ const QueryForm = sfc({
 });
 ```
 
+</details>
+
 In this way:
 
 - We can put all the logic codes into the `Component function` and manage it separately;
@@ -843,7 +853,10 @@ const TodoListWrapper = styled.ul`
 
 </details>
 
-Then we use `jsx-sfc` to rewrite it:
+<details>
+<summary>
+Then we use jsx-sfc to rewrite it (Click to expand)
+</summary>
 
 ```tsx
 const Todo = sfc(
@@ -916,6 +929,8 @@ const TodoList = sfc({
   }
 });
 ```
+
+</details>
 
 As you can see, we can **organize codes with component granularity** to achieve better visual isolation effect.
 
