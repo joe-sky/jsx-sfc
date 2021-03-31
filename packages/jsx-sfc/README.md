@@ -35,15 +35,16 @@
 - 💫 **Completely type inference** design by TypeScript
 - 🎉 Support all React hooks
 - 🔥 Support React Fast Refresh
-- 🔧 Support React eslint plugins
+- 🔧 Support React Eslint plugins
 - ⚡ Performance equivalent to original function components
 - 🚀 No any dependencies
 
 ## Table of Contents
 
 - [Inspiration & Motivation](#inspiration--motivation)
-  - [Adapt Eslint Plugin](#adapt-eslint-plugin)
-  - [Adapt Hot Reloading](#adapt-hot-reloading)
+  - [Extending Function Component](#extending-function-component)
+  - [Adapting Eslint Plugin](#adapt-eslint-plugin)
+  - [Adapting Hot Reloading](#adapt-hot-reloading)
   - [Performance](#performance)
 - [Examples](#examples)
 - [Installation](#installation)
@@ -51,7 +52,7 @@
   - [Using with Vite](#using-with-vite)
 - [Usage](#usage)
   - [`sfc`](#sfc)
-  - [`sfc.forwardRef`](#sfc.forwardRef)
+  - [`sfc.forwardRef`](#sfcforwardRef)
   - [Sub Templates](#sub-templates)
   - [Extensions](#extensions)
   - [Export Members](#export-members)
@@ -75,13 +76,13 @@ Overall, the above two solutions are to create a new file type for React to impl
 
 _Considering that the original design principle of JSX is a syntax extension of the existing JavaScript, so I want to create a new SFC solution that is more accord with the existing JSX(React) development habits._
 
-### Extending Function Component Syntax
+### Extending Function Component
 
 Since the birth of react hooks, function component has been the main way to write React components. My main idea is to create an as simple as possible extension syntax for the existing function components that conforms to the idea of **separation of concerns**, and without creating any new tool chains(e.g. IDE syntax highlight plugin).
 
 So I named it:
 
-`Separate Function Components` (npm package named `jsx-sfc`, abbreviated as SFC also 😅)
+`Separate Function Components` (npm package named `jsx-sfc`, abbreviated as SFC also 😃)
 
 It's implementation makes full use of **TypeScript generic inference**, and support the use of all React existing tool chains(e.g. CSS-in-JS/Eslint/HMR).
 
@@ -153,7 +154,7 @@ const App = sfc({
 
 Such this component structure at first glance, we can immediately distinguish the responsibilities of each part of the code~
 
-### Adapt Eslint Plugin
+### Adapting Eslint Plugin
 
 And if you configure the `eslint-plugin-react-hooks`, it also can check where you can use hooks:
 
@@ -192,7 +193,7 @@ const App = sfc({
 });
 ```
 
-### Adapt Hot Reloading
+### Adapting Hot Reloading
 
 Finally, `jsx-sfc` can also support `React Fast Refresh` perfectly. Because it has a `babel-plugin-jsx-sfc` to transform the runtime code into a format recognized by the `Babel plugin of React Fast Refresh` 😉.
 
@@ -946,13 +947,15 @@ When we organize component codes, we often have to divide them into multiple fil
 
 Before I decided on `jsx-sfc v1.0 API`, I actually made a lot of different attempts. Here are some of my summaries:
 
-### Why Type First
+<!-- ### Why Type First
 
 It can be explained in this way:
 
-> If the type design can match the requirements, the corresponding logic implementation can be done.
+> If the type design can match the requirements, the corresponding logic implementation can be done. -->
 
-For example, I thought about to put generics directly into `sfc function` like this:
+### Why Pass in TS Generics like this
+
+I once thought about to put generics directly into `sfc function` like this:
 
 ```tsx
 interface Props {
@@ -982,9 +985,33 @@ const App = sfc<Props>()({ // There's a pair of extra brackets after the generic
 });
 ```
 
-### Why not use JSX Wrapper
+### Why not use JSX Tags as Wrapper
 
-### Why JSX Tags named Template
+If we use JSX Tags Wrapper like Vue SFCs, we can get better visual isolation effect(such as [jue](https://github.com/egoist/jue)):
+
+```tsx
+const App = (
+  <Component>
+    <Template>{({ data, styles }) => ...}</Template>
+    <Script>{props => ...}</Script>
+    <Style>{...}</Style>
+  </Component>
+);
+```
+
+But unfortunately, the return value type of JSX tags can always be `JSX.Element`, only in this type can it be legally recognized as JSX tag by TS compiler. At this way, we will not be able to achieve type inference and type safe 😰.
+
+### Why JSX Tags Function named Template
+
+I named the JSX tags function of `jsx-sfc` to `template`, mainly because of the following points:
+
+1. If it is named `render`, it's not accurate for the rendering flow of the React function component.
+
+Compared with the React class component, the whole function body of the React function component is the render process, which includes hooks, inline functions, and so on. Rendering JSX tags is only a part of it.
+
+2. Not only `string template` can be named `template`, reusable functions can be called `template` also.
+
+In order not to have doubts, I explain it specifically: The `template` and `sub template` in `jsx-sfc` are reusable, their responsibilities are limited to returning `JSX.Element` type and support TS type safe, so I called them `template`. There are also other projects that use `template` as JSX related APIs(such as [monobase](https://github.com/framer/monobase#styled-components)).
 
 <!-- todo: ts limitation based -->
 
