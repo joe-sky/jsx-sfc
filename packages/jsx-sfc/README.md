@@ -43,8 +43,8 @@
 
 - [Inspiration & Motivation](#inspiration--motivation)
   - [Extending Function Component](#extending-function-component)
-  - [Adapting Eslint Plugin](#adapt-eslint-plugin)
-  - [Adapting Hot Reloading](#adapt-hot-reloading)
+  - [Adapting Eslint Plugin](#adapting-eslint-plugin)
+  - [Adapting Hot Reloading](#adapting-hot-reloading)
   - [Performance](#performance)
 - [Examples](#examples)
 - [Installation](#installation)
@@ -212,7 +212,7 @@ Finally, `jsx-sfc` can also support `React Fast Refresh` perfectly. Because it h
 
 ### Performance
 
-`jsx-sfc` is a tool that supports compiler optimization, so it's performance is almost the same as that of normal React function components ⚡️.
+`jsx-sfc` is a tool that supports compiler optimization, so it's performance is almost the same as that of normal React function components ⚡️. [Code comparison before and after compiling can refer to here.](https://github.com/joe-sky/jsx-sfc/tree/main/packages/babel-plugin-jsx-sfc#how-it-works)
 
 ## Examples
 
@@ -297,7 +297,7 @@ function sfc<TemplateData, Styles, EX>(
 
 > Only a rough type definition is put here for API documentation. [Actual type definition is here.](https://github.com/joe-sky/jsx-sfc/blob/main/packages/jsx-sfc/src/defineComponent.ts#L15)
 
-#### Basic: Isolate template function:
+#### Basic: Isolate template function
 
 ```tsx
 import React, { useState } from 'react';
@@ -953,7 +953,7 @@ It can be explained in this way:
 
 > If the type design can match the requirements, the corresponding logic implementation can be done. -->
 
-### Why Pass in TS Generics like this
+### Why pass in TS generics like this
 
 I once thought about to put generics directly into `sfc function` like this:
 
@@ -985,7 +985,7 @@ const App = sfc<Props>()({ // There's a pair of extra brackets after the generic
 });
 ```
 
-### Why not use JSX Tags as Wrapper
+### Why not use JSX tags as wrapper
 
 If we use JSX Tags Wrapper like Vue SFCs, we can get better visual isolation effect(such as [jue](https://github.com/egoist/jue)):
 
@@ -1001,7 +1001,7 @@ const App = (
 
 But unfortunately, the return value type of JSX tags can always be `JSX.Element`, only in this type can it be legally recognized as JSX tag by TS compiler. At this way, we will not be able to achieve type inference and type safe 😰.
 
-### Why JSX Tags Function named Template
+### Why JSX tags function named template
 
 I named the JSX tags function of `jsx-sfc` to `template`, mainly because of the following points:
 
@@ -1012,6 +1012,10 @@ Compared with the React class component, the whole function body of the React fu
 2. Not only `string template` can be named `template`, reusable functions can be called `template` also.
 
 In order not to have doubts, I explain it specifically: The `template` and `sub template` in `jsx-sfc` are reusable, their responsibilities are limited to returning `JSX.Element` type and support TS type safe, so I called them `template`. There are also other projects that use `template` as JSX related APIs(such as [monobase](https://github.com/framer/monobase#styled-components)).
+
+### Why the component function be capitalized
+
+We know that in the world of React, functions that start with capital letters are defined as components, and the React ecosystem tools(e.g. Eslint) will be the same standard. So the `jsx-sfc` also follows this standard, it can adapt to the existing ecosystem tools only in this way.
 
 <!-- todo: ts limitation based -->
 
