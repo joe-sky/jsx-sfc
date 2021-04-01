@@ -285,19 +285,19 @@ const config = {
 - Type definition of `sfc`
 
 ```ts
-function sfc<TemplateData, Styles, EX>(
+function sfc<Props, TemplateData, Styles, EX>(
   options: {
     template?: (args: { data: TemplateData; styles: Styles } & EX) => JSX.Element;
-    Component: (props?: SFCProps) => TemplateData;
+    Component: (props?: Props & Styles & EX & { originalProps: Props }) => TemplateData;
     styles?: Styles;
   },
   extensions?: EX
-): React.FC;
+): React.FC<Props> & { template: (data?: TemplateData), Component: React.FC<Props> } & Styles & EX;
 ```
 
-> Only a rough type definition is put here for API documentation. [Actual type definition is here.](https://github.com/joe-sky/jsx-sfc/blob/main/packages/jsx-sfc/src/defineComponent.ts#L15)
+Only a symbolic type definition is put here for API documentation, there are many differences in the actual implementation. [Actual type definition is here.](https://github.com/joe-sky/jsx-sfc/blob/main/packages/jsx-sfc/src/defineComponent.ts)
 
-#### Basic: Isolate template function
+#### With separate template function
 
 ```tsx
 import React, { useState } from 'react';
@@ -325,7 +325,7 @@ const App = sfc({
 
 #### With styles
 
-`jsx-sfc` allows you to choose a **CSS in JS framework** to define the style of components, such as [styled-components](https://github.com/styled-components/styled-components), [Emotion](https://github.com/emotion-js/emotion). A styled-components example:
+`jsx-sfc` allows you to choose a **CSS in JS Solution** to define the style of components, such as [styled-components](https://github.com/styled-components/styled-components), [Emotion](https://github.com/emotion-js/emotion). A styled-components example:
 
 ```tsx
 import React, { useState } from 'react';
@@ -387,7 +387,43 @@ const App = sfc({
 });
 ```
 
-#### With generics
+#### Without template function
+
+If you don't like to use the `separate template function` to write JSX tags, you still can also use the `Component function` directly to return the JSX tags:
+
+```tsx
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import sfc from 'jsx-sfc';
+
+const App = sfc({
+  Component({ styles: { Wrapper } }) {
+    const [user, setUser] = useState('foo');
+
+    return (
+      <Wrapper>
+        <button onClick={() => setUser('bar')}>{user}</button>
+      </Wrapper>
+    );
+  },
+
+  styles: () => {
+    const WrapperBase = styled.div`
+      background-color: #fff;
+    `;
+
+    return {
+      Wrapper: styled(WrapperBase)`
+        background-color: #fff;
+      `
+    };
+  }
+});
+```
+
+`jsx-sfc` uses `TS function overload feature` to ensure that it is still type safe without template function. If the component function does not return JSX tags, the type error will occurs.
+
+#### With TS generics
 
 `jsx-sfc` can also pass generics:
 
@@ -518,6 +554,8 @@ const App = sfc({
 });
 ```
 
+[See here for the specific benefits of sub templates.](#clearer-visual-isolation)
+
 ### Extensions
 
 Except template and styles, other extensions for `jsx-sfc` components are also supported:
@@ -550,7 +588,7 @@ const App = sfc({
       `
     };
   },
-  // Notice: you need to pass in the second parameter.
+  // Notice: you need to pass in the second parameter, and also can pass in a function like styles.
   {
     utils: {
       trimWithPrefix(str: string) {
@@ -563,41 +601,62 @@ const App = sfc({
 
 ### Export Members
 
-All members support exporting from `jsx-sfc` components(except `Component`):
+All members support exporting from `jsx-sfc` components:
 
 ```tsx
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import sfc from 'jsx-sfc';
 
-const App = sfc({
-  template: ({ data, styles: { Wrapper } }) => (
-    <Wrapper>
-      <button onClick={data.onClick}>{data.user}</button>
-    </Wrapper>
-  ),
+const App = sfc(
+  {
+    template: ({ data, styles: { Wrapper } }) => (
+      <Wrapper>
+        <button onClick={data.onClick}>{data.user}</button>
+      </Wrapper>
+    ),
 
-  Component() {
-    const [user, setUser] = useState('foo');
-    return { user, onClick: () => setUser('bar') };
-  },
+    Component() {
+      const [user, setUser] = useState('foo');
+      return { user, onClick: () => setUser('bar') };
+    },
 
-  styles: () => {
-    const WrapperBase = styled.div`
-      background-color: #fff;
-    `;
-
-    return {
-      Wrapper: styled(WrapperBase)`
+    styles: () => {
+      const WrapperBase = styled.div`
         background-color: #fff;
-      `
-    };
-  }
-});
+      `;
 
-console.log(App.template);
-console.log(App.styles);
+      return {
+        Wrapper: styled(WrapperBase)`
+          background-color: #fff;
+        `
+      };
+    }
+  },
+  {
+    utils: {
+      trimWithPrefix(str: string) {
+        return 'prefix_' + str.trim();
+      }
+    }
+  }
+);
+
+function Test() {
+  const [user, setUser] = useState('bar');
+
+  return (
+    <>
+      {App.template({ user, onClick: () => setUser('baz') })}
+      <App.Component />
+      <App.styles.Wrapper>{user}</App.styles.Wrapper>
+      {App.utils.trimWithPrefix(user)}
+    </>
+  );
+}
 ```
+
+We can use the above feature to unit test each member of the component independently, or even reuse them into other components.
 
 <!-- ### Using with TypeScript -->
 
