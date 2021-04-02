@@ -1,5 +1,5 @@
 /*!
- * jsx-sfc v1.1.1
+ * jsx-sfc v1.1.2
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
@@ -44,7 +44,7 @@ declare type DefineComponent<Ref = NoRef, Props = {}, ReturnComponent = Ref exte
         styles: InferStyles;
     } & InferEX, Styles = {}, EX = {}>(options: {
         /**
-         * Using the `styles property or function` to define styles, you can use the most popular `CSS in JS` frameworks. (e.g. `styled-components`, `Emotion`)
+         * Using the `styles property or function` to define styles, you can use the most popular `CSS in JS` solutions. (e.g. `styled-components`, `Emotion`)
          */
         styles?: Styles;
         /**
@@ -85,7 +85,7 @@ declare type DefineComponent<Ref = NoRef, Props = {}, ReturnComponent = Ref exte
         styles: InferStyles;
     } & InferEX, Styles = {}, EX = {}>(options: {
         /**
-         * Using the `styles property or function` to define styles, you can use the most popular `CSS in JS` frameworks. (e.g. `styled-components`, `emotion`)
+         * Using the `styles property or function` to define styles, you can use the most popular `CSS in JS` solutions. (e.g. `styled-components`, `emotion`)
          */
         styles: Styles;
         /**

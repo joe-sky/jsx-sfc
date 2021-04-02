@@ -26,7 +26,9 @@
 
 <!-- > Currently version is v1.0.0-alpha.x, the v1 version and full documentation will be completed soon. -->
 
-[Live Demo is here.](https://codesandbox.io/s/jsx-sfc-demo-wwgd4)
+<!-- [Live Demo is here.](https://codesandbox.io/s/jsx-sfc-demo-wwgd4) -->
+
+[Live Demo is here.](https://codesandbox.io/s/jsx-sfc-demo-jr2z0?file=/src/App.tsx)
 
 ## Features
 

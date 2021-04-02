@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v1.1.2] 2021.04.02
+
+- 👆 Optimize production environment rendering performance.
+
 ## [v1.1.1] 2021.03.27
 
 - 🌟 Add `parserPlugins` option for `vite-plugin-jsx-sfc`.

@@ -4,7 +4,7 @@ import { Template, isTemplate } from './template';
 import { isFunc, noop, getFuncParams, emptyObjs, withOrigin, Func, Obj, FuncMap } from './utils';
 
 const COMPILED_SIGN = '__cs';
-const IS_PRODUTION = process.env.NODE_ENV === 'production';
+const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
 export function createOptions(options: FuncMap, extensions?: Func | Obj, isRuntime?: boolean) {
   const ret: Obj = {};
@@ -28,19 +28,19 @@ export function createOptions(options: FuncMap, extensions?: Func | Obj, isRunti
       paramsCount > 1
         ? (data?: Template.Data) => {
             const jsxFragment: ReactElement = template({ data, ...ret }, ...emptyObjs(paramsCount - 1));
-            if (!IS_PRODUTION && jsxFragment?.type !== Fragment) {
+            if (!IS_PRODUCTION && jsxFragment?.type !== Fragment) {
               throw new TypeError('The return of template with multiple arguments must be React.Fragment type.');
             }
 
             const tmplFcs: ReactElement<{ name?: Template.Func; children: Template.Func['template'] }>[] =
               jsxFragment.props.children;
-            if (!IS_PRODUTION && !Array.isArray(tmplFcs)) {
+            if (!IS_PRODUCTION && !Array.isArray(tmplFcs)) {
               throw new RangeError('Must be at least 2 Template elements.');
             }
 
             let mainTemplate: Template.Func['template'] = noop;
             tmplFcs.forEach(item => {
-              if (IS_PRODUTION || (item && isTemplate(item.type))) {
+              if (IS_PRODUCTION || (item && isTemplate(item.type))) {
                 const { name, children } = item.props;
                 if (name) {
                   name.template = children;
