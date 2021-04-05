@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v1.2.0] 2021.04.05
+
+- 🌟 Add `jsx-sfc.macro`.
+
 ## [v1.1.2] 2021.04.02
 
 - 👆 Optimize production environment rendering performance.

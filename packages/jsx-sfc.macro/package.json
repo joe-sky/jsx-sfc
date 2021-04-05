@@ -1,0 +1,35 @@
+{
+  "name": "jsx-sfc.macro",
+  "version": "1.1.2",
+  "description": "Babel macro for compile and enhance the limitation of jsx-sfc runtime code.",
+  "main": "lib/index.js",
+  "files": [
+    "lib/",
+    "index.d.ts",
+    "README.md"
+  ],
+  "scripts": {
+    "lib": "babel src --out-dir lib --extensions \".js,.jsx,.ts,.tsx\" --config-file \"../../.babelrc\"",
+    "build": "yarn run lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joe-sky/jsx-sfc.git"
+  },
+  "bugs": {
+    "url": "https://github.com/joe-sky/jsx-sfc/issues"
+  },
+  "author": "Joe_Sky <hitomi_doax@sina.com>",
+  "license": "MIT",
+  "dependencies": {
+    "babel-plugin-jsx-sfc": "^1.1.2",
+    "jsx-sfc": "^1.1.2"
+  },
+  "devDependencies": {
+    "@types/babel-plugin-macros": "^2.8.1",
+    "babel-plugin-macros": "^2.8.0"
+  },
+  "peerDependencies": {
+    "babel-plugin-macros": "*"
+  }
+}

@@ -8,6 +8,7 @@ interface State {
   opts?: {
     importedLib?: string[];
   };
+  customImportName?: types.Identifier;
 }
 
 export default () => ({
@@ -70,7 +71,10 @@ export default () => ({
              * 4: const App = sfc.forwardRef({ ... })
              */
             let sfcType: 0 | 1 | 2 | 3 | 4 = 0;
-            if (types.isCallExpression(callee) && astUtil.isCalleeImportedBySfc(callee.callee, path, importedLib)) {
+            if (
+              types.isCallExpression(callee) &&
+              astUtil.isCalleeImportedBySfc(callee.callee, path, importedLib, state?.customImportName)
+            ) {
               if (
                 types.isMemberExpression(callee.callee) &&
                 types.isIdentifier(callee.callee.property) &&
@@ -80,7 +84,7 @@ export default () => ({
               } else {
                 sfcType = 1;
               }
-            } else if (astUtil.isCalleeImportedBySfc(callee, path, importedLib)) {
+            } else if (astUtil.isCalleeImportedBySfc(callee, path, importedLib, state?.customImportName)) {
               if (
                 types.isMemberExpression(callee) &&
                 types.isIdentifier(callee.property) &&
@@ -204,12 +208,14 @@ export default () => ({
                   path => path.isVariableDeclaration() || path.isExportDefaultDeclaration()
                 );
 
+                const importName = state?.customImportName?.name || SFC_FUNC;
+
                 const sfcOptionsPath = componentVariable?.insertBefore(
                   types.variableDeclaration('const', [
                     types.variableDeclarator(
                       types.identifier(sfcOptionsName),
                       types.callExpression(
-                        types.memberExpression(types.identifier(SFC_FUNC), types.identifier(SFC_CREATE_OPTIONS)),
+                        types.memberExpression(types.identifier(importName), types.identifier(SFC_CREATE_OPTIONS)),
                         sfcArguments
                       )
                     )
@@ -249,7 +255,7 @@ export default () => ({
                   }
 
                   path.replaceWith(
-                    types.callExpression(types.identifier(SFC_FUNC), [
+                    types.callExpression(types.identifier(importName), [
                       types.identifier(sfcName),
                       types.identifier(sfcOptionsName)
                     ])
@@ -257,7 +263,7 @@ export default () => ({
                 } else {
                   path.replaceWith(
                     types.callExpression(
-                      types.memberExpression(types.identifier(SFC_FUNC), types.identifier(SFC_FORWARD_REF)),
+                      types.memberExpression(types.identifier(importName), types.identifier(SFC_FORWARD_REF)),
                       [actualComponentFunc, types.identifier(sfcOptionsName)]
                     )
                   );

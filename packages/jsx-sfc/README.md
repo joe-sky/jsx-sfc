@@ -11,7 +11,7 @@
 </h1>
 
 <p align="center">
-  <img alt="jsx-sfc demo" src="https://github.com/joe-sky/jsx-sfc/blob/main/public/images/sfc.gif?raw=true" width="500" />
+  <img alt="jsx-sfc demo" src="https://user-images.githubusercontent.com/12705724/113466739-a75bee80-9470-11eb-8139-6aa54550a754.gif" width="500" />
 </p>
 
 | Package                                                                                            | Badges                                                                                                                                                                                                                                                                                                                                                                                                              |
@@ -26,9 +26,9 @@
 
 <!-- > Currently version is v1.0.0-alpha.x, the v1 version and full documentation will be completed soon. -->
 
-<!-- [Live Demo is here.](https://codesandbox.io/s/jsx-sfc-demo-wwgd4) -->
+[Live Demo is here.](https://codesandbox.io/s/jsx-sfc-demo-wwgd4)
 
-[Live Demo is here.](https://codesandbox.io/s/jsx-sfc-demo-jr2z0?file=/src/App.tsx)
+<!-- [Live Demo is here.](https://codesandbox.io/s/jsx-sfc-demo-jr2z0?file=/src/App.tsx) -->
 
 ## Features
 

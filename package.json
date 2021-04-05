@@ -4,9 +4,10 @@
   "workspaces": [
     "packages/jsx-sfc",
     "packages/babel-plugin-jsx-sfc",
-    "packages/vite-plugin-jsx-sfc"
+    "packages/vite-plugin-jsx-sfc",
+    "packages/jsx-sfc.macro"
   ],
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "A tiny tool for create React function components with Separation of Concerns and completely Type Inference.",
   "scripts": {
     "build": "lerna run build",
