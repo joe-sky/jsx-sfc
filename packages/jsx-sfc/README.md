@@ -28,7 +28,7 @@
 
 <!-- > Currently version is v1.0.0-alpha.x, the v1 version and full documentation will be completed soon. -->
 
-[Live Demo is here(Perfect experience of Typings/Hot reloading/Dev tools).](https://codesandbox.io/s/jsx-sfc-demo-wwgd4)
+[Live Demo is here](https://codesandbox.io/s/jsx-sfc-demo-wwgd4) (Perfect experience of **Typings/Hot reloading/Dev tools** by Codesandbox).
 
 <!-- [Live Demo is here.](https://codesandbox.io/s/jsx-sfc-demo-jr2z0?file=/src/App.tsx) -->
 
@@ -494,6 +494,7 @@ interface AppRef {
   getUserName: () => string;
 }
 
+// If you pass in TS generics, there's a pair of extra brackets after the generics; Otherwise, it's not necessary.
 const App = sfc.forwardRef<AppRef, AppProps>()({
   template: ({ data, styles: { Wrapper } }) => (
     <Wrapper>
@@ -574,7 +575,59 @@ const App = sfc({
 });
 ```
 
-[See here for the specific benefits of sub templates.](#clearer-visual-isolation)
+1. All parameters starting from the second parameter of the template function are sub template objects, and any number of them can be defined.
+
+2. The template function needs to return a React.Fragment tag; The sub template tag without name property is the entry function:
+
+```tsx
+{
+  template: ({ data }, tmpl1, tmpl2) => (
+    <>
+      <Template name={tmpl1}>{() => <div>foo</div>}</Template>
+
+      <Template name={tmpl2}>{() => <div>bar</div>}</Template>
+
+      <Template>
+        {() => (
+          <section>
+            {tmpl1.template()}
+            {tmpl2.template()}
+          </section>
+        )}
+      </Template>
+    </>
+  );
+}
+```
+
+3. In TSX, we can define the parameter types of sub template functions, this can achieve type safe:
+
+```tsx
+{
+  template: ({ data }, header: Template.Func<string, number>) => (
+    <>
+      <Template name={header}>
+        {(title, count) => (
+          <nav>
+            {title} count: {count}
+          </nav>
+        )}
+      </Template>
+
+      <Template>
+        {() => (
+          <section>
+            {header.template('posts', 100)}
+            <div>body</div>
+          </section>
+        )}
+      </Template>
+    </>
+  );
+}
+```
+
+We can use sub template syntax to continue to separate the responsibilities of JSX tags, [see here for the specific benefits of sub templates.](#clearer-visual-isolation)
 
 ### Extensions
 
@@ -618,6 +671,12 @@ const App = sfc({
   }
 });
 ```
+
+For some advanced usages of extensions, see these examples:
+
+- [React-i18next locales extension](https://github.com/joe-sky/jsx-sfc/blob/main/examples/react-i18next/src/App.tsx#L73)
+
+- [Jss styles extension](https://github.com/joe-sky/jsx-sfc/blob/main/examples/counter/src/App.tsx#L60)
 
 ### Export Members
 
@@ -1106,7 +1165,7 @@ We know that in the world of React, functions that start with capital letters ar
 
 ## Puzzle of Types
 
-There are many strange TS types problems encountered in the development of this project. Fortunately, these problems can be solved at present. [I recorded them all in this issue.](https://github.com/joe-sky/jsx-sfc/issues/1)
+There are many strange TS types problems encountered in the development of this project. Fortunately, these problems can be solved at present. [I recorded them in this issue.](https://github.com/joe-sky/jsx-sfc/issues/1)
 
 ## Roadmap
 
@@ -1121,6 +1180,10 @@ However, there is no version of the package which removes the runtime part yet. 
 The compiled code of `jsx-sfc` has a few optimization space yet, which can continue to improve the runtime performance. I will gradually start to optimize it.
 
 <!-- At present only React is supported. However, other framework versions will not be excluded in the future(e.g. Vue v3). -->
+
+- About better syntax
+
+If better syntax implementation details are found and if they're not compatible with v1.0 syntax, I will summarize them and arrange them to v2.0 implementation.
 
 ## Change Logs
 
