@@ -11,29 +11,33 @@ const App = sfc(
     Component: (props) => { ... },
     styles: () => ({ ... })
   },
-  () => ({
+  {
     hooks: { ... },
     utils: { ... }
-  })
+  }
 );
 
 ↓ ↓ ↓ ↓ ↓ ↓
 
+// "123" is line number
 const $sfcOptions_123 = sfc.createOptions(
   {
     template({ data }) { ... },
     styles: () => ({ ... })
   },
-  () => ({
+  {
     hooks: { ... },
     utils: { ... }
-  })
+  }
 );
 
+// Extract the actual component function
 const Sfc_123 = (props) => {
   ...
   return $sfcOptions_123.template({ ... });
 };
+Sfc_123.displayName = 'App';
 
+// It's just use Object.assign to merge members of "$sfcOptions_123" to create final component function.
 const App = sfc(Sfc_123, $sfcOptions_123);
 ```

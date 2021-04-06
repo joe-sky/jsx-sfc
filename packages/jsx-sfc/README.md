@@ -20,13 +20,15 @@
 | [babel-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/babel-plugin-jsx-sfc) | <a href="https://www.npmjs.org/package/babel-plugin-jsx-sfc"><img src="https://img.shields.io/npm/v/babel-plugin-jsx-sfc.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/babel-plugin-jsx-sfc"><img src="https://img.shields.io/npm/dm/babel-plugin-jsx-sfc.svg" alt="NPM Downloads"></a>                                                                                                        |
 | [vite-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/vite-plugin-jsx-sfc)   | <a href="https://www.npmjs.org/package/vite-plugin-jsx-sfc"><img src="https://img.shields.io/npm/v/vite-plugin-jsx-sfc.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/vite-plugin-jsx-sfc"><img src="https://img.shields.io/npm/dm/vite-plugin-jsx-sfc.svg" alt="NPM Downloads"></a>                                                                                                            |
 
+<!-- | [jsx-sfc.macro](https://github.com/joe-sky/jsx-sfc/tree/main/packages/jsx-sfc.macro)   | <a href="https://www.npmjs.org/package/jsx-sfc.macro"><img src="https://img.shields.io/npm/v/jsx-sfc.macro.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/jsx-sfc.macro"><img src="https://img.shields.io/npm/dm/jsx-sfc.macro.svg" alt="NPM Downloads"></a>                                                                                                            | -->
+
 ## Introduction
 
 `jsx-sfc`(JSX Separate Function Components) is a tiny tool(~1kb) for create React function components with **separation of concerns** and **completely type inference**. It can be seen as a JSX/TSX syntax or type tool, very simple to use🧙🏼‍♂️.
 
 <!-- > Currently version is v1.0.0-alpha.x, the v1 version and full documentation will be completed soon. -->
 
-[Live Demo is here.](https://codesandbox.io/s/jsx-sfc-demo-wwgd4)
+[Live Demo is here(Perfect experience of Typings/Hot reloading/Dev tools).](https://codesandbox.io/s/jsx-sfc-demo-wwgd4)
 
 <!-- [Live Demo is here.](https://codesandbox.io/s/jsx-sfc-demo-jr2z0?file=/src/App.tsx) -->
 
@@ -36,9 +38,10 @@
 - ✨ Clearly isolate **template**, **logic**, **styles** and **any other concerns**
 - 💫 **Completely type inference** design by TypeScript
 - 🎉 Support all React hooks
-- 🔥 Support React Fast Refresh
+- 🔥 Support [React Fast Refresh](https://github.com/facebook/react/tree/master/packages/react-refresh)
 - 🔧 Support React Eslint plugins
-- ⚡ Performance equivalent to original function components
+- 🔨 Perfect fit React dev tools
+- ⚡ Performance almost equivalent to original function components
 - 🚀 No any dependencies
 
 ## Table of Contents
@@ -52,6 +55,7 @@
 - [Installation](#installation)
   - [Using with Babel](#using-with-babel)
   - [Using with Vite](#using-with-vite)
+  - [Using with CRA](#using-with-cra)
 - [Usage](#usage)
   - [`sfc`](#sfc)
   - [`sfc.forwardRef`](#sfcforwardRef)
@@ -158,7 +162,7 @@ Such this component structure at first glance, we can immediately distinguish th
 
 ### Adapting Eslint Plugin
 
-And if you configure the `eslint-plugin-react-hooks`, it also can check where you can use hooks:
+And if you configure the [eslint-plugin-react-hooks](https://github.com/facebook/react/tree/master/packages/eslint-plugin-react-hooks), it also can check where you can use hooks:
 
 ```tsx
 import sfc from 'jsx-sfc';
@@ -197,7 +201,7 @@ const App = sfc({
 
 ### Adapting Hot Reloading
 
-Finally, `jsx-sfc` can also support `React Fast Refresh` perfectly. Because it has a `babel-plugin-jsx-sfc` to transform the runtime code into a format recognized by the `Babel plugin of React Fast Refresh` 😉.
+Finally, `jsx-sfc` can also support [React Fast Refresh](https://github.com/facebook/react/tree/master/packages/react-refresh) perfectly. Because it has a [babel-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/babel-plugin-jsx-sfc) to transform the runtime code into a format recognized by the [Babel plugin of React Fast Refresh](https://github.com/facebook/react/blob/master/packages/react-refresh/src/ReactFreshBabelPlugin.js) 😉.
 
 <!-- See the demo, the main design ideas of `jsx-sfc`:
 
@@ -278,6 +282,20 @@ const config = {
 }
 ```
 
+### Using with CRA
+
+Because _Creact-React-App_ doesn't support modifying Babel configuration directly, so you can use the `Babel Macro of jsx-sfc`:
+
+```bash
+npm install jsx-sfc.macro
+```
+
+When importing, just replace `jsx-sfc` by `jsx-sfc.macro`:
+
+```tsx
+import sfc from 'jsx-sfc.macro';
+```
+
 ## Usage
 
 ### `sfc`
@@ -289,7 +307,7 @@ const config = {
 ```ts
 function sfc<Props, TemplateData, Styles, EX>(
   options: {
-    template?: (args: { data: TemplateData; styles: Styles } & EX) => JSX.Element;
+    template?: (args: { data: TemplateData; styles: Styles } & EX, ...tmpls: Template.Func[]) => JSX.Element;
     Component: (props?: Props & Styles & EX & { originalProps: Props }) => TemplateData;
     styles?: Styles;
   },
@@ -1086,16 +1104,31 @@ We know that in the world of React, functions that start with capital letters ar
 
 <!-- todo: defferent from class component -->
 
+## Puzzle of Types
+
+There are many strange TS types problems encountered in the development of this project. Fortunately, these problems can be solved at present. [I recorded them all in this issue.](https://github.com/joe-sky/jsx-sfc/issues/1)
+
 ## Roadmap
 
 - Optimize runtime size
+
+At present, `jsx-sfc` supports working without compiler, it's just that the syntax will be slightly different([See the test cases for details](https://github.com/joe-sky/jsx-sfc/tree/main/packages/jsx-sfc/__tests__/runtime)).
+
+However, there is no version of the package which removes the runtime part yet. So I will optimize it here later, and the size of 1KB can be reduced a lot in the compiled version.
+
 - Optimize compiled code
+
+The compiled code of `jsx-sfc` has a few optimization space yet, which can continue to improve the runtime performance. I will gradually start to optimize it.
 
 <!-- At present only React is supported. However, other framework versions will not be excluded in the future(e.g. Vue v3). -->
 
+## Change Logs
+
+[Check here.](https://github.com/joe-sky/jsx-sfc/blob/main/CHANGELOG.md)
+
 ## Who is using
 
-The author `Joe_Sky` and his front-end team in jd.com.
+The author `Joe_Sky` and his front-end team in jd.com. It has been used in more than 3 production systems.
 
 <!-- todo: set some large code blocks -->
 

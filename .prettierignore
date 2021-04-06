@@ -4,3 +4,4 @@
 /packages/jsx-sfc/lib
 /packages/babel-plugin-jsx-sfc/lib
 /packages/vite-plugin-jsx-sfc/lib
+/packages/jsx-sfc.macro/lib

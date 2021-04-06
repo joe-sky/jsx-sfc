@@ -9,3 +9,4 @@
 /packages/vite-plugin-jsx-sfc/lib
 /packages/vite-plugin-jsx-sfc/legacy
 /packages/vite-plugin-jsx-sfc/index.d.ts
+/packages/jsx-sfc.macro/lib
