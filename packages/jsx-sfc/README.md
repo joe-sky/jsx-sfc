@@ -36,7 +36,7 @@
 - 🌟 Easy way to define function components with **separation of concerns**
 - ✨ Clearly isolate **template**, **logic**, **styles** and **any other concerns**
 - 💫 **Completely type inference** design by TypeScript
-- 🚩 Support **concept of private and public members** for function components (documentation to be completed)
+- 🚩 Support **concept of static members** for function components (documentation to be completed)
 - 🎉 Support all React hooks
 - 🔥 Support [React Fast Refresh](https://github.com/facebook/react/tree/master/packages/react-refresh)
 - 🔧 Support React Eslint plugins
@@ -53,6 +53,10 @@
   - [Adapting Hot Reloading](#adapting-hot-reloading)
   - [Performance](#performance)
 - [Examples](#examples)
+- [Benefits](#benefits)
+  - [Clearer visual isolation](#clearer-visual-isolation)
+  - [Better single file experience](#better-single-file-experience)
+  - [Support define static members](#support-define-static-members)
 - [Installation](#installation)
   - [Using with Babel](#using-with-babel)
   - [Using with Vite](#using-with-vite)
@@ -63,7 +67,6 @@
   - [Sub Templates](#sub-templates)
   - [Extensions](#extensions)
   - [Export Members](#export-members)
-- [Benefits](#benefits)
 - [API Design Principle](#api-design-principle)
 - [Roadmap](#roadmap)
 - [Who is using](#who-is-using)
@@ -233,6 +236,350 @@ Here are some examples of **using different CSS in JS Solutions**, which basical
 - [React-i18next Example (styles use Emotion)](https://github.com/joe-sky/jsx-sfc/tree/main/examples/react-i18next)
 - [Simple Counter (styles use Jss)](https://github.com/joe-sky/jsx-sfc/tree/main/examples/counter)
 - [TailwindCss Starter (styles use TailwindCss)](https://github.com/joe-sky/jsx-sfc/tree/main/examples/tailwind-starter)
+
+## Benefits
+
+<!-- tips: Use large code components examples, collapse code in md; like .vue, more cohesive components but can separate export members yet.; Compound components tree -->
+
+Compared with the original React function components, `jsx-sfc` has these benefits:
+
+### Clearer visual isolation
+
+<details>
+<summary>
+For example: Components with complex logic (Click to expand)
+</summary>
+
+```tsx
+const QueryForm: React.FC = () => {
+  const store = useStore();
+
+  const getTypes = () => {
+    return store.typeList.map((element, index) => (
+      <Option key={index} value={element.value} label={element.label}>
+        {element.label}
+      </Option>
+    ));
+  };
+
+  const getStatus = () => {
+    return store.statusList.map((el, index) => (
+      <Option key={index} value={el.value} label={el.label}>
+        {el.label}
+      </Option>
+    ));
+  };
+
+  const typesData = getTypes();
+  const statusData = getStatus();
+
+  if (typesData.length < 1) {
+    return <div className="empty">No type data</div>;
+  } else if (statusData.length < 1) {
+    return <div className="empty">No status data</div>;
+  }
+
+  const onTypeChange = (value: number) => {
+    store.setQueryFormItem({ type: value });
+  };
+
+  const onStatusChange = (value: number) => {
+    store.setQueryFormItem({ status: value });
+  };
+
+  const onQuery = () => {
+    store.setPaginationItem({ pageNum: 1 });
+    store.getList();
+  };
+
+  const onReset = () => {
+    store.resetQueryForm();
+  };
+
+  return (
+    <div>
+      <Row className="item-list">
+        <Col span={8}>
+          <Select value={store.queryForm.type} onChange={onTypeChange}>
+            {typesData}
+          </Select>
+        </Col>
+        <Col span={8}>
+          <Select value={store.queryForm.status} onChange={onStatusChange}>
+            {statusData}
+          </Select>
+        </Col>
+      </Row>
+      <div className="item-buttons">
+        <Button onClick={onQuery}>Search</Button>
+        <Button onClick={onReset}>Reset</Button>
+      </div>
+    </div>
+  );
+};
+```
+
+</details>
+
+Undeniably, components like the above are very common in actual development.
+
+<details>
+<summary>
+We can use jsx-sfc to rewrite it (Click to expand)
+</summary>
+
+```tsx
+const QueryForm = sfc({
+  template: ({ data }, types, status) => (
+    <>
+      <Template name={types}>
+        {() =>
+          data.store.typeList.map((element, index) => (
+            <Option key={index} value={element.value} label={element.label}>
+              {element.label}
+            </Option>
+          ))
+        }
+      </Template>
+
+      <Template name={status}>
+        {() =>
+          data.store.statusList.map((el, index) => {
+            return (
+              <Option key={index} value={el.value} label={el.label}>
+                {el.label}
+              </Option>
+            );
+          })
+        }
+      </Template>
+
+      <Template>
+        {() => {
+          const typesData = types.template();
+          const statusData = status.template();
+
+          if (typesData.length < 1) {
+            return <div className="empty">No type data</div>;
+          } else if (statusData.length < 1) {
+            return <div className="empty">No status data</div>;
+          }
+
+          return (
+            <div>
+              <Row className="item-list">
+                <Col span={8}>
+                  <Select value={data.store.queryForm.type} onChange={data.events.onTypeChange}>
+                    {typesData}
+                  </Select>
+                </Col>
+                <Col span={8}>
+                  <Select value={data.store.queryForm.status} onChange={data.events.onStatusChange}>
+                    {statusData}
+                  </Select>
+                </Col>
+              </Row>
+              <div className="item-buttons">
+                <Button onClick={data.events.onQuery}>Search</Button>
+                <Button onClick={data.events.onReset}>Reset</Button>
+              </div>
+            </div>
+          );
+        }}
+      </Template>
+    </>
+  ),
+
+  Component() {
+    const store = useStore();
+
+    return {
+      store,
+
+      events: {
+        onTypeChange(value: number) {
+          store.setQueryFormItem({ type: value });
+        },
+
+        onStatusChange(value: number) {
+          store.setQueryFormItem({ status: value });
+        },
+
+        onQuery() {
+          store.setPaginationItem({ pageNum: 1 });
+          store.getList();
+        },
+
+        onReset() {
+          store.resetQueryForm();
+        }
+      }
+    };
+  }
+});
+```
+
+</details>
+
+In this way:
+
+- We can put all the logic codes into the `Component function` and manage it separately;
+- Then we can put all the JSX codes into the `template function`, and support `sub template tags` to manage JSX codes that need to be reused.
+
+**When the component code is large and the logic is complex, the benefits of visual isolation are obvious.**
+
+### Better single file experience
+
+<details>
+<summary>
+For example: Multiple components in a single file (Click to expand)
+</summary>
+
+```tsx
+const svgProps = {
+  xmlns: 'http://www.w3.org/2000/svg',
+  width: '24',
+  height: '24',
+  viewBox: '0 0 24 24',
+  fill: 'none',
+  stroke: 'currentColor',
+  strokeWidth: '2',
+  strokeLinecap: 'round',
+  strokeLinejoin: 'round'
+};
+
+const Todo = ({ onClick, completed, text }) => (
+  <TodoWrapper onClick={onClick}>
+    {completed ? (
+      <svg {...svgProps}>
+        <polyline points="9 11 12 14 23 3"></polyline>
+        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+      </svg>
+    ) : (
+      <svg {...svgProps}>
+        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+      </svg>
+    )}
+    <span className="text">{text}</span>
+  </TodoWrapper>
+);
+
+const TodoList = ({ todos, onTodoClick }) => (
+  <TodoListWrapper>
+    {todos.map(todo => (
+      <Todo key={todo.id} {...todo} onClick={() => onTodoClick(todo.id)} />
+    ))}
+  </TodoListWrapper>
+);
+
+const TodoWrapper = styled.li`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 4px;
+  border-bottom: 1px solid #eee;
+  line-height: 24px;
+  font-size: 110%;
+
+  &:hover {
+    background: #efefef;
+  }
+`;
+
+const TodoListWrapper = styled.ul`
+  margin: 20px 0;
+  padding: 0;
+`;
+```
+
+</details>
+
+<details>
+<summary>
+Then we use jsx-sfc to rewrite it (Click to expand)
+</summary>
+
+```tsx
+const Todo = sfc(
+  {
+    Component({ onClick, completed, text, styles: { Wrapper }, svgProps }) {
+      return (
+        <Wrapper onClick={onClick}>
+          {completed ? (
+            <svg {...svgProps}>
+              <polyline points="9 11 12 14 23 3"></polyline>
+              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+            </svg>
+          ) : (
+            <svg {...svgProps}>
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            </svg>
+          )}
+          <span className="text">{text}</span>
+        </Wrapper>
+      );
+    },
+
+    styles: {
+      Wrapper: styled.li`
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 4px;
+        border-bottom: 1px solid #eee;
+        line-height: 24px;
+        font-size: 110%;
+
+        &:hover {
+          background: #efefef;
+        }
+      `
+    }
+  },
+  {
+    svgProps: {
+      xmlns: 'http://www.w3.org/2000/svg',
+      width: '24',
+      height: '24',
+      viewBox: '0 0 24 24',
+      fill: 'none',
+      stroke: 'currentColor',
+      strokeWidth: '2',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round'
+    }
+  }
+);
+
+const TodoList = sfc({
+  Component({ todos, onTodoClick, styles: { Wrapper } }) {
+    return (
+      <Wrapper>
+        {todos.map(todo => (
+          <Todo key={todo.id} {...todo} onClick={() => onTodoClick(todo.id)} />
+        ))}
+      </Wrapper>
+    );
+  },
+
+  styles: {
+    Wrapper: styled.ul`
+      margin: 20px 0;
+      padding: 0;
+    `
+  }
+});
+```
+
+</details>
+
+As you can see, we can **organize codes with component granularity** to achieve better visual isolation effect.
+
+When we organize component codes, we often have to divide them into multiple files, and sometimes the file switching action will cause a little upset. At this time, `jsx-sfc` can help you make this scene much easier. **We can still organize the code clearly even without a lot of fragmented files** 😊.
+
+### Support define static members
+
+> Documentation to be completed.
 
 ## Installation
 
@@ -745,346 +1092,6 @@ We can use the above feature to unit test each member of the component independe
 <!-- ### Using with TypeScript -->
 
 <!-- todo: difference in strict mode -->
-
-## Benefits
-
-<!-- tips: Use large code components examples, collapse code in md; like .vue, more cohesive components but can separate export members yet.; Compound components tree -->
-
-Compared with the original React function components, `jsx-sfc` has these benefits:
-
-### Clearer visual isolation
-
-<details>
-<summary>
-For example: Components with complex logic (Click to expand)
-</summary>
-
-```tsx
-const QueryForm: React.FC = () => {
-  const store = useStore();
-
-  const getTypes = () => {
-    return store.typeList.map((element, index) => (
-      <Option key={index} value={element.value} label={element.label}>
-        {element.label}
-      </Option>
-    ));
-  };
-
-  const getStatus = () => {
-    return store.statusList.map((el, index) => (
-      <Option key={index} value={el.value} label={el.label}>
-        {el.label}
-      </Option>
-    ));
-  };
-
-  const typesData = getTypes();
-  const statusData = getStatus();
-
-  if (typesData.length < 1) {
-    return <div className="empty">No type data</div>;
-  } else if (statusData.length < 1) {
-    return <div className="empty">No status data</div>;
-  }
-
-  const onTypeChange = (value: number) => {
-    store.setQueryFormItem({ type: value });
-  };
-
-  const onStatusChange = (value: number) => {
-    store.setQueryFormItem({ status: value });
-  };
-
-  const onQuery = () => {
-    store.setPaginationItem({ pageNum: 1 });
-    store.getList();
-  };
-
-  const onReset = () => {
-    store.resetQueryForm();
-  };
-
-  return (
-    <div>
-      <Row className="item-list">
-        <Col span={8}>
-          <Select value={store.queryForm.type} onChange={onTypeChange}>
-            {typesData}
-          </Select>
-        </Col>
-        <Col span={8}>
-          <Select value={store.queryForm.status} onChange={onStatusChange}>
-            {statusData}
-          </Select>
-        </Col>
-      </Row>
-      <div className="item-buttons">
-        <Button onClick={onQuery}>Search</Button>
-        <Button onClick={onReset}>Reset</Button>
-      </div>
-    </div>
-  );
-};
-```
-
-</details>
-
-Undeniably, components like the above are very common in actual development.
-
-<details>
-<summary>
-We can use jsx-sfc to rewrite it (Click to expand)
-</summary>
-
-```tsx
-const QueryForm = sfc({
-  template: ({ data }, types, status) => (
-    <>
-      <Template name={types}>
-        {() =>
-          data.store.typeList.map((element, index) => (
-            <Option key={index} value={element.value} label={element.label}>
-              {element.label}
-            </Option>
-          ))
-        }
-      </Template>
-
-      <Template name={status}>
-        {() =>
-          data.store.statusList.map((el, index) => {
-            return (
-              <Option key={index} value={el.value} label={el.label}>
-                {el.label}
-              </Option>
-            );
-          })
-        }
-      </Template>
-
-      <Template>
-        {() => {
-          const typesData = types.template();
-          const statusData = status.template();
-
-          if (typesData.length < 1) {
-            return <div className="empty">No type data</div>;
-          } else if (statusData.length < 1) {
-            return <div className="empty">No status data</div>;
-          }
-
-          return (
-            <div>
-              <Row className="item-list">
-                <Col span={8}>
-                  <Select value={data.store.queryForm.type} onChange={data.events.onTypeChange}>
-                    {typesData}
-                  </Select>
-                </Col>
-                <Col span={8}>
-                  <Select value={data.store.queryForm.status} onChange={data.events.onStatusChange}>
-                    {statusData}
-                  </Select>
-                </Col>
-              </Row>
-              <div className="item-buttons">
-                <Button onClick={data.events.onQuery}>Search</Button>
-                <Button onClick={data.events.onReset}>Reset</Button>
-              </div>
-            </div>
-          );
-        }}
-      </Template>
-    </>
-  ),
-
-  Component() {
-    const store = useStore();
-
-    return {
-      store,
-
-      events: {
-        onTypeChange(value: number) {
-          store.setQueryFormItem({ type: value });
-        },
-
-        onStatusChange(value: number) {
-          store.setQueryFormItem({ status: value });
-        },
-
-        onQuery() {
-          store.setPaginationItem({ pageNum: 1 });
-          store.getList();
-        },
-
-        onReset() {
-          store.resetQueryForm();
-        }
-      }
-    };
-  }
-});
-```
-
-</details>
-
-In this way:
-
-- We can put all the logic codes into the `Component function` and manage it separately;
-- Then we can put all the JSX codes into the `template function`, and support `sub template tags` to manage JSX codes that need to be reused.
-
-**When the component code is large and the logic is complex, the benefits of visual isolation are obvious.**
-
-### Better single file experience
-
-<details>
-<summary>
-For example: Multiple components in a single file (Click to expand)
-</summary>
-
-```tsx
-const svgProps = {
-  xmlns: 'http://www.w3.org/2000/svg',
-  width: '24',
-  height: '24',
-  viewBox: '0 0 24 24',
-  fill: 'none',
-  stroke: 'currentColor',
-  strokeWidth: '2',
-  strokeLinecap: 'round',
-  strokeLinejoin: 'round'
-};
-
-const Todo = ({ onClick, completed, text }) => (
-  <TodoWrapper onClick={onClick}>
-    {completed ? (
-      <svg {...svgProps}>
-        <polyline points="9 11 12 14 23 3"></polyline>
-        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
-      </svg>
-    ) : (
-      <svg {...svgProps}>
-        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-      </svg>
-    )}
-    <span className="text">{text}</span>
-  </TodoWrapper>
-);
-
-const TodoList = ({ todos, onTodoClick }) => (
-  <TodoListWrapper>
-    {todos.map(todo => (
-      <Todo key={todo.id} {...todo} onClick={() => onTodoClick(todo.id)} />
-    ))}
-  </TodoListWrapper>
-);
-
-const TodoWrapper = styled.li`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 4px;
-  border-bottom: 1px solid #eee;
-  line-height: 24px;
-  font-size: 110%;
-
-  &:hover {
-    background: #efefef;
-  }
-`;
-
-const TodoListWrapper = styled.ul`
-  margin: 20px 0;
-  padding: 0;
-`;
-```
-
-</details>
-
-<details>
-<summary>
-Then we use jsx-sfc to rewrite it (Click to expand)
-</summary>
-
-```tsx
-const Todo = sfc(
-  {
-    Component({ onClick, completed, text, styles: { Wrapper }, svgProps }) {
-      return (
-        <Wrapper onClick={onClick}>
-          {completed ? (
-            <svg {...svgProps}>
-              <polyline points="9 11 12 14 23 3"></polyline>
-              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
-            </svg>
-          ) : (
-            <svg {...svgProps}>
-              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-            </svg>
-          )}
-          <span className="text">{text}</span>
-        </Wrapper>
-      );
-    },
-
-    styles: {
-      Wrapper: styled.li`
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        padding: 4px;
-        border-bottom: 1px solid #eee;
-        line-height: 24px;
-        font-size: 110%;
-
-        &:hover {
-          background: #efefef;
-        }
-      `
-    }
-  },
-  {
-    svgProps: {
-      xmlns: 'http://www.w3.org/2000/svg',
-      width: '24',
-      height: '24',
-      viewBox: '0 0 24 24',
-      fill: 'none',
-      stroke: 'currentColor',
-      strokeWidth: '2',
-      strokeLinecap: 'round',
-      strokeLinejoin: 'round'
-    }
-  }
-);
-
-const TodoList = sfc({
-  Component({ todos, onTodoClick, styles: { Wrapper } }) {
-    return (
-      <Wrapper>
-        {todos.map(todo => (
-          <Todo key={todo.id} {...todo} onClick={() => onTodoClick(todo.id)} />
-        ))}
-      </Wrapper>
-    );
-  },
-
-  styles: {
-    Wrapper: styled.ul`
-      margin: 20px 0;
-      padding: 0;
-    `
-  }
-});
-```
-
-</details>
-
-As you can see, we can **organize codes with component granularity** to achieve better visual isolation effect.
-
-When we organize component codes, we often have to divide them into multiple files, and sometimes the file switching action will cause a little upset. At this time, `jsx-sfc` can help you make this scene much easier. **We can still organize the code clearly even without a lot of fragmented files** 😊.
 
 ## API Design Principle
 
