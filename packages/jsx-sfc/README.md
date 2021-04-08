@@ -19,8 +19,7 @@
 | [jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/jsx-sfc)                           | <a href="https://www.npmjs.org/package/jsx-sfc"><img src="https://img.shields.io/npm/v/jsx-sfc.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/jsx-sfc"><img src="https://img.shields.io/npm/dm/jsx-sfc.svg" alt="NPM Downloads"></a> <a href="https://bundlephobia.com/result?p=jsx-sfc"><img src="https://img.shields.io/bundlephobia/minzip/jsx-sfc.svg?style=flat" alt="Minzipped Size"></a> |
 | [babel-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/babel-plugin-jsx-sfc) | <a href="https://www.npmjs.org/package/babel-plugin-jsx-sfc"><img src="https://img.shields.io/npm/v/babel-plugin-jsx-sfc.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/babel-plugin-jsx-sfc"><img src="https://img.shields.io/npm/dm/babel-plugin-jsx-sfc.svg" alt="NPM Downloads"></a>                                                                                                        |
 | [vite-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/vite-plugin-jsx-sfc)   | <a href="https://www.npmjs.org/package/vite-plugin-jsx-sfc"><img src="https://img.shields.io/npm/v/vite-plugin-jsx-sfc.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/vite-plugin-jsx-sfc"><img src="https://img.shields.io/npm/dm/vite-plugin-jsx-sfc.svg" alt="NPM Downloads"></a>                                                                                                            |
-
-<!-- | [jsx-sfc.macro](https://github.com/joe-sky/jsx-sfc/tree/main/packages/jsx-sfc.macro)   | <a href="https://www.npmjs.org/package/jsx-sfc.macro"><img src="https://img.shields.io/npm/v/jsx-sfc.macro.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/jsx-sfc.macro"><img src="https://img.shields.io/npm/dm/jsx-sfc.macro.svg" alt="NPM Downloads"></a>                                                                                                            | -->
+| [jsx-sfc.macro](https://github.com/joe-sky/jsx-sfc/tree/main/packages/jsx-sfc.macro)               | <a href="https://www.npmjs.org/package/jsx-sfc.macro"><img src="https://img.shields.io/npm/v/jsx-sfc.macro.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/jsx-sfc.macro"><img src="https://img.shields.io/npm/dm/jsx-sfc.macro.svg" alt="NPM Downloads"></a>                                                                                                                                    |
 
 ## Introduction
 
@@ -32,23 +31,23 @@
 
 <!-- [Live Demo is here.](https://codesandbox.io/s/jsx-sfc-demo-jr2z0?file=/src/App.tsx) -->
 
-> I will continue to refine and summarize the comparison and pattern between this project and regular function components in the development of actual projects, and try to release it in the near future.
-
 ## Features
 
 - 🌟 Easy way to define function components with **separation of concerns**
 - ✨ Clearly isolate **template**, **logic**, **styles** and **any other concerns**
 - 💫 **Completely type inference** design by TypeScript
+- 🚩 Support **concept of private and public members** for function components (documentation to be completed)
 - 🎉 Support all React hooks
 - 🔥 Support [React Fast Refresh](https://github.com/facebook/react/tree/master/packages/react-refresh)
 - 🔧 Support React Eslint plugins
 - 🔨 Support React dev tools
 - ⚡ Performance almost equivalent to original function components
-- 🚀 No any dependencies
+- 🚀 No any dependencies (except compiler)
 
 ## Table of Contents
 
-- [Inspiration & Motivation](#inspiration--motivation)
+- [Motivation](#motivation)
+- [Inspiration](#inspiration)
   - [Extending Function Component](#extending-function-component)
   - [Adapting Eslint Plugin](#adapting-eslint-plugin)
   - [Adapting Hot Reloading](#adapting-hot-reloading)
@@ -69,7 +68,11 @@
 - [Roadmap](#roadmap)
 - [Who is using](#who-is-using)
 
-## Inspiration & Motivation
+## Motivation
+
+> I will continue to refine and summarize the comparison and pattern between this project and regular function components in the development of actual projects, and try to release it in the near future.
+
+## Inspiration
 
 This project was originally inspired by [Vue Single File Components](https://vuejs.org/v2/guide/single-file-components.html). The point of Vue SFCs has been recognized by many people:
 
