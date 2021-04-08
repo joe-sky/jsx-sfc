@@ -32,6 +32,8 @@
 
 <!-- [Live Demo is here.](https://codesandbox.io/s/jsx-sfc-demo-jr2z0?file=/src/App.tsx) -->
 
+> I will continue to refine and summarize the comparison and pattern between this project and regular function components in the development of actual projects, and try to release it in the near future.
+
 ## Features
 
 - 🌟 Easy way to define function components with **separation of concerns**
