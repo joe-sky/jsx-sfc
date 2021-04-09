@@ -23,7 +23,7 @@
 
 ## Introduction
 
-`jsx-sfc`(JSX Separate Function Components) is a tiny tool(~1kb) for create React function components with **separation of concerns** and **completely type inference**. It can be seen as a JSX/TSX syntax or type tool, very simple to use🧙🏼‍♂️.
+`jsx-sfc`(JSX Separate Function Components) is a tiny tool(at present ~1kb, can continue to optimize) for create React function components with **separation of concerns** and **completely type inference**. It can be seen as a JSX/TSX syntax or type tool, very simple to use🧙🏼‍♂️.
 
 <!-- > Currently version is v1.0.0-alpha.x, the v1 version and full documentation will be completed soon. -->
 
@@ -36,7 +36,7 @@
 - 🌟 Easy way to define function components with **separation of concerns**
 - ✨ Clearly isolate **template**, **logic**, **styles** and **any other concerns**
 - 💫 **Completely type inference** design by TypeScript
-- 🚩 Support **concept of static members** for function components (documentation to be completed)
+- 🚩 Support define static members for function components (documentation to be completed)
 - 🎉 Support all React hooks
 - 🔥 Support [React Fast Refresh](https://github.com/facebook/react/tree/master/packages/react-refresh)
 - 🔧 Support React Eslint plugins
@@ -65,10 +65,12 @@
   - [`sfc`](#sfc)
   - [`sfc.forwardRef`](#sfcforwardRef)
   - [Sub Templates](#sub-templates)
-  - [Extensions](#extensions)
-  - [Export Members](#export-members)
+  - [Extension options](#extensions-options)
+  - [Export static members](#export-static-members)
 - [API Design Principle](#api-design-principle)
 - [Roadmap](#roadmap)
+  - [Optimize runtime size](#optimize-runtime-size)
+  - [Support Vue v3](#support-vue-v3)
 - [Who is using](#who-is-using)
 
 ## Motivation
@@ -981,7 +983,7 @@ const App = sfc({
 
 We can use sub template syntax to continue to separate the responsibilities of JSX tags, [see here for the specific benefits of sub templates.](#clearer-visual-isolation)
 
-### Extensions
+### Extension options
 
 Except template and styles, other extensions for `jsx-sfc` components are also supported:
 
@@ -1030,7 +1032,7 @@ For some advanced usages of extensions, see these examples:
 
 - [Jss styles extension](https://github.com/joe-sky/jsx-sfc/blob/main/examples/counter/src/App.tsx#L60)
 
-### Export Members
+### Export static members
 
 All members support exporting from `jsx-sfc` components:
 
@@ -1181,21 +1183,75 @@ There are many strange TS types problems encountered in the development of this 
 
 ## Roadmap
 
-- Optimize runtime size
+### Optimize runtime size
 
 At present, `jsx-sfc` supports working without compiler, it's just that the syntax will be slightly different([See the test cases for details](https://github.com/joe-sky/jsx-sfc/tree/main/packages/jsx-sfc/__tests__/runtime)).
 
 However, there is no version of the package which removes the runtime part yet. So I will optimize it here later, and the size of 1KB can be reduced a lot in the compiled version.
 
-- Optimize compiled code
+### Optimize compiled code
 
 The compiled code of `jsx-sfc` has a few optimization space yet, which can continue to improve the runtime performance. I will gradually start to optimize it.
 
 <!-- At present only React is supported. However, other framework versions will not be excluded in the future(e.g. Vue v3). -->
 
-- About better syntax
+### About better syntax
 
 If better syntax implementation details are found and if they're not compatible with v1.0 syntax, I will summarize them and arrange them to v2.0 implementation.
+
+### Support Vue v3
+
+After a preliminary study, the `jsx-sfc for Vue v3` version can basically be implemented, which is roughly the following syntax:
+
+```tsx
+// Not yet implemented
+import { ref } from 'vue';
+import { css } from '@emotion/css';
+import sfc from 'jsx-sfc-vue';
+
+const App = sfc({
+  template: ({ data, styles }) => (
+    <section class={styles.wrapper}>
+      <input value={data.count} />
+    </section>
+  ),
+
+  setup() {
+    const count = ref(0);
+    return { count };
+  },
+
+  styles: {
+    wrapper: css`
+      font-size: 16px;
+      color: #000;
+    `
+  }
+});
+```
+
+The above is written in the regular way:
+
+```tsx
+import { defineComponent, ref } from 'vue';
+import { css } from '@emotion/css';
+
+const App = defineComponent(() => {
+  const count = ref(0);
+
+  return () => (
+    <section
+      class={css`
+        font-size: 16px;
+        color: #000;
+      `}>
+      <input value={count} />
+    </section>
+  );
+});
+```
+
+It can be predicted that there will inevitably be problems in the process of implementation, and I will continue to try in the near future.
 
 ## Change Logs
 
