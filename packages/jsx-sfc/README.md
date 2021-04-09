@@ -1212,13 +1212,19 @@ import sfc from 'jsx-sfc-vue';
 const App = sfc({
   template: ({ data, styles }) => (
     <section class={styles.wrapper}>
-      <input value={data.count} />
+      <input value={data.count.value} onClick={data.onClick} />
     </section>
   ),
 
   setup() {
     const count = ref(0);
-    return { count };
+
+    return {
+      count,
+      onClick() {
+        count.value++;
+      }
+    };
   },
 
   styles: {
@@ -1245,7 +1251,7 @@ const App = defineComponent(() => {
         font-size: 16px;
         color: #000;
       `}>
-      <input value={count} />
+      <input value={count.value} />
     </section>
   );
 });
