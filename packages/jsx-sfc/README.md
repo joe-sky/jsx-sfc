@@ -36,12 +36,12 @@
 - 🌟 Easy way to define function components with **separation of concerns**
 - ✨ Clearly isolate **template**, **logic**, **styles** and **any other concerns**
 - 💫 **Completely type inference** design by TypeScript
-- 🚩 Support define static members for function components (documentation to be completed)
+- 🚩 New APIs for **defining and using static members** in function components
 - 🎉 Support all React hooks
 - 🔥 Support [React Fast Refresh](https://github.com/facebook/react/tree/master/packages/react-refresh)
 - 🔧 Support React Eslint plugins
 - 🔨 Support React dev tools
-- ⚡ Performance almost equivalent to original function components
+- ⚡ Performance almost equivalent to regular function components
 - 🚀 No any dependencies (except compiler)
 
 ## Table of Contents
@@ -56,7 +56,7 @@
 - [Benefits](#benefits)
   - [Clearer visual isolation](#clearer-visual-isolation)
   - [Better single file experience](#better-single-file-experience)
-  - [Support define static members](#support-define-static-members)
+  - [Using static members gracefully](#using-static-members-gracefully)
 - [Installation](#installation)
   - [Using with Babel](#using-with-babel)
   - [Using with Vite](#using-with-vite)
@@ -65,7 +65,7 @@
   - [`sfc`](#sfc)
   - [`sfc.forwardRef`](#sfcforwardRef)
   - [Sub Templates](#sub-templates)
-  - [Extension options](#extensions-options)
+  - [Extension options](#extension-options)
   - [Export static members](#export-static-members)
 - [API Design Principle](#api-design-principle)
 - [Roadmap](#roadmap)
@@ -579,7 +579,7 @@ As you can see, we can **organize codes with component granularity** to achieve 
 
 When we organize component codes, we often have to divide them into multiple files, and sometimes the file switching action will cause a little upset. At this time, `jsx-sfc` can help you make this scene much easier. **We can still organize the code clearly even without a lot of fragmented files** 😊.
 
-### Support define static members
+### Using static members gracefully
 
 > Documentation to be completed.
 
