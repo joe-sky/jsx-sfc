@@ -8,24 +8,32 @@ import { locales } from './utils';
 
 const App = sfc(
   {
-    Component({ styles: { Wrapper, ...styles } }) {
+    template: ({ data, styles: { Wrapper, ...styles } }) => (
+      <Wrapper>
+        <header className="App-header">
+          <img src={logo} css={styles.appLogo} alt="logo" />
+          <select value={data.i18n.language} onChange={data.onSelectChange}>
+            <option value="en">English</option>
+            <option value="ja">日本語</option>
+          </select>
+          <h2>{data.t('title')}</h2>
+          <p>{data.t('description.part1')}</p>
+          <p>{data.t('description.part2')}</p>
+          <p>{data.t('description.part3')}</p>
+        </header>
+      </Wrapper>
+    ),
+
+    Component() {
       const { t, i18n } = useTranslation();
 
-      return (
-        <Wrapper>
-          <header className="App-header">
-            <img src={logo} css={styles.appLogo} alt="logo" />
-            <select value={i18n.language} onChange={e => i18n.changeLanguage(e.target.value)}>
-              <option value="en">English</option>
-              <option value="ja">日本語</option>
-            </select>
-            <h2>{t('title')}</h2>
-            <p>{t('description.part1')}</p>
-            <p>{t('description.part2')}</p>
-            <p>{t('description.part3')}</p>
-          </header>
-        </Wrapper>
-      );
+      return {
+        t,
+        i18n,
+        onSelectChange(e: React.ChangeEvent<HTMLSelectElement>) {
+          i18n.changeLanguage(e.target.value);
+        }
+      };
     },
 
     styles: {
