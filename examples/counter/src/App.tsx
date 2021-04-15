@@ -57,44 +57,46 @@ const App = sfc<AppProps>()(
     }
   },
 
-  styles({
-    App: {
-      textAlign: 'center'
-    },
-    AppLogo: {
-      height: '40vmin',
-      pointerEvents: 'none',
-      animation: '$App-logo-spin infinite 20s linear'
-    },
-    '@keyframes App-logo-spin': {
-      from: {
-        transform: 'rotate(0deg)'
+  {
+    ...styles({
+      App: {
+        textAlign: 'center'
       },
-      to: {
-        transform: 'rotate(360deg)'
+      AppLogo: {
+        height: '40vmin',
+        pointerEvents: 'none',
+        animation: '$App-logo-spin infinite 20s linear'
+      },
+      '@keyframes App-logo-spin': {
+        from: {
+          transform: 'rotate(0deg)'
+        },
+        to: {
+          transform: 'rotate(360deg)'
+        }
+      },
+      AppHeader: {
+        backgroundColor: '#282c34',
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize: 'calc(10px + 2vmin)',
+        color: 'white'
+      },
+      AppLink: {
+        color: '#61dafb'
+      },
+      AppButton: {
+        fontSize: 'calc(10px + 2vmin)'
       }
-    },
-    AppHeader: {
-      backgroundColor: '#282c34',
-      minHeight: '100vh',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      fontSize: 'calc(10px + 2vmin)',
-      color: 'white'
-    },
-    AppLink: {
-      color: '#61dafb'
-    },
-    AppButton: {
-      fontSize: 'calc(10px + 2vmin)'
-    }
-  })
-);
+    }),
 
-App.defaultProps = {
-  title: 'Hello Vite + React!'
-};
+    defaultProps: {
+      title: 'Hello Vite + React!'
+    }
+  }
+);
 
 export default App;

@@ -57,6 +57,7 @@ const Todo = sfc(
       `
     }
   },
+
   {
     svgProps: {
       xmlns: 'http://www.w3.org/2000/svg',
@@ -68,14 +69,14 @@ const Todo = sfc(
       strokeWidth: '2',
       strokeLinecap: 'round',
       strokeLinejoin: 'round'
+    },
+
+    propTypes: {
+      onClick: PropTypes.func.isRequired,
+      completed: PropTypes.bool.isRequired,
+      text: PropTypes.string.isRequired
     }
   }
 );
-
-Todo.propTypes = {
-  onClick: PropTypes.func.isRequired,
-  completed: PropTypes.bool.isRequired,
-  text: PropTypes.string.isRequired
-};
 
 export default Todo;
