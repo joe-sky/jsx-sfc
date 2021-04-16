@@ -31,6 +31,8 @@
 
 <!-- [Live Demo is here.](https://codesandbox.io/s/jsx-sfc-demo-jr2z0?file=/src/App.tsx) -->
 
+> I'm sorting out the new TS development pattern: [tsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/tsx-sfc). Now it's experimenting in the actual project.
+
 ## Features
 
 - 🌟 Easy way to define function components with **separation of concerns**
