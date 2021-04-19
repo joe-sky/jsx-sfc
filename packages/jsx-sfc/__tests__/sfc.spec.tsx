@@ -11,16 +11,23 @@ interface AppProps {
 }
 
 const App = sfc<AppProps>()({
-  template({ data, styles: { Container } }) {
+  template({ data, styles: { Container }, emptyStr }) {
     return (
       <Container>
-        <div>{data.a}</div>
+        <div>
+          {data.a}
+          {emptyStr}
+        </div>
       </Container>
     );
   },
 
   Component: props => {
     return { a: props.test };
+  },
+
+  options: () => {
+    return { emptyStr: '' };
   },
 
   styles: () => ({

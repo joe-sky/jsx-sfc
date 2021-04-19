@@ -20,9 +20,11 @@ export type DefineComponent<
   <
     Data extends Template.Data,
     InferStyles extends ExtractOptions<Styles>,
+    InferOP extends ExtractOptions<OP>,
     InferEX extends ExtractOptions<EX>,
-    FR extends { styles: InferStyles } & InferEX,
+    FR extends { styles: InferStyles } & InferOP & InferEX,
     Styles = {},
+    OP = {},
     EX = {}
   >(
     options: {
@@ -60,26 +62,31 @@ export type DefineComponent<
        * ```
        */
       template: <U extends Data>(args: { data: U } & FR, ...tmpls: Template.Func[]) => JSXElements;
+
+      options?: OP;
     },
     extensions?: EX
   ): ReturnComponent &
     Origin & {
       template: (data?: Partial<Data>) => JSXElements;
       styles: InferStyles;
-    } & ExtractOptions<EX>;
+    } & ExtractOptions<OP> &
+    ExtractOptions<EX>;
 
   <
     InferStyles extends ExtractOptions<Styles>,
+    InferOP extends ExtractOptions<OP>,
     InferEX extends ExtractOptions<EX>,
-    FR extends { styles: InferStyles } & InferEX,
+    FR extends { styles: InferStyles } & InferOP & InferEX,
     Styles = {},
+    OP = {},
     EX = {}
   >(
     options: {
       /**
        * Using the `styles property or function` to define styles, you can use the most popular `CSS in JS` solutions. (e.g. `styled-components`, `emotion`)
        */
-      styles: Styles;
+      styles?: Styles;
       /**
        * Using the `Component function` to define actual component, example:
        * ```tsx
@@ -95,9 +102,11 @@ export type DefineComponent<
       Component: Ref extends NoRef
         ? (props: SFCProps<Props, FR>, context?: any) => JSXElements
         : (props: SFCProps<Props, FR>, ref?: React.Ref<Ref>) => JSXElements;
+
+      options?: OP;
     },
     extensions?: EX
-  ): ReturnComponent & Origin & { styles: InferStyles } & ExtractOptions<EX>;
+  ): ReturnComponent & Origin & { styles: InferStyles } & ExtractOptions<OP> & ExtractOptions<EX>;
 
   <InferEX extends ExtractOptions<EX>, EX = {}>(
     component: Ref extends NoRef
@@ -121,6 +130,7 @@ export interface SFCOptions {
   template?: Func;
   Component: Func;
   styles?: Func | Obj;
+  options?: Func | Obj;
 }
 
 export type SFCExtensions = {
