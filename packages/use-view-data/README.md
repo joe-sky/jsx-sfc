@@ -4,6 +4,6 @@
 
 ## Introduction
 
-`useViewData` is a pattern for create React function components with **separation of concerns** and **more fine grained reusability**. It's just a simple type tool for implement the pattern, can be run without runtime code☄️.
+`useViewData` is a TS type tool for create React function components with **separation of concerns** and not be confined to single file components. It's just to describe a function component development pattern, you can also not import it☄️.
 
 > Documentation to be completed

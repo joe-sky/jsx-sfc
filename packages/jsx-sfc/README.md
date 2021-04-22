@@ -23,7 +23,7 @@
 
 ## Introduction
 
-`jsx-sfc`(JSX Separate Function Components) is a tiny tool(at present ~1kb, can continue to optimize) for create React function components with **separation of concerns** and **more fine grained reusability**. It can be seen as a JSX/TSX syntax or type tool, very simple to use🧙🏼‍♂️.
+`jsx-sfc`(JSX Separate Function Components) is a tiny tool(at present ~1kb, can continue to optimize) for create React function components with **separation of concerns** and not be confined to single file components. It can be seen as a JSX/TSX syntax or type tool, very simple to use🧙🏼‍♂️.
 
 <!-- > Currently version is v1.0.0-alpha.x, the v1 version and full documentation will be completed soon. -->
 
@@ -38,8 +38,8 @@
 - 🌟 Easy way to define function components with **separation of concerns**
 - ✨ Clearly isolate **template**, **logic**, **styles** and **any other concerns**
   <!-- - 🚩 New APIs for **defining and using static members** in function components -->
-- 🕹 easy **more fine grained reusability** of components (Documentation to be completed)
 - 💫 **Completely type inference** design by TypeScript
+- 🕹 Support **export internal member types** from components (Documentation to be completed)
 - 🎉 Support all React hooks
 - 🔥 Support [React Fast Refresh](https://github.com/facebook/react/tree/master/packages/react-refresh)
 - 🔧 Support React Eslint plugins
@@ -59,7 +59,7 @@
 - [Benefits](#benefits)
   - [Clearer visual isolation](#clearer-visual-isolation)
   - [Better single file experience](#better-single-file-experience)
-  - [More fine grained reusability](#more-fine-grained-reusability)
+  - [Exportable internal member types](#exportable-internal-member-types)
 - [Installation](#installation)
   - [Using with Babel](#using-with-babel)
   - [Using with Vite](#using-with-vite)
@@ -582,7 +582,7 @@ As you can see, we can **organize codes with component granularity** to achieve 
 
 When we organize component codes, we often have to divide them into multiple files, and sometimes the file switching action will cause a little upset. At this time, `jsx-sfc` can help you make this scene much easier. **We can still organize the code clearly even without a lot of fragmented files** 😊.
 
-### More fine grained reusability
+### Exportable internal member types
 
 > Documentation to be completed.
 
@@ -1092,7 +1092,7 @@ function Test() {
 }
 ```
 
-We can use the above feature to unit test each member of the component independently, or even reuse them into other components.
+<!-- We can use the above feature to unit test each member of the component independently, or even reuse them into other components. -->
 
 <!-- ### Using with TypeScript -->
 
