@@ -3,7 +3,8 @@
     "packages/jsx-sfc",
     "packages/babel-plugin-jsx-sfc",
     "packages/vite-plugin-jsx-sfc",
-    "packages/jsx-sfc.macro"
+    "packages/jsx-sfc.macro",
+    "packages/use-view-data"
   ],
   "command": {
     "publish": {

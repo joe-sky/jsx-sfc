@@ -30,7 +30,7 @@ export namespace Template {
 
   export type EL = typeof templateElement;
 
-  export type Data = Obj;
+  export type ViewData = Obj;
 
-  export type InternalFunc = <D extends Data>(data?: D) => D;
+  export type InternalFunc = <D extends ViewData>(data?: D) => D;
 }

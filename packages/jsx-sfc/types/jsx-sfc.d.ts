@@ -1,5 +1,5 @@
 /*!
- * jsx-sfc v1.3.0-alpha.1
+ * jsx-sfc v1.3.0-alpha.2
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
@@ -27,8 +27,8 @@ declare namespace Template {
         __required(arg1: Arg1, arg2: Arg2, arg3: Arg3, arg4: Arg4, arg5: Arg5, ...args: unknown[]): JSXElements;
     }
     type EL = typeof templateElement;
-    type Data = Obj;
-    type InternalFunc = <D extends Data>(data?: D) => D;
+    type ViewData = Obj;
+    type InternalFunc = <D extends ViewData>(data?: D) => D;
 }
 
 declare type NoRef = 'noRef';
@@ -40,7 +40,7 @@ declare type ExtractOptions<T> = T extends () => infer R ? (R extends Obj ? R : 
 declare type DefineComponent<Ref = NoRef, Props = {}, ReturnComponent = Ref extends NoRef ? React.FC<Props> : React.ForwardRefExoticComponent<Props & RefAttributes<Ref>>, Origin = {
     Component: ReturnComponent;
 }> = {
-    <Data extends Template.Data, InferStyles extends ExtractOptions<Styles>, InferOP extends ExtractOptions<OP>, InferEX extends ExtractOptions<EX>, FR extends {
+    <Data extends Template.ViewData, InferStyles extends ExtractOptions<Styles>, InferOP extends ExtractOptions<OP>, InferEX extends ExtractOptions<EX>, FR extends {
         styles: InferStyles;
     } & InferOP & InferEX, Styles = {}, OP = {}, EX = {}>(options: {
         /**
@@ -126,10 +126,13 @@ declare type SFCExtensions = {
     __cs?: boolean;
     [key: string]: any;
 };
+declare type ViewDataType<C> = C extends {
+    template: infer T;
+} ? T extends (...args: infer P) => any ? P[0] : never : never;
 
 declare function createOptions(options: FuncMap, extensions?: Func | Obj, isRuntime?: boolean): Record<string, unknown>;
 declare const sfc: SFC;
 declare const forwardRef: ForwardRefSFC;
 
 export default sfc;
-export { DefineComponent, ForwardRefSFC, SFC, SFCExtensions, SFCOptions, SFCProps, Template, createOptions, forwardRef, isTemplate };
+export { DefineComponent, ForwardRefSFC, SFC, SFCExtensions, SFCOptions, SFCProps, Template, ViewDataType, createOptions, forwardRef, isTemplate };

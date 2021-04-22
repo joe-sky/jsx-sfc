@@ -23,7 +23,7 @@
 
 ## Introduction
 
-`jsx-sfc`(JSX Separate Function Components) is a tiny tool(at present ~1kb, can continue to optimize) for create React function components with **separation of concerns** and **completely type inference**. It can be seen as a JSX/TSX syntax or type tool, very simple to use🧙🏼‍♂️.
+`jsx-sfc`(JSX Separate Function Components) is a tiny tool(at present ~1kb, can continue to optimize) for create React function components with **separation of concerns** and **more fine grained reusability**. It can be seen as a JSX/TSX syntax or type tool, very simple to use🧙🏼‍♂️.
 
 <!-- > Currently version is v1.0.0-alpha.x, the v1 version and full documentation will be completed soon. -->
 
@@ -31,14 +31,15 @@
 
 <!-- [Live Demo is here.](https://codesandbox.io/s/jsx-sfc-demo-jr2z0?file=/src/App.tsx) -->
 
-> I'm sorting out the new TS development pattern: [tsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/tsx-sfc). Now it's experimenting in the actual project.
+> I'm sorting out the regular function component syntax version: [useViewData](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-view-data). Now it's experimenting in the actual project.
 
 ## Features
 
 - 🌟 Easy way to define function components with **separation of concerns**
 - ✨ Clearly isolate **template**, **logic**, **styles** and **any other concerns**
+  <!-- - 🚩 New APIs for **defining and using static members** in function components -->
+- 🕹 easy **more fine grained reusability** of components (Documentation to be completed)
 - 💫 **Completely type inference** design by TypeScript
-- 🚩 New APIs for **defining and using static members** in function components
 - 🎉 Support all React hooks
 - 🔥 Support [React Fast Refresh](https://github.com/facebook/react/tree/master/packages/react-refresh)
 - 🔧 Support React Eslint plugins
@@ -58,7 +59,7 @@
 - [Benefits](#benefits)
   - [Clearer visual isolation](#clearer-visual-isolation)
   - [Better single file experience](#better-single-file-experience)
-  - [Using static members gracefully](#using-static-members-gracefully)
+  - [More fine grained reusability](#more-fine-grained-reusability)
 - [Installation](#installation)
   - [Using with Babel](#using-with-babel)
   - [Using with Vite](#using-with-vite)
@@ -581,7 +582,7 @@ As you can see, we can **organize codes with component granularity** to achieve 
 
 When we organize component codes, we often have to divide them into multiple files, and sometimes the file switching action will cause a little upset. At this time, `jsx-sfc` can help you make this scene much easier. **We can still organize the code clearly even without a lot of fragmented files** 😊.
 
-### Using static members gracefully
+### More fine grained reusability
 
 > Documentation to be completed.
 
@@ -661,14 +662,14 @@ import sfc from 'jsx-sfc.macro';
 - Type definition of `sfc`
 
 ```ts
-function sfc<Props, TemplateData, Styles, EX>(
+function sfc<Props, ViewData, Styles, EX>(
   options: {
-    template?: (args: { data: TemplateData; styles: Styles } & EX, ...tmpls: Template.Func[]) => JSX.Element;
-    Component: (props?: Props & Styles & EX & { originalProps: Props }) => TemplateData;
+    template?: (args: { data: ViewData; styles: Styles } & EX, ...tmpls: Template.Func[]) => JSX.Element;
+    Component: (props?: Props & Styles & EX & { originalProps: Props }) => ViewData;
     styles?: Styles;
   },
   extensions?: EX
-): React.FC<Props> & { template: (data?: TemplateData), Component: React.FC<Props> } & Styles & EX;
+): React.FC<Props> & { template: (data?: ViewData), Component: React.FC<Props> } & Styles & EX;
 ```
 
 Only a symbolic type definition is put here for API documentation, there are many differences in the actual implementation. [Actual type definition is here.](https://github.com/joe-sky/jsx-sfc/blob/main/packages/jsx-sfc/src/defineComponent.ts)
