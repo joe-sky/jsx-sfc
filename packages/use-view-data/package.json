@@ -1,6 +1,6 @@
 {
   "name": "use-view-data",
-  "version": "1.3.0-alpha.1",
+  "version": "1.3.0-alpha.2",
   "description": "A tiny type tool for create React function components with separation of concerns and more fine grained reusability.",
   "main": "dist/use-view-data.common.js",
   "module": "dist/use-view-data.esm.js",
