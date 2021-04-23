@@ -2,6 +2,7 @@
 
 ## [v1.3.0-alpha.3] 2021.04.23
 
+- 🌟 Add `options` API for `jsx-sfc`.
 - 🌟 Add `use-view-data`.
 - 🌟 Add `use-templates`.
 

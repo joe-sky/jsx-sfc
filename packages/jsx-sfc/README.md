@@ -31,7 +31,7 @@
 
 <!-- [Live Demo is here.](https://codesandbox.io/s/jsx-sfc-demo-jr2z0?file=/src/App.tsx) -->
 
-> I'm sorting out the hooks syntax tools for separation of concerns: [use-view-data](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-view-data) and [use-templates](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-templates). Now it's experimenting in the actual project.
+> I'm sorting out the hooks syntax tools for separation of concerns: [use-view-data](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-view-data) and [use-templates](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-templates), they can be used with jsx-sfc or alone. Now it's experimenting in the actual project.
 
 ## Features
 
@@ -39,7 +39,7 @@
 - ✨ Clearly isolate **template**, **logic**, **styles** and **any other concerns**
   <!-- - 🚩 New APIs for **defining and using static members** in function components -->
 - 💫 **Completely type inference** design by TypeScript
-- 🕹 Support **export internal member types** from components (Documentation to be completed)
+  <!-- - 🕹 Support **export internal member types** from components (Documentation to be completed) -->
 - 🎉 Support all React hooks
 - 🔥 Support [React Fast Refresh](https://github.com/facebook/react/tree/master/packages/react-refresh)
 - 🔧 Support React Eslint plugins
@@ -59,7 +59,7 @@
 - [Benefits](#benefits)
   - [Clearer visual isolation](#clearer-visual-isolation)
   - [Better single file experience](#better-single-file-experience)
-  - [Exportable internal member types](#exportable-internal-member-types)
+    <!-- - [Exportable internal member types](#exportable-internal-member-types) -->
 - [Installation](#installation)
   - [Using with Babel](#using-with-babel)
   - [Using with Vite](#using-with-vite)
@@ -582,9 +582,9 @@ As you can see, we can **organize codes with component granularity** to achieve 
 
 When we organize component codes, we often have to divide them into multiple files, and sometimes the file switching action will cause a little upset. At this time, `jsx-sfc` can help you make this scene much easier. **We can still organize the code clearly even without a lot of fragmented files** 😊.
 
-### Exportable internal member types
+<!-- ### Exportable internal member types
 
-> Documentation to be completed.
+> Documentation to be completed. -->
 
 ## Installation
 
