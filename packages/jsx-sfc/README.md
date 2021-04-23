@@ -23,7 +23,7 @@
 
 ## Introduction
 
-`jsx-sfc`(JSX Separate Function Components) is a tiny tool(at present ~1kb, can continue to optimize) for create React function components with **separation of concerns** and not be confined to single file components. It can be seen as a JSX/TSX syntax or type tool, very simple to use🧙🏼‍♂️.
+`jsx-sfc`(JSX Separate Function Components) is a tiny JSX/TSX toolkit(<1kb minimum) for create React function components with **separation of concerns**. It can be seen as a JSX/TSX syntax or type tool, very simple to use🧙🏼‍♂️.
 
 <!-- > Currently version is v1.0.0-alpha.x, the v1 version and full documentation will be completed soon. -->
 
@@ -31,7 +31,7 @@
 
 <!-- [Live Demo is here.](https://codesandbox.io/s/jsx-sfc-demo-jr2z0?file=/src/App.tsx) -->
 
-> I'm sorting out the regular function component syntax version: [useViewData](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-view-data). Now it's experimenting in the actual project.
+> I'm sorting out the regular syntax version tools: [use-view-data](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-view-data) and [jsx-render-templates](https://github.com/joe-sky/jsx-sfc/tree/main/packages/jsx-render-templates). Now it's experimenting in the actual project.
 
 ## Features
 
@@ -1260,7 +1260,7 @@ const App = defineComponent(() => {
 });
 ```
 
-It can be predicted that there will inevitably be problems in the process of implementation, and I will continue to try in the near future.
+It can be predicted that there will inevitably be problems in the process of implementation, and I will continue to try in the near future. Now we are looking for suitable business systems.
 
 ## Change Logs
 

@@ -1,7 +1,7 @@
 {
   "name": "use-view-data",
   "version": "1.3.0-alpha.2",
-  "description": "A tiny type tool for create React function components with separation of concerns and exportable internal member types.",
+  "description": "A tiny type tool for create React function components with separation of concerns.",
   "main": "dist/use-view-data.common.js",
   "module": "dist/use-view-data.esm.js",
   "unpkg": "dist/use-view-data.js",

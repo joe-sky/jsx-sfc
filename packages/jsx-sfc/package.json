@@ -1,7 +1,7 @@
 {
   "name": "jsx-sfc",
   "version": "1.3.0-alpha.2",
-  "description": "A tiny library for create React function components with separation of concerns and not be confined to single file components.",
+  "description": "A tiny JSX/TSX toolkit for create React function components with separation of concerns.",
   "main": "dist/jsx-sfc.common.js",
   "module": "dist/jsx-sfc.esm.js",
   "unpkg": "dist/jsx-sfc.js",
