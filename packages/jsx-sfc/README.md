@@ -31,7 +31,7 @@
 
 <!-- [Live Demo is here.](https://codesandbox.io/s/jsx-sfc-demo-jr2z0?file=/src/App.tsx) -->
 
-> I'm sorting out the regular syntax version tools: [use-view-data](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-view-data) and [jsx-render-templates](https://github.com/joe-sky/jsx-sfc/tree/main/packages/jsx-render-templates). Now it's experimenting in the actual project.
+> I'm sorting out the hooks syntax tools for separation of concerns: [use-view-data](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-view-data) and [use-templates](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-templates). Now it's experimenting in the actual project.
 
 ## Features
 

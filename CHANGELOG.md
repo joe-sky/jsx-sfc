@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## [v1.3.0-alpha.3] 2021.04.23
+
+- 🌟 Add `use-view-data`.
+- 🌟 Add `use-templates`.
+
 ## [v1.2.0] 2021.04.05
 
 - 🌟 Add `jsx-sfc.macro`.

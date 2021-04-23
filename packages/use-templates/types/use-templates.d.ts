@@ -1,0 +1,35 @@
+/*!
+ * use-templates v1.3.0-alpha.3
+ * (c) 2021-present Joe_Sky
+ * Released under the MIT License.
+ */
+import { ReactElement } from 'react';
+
+declare type Obj = Record<string, unknown>;
+declare type JSXElements = ReactElement<any, any> | null;
+interface Noop {
+    (): any;
+    [key: string]: any;
+}
+
+declare const templateElement: Noop;
+declare function isTemplate(templateElement: any): templateElement is Template.EL;
+declare const Template: <Arg1 = any, Arg2 = any, Arg3 = any, Arg4 = any, Arg5 = any, T extends Template.Func<Arg1, Arg2, Arg3, Arg4, Arg5> = Template.Func>(props: {
+    name?: T;
+    children: T['__required'];
+}) => JSXElements;
+declare namespace Template {
+    interface Func<Arg1 = unknown, Arg2 = unknown, Arg3 = unknown, Arg4 = unknown, Arg5 = unknown> {
+        (arg1?: Arg1, arg2?: Arg2, arg3?: Arg3, arg4?: Arg4, arg5?: Arg5, ...args: unknown[]): JSXElements;
+        template: (arg1?: Arg1, arg2?: Arg2, arg3?: Arg3, arg4?: Arg4, arg5?: Arg5, ...args: unknown[]) => JSXElements;
+        __required(arg1: Arg1, arg2: Arg2, arg3: Arg3, arg4: Arg4, arg5: Arg5, ...args: unknown[]): JSXElements;
+    }
+    type EL = typeof templateElement;
+    type ViewData = Obj;
+}
+
+declare type DefineTemplates = (...tmpls: Template.Func[]) => JSXElements;
+declare function useTemplates(defineTemplates: DefineTemplates): JSXElements;
+
+export default useTemplates;
+export { DefineTemplates, Template, isTemplate };

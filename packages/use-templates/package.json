@@ -1,0 +1,34 @@
+{
+  "name": "use-templates",
+  "version": "1.3.0-alpha.2",
+  "description": "A tiny custom hook for render JSX tags of components with separation of concerns.",
+  "main": "dist/use-templates.common.js",
+  "module": "dist/use-templates.esm.js",
+  "unpkg": "dist/use-templates.js",
+  "jsdelivr": "dist/use-templates.js",
+  "files": [
+    "dist/",
+    "lib/",
+    "types/",
+    "index.d.ts",
+    "README.md"
+  ],
+  "scripts": {
+    "cjs": "cross-env NODE_ENV=cjs rollup -c -o dist/use-templates.common.js",
+    "esm": "cross-env NODE_ENV=es rollup -c -o dist/use-templates.esm.js",
+    "umd": "cross-env NODE_ENV=development rollup -c -o dist/use-templates.js",
+    "min": "cross-env NODE_ENV=production rollup -c -o dist/use-templates.min.js",
+    "lib": "babel src --out-dir lib --extensions \".js,.jsx,.ts,.tsx\" --config-file \"../../.babelrc\"",
+    "dts": "cross-env TYPE=dts NODE_ENV=es rollup -c -o types/use-templates.d.ts",
+    "build": "yarn run cjs && yarn run esm && yarn run umd && yarn run min && yarn run lib && yarn run dts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joe-sky/jsx-sfc.git"
+  },
+  "bugs": {
+    "url": "https://github.com/joe-sky/jsx-sfc/issues"
+  },
+  "author": "Joe_Sky <hitomi_doax@sina.com>",
+  "license": "MIT"
+}
