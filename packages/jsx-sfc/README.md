@@ -74,9 +74,14 @@
 - [Roadmap](#roadmap)
   - [Optimize runtime size](#optimize-runtime-size)
   - [Support Vue v3](#support-vue-v3)
+  - [Add hooks syntax](#add-hooks-syntax)
 - [Who is using](#who-is-using)
 
 ## Motivation
+
+On the whole, my goal is to create a toolkit with similar syntax and useful structure for the scenario of using JSX to develop function components, according to the `mental model of single file components like Vue/Svelte/Marko`.
+
+If you are already familiar with the similar Vue SFCs development model, you will find the syntax of this project so intuitive~
 
 > I will continue to refine and summarize the comparison and pattern between this project and regular function components in the development of actual projects, and try to release it in the near future.
 
@@ -1260,7 +1265,19 @@ const App = defineComponent(() => {
 });
 ```
 
-It can be predicted that there will inevitably be problems in the process of implementation, and I will continue to try in the near future. Now we are looking for suitable business systems.
+It can be predicted that there will inevitably be problems in the process of implementation, and I will continue to try in the near future.
+
+> The biggest difficulty lies in the processing of TS type. The return value [type of defineComponent API](https://github.com/vuejs/vue-next/blob/master/packages/runtime-core/src/apiDefineComponent.ts) is much more complex than React, and some types are not exported from Vue package.
+
+### Add hooks syntax
+
+These are currently being experimented. With hooks, they will be easier to integrate the concept of `separation of concerns` into the existing JSX based function component development. I will sort out the relevant documentation soon:
+
+- [use-view-data](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-view-data)
+
+- [use-templates](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-templates)
+
+Moreover, at present Vue composition API can also support syntax similar to hooks, so I will also consider developing Vue version, and this process should not be too difficult.
 
 ## Change Logs
 
