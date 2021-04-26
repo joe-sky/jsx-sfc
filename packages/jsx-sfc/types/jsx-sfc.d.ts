@@ -1,5 +1,5 @@
 /*!
- * jsx-sfc v1.3.0-alpha.3
+ * jsx-sfc v1.3.0-alpha.4
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
@@ -16,16 +16,24 @@ interface Noop {
 
 declare const templateElement: Noop;
 declare function isTemplate(templateElement: any): templateElement is Template.EL;
-declare const Template: <Arg1 = any, Arg2 = any, Arg3 = any, Arg4 = any, Arg5 = any, T extends Template.Func<Arg1, Arg2, Arg3, Arg4, Arg5> = Template.Func>(props: {
+declare const Template: <Arg1 = any, Arg2 = any, Arg3 = any, Arg4 = any, Arg5 = any, T extends Template.Render<Arg1, Arg2, Arg3, Arg4, Arg5> = Template.Render>(props: {
     name?: T;
     children: T['__required'];
 }) => JSXElements;
 declare namespace Template {
-    interface Func<Arg1 = unknown, Arg2 = unknown, Arg3 = unknown, Arg4 = unknown, Arg5 = unknown> {
+    interface Render<Arg1 = unknown, Arg2 = unknown, Arg3 = unknown, Arg4 = unknown, Arg5 = unknown> {
         (arg1?: Arg1, arg2?: Arg2, arg3?: Arg3, arg4?: Arg4, arg5?: Arg5, ...args: unknown[]): JSXElements;
-        template: (arg1?: Arg1, arg2?: Arg2, arg3?: Arg3, arg4?: Arg4, arg5?: Arg5, ...args: unknown[]) => JSXElements;
+        render: (arg1?: Arg1, arg2?: Arg2, arg3?: Arg3, arg4?: Arg4, arg5?: Arg5, ...args: unknown[]) => JSXElements;
         __required(arg1: Arg1, arg2: Arg2, arg3: Arg3, arg4: Arg4, arg5: Arg5, ...args: unknown[]): JSXElements;
+        /**
+         * @deprecated Please use `render`
+         */
+        template: (arg1?: Arg1, arg2?: Arg2, arg3?: Arg3, arg4?: Arg4, arg5?: Arg5, ...args: unknown[]) => JSXElements;
     }
+    /**
+     * @deprecated Please use `Template.Render`
+     */
+    type Func<Arg1 = unknown, Arg2 = unknown, Arg3 = unknown, Arg4 = unknown, Arg5 = unknown> = Render<Arg1, Arg2, Arg3, Arg4, Arg5>;
     type EL = typeof templateElement;
     type ViewData = Obj;
     type InternalFunc = <D extends ViewData>(data?: D) => D;
@@ -76,7 +84,7 @@ declare type DefineComponent<Ref = NoRef, Props = {}, ReturnComponent = Ref exte
          */
         template: <U extends Data>(args: {
             data: U;
-        } & FR, ...tmpls: Template.Func[]) => JSXElements;
+        } & FR, ...tmpls: Template.Render[]) => JSXElements;
         options?: OP;
     }, extensions?: EX): ReturnComponent & Origin & {
         template: (data?: Partial<Data>) => JSXElements;

@@ -35,18 +35,18 @@ export function createOptions(options: FuncMap, extensions?: Func | Obj, isRunti
               throw new TypeError('The return of template with multiple arguments must be React.Fragment type.');
             }
 
-            const tmplFcs: ReactElement<{ name?: Template.Func; children: Template.Func['template'] }>[] =
+            const tmplFcs: ReactElement<{ name?: Template.Render; children: Template.Render['render'] }>[] =
               jsxFragment.props.children;
             if (!IS_PRODUCTION && !Array.isArray(tmplFcs)) {
               throw new RangeError('Must be at least 2 Template elements.');
             }
 
-            let mainTemplate: Template.Func['template'] = noop;
+            let mainTemplate = noop as Template.Render['render'];
             tmplFcs.forEach(item => {
               if (IS_PRODUCTION || (item && isTemplate(item.type))) {
                 const { name, children } = item.props;
                 if (name) {
-                  name.template = children;
+                  name.template = name.render = children;
                 } else {
                   mainTemplate = children;
                 }

@@ -1,4 +1,4 @@
-import { noop, Obj, JSXElements } from './utils';
+import { noop, JSXElements } from './utils';
 
 const __TEMPLATE__ = 0x5fc;
 
@@ -15,20 +15,18 @@ export const Template: <
   Arg3 = any,
   Arg4 = any,
   Arg5 = any,
-  T extends Template.Func<Arg1, Arg2, Arg3, Arg4, Arg5> = Template.Func
+  T extends Template.Render<Arg1, Arg2, Arg3, Arg4, Arg5> = Template.Render
 >(props: {
   name?: T;
   children: T['__required'];
 }) => JSXElements = templateElement;
 
 export namespace Template {
-  export interface Func<Arg1 = unknown, Arg2 = unknown, Arg3 = unknown, Arg4 = unknown, Arg5 = unknown> {
+  export interface Render<Arg1 = unknown, Arg2 = unknown, Arg3 = unknown, Arg4 = unknown, Arg5 = unknown> {
     (arg1?: Arg1, arg2?: Arg2, arg3?: Arg3, arg4?: Arg4, arg5?: Arg5, ...args: unknown[]): JSXElements;
-    template: (arg1?: Arg1, arg2?: Arg2, arg3?: Arg3, arg4?: Arg4, arg5?: Arg5, ...args: unknown[]) => JSXElements;
+    render: (arg1?: Arg1, arg2?: Arg2, arg3?: Arg3, arg4?: Arg4, arg5?: Arg5, ...args: unknown[]) => JSXElements;
     __required(arg1: Arg1, arg2: Arg2, arg3: Arg3, arg4: Arg4, arg5: Arg5, ...args: unknown[]): JSXElements;
   }
 
   export type EL = typeof templateElement;
-
-  export type ViewData = Obj;
 }

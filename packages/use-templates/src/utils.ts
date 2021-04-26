@@ -2,8 +2,6 @@ import { ReactElement } from 'react';
 
 export type Func = (...args: any) => any;
 
-export type Obj = Record<string, unknown>;
-
 export type JSXElements = ReactElement<any, any> | null;
 
 export interface Noop {

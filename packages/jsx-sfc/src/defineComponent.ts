@@ -61,7 +61,7 @@ export type DefineComponent<
        * });
        * ```
        */
-      template: <U extends Data>(args: { data: U } & FR, ...tmpls: Template.Func[]) => JSXElements;
+      template: <U extends Data>(args: { data: U } & FR, ...tmpls: Template.Render[]) => JSXElements;
 
       options?: OP;
     },

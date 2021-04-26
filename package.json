@@ -9,7 +9,7 @@
     "packages/use-view-data",
     "packages/use-templates"
   ],
-  "version": "1.3.0-alpha.3",
+  "version": "1.3.0-alpha.4",
   "description": "A tiny tool for create React function components with Separation of Concerns and completely Type Inference.",
   "scripts": {
     "build": "lerna run build",
