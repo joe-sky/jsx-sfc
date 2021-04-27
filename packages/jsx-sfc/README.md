@@ -1273,9 +1273,9 @@ It can be predicted that there will inevitably be problems in the process of imp
 
 These are currently being experimented. With hooks, they will be easier to integrate the concept of `separation of concerns` into the existing JSX based function component development. I will sort out the relevant documentation soon:
 
-- [use-view-data](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-view-data)
+- [use-view-data](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-view-data) (Has been implemented in React)
 
-- [use-templates](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-templates)
+- [use-templates](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-templates) (Has been implemented in React/Vue3)
 
 Moreover, at present Vue composition API can also support syntax similar to hooks, so I will also consider developing Vue version, and this process should not be too difficult.
 

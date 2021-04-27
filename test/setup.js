@@ -32,6 +32,8 @@ Object.defineProperty(window, 'matchMedia', {
   }))
 });
 
+Object.defineProperty(window, 'ShadowRoot', { value: Object });
+
 global.window = window;
 global.document = window.document;
 global.navigator = {

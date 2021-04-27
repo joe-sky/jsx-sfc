@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "jsx": "react",
+    "jsx": "preserve",
     "target": "es2019",
     "module": "es2015",
     "moduleResolution": "node",

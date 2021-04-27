@@ -70,6 +70,7 @@ const AppNoGeneric = sfc.forwardRef({
 
 describe('forward ref basic', function() {
   const ref = createRef<AppRef>();
+  // @ts-ignore
   const app = mount(<App test="1" ref={ref} />);
 
   it('simple', () => {
