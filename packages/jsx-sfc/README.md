@@ -14,17 +14,17 @@
   <img alt="jsx-sfc demo" src="https://user-images.githubusercontent.com/12705724/113466739-a75bee80-9470-11eb-8139-6aa54550a754.gif" width="500" />
 </p>
 
-| Package                                                                                            | Badges                                                                                                                                                                                                                                                                                                                                                                                                              |
-| -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/jsx-sfc)                           | <a href="https://www.npmjs.org/package/jsx-sfc"><img src="https://img.shields.io/npm/v/jsx-sfc.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/jsx-sfc"><img src="https://img.shields.io/npm/dm/jsx-sfc.svg" alt="NPM Downloads"></a> <a href="https://bundlephobia.com/result?p=jsx-sfc"><img src="https://img.shields.io/bundlephobia/minzip/jsx-sfc.svg?style=flat" alt="Minzipped Size"></a> |
-| [babel-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/babel-plugin-jsx-sfc) | <a href="https://www.npmjs.org/package/babel-plugin-jsx-sfc"><img src="https://img.shields.io/npm/v/babel-plugin-jsx-sfc.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/babel-plugin-jsx-sfc"><img src="https://img.shields.io/npm/dm/babel-plugin-jsx-sfc.svg" alt="NPM Downloads"></a>                                                                                                        |
-| [vite-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/vite-plugin-jsx-sfc)   | <a href="https://www.npmjs.org/package/vite-plugin-jsx-sfc"><img src="https://img.shields.io/npm/v/vite-plugin-jsx-sfc.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/vite-plugin-jsx-sfc"><img src="https://img.shields.io/npm/dm/vite-plugin-jsx-sfc.svg" alt="NPM Downloads"></a>                                                                                                            |
-| [jsx-sfc.macro](https://github.com/joe-sky/jsx-sfc/tree/main/packages/jsx-sfc.macro)               | <a href="https://www.npmjs.org/package/jsx-sfc.macro"><img src="https://img.shields.io/npm/v/jsx-sfc.macro.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/jsx-sfc.macro"><img src="https://img.shields.io/npm/dm/jsx-sfc.macro.svg" alt="NPM Downloads"></a>                                                                                                                                    |
-| [use-templates](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-templates)               | <a href="https://www.npmjs.org/package/use-templates"><img src="https://img.shields.io/npm/v/use-templates.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/use-templates"><img src="https://img.shields.io/npm/dm/use-templates.svg" alt="NPM Downloads"></a>                                                                                                                                    |
+| Package                                                                                            | Badges                                                                                                                                                                                                                                                                                                                                                                                                              | Supported frameworks |
+| -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
+| [jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/jsx-sfc)                           | <a href="https://www.npmjs.org/package/jsx-sfc"><img src="https://img.shields.io/npm/v/jsx-sfc.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/jsx-sfc"><img src="https://img.shields.io/npm/dm/jsx-sfc.svg" alt="NPM Downloads"></a> <a href="https://bundlephobia.com/result?p=jsx-sfc"><img src="https://img.shields.io/bundlephobia/minzip/jsx-sfc.svg?style=flat" alt="Minzipped Size"></a> | React                |
+| [babel-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/babel-plugin-jsx-sfc) | <a href="https://www.npmjs.org/package/babel-plugin-jsx-sfc"><img src="https://img.shields.io/npm/v/babel-plugin-jsx-sfc.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/babel-plugin-jsx-sfc"><img src="https://img.shields.io/npm/dm/babel-plugin-jsx-sfc.svg" alt="NPM Downloads"></a>                                                                                                        | React                |
+| [vite-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/vite-plugin-jsx-sfc)   | <a href="https://www.npmjs.org/package/vite-plugin-jsx-sfc"><img src="https://img.shields.io/npm/v/vite-plugin-jsx-sfc.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/vite-plugin-jsx-sfc"><img src="https://img.shields.io/npm/dm/vite-plugin-jsx-sfc.svg" alt="NPM Downloads"></a>                                                                                                            | React                |
+| [jsx-sfc.macro](https://github.com/joe-sky/jsx-sfc/tree/main/packages/jsx-sfc.macro)               | <a href="https://www.npmjs.org/package/jsx-sfc.macro"><img src="https://img.shields.io/npm/v/jsx-sfc.macro.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/jsx-sfc.macro"><img src="https://img.shields.io/npm/dm/jsx-sfc.macro.svg" alt="NPM Downloads"></a>                                                                                                                                    | React                |
+| [use-templates](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-templates)               | <a href="https://www.npmjs.org/package/use-templates"><img src="https://img.shields.io/npm/v/use-templates.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/use-templates"><img src="https://img.shields.io/npm/dm/use-templates.svg" alt="NPM Downloads"></a>                                                                                                                                    | React & Vue(v3)      |
 
 ## Introduction
 
-`jsx-sfc`(JSX Separate Function Components) is a tiny JSX/TSX toolkit(<1kb minimum) for create React function components with **separation of concerns**. It can be seen as a JSX/TSX syntax or type tool, very simple to use🧙🏼‍♂️.
+`jsx-sfc`(JSX Separate Function Components) is a tiny JSX/TSX toolkit(<1kb minimum) for create functional components with **separation of concerns**. It can be seen as JSX/TSX syntax or type tools, very simple to use🧙🏼‍♂️.
 
 <!-- > Currently version is v1.0.0-alpha.x, the v1 version and full documentation will be completed soon. -->
 
@@ -74,7 +74,7 @@
 - [API Design Principle](#api-design-principle)
 - [Roadmap](#roadmap)
   - [Optimize runtime size](#optimize-runtime-size)
-  - [Support Vue v3](#support-vue-v3)
+    <!-- - [Support Vue v3](#support-vue-v3) -->
   - [Add hooks syntax](#add-hooks-syntax)
 - [Who is using](#who-is-using)
 
@@ -1208,7 +1208,7 @@ The compiled code of `jsx-sfc` has a few optimization space yet, which can conti
 
 If better syntax implementation details are found and if they're not compatible with v1.0 syntax, I will summarize them and arrange them to v2.0 implementation.
 
-### Support Vue v3
+<!-- ### Support Vue v3
 
 After a preliminary study, the `jsx-sfc for Vue v3` version can basically be implemented, which is roughly the following syntax:
 
@@ -1268,17 +1268,17 @@ const App = defineComponent(() => {
 
 It can be predicted that there will inevitably be problems in the process of implementation, and I will continue to try in the near future.
 
-> The biggest difficulty lies in the processing of TS type. The return value [type of defineComponent API](https://github.com/vuejs/vue-next/blob/master/packages/runtime-core/src/apiDefineComponent.ts) is much more complex than React, and some types are not exported from Vue package.
+> The biggest difficulty lies in the processing of TS type. The return value [type of defineComponent API](https://github.com/vuejs/vue-next/blob/master/packages/runtime-core/src/apiDefineComponent.ts) is much more complex than React, and some types are not exported from Vue package. -->
 
 ### Add hooks syntax
 
-These are currently being experimented. With hooks, they will be easier to integrate the concept of `separation of concerns` into the existing JSX based function component development. I will sort out the relevant documentation soon:
+These are currently being experimented. With hooks, they will be easier to integrate the concept of `separation of concerns` into the existing JSX based functional component development. I will sort out the relevant documentation soon:
 
-- [use-view-data](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-view-data) (Has been implemented in React)
+- [use-view-data](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-view-data) (Has been implemented in React, APIs are not sure yet)
 
-- [use-templates](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-templates) (Has been implemented in React/Vue3)
+- [use-templates](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-templates) (Has been implemented in React/Vue v3)
 
-Moreover, at present Vue composition API can also support syntax similar to hooks, so I will also consider developing Vue version, and this process should not be too difficult.
+<!-- Moreover, at present Vue composition API can also support syntax similar to hooks, so I will also consider developing Vue version, and this process should not be too difficult. -->
 
 ## Change Logs
 
