@@ -25,15 +25,15 @@
 
 ## Introduction
 
-`jsx-sfc`(JSX Separate Function Components) is a tiny JSX/TSX toolkit(<1kb minimum) for create functional components with **separation of concerns**. It can be seen as JSX/TSX syntax or type tools, very simple to use🧙🏼‍♂️.
-
-<!-- > Currently version is v1.0.0-alpha.x, the v1 version and full documentation will be completed soon. -->
+`jsx-sfc`(JSX Separate Function Components) is a tiny toolkit(<1kb minimum) for create JSX based functional components with **separation of concerns**. It can be seen as JSX/TSX syntax or type tools, very simple to use🧙🏼‍♂️.
 
 [Live Demo is here](https://codesandbox.io/s/jsx-sfc-demo-wwgd4) (Experience **Typings/Hot reloading/Dev tools** by Codesandbox).
 
 <!-- [Live Demo is here.](https://codesandbox.io/s/jsx-sfc-demo-jr2z0?file=/src/App.tsx) -->
 
-> I'm sorting out the hooks syntax tools for separation of concerns: [use-templates](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-templates) and [use-view-data](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-view-data), they can be used with jsx-sfc or alone. Now it's experimenting in the actual project.
+<!-- > I'm sorting out the hooks syntax tools for separation of concerns: [use-templates](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-templates) and [use-view-data](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-view-data), they can be used with jsx-sfc or alone. Now it's experimenting in the actual project. -->
+
+> The v1.3 version will be released soon. There are some new features and documentation to be completed.
 
 ## Features
 
@@ -61,7 +61,7 @@
 - [Benefits](#benefits)
   - [Clearer visual isolation](#clearer-visual-isolation)
   - [Better single file experience](#better-single-file-experience)
-    <!-- - [Exportable internal member types](#exportable-internal-member-types) -->
+  - [Exportable internal state types](#exportable-internal-state-types)
 - [Installation](#installation)
   - [Using with Babel](#using-with-babel)
   - [Using with Vite](#using-with-vite)
@@ -70,7 +70,8 @@
   - [`sfc`](#sfc)
   - [`sfc.forwardRef`](#sfcforwardRef)
   - [Sub Templates](#sub-templates)
-  - [Extension options](#extension-options)
+  - [Options](#options)
+  - [Extensions](#extensions)
   - [Export static members](#export-static-members)
 - [API Design Principle](#api-design-principle)
 - [Roadmap](#roadmap)
@@ -81,15 +82,15 @@
 
 ## Motivation
 
-On the whole, my goal is to create a toolkit with similar syntax and useful structure for the scenario of using JSX to develop function components, according to the `mental model of single file components like Vue/Svelte/Marko`.
+On the whole, the goal of this project is to create a toolkit with similar syntax and useful structure for the scenario of using JSX to develop functional components, according to the `mental model of single file components like Vue/Svelte/Marko`.
 
-If you are already familiar with the similar Vue SFCs development model, you will find the syntax of this project so intuitive~
+If you are already familiar with the similar SFCs development mode and understand the advantages, you will find the syntax of this project so intuitive~ Of course, in addition to the syntax structure similar to SFCs, this project will also provide some additional benefits, which will be explained later.
 
-> I will continue to refine and summarize the comparison and pattern between this project and regular function components in the development of actual projects, and try to release it in the near future.
+<!-- > I will continue to refine and summarize the comparison and pattern between this project and regular function components in the development of actual projects, and try to release it in the near future. -->
 
 ## Inspiration
 
-This project was originally inspired by [Vue Single File Components](https://vuejs.org/v2/guide/single-file-components.html). The point of Vue SFCs has been recognized by many people:
+This project was originally inspired by [Single File Components](https://vuejs.org/v2/guide/single-file-components.html). The point of SFCs has been recognized by many people:
 
 > Inside a component, it's template, logic and styles are inherently coupled, and collocating them actually makes the component more cohesive and maintainable.
 
@@ -98,7 +99,7 @@ However, the **separation of concerns** idea is very rare in the JSX(React) envi
 - [one-loader](https://github.com/digitalie/one-loader)
 - [react-sfc-swyx](https://github.com/react-sfc/react-sfc-swyx)
 
-Overall, the above two solutions are to create a new file type for React to implement the idea similar to Vue SFCs. But the idea of this project is quite different from the above implementations:
+Overall, the above two solutions are to create a new file type for React to implement the idea similar to SFCs. But the idea of this project is quite different from the above implementations:
 
 _Considering that the original design principle of JSX is a syntax extension of the existing JavaScript, so I want to create a new SFC solution that is more accord with the existing JSX(React) development habits._
 
@@ -108,13 +109,13 @@ Since the birth of react hooks, function component has been the main way to writ
 
 So I named it:
 
-`Separate Function Components` (npm package named `jsx-sfc`, abbreviated as SFC also 😃)
+`Separate Function Components` (npm package named `jsx-sfc`, abbreviated as SFC also)
 
 It's implementation makes full use of **TypeScript generic inference**, and support the use of all React existing tool chains(e.g. CSS-in-JS/Eslint/HMR).
 
-> Why not named react-sfc? In fact, the npm package name of react-sfc has been occupied([react-sfc-swyx](https://github.com/react-sfc/react-sfc-swyx)).
+> Why not named react-sfc? In fact, the npm package name of react-sfc has been occupied([react-sfc-swyx](https://github.com/react-sfc/react-sfc-swyx)). But more importantly, the idea of this project can be extended to other frameworks that support JSX(e.g. using JSX in Vue).
 
-A simple demo, when we write a function component module like this:
+A simple demo, when we write a React function component module(with CSS-in-JS) like this:
 
 ```tsx
 import React, { useState, useEffect } from 'react';
@@ -178,7 +179,29 @@ const App = sfc({
 });
 ```
 
-Such this component structure at first glance, we can immediately distinguish the responsibilities of each part of the code~
+Such this component structure at first glance, we can immediately distinguish the responsibilities of each part of the code. From this syntax structure, we can easily extract the TS type of internal state of a component, like this:
+
+```tsx
+import sfc, { ViewDataType } from 'jsx-sfc';
+
+const App = sfc({
+  template: ({ data }) => <AddCount parent={data} />,
+
+  Component() {
+    const [count, setCount] = useState({ value: 0 });
+    return { count, setCount };
+  }
+});
+
+type Data = ViewDataType<typeof App>;
+
+const AddCount: React.FC<{ parent: Data }> = ({ parent: { count, setCount } }) => (
+  // Note that TS can easily infer the internal state type of the parent component in the child component, even very complex types.
+  <button onClick={() => setCount({ value: count.value + 1 })}>Add count</button>
+);
+```
+
+[See here for specific advantages compared with regular components.](#benefits)
 
 ### Adapting Eslint Plugin
 
@@ -368,8 +391,8 @@ const QueryForm = sfc({
 
       <Template>
         {() => {
-          const typesData = types.template();
-          const statusData = status.template();
+          const typesData = types.render();
+          const statusData = status.render();
 
           if (typesData.length < 1) {
             return <div className="empty">No type data</div>;
@@ -589,9 +612,9 @@ As you can see, we can **organize codes with component granularity** to achieve 
 
 When we organize component codes, we often have to divide them into multiple files, and sometimes the file switching action will cause a little upset. At this time, `jsx-sfc` can help you make this scene much easier. **We can still organize the code clearly even without a lot of fragmented files** 😊.
 
-<!-- ### Exportable internal member types
+### Exportable internal state types
 
-> Documentation to be completed. -->
+> Documentation to be completed.
 
 ## Installation
 
@@ -669,14 +692,15 @@ import sfc from 'jsx-sfc.macro';
 - Type definition of `sfc`
 
 ```ts
-function sfc<Props, ViewData, Styles, EX>(
+function sfc<Props, ViewData, Styles, OP, EX>(
   options: {
-    template?: (args: { data: ViewData; styles: Styles } & EX, ...tmpls: Template.Func[]) => JSX.Element;
+    template?: (args: { data: ViewData; styles: Styles } & OP & EX, ...tmpls: Template.Func[]) => JSX.Element;
     Component: (props?: Props & Styles & EX & { originalProps: Props }) => ViewData;
     styles?: Styles;
+    options?: OP;
   },
   extensions?: EX
-): React.FC<Props> & { template: (data?: ViewData), Component: React.FC<Props> } & Styles & EX;
+): React.FC<Props> & { template: (data?: ViewData), Component: React.FC<Props> } & Styles & OP & EX;
 ```
 
 Only a symbolic type definition is put here for API documentation, there are many differences in the actual implementation. [Actual type definition is here.](https://github.com/joe-sky/jsx-sfc/blob/main/packages/jsx-sfc/src/defineComponent.ts)
@@ -905,7 +929,7 @@ import styled from 'styled-components';
 import sfc, { Template } from 'jsx-sfc';
 
 const App = sfc({
-  template: ({ data, styles: { Wrapper } }, btn, text: Template.Func<number>) => (
+  template: ({ data, styles: { Wrapper } }, btn, text: Template.Render<number>) => (
     <>
       <Template name={btn}>{() => <button onClick={data.onClick}>{data.user}</button>}</Template>
 
@@ -913,8 +937,8 @@ const App = sfc({
 
       <Template>
         <Wrapper>
-          {btn.template()}
-          {[1, 2, 3].map(num => text.template(num))}
+          {btn.render()}
+          {[1, 2, 3].map(num => text.render(num))}
         </Wrapper>
       </Template>
     </>
@@ -954,8 +978,8 @@ const App = sfc({
       <Template>
         {() => (
           <section>
-            {tmpl1.template()}
-            {tmpl2.template()}
+            {tmpl1.render()}
+            {tmpl2.render()}
           </section>
         )}
       </Template>
@@ -968,7 +992,7 @@ const App = sfc({
 
 ```tsx
 {
-  template: ({ data }, header: Template.Func<string, number>) => (
+  template: ({ data }, header: Template.Render<string, number>) => (
     <>
       <Template name={header}>
         {(title, count) => (
@@ -981,7 +1005,7 @@ const App = sfc({
       <Template>
         {() => (
           <section>
-            {header.template('posts', 100)}
+            {header.render('posts', 100)}
             <div>body</div>
           </section>
         )}
@@ -993,7 +1017,11 @@ const App = sfc({
 
 We can use sub template syntax to continue to separate the responsibilities of JSX tags, [see here for the specific benefits of sub templates.](#clearer-visual-isolation)
 
-### Extension options
+### Options
+
+> Documentation to be completed.
+
+### Extensions
 
 Except template and styles, other extensions for `jsx-sfc` components are also supported:
 
