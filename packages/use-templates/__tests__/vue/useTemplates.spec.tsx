@@ -27,14 +27,20 @@ const Nav = defineComponent({
         </Template>
 
         <Template name={admin}>
-          {() => (
-            <>
-              <a id="admin" href={props.adminHref}>
-                Admin{state.count}
-              </a>
-              <button onClick={() => state.count++}>add count</button>
-            </>
-          )}
+          {() => {
+            function onClick() {
+              state.count++;
+            }
+
+            return (
+              <>
+                <a id="admin" href={props.adminHref}>
+                  Admin{state.count}
+                </a>
+                <button onClick={onClick}>add count</button>
+              </>
+            );
+          }}
         </Template>
 
         <Template>

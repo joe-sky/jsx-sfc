@@ -13,7 +13,7 @@ let config;
 if (type !== 'dts') {
   config = {
     input: './src/index.ts',
-    output: { name: 'JsxSFC' },
+    output: { name: 'UseViewData' },
     plugins: [
       esbuild({
         include: /\.[jt]sx?$/, // default, inferred from `loaders` option

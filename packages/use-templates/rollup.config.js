@@ -8,12 +8,14 @@ import copy from 'rollup-plugin-copy';
 
 const env = process.env.NODE_ENV;
 const type = process.env.TYPE;
+const ver = process.env.VER;
 let config;
 
 if (type !== 'dts') {
   config = {
-    input: './src/index.ts',
-    output: { name: 'JsxSFC' },
+    input: ver !== 'vue' ? './src/index.ts' : './src/vue/index.ts',
+    output: { name: 'UseTemplates' },
+    external: ['vue'],
     plugins: [
       esbuild({
         include: /\.[jt]sx?$/, // default, inferred from `loaders` option
@@ -65,8 +67,8 @@ if (type !== 'dts') {
       copy({
         targets: [
           {
-            src: 'types/dist.definition.ts',
-            dest: 'dist',
+            src: `${ver === 'vue' ? 'vue/' : ''}types/dist.definition.ts`,
+            dest: `${ver === 'vue' ? 'vue/' : ''}dist`,
             rename: `${env === 'cjs' ? 'use-templates.common' : 'use-templates.esm'}.d.ts`
           }
         ]
@@ -75,7 +77,7 @@ if (type !== 'dts') {
   }
 } else {
   config = {
-    input: './src/index.ts',
+    input: ver !== 'vue' ? './src/index.ts' : './src/vue/index.ts',
     output: { format: 'es' },
     plugins: [dts()]
   };

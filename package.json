@@ -10,7 +10,7 @@
     "packages/use-templates"
   ],
   "version": "1.3.0-alpha.4",
-  "description": "A tiny tool for create React function components with Separation of Concerns and completely Type Inference.",
+  "description": "A tiny JSX/TSX toolkit that help you to create React/Vue function components with Separation of Concerns.",
   "scripts": {
     "build": "lerna run build",
     "test": "yarn run jest:clear && jest --config=test/jest.config.compile.js",

@@ -6,6 +6,20 @@
   "module": "dist/use-templates.esm.js",
   "unpkg": "dist/use-templates.js",
   "jsdelivr": "dist/use-templates.js",
+  "exports": {
+    ".": {
+      "import": "./dist/use-templates.esm.js",
+      "require": "./dist/use-templates.common.js",
+      "node": "./dist/use-templates.common.js",
+      "default": "./dist/use-templates.js"
+    },
+    "./vue": {
+      "import": "./vue/dist/use-templates.esm.js",
+      "require": "./vue/dist/use-templates.common.js",
+      "node": "./vue/dist/use-templates.common.js",
+      "default": "./vue/dist/use-templates.js"
+    }
+  },
   "files": [
     "dist/",
     "lib/",
@@ -18,9 +32,14 @@
     "esm": "cross-env NODE_ENV=es rollup -c -o dist/use-templates.esm.js",
     "umd": "cross-env NODE_ENV=development rollup -c -o dist/use-templates.js",
     "min": "cross-env NODE_ENV=production rollup -c -o dist/use-templates.min.js",
-    "lib": "babel src --out-dir lib --extensions \".js,.jsx,.ts,.tsx\" --config-file \"../../.babelrc\"",
     "dts": "cross-env TYPE=dts NODE_ENV=es rollup -c -o types/use-templates.d.ts",
-    "build": "yarn run cjs && yarn run esm && yarn run umd && yarn run min && yarn run lib && yarn run dts"
+    "cjs:vue": "cross-env NODE_ENV=cjs VER=vue rollup -c -o vue/dist/use-templates.common.js",
+    "esm:vue": "cross-env NODE_ENV=es VER=vue rollup -c -o vue/dist/use-templates.esm.js",
+    "umd:vue": "cross-env NODE_ENV=development VER=vue rollup -c -o vue/dist/use-templates.js",
+    "min:vue": "cross-env NODE_ENV=production VER=vue rollup -c -o vue/dist/use-templates.min.js",
+    "dts:vue": "cross-env TYPE=dts NODE_ENV=es VER=vue rollup -c -o vue/types/use-templates.d.ts",
+    "lib": "babel src --out-dir lib --extensions \".js,.jsx,.ts,.tsx\" --config-file \"../../.babelrc\"",
+    "build": "yarn run cjs && yarn run cjs:vue && yarn run esm && yarn run esm:vue && yarn run umd && yarn run umd:vue && yarn run min && yarn run min:vue && yarn run lib && yarn run dts && yarn run dts:vue"
   },
   "repository": {
     "type": "git",
