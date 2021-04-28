@@ -21,6 +21,7 @@
 | [vite-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/vite-plugin-jsx-sfc)   | <a href="https://www.npmjs.org/package/vite-plugin-jsx-sfc"><img src="https://img.shields.io/npm/v/vite-plugin-jsx-sfc.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/vite-plugin-jsx-sfc"><img src="https://img.shields.io/npm/dm/vite-plugin-jsx-sfc.svg" alt="NPM Downloads"></a>                                                                                                            | React                |
 | [jsx-sfc.macro](https://github.com/joe-sky/jsx-sfc/tree/main/packages/jsx-sfc.macro)               | <a href="https://www.npmjs.org/package/jsx-sfc.macro"><img src="https://img.shields.io/npm/v/jsx-sfc.macro.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/jsx-sfc.macro"><img src="https://img.shields.io/npm/dm/jsx-sfc.macro.svg" alt="NPM Downloads"></a>                                                                                                                                    | React                |
 | [use-templates](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-templates)               | <a href="https://www.npmjs.org/package/use-templates"><img src="https://img.shields.io/npm/v/use-templates.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/use-templates"><img src="https://img.shields.io/npm/dm/use-templates.svg" alt="NPM Downloads"></a>                                                                                                                                    | React & Vue(v3)      |
+| [use-view-data](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-view-data)               | <a href="https://www.npmjs.org/package/use-view-data"><img src="https://img.shields.io/npm/v/use-view-data.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/use-view-data"><img src="https://img.shields.io/npm/dm/use-view-data.svg" alt="NPM Downloads"></a>                                                                                                                                    | React                |
 
 ## Introduction
 
@@ -32,7 +33,7 @@
 
 <!-- [Live Demo is here.](https://codesandbox.io/s/jsx-sfc-demo-jr2z0?file=/src/App.tsx) -->
 
-> I'm sorting out the hooks syntax tools for separation of concerns: [use-view-data](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-view-data) and [use-templates](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-templates), they can be used with jsx-sfc or alone. Now it's experimenting in the actual project.
+> I'm sorting out the hooks syntax tools for separation of concerns: [use-templates](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-templates) and [use-view-data](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-view-data), they can be used with jsx-sfc or alone. Now it's experimenting in the actual project.
 
 ## Features
 
@@ -1274,11 +1275,11 @@ It can be predicted that there will inevitably be problems in the process of imp
 
 These are currently being experimented. With hooks, they will be easier to integrate the concept of `separation of concerns` into the existing JSX based functional component development. I will sort out the relevant documentation soon:
 
-- [use-view-data](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-view-data) (Has been implemented in React, APIs are not sure yet)
+- [use-templates](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-templates)
 
-- [use-templates](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-templates) (Has been implemented in React/Vue v3)
+- [use-view-data](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-view-data)
 
-<!-- Moreover, at present Vue composition API can also support syntax similar to hooks, so I will also consider developing Vue version, and this process should not be too difficult. -->
+Moreover, at present Vue composition API can also support syntax similar to hooks, so I will also consider developing Vue version, and this process should not be too difficult.
 
 ## Change Logs
 

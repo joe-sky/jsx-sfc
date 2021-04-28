@@ -12,4 +12,49 @@
 
 - [Must-Know Reusable Module Vs Component In Vue 3 Composition API](https://softauthor.com/vuejs-composition-api-reusable-module-vs-component)
 
+## Installation
+
+```bash
+npm install use-templates
+```
+
+## Usage
+
+The following code can pass the internal TS type of the parent component to the child component:
+
+```tsx
+import { useState, useEffect } from 'react';
+import { createUseViewData, ViewDataType } from 'use-view-data';
+
+interface AppProps {
+  title: string;
+}
+
+type Data = ViewDataType<typeof useViewData>;
+
+const useViewData = createUseViewData<AppProps>()(props => {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    console.log('Mounted!');
+  }, []);
+
+  return {
+    props,
+    count,
+    setCount
+  };
+});
+
+const App: React.FC<AppProps> = props => {
+  const data = useViewData(props);
+
+  return <AddCount parent={data} />;
+};
+
+const AddCount: React.FC<{ parent: Data }> = props => {
+  return <div onClick={() => parent.setCount(parent.count + 1)}>Add</div>;
+};
+```
+
 > Documentation to be completed
