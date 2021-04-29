@@ -4,13 +4,15 @@
 
 ## Introduction
 
-`useViewData` is a tiny TS type tool for create React function components with **separation of concerns**. It's just to describe a function component development pattern, you can also not import it☄️.
+`useViewData` is a tiny TS type tool for create React function components with **separation of concerns**. It's just to describe a function component development pattern, you can also not import it.
 
 ## Community articles with similar or related ideas
 
 - [Separation of concerns with custom React hooks](https://dev.to/areknawo/separation-of-concerns-with-custom-react-hooks-3aoe)
 
 - [Must-Know Reusable Module Vs Component In Vue 3 Composition API](https://softauthor.com/vuejs-composition-api-reusable-module-vs-component)
+
+- [Function-based component API extended discussion in RFCs of Vue](https://github.com/vuejs/rfcs/issues/55)
 
 ## Installation
 
@@ -53,6 +55,7 @@ const App: React.FC<AppProps> = props => {
 };
 
 const AddCount: React.FC<{ parent: Data }> = props => {
+  // Note that TS can easily infer the internal state type of the parent component in the child component, even very complex types.
   return <div onClick={() => parent.setCount(parent.count + 1)}>Add</div>;
 };
 ```

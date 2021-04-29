@@ -33,7 +33,7 @@
 
 <!-- > I'm sorting out the hooks syntax tools for separation of concerns: [use-templates](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-templates) and [use-view-data](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-view-data), they can be used with jsx-sfc or alone. Now it's experimenting in the actual project. -->
 
-> The v1.3 version will be released soon. There are some new features and documentation to be completed.
+> The v1.3 version will be released soon, there are some new features and documentation to be completed. There is no breaking API change this time, but this version will include the more in-depth reflections on the problems that this project solves.
 
 ## Features
 
@@ -84,7 +84,7 @@
 
 On the whole, the goal of this project is to create a toolkit with similar syntax and useful structure for the scenario of using JSX to develop functional components, according to the `mental model of single file components like Vue/Svelte/Marko`.
 
-If you are already familiar with the similar SFCs development mode and understand the advantages, you will find the syntax of this project so intuitive~ Of course, in addition to the syntax structure similar to SFCs, this project will also provide some additional benefits, which will be explained later.
+If you are already familiar with the similar SFCs development mode and understand the advantages, you will find the syntax of this project so intuitive~ Of course, in addition to the syntax structure similar to SFCs, this project will also provide some additional benefits, which will be explained below.
 
 <!-- > I will continue to refine and summarize the comparison and pattern between this project and regular function components in the development of actual projects, and try to release it in the near future. -->
 
