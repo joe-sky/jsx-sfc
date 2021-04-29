@@ -68,7 +68,7 @@ declare type DefineComponent<Ref = NoRef, Props = {}, ReturnComponent = Ref exte
          * });
          * ```
          */
-        Component: Ref extends NoRef ? (props: SFCProps<Props, FR>, context?: any) => Data : (props: SFCProps<Props, FR>, ref?: React.Ref<Ref>) => Data;
+        Component: Ref extends NoRef ? (props: SFCProps<Props, FR>, context?: any) => Data : (props: SFCProps<Props, FR>, ref: React.Ref<Ref>) => Data;
         /**
          * Using the `template function` to return JSX elements, example:
          * ```tsx
@@ -109,12 +109,12 @@ declare type DefineComponent<Ref = NoRef, Props = {}, ReturnComponent = Ref exte
          * });
          * ```
          */
-        Component: Ref extends NoRef ? (props: SFCProps<Props, FR>, context?: any) => JSXElements : (props: SFCProps<Props, FR>, ref?: React.Ref<Ref>) => JSXElements;
+        Component: Ref extends NoRef ? (props: SFCProps<Props, FR>, context?: any) => JSXElements : (props: SFCProps<Props, FR>, ref: React.Ref<Ref>) => JSXElements;
         options?: OP;
     }, extensions?: EX): ReturnComponent & Origin & {
         styles: InferStyles;
     } & ExtractOptions<OP> & ExtractOptions<EX>;
-    <InferEX extends ExtractOptions<EX>, EX = {}>(component: Ref extends NoRef ? (props: SFCProps<Props, InferEX>, context?: any) => JSXElements : (props: SFCProps<Props, InferEX>, ref?: React.Ref<Ref>) => JSXElements, extensions?: EX): ReturnComponent & Origin & ExtractOptions<EX>;
+    <InferEX extends ExtractOptions<EX>, EX = {}>(component: Ref extends NoRef ? (props: SFCProps<Props, InferEX>, context?: any) => JSXElements : (props: SFCProps<Props, InferEX>, ref: React.Ref<Ref>) => JSXElements, extensions?: EX): ReturnComponent & Origin & ExtractOptions<EX>;
 };
 interface ForwardRefSFC<Ref = unknown> extends DefineComponent<Ref> {
     <Ref = unknown, Props = {}>(): DefineComponent<Ref, Props>;

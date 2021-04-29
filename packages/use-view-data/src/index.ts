@@ -1,20 +1,33 @@
-type ViewData = Record<string, unknown>;
+import { Func, NoRef } from './utils';
+import { ViewData } from './viewData';
 
-export type ViewDataType<H> = H extends (...args: any) => infer R ? (R extends ViewData ? Partial<R> : never) : never;
-
-type CreateUseViewDataFunc<P = {}> = <H extends (props?: React.PropsWithChildren<P>, ...args: unknown[]) => ViewData>(
+export type CreateUseViewDataFunc<Ref = NoRef, P = {}> = <
+  H extends Ref extends NoRef
+    ? (props: React.PropsWithChildren<P>, ...args: any) => ViewData
+    : (props: React.PropsWithChildren<P>, ref?: React.Ref<Ref>, ...args: any) => ViewData
+>(
   hook: H
 ) => H;
 
-interface CreateUseViewData extends CreateUseViewDataFunc {
-  <P = {}>(): CreateUseViewDataFunc<P>;
+export interface CreateForwardRefUseViewData<Ref = unknown> extends CreateUseViewDataFunc<Ref> {
+  <Ref = unknown, P = {}>(): CreateUseViewDataFunc<Ref, P>;
 }
 
-type HookFunc = (...args: any) => any;
+export interface CreateUseViewData extends CreateUseViewDataFunc {
+  <P = {}>(): CreateUseViewDataFunc<NoRef, P>;
+  forwardRef: CreateForwardRefUseViewData;
+}
 
-function setUseViewDataHookName(hook: HookFunc) {
+function setUseViewDataHookName(hook: Func) {
   return hook.name ? hook : Object.defineProperty(hook, 'name', { value: 'useViewData' });
 }
 
-export const createUseViewData: CreateUseViewData = (hook?: HookFunc) =>
-  hook ? setUseViewDataHookName(hook) : (hook: HookFunc) => setUseViewDataHookName(hook);
+function createHookFunc() {
+  return (hook?: Func) => (hook ? setUseViewDataHookName(hook) : (hook: Func) => setUseViewDataHookName(hook));
+}
+
+export const createUseViewData: CreateUseViewData = Object.assign(createHookFunc(), {
+  forwardRef: createHookFunc()
+}) as any;
+
+export * from './viewData';

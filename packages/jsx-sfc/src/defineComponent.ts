@@ -47,7 +47,7 @@ export type DefineComponent<
        */
       Component: Ref extends NoRef
         ? (props: SFCProps<Props, FR>, context?: any) => Data
-        : (props: SFCProps<Props, FR>, ref?: React.Ref<Ref>) => Data;
+        : (props: SFCProps<Props, FR>, ref: React.Ref<Ref>) => Data;
       /**
        * Using the `template function` to return JSX elements, example:
        * ```tsx
@@ -101,7 +101,7 @@ export type DefineComponent<
        */
       Component: Ref extends NoRef
         ? (props: SFCProps<Props, FR>, context?: any) => JSXElements
-        : (props: SFCProps<Props, FR>, ref?: React.Ref<Ref>) => JSXElements;
+        : (props: SFCProps<Props, FR>, ref: React.Ref<Ref>) => JSXElements;
 
       options?: OP;
     },
@@ -111,7 +111,7 @@ export type DefineComponent<
   <InferEX extends ExtractOptions<EX>, EX = {}>(
     component: Ref extends NoRef
       ? (props: SFCProps<Props, InferEX>, context?: any) => JSXElements
-      : (props: SFCProps<Props, InferEX>, ref?: React.Ref<Ref>) => JSXElements,
+      : (props: SFCProps<Props, InferEX>, ref: React.Ref<Ref>) => JSXElements,
     extensions?: EX
   ): ReturnComponent & Origin & ExtractOptions<EX>;
 };
