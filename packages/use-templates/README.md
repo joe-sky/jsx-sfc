@@ -4,11 +4,199 @@
 
 ## Introduction
 
-`use-templates` is a tiny custom hook for render JSX tags of components with **separation of concerns**.
+`use-templates` is a tiny custom hook for render JSX tags of functional components with **separation of concerns**.
 
 ## Features
 
-- 🚀 No any dependencies
+- ✨ Tiny size, only ~600b and no any dependencies
+- 💫 Clear syntax design based on JSX and render props pattern
+- 🌟 Support rendering JSX by blocks, each block can have its own business logic
+
+## Motivation
+
+When we write function components, we are used to extracting some logic independently as inline functions according to the division of responsibilities. This includes various event handlers for UI components, as well as some reusable rendering logic with JSX. For example:
+
+```tsx
+const QueryForm: React.FC = () => {
+  const store = useStore();
+
+  function renderOptions(list: Item[]) {
+    return list.map((item, index) => (
+      <Option key={index} value={item.value} label={item.label}>
+        {item.label}
+      </Option>
+    ));
+  }
+
+  const typesData = renderOptions(store.typeList);
+  const statusData = renderOptions(store.statusList);
+
+  if (typesData.length < 1) {
+    return <div className="empty">No type data</div>;
+  } else if (statusData.length < 1) {
+    return <div className="empty">No status data</div>;
+  }
+
+  function onQuery() {
+    store.setPaginationItem({ pageNum: 1 });
+    store.getList();
+  }
+
+  useEffect(() => {
+    onQuery();
+  }, []);
+
+  function onTypeChange(value: number) {
+    store.setQueryFormItem({ type: value });
+  }
+
+  function onStatusChange(value: number) {
+    store.setQueryFormItem({ status: value });
+  }
+
+  function onReset() {
+    store.resetQueryForm();
+  }
+
+  return (
+    <div>
+      <Row className="item-list">
+        <Col span={8}>
+          <Select value={store.queryForm.type} onChange={onTypeChange}>
+            {typesData}
+          </Select>
+        </Col>
+        <Col span={8}>
+          <Select value={store.queryForm.status} onChange={onStatusChange}>
+            {statusData}
+          </Select>
+        </Col>
+      </Row>
+      <div className="item-buttons">
+        <Button onClick={onQuery}>Search</Button>
+        <Button onClick={onReset}>Reset</Button>
+      </div>
+    </div>
+  );
+};
+```
+
+Let's look at the above code and you can see that there are several potential problems that may be optimized:
+
+- All the logic codes before the return statement of the component are mixed together, and they have no clear categories;
+
+- The part of JSX before the return statement is mixed with the logic code, which seems a bit confusing;
+
+- All the event handlers, we need to name them individually.
+
+These potential problems are more obvious when we develop components with more code. Even if we use custom hooks to extract the logic code out of the component function, we can not solve these problems perfectly.
+
+So, the `use-templates` hook was created to solve the above problems. Let's rewrite the code:
+
+```tsx
+const QueryForm: React.FC = () => {
+  const store = useStore();
+
+  function onQuery() {
+    store.setPaginationItem({ pageNum: 1 });
+    store.getList();
+  }
+
+  useEffect(() => {
+    onQuery();
+  }, []);
+
+  return useTemplates(
+    (
+      renderOptions: Template.Render<Item[]>,
+      typeField: Template.Render<ReactNode[]>,
+      statusField: Template.Render<ReactNode[]>
+    ) => (
+      <>
+        <Template name={renderOptions}>
+          {list =>
+            list.map((item, index) => (
+              <Option key={index} value={item.value} label={item.label}>
+                {item.label}
+              </Option>
+            ))
+          }
+        </Template>
+
+        <Template name={typeField}>
+          {options => {
+            function onChange(value: number) {
+              store.setQueryFormItem({ type: value });
+            }
+
+            return (
+              <Col span={8}>
+                <Select value={store.queryForm.type} onChange={onChange}>
+                  {options}
+                </Select>
+              </Col>
+            );
+          }}
+        </Template>
+
+        <Template name={statusField}>
+          {options => {
+            function onChange(value: number) {
+              store.setQueryFormItem({ status: value });
+            }
+
+            return (
+              <Col span={8}>
+                <Select value={store.queryForm.status} onChange={onChange}>
+                  {options}
+                </Select>
+              </Col>
+            );
+          }}
+        </Template>
+
+        <Template>
+          {() => {
+            const typeOptions = renderOptions.render(store.typeList);
+            const statusOptions = renderOptions.render(store.statusList);
+
+            if (typeOptions.length < 1) {
+              return <div className="empty">No type data</div>;
+            } else if (statusOptions.length < 1) {
+              return <div className="empty">No status data</div>;
+            }
+
+            function onReset() {
+              store.resetQueryForm();
+            }
+
+            return (
+              <div>
+                <Row className="item-list">
+                  {typeField.render(typeOptions)}
+                  {statusField.render(statusOptions)}
+                </Row>
+                <div className="item-buttons">
+                  <Button onClick={onQuery}>Search</Button>
+                  <Button onClick={onReset}>Reset</Button>
+                </div>
+              </div>
+            );
+          }}
+        </Template>
+      </>
+    )
+  );
+};
+```
+
+We can see that:
+
+- After using `use templates`, we can plan the code in the function component according to the business logic and put the related logic together with the related JSX;
+
+- The business logic of each category is isolated in a separate template tag, and the code looks will be very clear. We just need to find the category name in the parameter of `use templates` and can find the template tag with the corresponding name property quickly;
+
+- Because each template tag has a separate scope, it's not necessary to pay too much attention to the naming of event handlers.
 
 ## Installation
 
