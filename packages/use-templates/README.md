@@ -4,13 +4,13 @@
 
 ## Introduction
 
-`use-templates` is a tiny custom hook for render JSX tags of functional components with **separation of concerns**.
+`use-templates` is a tiny custom hook for render JSX tags of functional components with **separation of concerns for view**.
 
 ## Features
 
 - ✨ Tiny size, only ~600b and no any dependencies
 - 💫 Clear syntax design based on JSX and render props pattern
-- 🌟 Support rendering JSX by blocks, each block can have its own business logic
+- 🌟 Support rendering JSX by blocks, each block can have its own logic codes([See here for details](#what-logic-code-is-suitable-for-separate-jsx-blocks))
 
 ## Motivation
 
@@ -197,6 +197,16 @@ We can see that:
 - The business logic of each category is isolated in a separate template tag, and the code looks will be very clear. We just need to find the category name in the parameter of `use templates` and can find the template tag with the corresponding name property quickly;
 
 - Because each template tag has a separate scope, it's not necessary to pay too much attention to the naming of event handlers.
+
+### What logic code is suitable for separate JSX blocks
+
+From the summary of daily development, there are the following categories:
+
+- Event handlers
+
+- Complex logic with JSX
+
+- Control flow statement with JSX
 
 ## Installation
 
