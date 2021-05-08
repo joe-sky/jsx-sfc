@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { act } from 'react-dom/test-utils';
 import { shallow, mount } from 'enzyme';
-import { createUseViewData, ViewDataType } from '../../src/index';
+import { createUseViewData, ViewDataType } from '../src/index';
 
 interface AppProps {
   title: string;

@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { act } from 'react-dom/test-utils';
 import { shallow, mount } from 'enzyme';
-import useTemplates, { Template } from '../../src/index';
+import useTemplates, { Template } from '../src/index';
 
 interface NavProps {
   profileHref: string;

@@ -20,12 +20,12 @@
 | [babel-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/babel-plugin-jsx-sfc) | <a href="https://www.npmjs.org/package/babel-plugin-jsx-sfc"><img src="https://img.shields.io/npm/v/babel-plugin-jsx-sfc.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/babel-plugin-jsx-sfc"><img src="https://img.shields.io/npm/dm/babel-plugin-jsx-sfc.svg" alt="NPM Downloads"></a>                                                                                                                                            | React                |
 | [vite-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/vite-plugin-jsx-sfc)   | <a href="https://www.npmjs.org/package/vite-plugin-jsx-sfc"><img src="https://img.shields.io/npm/v/vite-plugin-jsx-sfc.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/vite-plugin-jsx-sfc"><img src="https://img.shields.io/npm/dm/vite-plugin-jsx-sfc.svg" alt="NPM Downloads"></a>                                                                                                                                                | React                |
 | [jsx-sfc.macro](https://github.com/joe-sky/jsx-sfc/tree/main/packages/jsx-sfc.macro)               | <a href="https://www.npmjs.org/package/jsx-sfc.macro"><img src="https://img.shields.io/npm/v/jsx-sfc.macro.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/jsx-sfc.macro"><img src="https://img.shields.io/npm/dm/jsx-sfc.macro.svg" alt="NPM Downloads"></a>                                                                                                                                                                        | React                |
+| [use-view-data](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-view-data)               | <a href="https://www.npmjs.org/package/use-view-data"><img src="https://img.shields.io/npm/v/use-view-data.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/use-view-data"><img src="https://img.shields.io/npm/dm/use-view-data.svg" alt="NPM Downloads"></a> <a href="https://bundlephobia.com/result?p=use-view-data"><img src="https://img.shields.io/bundlephobia/minzip/use-view-data.svg?style=flat" alt="Minzipped Size"></a> | React                |
 | [use-templates](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-templates)               | <a href="https://www.npmjs.org/package/use-templates"><img src="https://img.shields.io/npm/v/use-templates.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/use-templates"><img src="https://img.shields.io/npm/dm/use-templates.svg" alt="NPM Downloads"></a> <a href="https://bundlephobia.com/result?p=use-templates"><img src="https://img.shields.io/bundlephobia/minzip/use-templates.svg?style=flat" alt="Minzipped Size"></a> | React / Vue(v3)      |
-| [use-view-data](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-view-data)               | <a href="https://www.npmjs.org/package/use-view-data"><img src="https://img.shields.io/npm/v/use-view-data.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/use-view-data"><img src="https://img.shields.io/npm/dm/use-view-data.svg" alt="NPM Downloads"></a> <a href="https://bundlephobia.com/result?p=use-view-data"><img src="https://img.shields.io/bundlephobia/minzip/use-view-data.svg?style=flat" alt="Minzipped Size"></a> | React / Vue(v3)      |
 
 ## Introduction
 
-`jsx-sfc`(JSX Separate Function Components) is a tiny toolkit(<1kb minimum) for create JSX based functional components with **separation of concerns**. It can be seen as JSX/TSX syntax or type tools, very simple to use🧙🏼‍♂️.
+`jsx-sfc`(JSX Separate Function Components) is a tiny toolkit(<1kb minimum) that help you to better implement **separation of concerns** within JSX based functional components. It can be seen as JSX/TSX syntax or type tools, very simple to use🧙🏼‍♂️.
 
 [Live Demo is here](https://codesandbox.io/s/jsx-sfc-demo-wwgd4) (Experience **Typings/Hot reloading/Dev tools** by Codesandbox).
 
@@ -37,8 +37,9 @@
 
 ## Features
 
-- 🌟 Easy way to define function components with **separation of concerns**
-- ✨ Clearly isolate **template**, **logic**, **styles** and **any other concerns**
+<!-- - 🌟 Easy way to define function components with **separation of concerns** -->
+
+- ✨ Clearly isolate **JSX tags**, **logic**, **styles** and **any other concerns** within JSX based functional components
   <!-- - 🚩 New APIs for **defining and using static members** in function components -->
 - 💫 **Completely type inference** design by TypeScript
   <!-- - 🕹 Support **export internal member types** from components (Documentation to be completed) -->
@@ -49,9 +50,26 @@
 - ⚡ Performance almost equivalent to regular function components
 - 🚀 No any dependencies (except compiler)
 
+## Motivation
+
+On the whole, the goal of `jsx-sfc` is to create a toolkit with similar syntax and useful structure for the scenario of using JSX to develop functional components, according to the `mental model of single file components like Vue/Svelte/Marko`.
+
+If you are already familiar with the similar SFCs development mode and understand the advantages, you will find the syntax of `jsx-sfc` so intuitive~ Of course, in addition to the syntax structure similar to SFCs, this project will also provide some additional benefits, which will be explained below.
+
+### About hooks syntax
+
+If you prefer to use regular functional component syntax, you can take a look at these hooks:
+
+- [use-view-data](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-view-data)
+
+- [use-templates](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-templates)
+
+They extract the core features of `jsx-sfc` and can be used independently.
+
+<!-- > I will continue to refine and summarize the comparison and pattern between this project and regular function components in the development of actual projects, and try to release it in the near future. -->
+
 ## Table of Contents
 
-- [Motivation](#motivation)
 - [Inspiration](#inspiration)
   - [Extending Function Component](#extending-function-component)
   - [Adapting Eslint Plugin](#adapting-eslint-plugin)
@@ -61,7 +79,7 @@
 - [Benefits](#benefits)
   - [Clearer visual isolation](#clearer-visual-isolation)
   - [Better single file experience](#better-single-file-experience)
-  - [Exportable internal state types](#exportable-internal-state-types)
+    <!-- - [Exportable internal state types](#exportable-internal-state-types) -->
 - [Installation](#installation)
   - [Using with Babel](#using-with-babel)
   - [Using with Vite](#using-with-vite)
@@ -75,18 +93,7 @@
   - [Export static members](#export-static-members)
 - [API Design Principle](#api-design-principle)
 - [Roadmap](#roadmap)
-  - [Optimize runtime size](#optimize-runtime-size)
-    <!-- - [Support Vue v3](#support-vue-v3) -->
-  - [Add hooks syntax](#add-hooks-syntax)
 - [Who is using](#who-is-using)
-
-## Motivation
-
-On the whole, the goal of this project is to create a toolkit with similar syntax and useful structure for the scenario of using JSX to develop functional components, according to the `mental model of single file components like Vue/Svelte/Marko`.
-
-If you are already familiar with the similar SFCs development mode and understand the advantages, you will find the syntax of this project so intuitive~ Of course, in addition to the syntax structure similar to SFCs, this project will also provide some additional benefits, which will be explained below.
-
-<!-- > I will continue to refine and summarize the comparison and pattern between this project and regular function components in the development of actual projects, and try to release it in the near future. -->
 
 ## Inspiration
 
@@ -612,9 +619,9 @@ As you can see, we can **organize codes with component granularity** to achieve 
 
 When we organize component codes, we often have to divide them into multiple files, and sometimes the file switching action will cause a little upset. At this time, `jsx-sfc` can help you make this scene much easier. **We can still organize the code clearly even without a lot of fragmented files** 😊.
 
-### Exportable internal state types
+<!-- ### Exportable internal state types
 
-> Documentation to be completed.
+> Documentation to be completed. -->
 
 ## Installation
 
@@ -1299,7 +1306,7 @@ It can be predicted that there will inevitably be problems in the process of imp
 
 > The biggest difficulty lies in the processing of TS type. The return value [type of defineComponent API](https://github.com/vuejs/vue-next/blob/master/packages/runtime-core/src/apiDefineComponent.ts) is much more complex than React, and some types are not exported from Vue package. -->
 
-### Add hooks syntax
+<!-- ### Add hooks syntax
 
 These are currently being experimented. With hooks, they will be easier to integrate the concept of `separation of concerns` into the existing JSX based functional component development. I will sort out the relevant documentation soon:
 
@@ -1307,7 +1314,7 @@ These are currently being experimented. With hooks, they will be easier to integ
 
 - [use-view-data](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-view-data)
 
-Moreover, at present Vue composition API can also support syntax similar to hooks, so I will also consider developing Vue version, and this process should not be too difficult.
+Moreover, at present Vue composition API can also support syntax similar to hooks, so I will also consider developing Vue version, and this process should not be too difficult. -->
 
 ## Change Logs
 

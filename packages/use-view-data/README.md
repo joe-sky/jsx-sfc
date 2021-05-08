@@ -4,7 +4,13 @@
 
 ## Introduction
 
-`useViewData` is a tiny TS type tool for create functional components with **separation of concerns**. It's just to describe a function component development pattern, you can also not import it.
+`useViewData` is a tiny TS type tool that **separating the logic concerns** of React function components. It's just to describe a development pattern, you can also not import it.
+
+## Features
+
+- 🌟 Easy to create a structure that separates logic and JSX tags, can support multi file components
+- 💫 Support export internal member types from components, easy to split child components
+- 🚀 Tiny size, only ~200b and no any dependencies
 
 ## Installation
 
@@ -15,8 +21,6 @@ npm install use-templates
 ## Usage
 
 The following code can pass the internal TS type of the parent component to the child component. Note that TS can easily infer the internal state type of the parent component in the child component, even very complex types.
-
-### Using with React
 
 ```tsx
 import { useState, useEffect } from 'react';
@@ -53,7 +57,7 @@ const AddCount: React.FC<{ parent: Data }> = props => {
 };
 ```
 
-### Using with Vue
+<!-- ### Using with Vue
 
 ```tsx
 import { defineComponent, reactive, onMounted, PropType } from 'vue';
@@ -108,7 +112,7 @@ const AddCount = defineComponent({
     );
   }
 });
-```
+``` -->
 
 ## Community articles with similar or related ideas
 

@@ -4,13 +4,13 @@
 
 ## Introduction
 
-`use-templates` is a tiny custom hook for render JSX tags of functional components with **separation of concerns for view**.
+`use-templates` is a tiny custom hook for render JSX tags of functional components with **separation of view concerns**.
 
 ## Features
 
-- ✨ Tiny size, only ~600b and no any dependencies
-- 💫 Clear syntax design based on JSX and render props pattern
-- 🌟 Support rendering JSX by blocks, each block can have its own logic codes([See here for details](#what-logic-code-is-suitable-for-separate-jsx-blocks))
+- 🌟 Clear syntax design based on JSX and render props pattern
+- 💫 Support rendering JSX by blocks, each block can have its own logic codes([See here for details](#what-logic-code-is-suitable-for-separate-jsx-blocks))
+- 🚀 Tiny size, only ~600b and no any dependencies
 
 ## Motivation
 
