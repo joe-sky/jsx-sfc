@@ -1,5 +1,5 @@
 /*!
- * jsx-sfc v1.3.0-alpha.4
+ * jsx-sfc v1.3.0-alpha.5
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
@@ -35,8 +35,8 @@ declare namespace Template {
      */
     type Func<Arg1 = unknown, Arg2 = unknown, Arg3 = unknown, Arg4 = unknown, Arg5 = unknown> = Render<Arg1, Arg2, Arg3, Arg4, Arg5>;
     type EL = typeof templateElement;
-    type ViewData = Obj;
-    type InternalFunc = <D extends ViewData>(data?: D) => D;
+    type ComponentData = Obj;
+    type InternalFunc = <D extends ComponentData>(data?: D) => D;
 }
 
 declare type NoRef = 'noRef';
@@ -48,7 +48,7 @@ declare type ExtractOptions<T> = T extends () => infer R ? (R extends Obj ? R : 
 declare type DefineComponent<Ref = NoRef, Props = {}, ReturnComponent = Ref extends NoRef ? React.FC<Props> : React.ForwardRefExoticComponent<Props & RefAttributes<Ref>>, Origin = {
     Component: ReturnComponent;
 }> = {
-    <Data extends Template.ViewData, InferStyles extends ExtractOptions<Styles>, InferOP extends ExtractOptions<OP>, InferEX extends ExtractOptions<EX>, FR extends {
+    <Data extends Template.ComponentData, InferStyles extends ExtractOptions<Styles>, InferOP extends ExtractOptions<OP>, InferEX extends ExtractOptions<EX>, FR extends {
         styles: InferStyles;
     } & InferOP & InferEX, Styles = {}, OP = {}, EX = {}>(options: {
         /**
@@ -134,13 +134,13 @@ declare type SFCExtensions = {
     __cs?: boolean;
     [key: string]: any;
 };
-declare type ViewDataType<C> = C extends {
+declare type ComponentDataType<C> = C extends {
     template: infer T;
-} ? T extends (...args: infer P) => any ? P[0] : never : never;
+} ? T extends (...args: infer P) => any ? Required<P[0]> : never : never;
 
 declare function createOptions(options: FuncMap, extensions?: Func | Obj, isRuntime?: boolean): Record<string, unknown>;
 declare const sfc: SFC;
 declare const forwardRef: ForwardRefSFC;
 
 export default sfc;
-export { DefineComponent, ForwardRefSFC, SFC, SFCExtensions, SFCOptions, SFCProps, Template, ViewDataType, createOptions, forwardRef, isTemplate };
+export { ComponentDataType, DefineComponent, ForwardRefSFC, SFC, SFCExtensions, SFCOptions, SFCProps, Template, createOptions, forwardRef, isTemplate };

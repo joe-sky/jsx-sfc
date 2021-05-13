@@ -1,8 +1,8 @@
 Arguments: 
-  d:\Program Files\nodejs\node.exe C:\Users\zhoutaoinfo\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js run lib
+  d:\Program Files\nodejs\node.exe C:\Users\zhoutaoinfo\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js run dts
 
 PATH: 
-  C:\Users\ZHOUTA~1\AppData\Local\Temp\yarn--1620878938171-0.26119047315626664;D:\joe_sky\flareJ\flareJ\JsLibrary\jsx-sfc\packages\vite-plugin-jsx-sfc\node_modules\.bin;C:\Users\zhoutaoinfo\AppData\Local\Yarn\Data\link\node_modules\.bin;D:\joe_sky\flareJ\flareJ\JsLibrary\jsx-sfc\node_modules\.bin;d:\Program Files\libexec\lib\node_modules\npm\bin\node-gyp-bin;d:\Program Files\lib\node_modules\npm\bin\node-gyp-bin;d:\Program Files\nodejs\node_modules\npm\bin\node-gyp-bin;D:\joe_sky\flareJ\flareJ\JsLibrary\jsx-sfc\packages\vite-plugin-jsx-sfc\node_modules\.bin;D:\joe_sky\flareJ\flareJ\JsLibrary\jsx-sfc\packages\node_modules\.bin;D:\joe_sky\flareJ\flareJ\JsLibrary\jsx-sfc\node_modules\.bin;D:\joe_sky\flareJ\flareJ\JsLibrary\node_modules\.bin;D:\joe_sky\flareJ\flareJ\node_modules\.bin;D:\joe_sky\flareJ\node_modules\.bin;D:\joe_sky\node_modules\.bin;D:\node_modules\.bin;d:\Program Files\nodejs;C:\Users\ZHOUTA~1\AppData\Local\Temp\yarn--1620878882389-0.3209353613654944;D:\joe_sky\flareJ\flareJ\JsLibrary\jsx-sfc\node_modules\.bin;C:\Users\zhoutaoinfo\AppData\Local\Yarn\Data\link\node_modules\.bin;D:\joe_sky\flareJ\flareJ\JsLibrary\jsx-sfc\node_modules\.bin;C:\Users\zhoutaoinfo\AppData\Local\Yarn\bin;d:\Program Files\libexec\lib\node_modules\npm\bin\node-gyp-bin;d:\Program Files\lib\node_modules\npm\bin\node-gyp-bin;d:\Program Files\nodejs\node_modules\npm\bin\node-gyp-bin;C:\ProgramData\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;D:\Program Files\TortoiseGit\bin;C:\WINDOWS\System32\OpenSSH\;%NVM_HOME%;%NVM_SYMLINK%;d:\Program Files\Git\cmd;C:\Users\zhoutaoinfo\AppData\Local\Microsoft\WindowsApps;d:\Users\zhoutaoinfo\AppData\Local\Programs\Microsoft VS Code\bin;d:\Users\zhoutaoinfo\AppData\Local\Programs\Microsoft VS Code Insiders\bin;C:\Users\zhoutaoinfo\AppData\Local\atom\bin;C:\Users\zhoutaoinfo\AppData\Roaming\npm;d:\Users\zhoutaoinfo\AppData\Roaming\nvm;d:\Program Files\nodejs;D:\Python27\Scripts;D:\Python27
+  C:\Users\ZHOUTA~1\AppData\Local\Temp\yarn--1620878893909-0.22559439126949132;D:\joe_sky\flareJ\flareJ\JsLibrary\jsx-sfc\packages\use-templates\node_modules\.bin;C:\Users\zhoutaoinfo\AppData\Local\Yarn\Data\link\node_modules\.bin;D:\joe_sky\flareJ\flareJ\JsLibrary\jsx-sfc\node_modules\.bin;d:\Program Files\libexec\lib\node_modules\npm\bin\node-gyp-bin;d:\Program Files\lib\node_modules\npm\bin\node-gyp-bin;d:\Program Files\nodejs\node_modules\npm\bin\node-gyp-bin;D:\joe_sky\flareJ\flareJ\JsLibrary\jsx-sfc\packages\use-templates\node_modules\.bin;D:\joe_sky\flareJ\flareJ\JsLibrary\jsx-sfc\packages\node_modules\.bin;D:\joe_sky\flareJ\flareJ\JsLibrary\jsx-sfc\node_modules\.bin;D:\joe_sky\flareJ\flareJ\JsLibrary\node_modules\.bin;D:\joe_sky\flareJ\flareJ\node_modules\.bin;D:\joe_sky\flareJ\node_modules\.bin;D:\joe_sky\node_modules\.bin;D:\node_modules\.bin;d:\Program Files\nodejs;C:\Users\ZHOUTA~1\AppData\Local\Temp\yarn--1620878882389-0.3209353613654944;D:\joe_sky\flareJ\flareJ\JsLibrary\jsx-sfc\node_modules\.bin;C:\Users\zhoutaoinfo\AppData\Local\Yarn\Data\link\node_modules\.bin;D:\joe_sky\flareJ\flareJ\JsLibrary\jsx-sfc\node_modules\.bin;C:\Users\zhoutaoinfo\AppData\Local\Yarn\bin;d:\Program Files\libexec\lib\node_modules\npm\bin\node-gyp-bin;d:\Program Files\lib\node_modules\npm\bin\node-gyp-bin;d:\Program Files\nodejs\node_modules\npm\bin\node-gyp-bin;C:\ProgramData\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;D:\Program Files\TortoiseGit\bin;C:\WINDOWS\System32\OpenSSH\;%NVM_HOME%;%NVM_SYMLINK%;d:\Program Files\Git\cmd;C:\Users\zhoutaoinfo\AppData\Local\Microsoft\WindowsApps;d:\Users\zhoutaoinfo\AppData\Local\Programs\Microsoft VS Code\bin;d:\Users\zhoutaoinfo\AppData\Local\Programs\Microsoft VS Code Insiders\bin;C:\Users\zhoutaoinfo\AppData\Local\atom\bin;C:\Users\zhoutaoinfo\AppData\Roaming\npm;d:\Users\zhoutaoinfo\AppData\Roaming\nvm;d:\Program Files\nodejs;D:\Python27\Scripts;D:\Python27
 
 Yarn version: 
   1.15.2
@@ -28,21 +28,47 @@ Trace:
 
 npm manifest: 
   {
-    "name": "vite-plugin-jsx-sfc",
+    "name": "use-templates",
     "version": "1.3.0-alpha.4",
-    "description": "Vite plugin for compile and enhance the limitation of jsx-sfc runtime code.",
-    "main": "lib/index.js",
+    "description": "A tiny custom hook for render JSX tags of components with separation of concerns.",
+    "main": "dist/use-templates.common.js",
+    "module": "dist/use-templates.esm.js",
+    "unpkg": "dist/use-templates.js",
+    "jsdelivr": "dist/use-templates.js",
+    "exports": {
+      ".": {
+        "import": "./dist/use-templates.esm.js",
+        "require": "./dist/use-templates.common.js",
+        "node": "./dist/use-templates.common.js",
+        "default": "./dist/use-templates.js"
+      },
+      "./vue": {
+        "import": "./vue/dist/use-templates.esm.js",
+        "require": "./vue/dist/use-templates.common.js",
+        "node": "./vue/dist/use-templates.common.js",
+        "default": "./vue/dist/use-templates.js"
+      }
+    },
     "files": [
+      "dist/",
       "lib/",
-      "legacy/",
+      "types/",
       "index.d.ts",
       "README.md"
     ],
     "scripts": {
-      "legacy": "babel src/legacy --out-dir legacy --extensions \".js,.jsx,.ts,.tsx\" --config-file \"../../.babelrc\"",
-      "lib": "babel src/index.ts --out-dir lib/index.js --extensions \".js,.jsx,.ts,.tsx\" --config-file \"../../.babelrc\"",
-      "dts": "rollup -c -o index.d.ts",
-      "build": "yarn run lib && yarn run legacy && yarn run dts"
+      "cjs": "cross-env NODE_ENV=cjs rollup -c -o dist/use-templates.common.js",
+      "esm": "cross-env NODE_ENV=es rollup -c -o dist/use-templates.esm.js",
+      "umd": "cross-env NODE_ENV=development rollup -c -o dist/use-templates.js",
+      "min": "cross-env NODE_ENV=production rollup -c -o dist/use-templates.min.js",
+      "dts": "cross-env TYPE=dts NODE_ENV=es rollup -c -o types/use-templates.d.ts",
+      "cjs:vue": "cross-env NODE_ENV=cjs VER=vue rollup -c -o vue/dist/use-templates.common.js",
+      "esm:vue": "cross-env NODE_ENV=es VER=vue rollup -c -o vue/dist/use-templates.esm.js",
+      "umd:vue": "cross-env NODE_ENV=development VER=vue rollup -c -o vue/dist/use-templates.js",
+      "min:vue": "cross-env NODE_ENV=production VER=vue rollup -c -o vue/dist/use-templates.min.js",
+      "dts:vue": "cross-env TYPE=dts NODE_ENV=es VER=vue rollup -c -o vue/types/use-templates.d.ts",
+      "lib": "babel src --out-dir lib --extensions \".js,.jsx,.ts,.tsx\" --config-file \"../../.babelrc\"",
+      "build": "yarn run cjs && yarn run cjs:vue && yarn run esm && yarn run esm:vue && yarn run umd && yarn run umd:vue && yarn run min && yarn run min:vue && yarn run lib && yarn run dts && yarn run dts:vue"
     },
     "repository": {
       "type": "git",
@@ -52,16 +78,7 @@ npm manifest:
       "url": "https://github.com/joe-sky/jsx-sfc/issues"
     },
     "author": "Joe_Sky <hitomi_doax@sina.com>",
-    "license": "MIT",
-    "dependencies": {
-      "babel-plugin-jsx-sfc": "^1.3.0-alpha.4"
-    },
-    "devDependencies": {
-      "vite": "^2.0.0-beta.3"
-    },
-    "peerDependencies": {
-      "vite": "*"
-    }
+    "license": "MIT"
   }
 
 yarn manifest: 

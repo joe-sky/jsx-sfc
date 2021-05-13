@@ -20,12 +20,11 @@
 | [babel-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/babel-plugin-jsx-sfc) | <a href="https://www.npmjs.org/package/babel-plugin-jsx-sfc"><img src="https://img.shields.io/npm/v/babel-plugin-jsx-sfc.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/babel-plugin-jsx-sfc"><img src="https://img.shields.io/npm/dm/babel-plugin-jsx-sfc.svg" alt="NPM Downloads"></a>                                                                                                                                            | React                |
 | [vite-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/vite-plugin-jsx-sfc)   | <a href="https://www.npmjs.org/package/vite-plugin-jsx-sfc"><img src="https://img.shields.io/npm/v/vite-plugin-jsx-sfc.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/vite-plugin-jsx-sfc"><img src="https://img.shields.io/npm/dm/vite-plugin-jsx-sfc.svg" alt="NPM Downloads"></a>                                                                                                                                                | React                |
 | [jsx-sfc.macro](https://github.com/joe-sky/jsx-sfc/tree/main/packages/jsx-sfc.macro)               | <a href="https://www.npmjs.org/package/jsx-sfc.macro"><img src="https://img.shields.io/npm/v/jsx-sfc.macro.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/jsx-sfc.macro"><img src="https://img.shields.io/npm/dm/jsx-sfc.macro.svg" alt="NPM Downloads"></a>                                                                                                                                                                        | React                |
-| [use-view-data](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-view-data)               | <a href="https://www.npmjs.org/package/use-view-data"><img src="https://img.shields.io/npm/v/use-view-data.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/use-view-data"><img src="https://img.shields.io/npm/dm/use-view-data.svg" alt="NPM Downloads"></a> <a href="https://bundlephobia.com/result?p=use-view-data"><img src="https://img.shields.io/bundlephobia/minzip/use-view-data.svg?style=flat" alt="Minzipped Size"></a> | React                |
-| [use-templates](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-templates)               | <a href="https://www.npmjs.org/package/use-templates"><img src="https://img.shields.io/npm/v/use-templates.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/use-templates"><img src="https://img.shields.io/npm/dm/use-templates.svg" alt="NPM Downloads"></a> <a href="https://bundlephobia.com/result?p=use-templates"><img src="https://img.shields.io/bundlephobia/minzip/use-templates.svg?style=flat" alt="Minzipped Size"></a> | React / Vue(v3)      |
+| [use-templates](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-templates)               | <a href="https://www.npmjs.org/package/use-templates"><img src="https://img.shields.io/npm/v/use-templates.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/use-templates"><img src="https://img.shields.io/npm/dm/use-templates.svg" alt="NPM Downloads"></a> <a href="https://bundlephobia.com/result?p=use-templates"><img src="https://img.shields.io/bundlephobia/minzip/use-templates.svg?style=flat" alt="Minzipped Size"></a> | React/Vue(v3)        |
 
 ## Introduction
 
-`jsx-sfc`(JSX Separate Function Components) is a tiny toolkit(<1kb minimum) that help you to better implement **separation of concerns** within JSX based functional components. It can be seen as JSX/TSX syntax or type tools, very simple to use🧙🏼‍♂️.
+`jsx-sfc`(JSX Separate Function Components) is a tiny toolkit(<1kb minimum) that help you to better implement **separation of concerns** within JSX based functional components. It can be seen as a JSX/TSX syntax or type tool, very simple to use🧙🏼‍♂️.
 
 [Live Demo is here](https://codesandbox.io/s/jsx-sfc-demo-wwgd4) (Experience **Typings/Hot reloading/Dev tools** by Codesandbox).
 
@@ -56,7 +55,7 @@ On the whole, the goal of `jsx-sfc` is to create a toolkit with similar syntax a
 
 If you are already familiar with the similar SFCs development mode and understand the advantages, you will find the syntax of `jsx-sfc` so intuitive~ Of course, in addition to the syntax structure similar to SFCs, this project will also provide some additional benefits, which will be explained below.
 
-### About hooks syntax
+<!-- ### About hooks syntax
 
 If you prefer to use regular functional component syntax, you can take a look at these hooks:
 
@@ -64,7 +63,7 @@ If you prefer to use regular functional component syntax, you can take a look at
 
 - [use-templates](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-templates)
 
-They extract the core features of `jsx-sfc` and can be used independently.
+They extract the core features of `jsx-sfc` and can be used independently. -->
 
 <!-- > I will continue to refine and summarize the comparison and pattern between this project and regular function components in the development of actual projects, and try to release it in the near future. -->
 
@@ -87,7 +86,8 @@ They extract the core features of `jsx-sfc` and can be used independently.
 - [Usage](#usage)
   - [`sfc`](#sfc)
   - [`sfc.forwardRef`](#sfcforwardRef)
-  - [Sub Templates](#sub-templates)
+  - [Multiple Templates](#multiple-templates)
+    - [`use-templates`](#use-templates)
   - [Options](#options)
   - [Extensions](#extensions)
   - [Export static members](#export-static-members)
@@ -189,10 +189,15 @@ const App = sfc({
 Such this component structure at first glance, we can immediately distinguish the responsibilities of each part of the code. From this syntax structure, we can easily extract the TS type of internal state of a component, like this:
 
 ```tsx
-import sfc, { ViewDataType } from 'jsx-sfc';
+import sfc, { ComponentDataType } from 'jsx-sfc';
 
 const App = sfc({
-  template: ({ data }) => <AddCount parent={data} />,
+  template: ({ data }) => (
+    <>
+      <i>{data.count}</i>
+      <AddCount {...data} />
+    </>
+  ),
 
   Component() {
     const [count, setCount] = useState({ value: 0 });
@@ -200,9 +205,7 @@ const App = sfc({
   }
 });
 
-type Data = ViewDataType<typeof App>;
-
-const AddCount: React.FC<{ parent: Data }> = ({ parent: { count, setCount } }) => (
+const AddCount: React.FC<ComponentDataType<typeof App>> = ({ count, setCount }) => (
   // Note that TS can easily infer the internal state type of the parent component in the child component, even very complex types.
   <button onClick={() => setCount({ value: count.value + 1 })}>Add count</button>
 );
@@ -699,15 +702,15 @@ import sfc from 'jsx-sfc.macro';
 - Type definition of `sfc`
 
 ```ts
-function sfc<Props, ViewData, Styles, OP, EX>(
+function sfc<Props, ComponentData, Styles, OP, EX>(
   options: {
-    template?: (args: { data: ViewData; styles: Styles } & OP & EX, ...tmpls: Template.Func[]) => JSX.Element;
-    Component: (props?: Props & Styles & EX & { originalProps: Props }) => ViewData;
+    template?: (args: { data: ComponentData; styles: Styles } & OP & EX, ...tmpls: Template.Func[]) => JSX.Element;
+    Component: (props?: Props & Styles & EX & { originalProps: Props }) => ComponentData;
     styles?: Styles;
     options?: OP;
   },
   extensions?: EX
-): React.FC<Props> & { template: (data?: ViewData), Component: React.FC<Props> } & Styles & OP & EX;
+): React.FC<Props> & { template: (data?: ComponentData), Component: React.FC<Props> } & Styles & OP & EX;
 ```
 
 Only a symbolic type definition is put here for API documentation, there are many differences in the actual implementation. [Actual type definition is here.](https://github.com/joe-sky/jsx-sfc/blob/main/packages/jsx-sfc/src/defineComponent.ts)
@@ -926,9 +929,9 @@ function TestApp() {
 }
 ```
 
-### Sub Templates
+### Multiple Templates
 
-In the template function of `jsx-sfc` components, we can also create reusable sub template functions:
+In the template function of `jsx-sfc` components, we can also create reusable multiple template functions:
 
 ```tsx
 import React, { useState } from 'react';
@@ -1023,6 +1026,10 @@ const App = sfc({
 ```
 
 We can use sub template syntax to continue to separate the responsibilities of JSX tags, [see here for the specific benefits of sub templates.](#clearer-visual-isolation)
+
+#### `use-templates`
+
+The multiple templates feature has a independent implementation of hooks syntax, which supports React/Vue(v3). [Please see the documentation here.](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-templates)
 
 ### Options
 

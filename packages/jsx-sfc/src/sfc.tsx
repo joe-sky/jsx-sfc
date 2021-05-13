@@ -29,7 +29,7 @@ export function createOptions(options: FuncMap, extensions?: Func | Obj, isRunti
     const paramsCount = getFuncParams(template).length;
     ret.template =
       paramsCount > 1
-        ? (data?: Template.ViewData) => {
+        ? (data?: Template.ComponentData) => {
             const jsxFragment: ReactElement = template({ data, ...ret }, ...emptyObjs(paramsCount - 1));
             if (!IS_PRODUCTION && jsxFragment?.type !== Fragment) {
               throw new TypeError('The return of template with multiple arguments must be React.Fragment type.');
@@ -55,7 +55,7 @@ export function createOptions(options: FuncMap, extensions?: Func | Obj, isRunti
 
             return mainTemplate();
           }
-        : (data?: Template.ViewData) => template({ data, ...ret });
+        : (data?: Template.ComponentData) => template({ data, ...ret });
   }
 
   if (!isRuntime) {

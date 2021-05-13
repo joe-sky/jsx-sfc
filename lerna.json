@@ -4,7 +4,6 @@
     "packages/babel-plugin-jsx-sfc",
     "packages/vite-plugin-jsx-sfc",
     "packages/jsx-sfc.macro",
-    "packages/use-view-data",
     "packages/use-templates"
   ],
   "command": {

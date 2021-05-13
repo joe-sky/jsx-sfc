@@ -18,7 +18,7 @@ export type DefineComponent<
   Origin = { Component: ReturnComponent }
 > = {
   <
-    Data extends Template.ViewData,
+    Data extends Template.ComponentData,
     InferStyles extends ExtractOptions<Styles>,
     InferOP extends ExtractOptions<OP>,
     InferEX extends ExtractOptions<EX>,
@@ -138,8 +138,8 @@ export type SFCExtensions = {
   [key: string]: any;
 };
 
-export type ViewDataType<C> = C extends { template: infer T }
+export type ComponentDataType<C> = C extends { template: infer T }
   ? T extends (...args: infer P) => any
-    ? P[0]
+    ? Required<P[0]>
     : never
   : never;
