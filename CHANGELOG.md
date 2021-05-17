@@ -1,8 +1,8 @@
 # CHANGELOG
 
-## [v1.3.0-alpha.3] 2021.04.23
+## [v1.3.0] 2021.05.17
 
-- 🌟 Add `options` API for `jsx-sfc`.
+- 🌟 Add `options`, `ComponentDataType` API for `jsx-sfc`.
 - 🌟 Add `use-templates`.
 
 ## [v1.2.0] 2021.04.05

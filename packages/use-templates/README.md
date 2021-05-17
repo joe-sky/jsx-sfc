@@ -4,7 +4,7 @@
 
 ## Introduction
 
-`use-templates` is a tiny custom hook for render JSX tags of functional components with **separation of view concerns**.
+`use-templates` is a tiny custom hook(~600b) that help you to better implement **separation of concerns** within JSX based functional components.
 
 ## Features
 
@@ -334,4 +334,14 @@ const Nav = defineComponent({
 });
 ```
 
-> Documentation to be completed
+[See here for more details of usage.](https://github.com/joe-sky/jsx-sfc#template-tags)
+
+## Change Logs
+
+[Check here.](https://github.com/joe-sky/jsx-sfc/blob/main/CHANGELOG.md)
+
+## License
+
+MIT
+
+<!-- > Documentation to be completed -->

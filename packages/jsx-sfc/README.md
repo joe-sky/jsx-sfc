@@ -24,7 +24,7 @@
 
 ## Introduction
 
-`jsx-sfc`(JSX Separate Function Components) is a tiny toolkit(<1kb minimum) that help you to better implement **separation of concerns** within JSX based functional components. It can be seen as a JSX/TSX syntax or type tool, very simple to use🧙🏼‍♂️.
+`jsx-sfc`(JSX Separate Function Components) is a tiny toolkit(~1kb) that help you to better implement **separation of concerns** within JSX based functional components. It can be seen as a JSX/TSX syntax or type tool, very simple to use🧙🏼‍♂️.
 
 [Live Demo is here](https://codesandbox.io/s/jsx-sfc-demo-wwgd4) (Experience **Typings/Hot reloading/Dev tools** by Codesandbox).
 
@@ -32,7 +32,7 @@
 
 <!-- > I'm sorting out the hooks syntax tools for separation of concerns: [use-templates](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-templates) and [use-view-data](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-view-data), they can be used with jsx-sfc or alone. Now it's experimenting in the actual project. -->
 
-> The v1.3 version will be released soon, there are some new features and documentation to be completed. There is no breaking API change this time, but this version will include the more in-depth reflections on the problems that this project solves.
+<!-- > The v1.3 version will be released soon, there are some new features and documentation to be completed. There is no breaking API change this time, but this version will include the more in-depth reflections on the problems that this project solves. -->
 
 ## Features
 
@@ -55,15 +55,13 @@ On the whole, the goal of `jsx-sfc` is to create a toolkit with similar syntax a
 
 If you are already familiar with the similar SFCs development mode and understand the advantages, you will find the syntax of `jsx-sfc` so intuitive~ Of course, in addition to the syntax structure similar to SFCs, this project will also provide some additional benefits, which will be explained below.
 
-<!-- ### About hooks syntax
+### About hooks syntax
 
-If you prefer to use regular functional component syntax, you can take a look at these hooks:
-
-- [use-view-data](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-view-data)
+If you prefer to use regular functional component syntax, you can take a look at this custom hook:
 
 - [use-templates](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-templates)
 
-They extract the core features of `jsx-sfc` and can be used independently. -->
+It extract a core features of `jsx-sfc` and can be used independently.
 
 <!-- > I will continue to refine and summarize the comparison and pattern between this project and regular function components in the development of actual projects, and try to release it in the near future. -->
 
@@ -86,10 +84,10 @@ They extract the core features of `jsx-sfc` and can be used independently. -->
 - [Usage](#usage)
   - [`sfc`](#sfc)
   - [`sfc.forwardRef`](#sfcforwardRef)
-  - [Multiple Templates](#multiple-templates)
+  - [Template tags](#template-tags)
     - [`use-templates`](#use-templates)
-  - [Options](#options)
   - [Extensions](#extensions)
+    - [Options](#options)
   - [Export static members](#export-static-members)
 - [API Design Principle](#api-design-principle)
 - [Roadmap](#roadmap)
@@ -469,7 +467,7 @@ const QueryForm = sfc({
 In this way:
 
 - We can put all the logic codes into the `Component function` and manage it separately;
-- Then we can put all the JSX codes into the `template function`, and support `sub template tags` to manage JSX codes that need to be reused.
+- Then we can put all the JSX codes into the `template function`, and support `template tags` to manage JSX codes that need to be reused.
 
 **When the component code is large and the logic is complex, the benefits of visual isolation are obvious.**
 
@@ -929,7 +927,7 @@ function TestApp() {
 }
 ```
 
-### Multiple Templates
+### Template tags
 
 In the template function of `jsx-sfc` components, we can also create reusable multiple template functions:
 
@@ -973,9 +971,9 @@ const App = sfc({
 });
 ```
 
-1. All parameters starting from the second parameter of the template function are sub template objects, and any number of them can be defined.
+1. All parameters starting from the second parameter of the template function are template tag renders, and any number of them can be defined.
 
-2. The template function needs to return a React.Fragment tag; The sub template tag without name property is the entry function:
+2. The template function needs to return a React.Fragment tag; The template tag without name property is the entry function:
 
 ```tsx
 {
@@ -998,7 +996,7 @@ const App = sfc({
 }
 ```
 
-3. In TSX, we can define the parameter types of sub template functions, this can achieve type safe:
+3. In TSX, we can define the parameter types of template tag render functions, this can achieve type safe:
 
 ```tsx
 {
@@ -1025,19 +1023,86 @@ const App = sfc({
 }
 ```
 
-We can use sub template syntax to continue to separate the responsibilities of JSX tags, [see here for the specific benefits of sub templates.](#clearer-visual-isolation)
+We can use template tags syntax to continue to separate the responsibilities of JSX tags, [see here for the specific benefits of template tags.](#clearer-visual-isolation)
 
 #### `use-templates`
 
 The multiple templates feature has a independent implementation of hooks syntax, which supports React/Vue(v3). [Please see the documentation here.](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-templates)
 
-### Options
-
-> Documentation to be completed.
-
 ### Extensions
 
 Except template and styles, other extensions for `jsx-sfc` components are also supported:
+
+```tsx
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import sfc from 'jsx-sfc';
+
+const App = sfc(
+  {
+    template: ({ data, styles: { Wrapper }, utils: { trimWithPrefix } }) => (
+      <Wrapper>
+        <button onClick={data.onClick}>{trimWithPrefix(data.user)}</button>
+      </Wrapper>
+    ),
+
+    Component() {
+      const [user, setUser] = useState('  foo  ');
+      return { user, onClick: () => setUser('bar') };
+    },
+
+    styles: () => {
+      const WrapperBase = styled.div`
+        background-color: #fff;
+      `;
+
+      return {
+        Wrapper: styled(WrapperBase)`
+          background-color: #fff;
+        `
+      };
+    }
+  },
+  // You need to pass in the second parameter
+  {
+    utils: {
+      trimWithPrefix(str: string) {
+        return 'prefix_' + str.trim();
+      }
+    }
+  }
+);
+```
+
+And also can pass in a function like styles:
+
+```tsx
+const App = sfc(
+  {
+    template: ({ data, utils: { trimWithPrefix } }) => ...,
+    ...
+  },
+  () => {
+    return {
+      utils: {
+        trimWithPrefix(str: string) {
+          return 'prefix_' + str.trim();
+        }
+      }
+    }
+  }
+);
+```
+
+For some advanced usages of extensions, see these examples:
+
+- [React-i18next locales extension](https://github.com/joe-sky/jsx-sfc/blob/main/examples/react-i18next/src/App.tsx#L73)
+
+- [Jss styles extension](https://github.com/joe-sky/jsx-sfc/blob/main/examples/counter/src/App.tsx#L60)
+
+#### Options
+
+A new API `options` that purpose is exactly the same as the `extensions` added in v1.3.0. It's just that they're in different places:
 
 ```tsx
 import React, { useState } from 'react';
@@ -1056,6 +1121,16 @@ const App = sfc({
     return { user, onClick: () => setUser('bar') };
   },
 
+  options: () => {
+    return {
+      utils: {
+        trimWithPrefix(str: string) {
+          return 'prefix_' + str.trim();
+        }
+      }
+    };
+  },
+
   styles: () => {
     const WrapperBase = styled.div`
       background-color: #fff;
@@ -1066,23 +1141,9 @@ const App = sfc({
         background-color: #fff;
       `
     };
-  },
-  // Notice: you need to pass in the second parameter, and also can pass in a function like styles.
-  {
-    utils: {
-      trimWithPrefix(str: string) {
-        return ('prefix_' + str.trim());
-      }
-    }
   }
 });
 ```
-
-For some advanced usages of extensions, see these examples:
-
-- [React-i18next locales extension](https://github.com/joe-sky/jsx-sfc/blob/main/examples/react-i18next/src/App.tsx#L73)
-
-- [Jss styles extension](https://github.com/joe-sky/jsx-sfc/blob/main/examples/counter/src/App.tsx#L60)
 
 ### Export static members
 
@@ -1215,7 +1276,7 @@ Compared with the React class component, the whole function body of the React fu
 
 2. Not only `string template` can be named `template`, reusable functions can be called `template` also.
 
-In order not to have doubts, I explain it specifically: The `template` and `sub template` in `jsx-sfc` are reusable, their responsibilities are limited to returning `JSX.Element` type and support TS type safe, so I called them `template`. There are also other projects that use `template` as JSX related APIs(such as [monobase](https://github.com/framer/monobase#styled-components)).
+In order not to have doubts, I explain it specifically: The `template function` and `template tags` in `jsx-sfc` are reusable, their responsibilities are limited to returning `JSX.Element` type and support TS type safe, so I called them `template`. There are also other projects that use `template` as JSX related APIs(such as [monobase](https://github.com/framer/monobase#styled-components)).
 
 ### Why the component function be capitalized
 
