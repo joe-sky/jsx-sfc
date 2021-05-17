@@ -4,7 +4,7 @@ import { shallow, mount } from 'enzyme';
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import styled from '@emotion/styled';
-import sfc, { Template } from '../src/index';
+import sfc, { Template, ComponentDataType } from '../src/index';
 
 interface AppProps {
   test?: string;
@@ -125,9 +125,11 @@ const AppButton = sfc({
   },
 
   Component() {
-    return {} as { name: string; onClick: () => void };
+    return {} as { name: string; age?: number; onClick: () => void };
   }
 });
+
+type ComponentData = ComponentDataType<typeof AppButton>;
 
 const AppButton1: React.FC = () => AppButton.template({ name: 'joe_sky', onClick: () => console.log('click!') });
 

@@ -8,7 +8,7 @@
     "packages/jsx-sfc.macro",
     "packages/use-templates"
   ],
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "A tiny JSX/TSX toolkit that help you to create React/Vue function components with Separation of Concerns.",
   "scripts": {
     "build": "lerna run build",

@@ -68,7 +68,10 @@ export type DefineComponent<
     extensions?: EX
   ): ReturnComponent &
     Origin & {
-      template: (data?: Partial<Data>) => JSXElements;
+      template: {
+        (data?: Partial<Data>): JSXElements;
+        __componentData: Data;
+      };
       styles: InferStyles;
     } & ExtractOptions<OP> &
     ExtractOptions<EX>;
@@ -139,7 +142,7 @@ export type SFCExtensions = {
 };
 
 export type ComponentDataType<C> = C extends { template: infer T }
-  ? T extends (...args: infer P) => any
-    ? Required<P[0]>
+  ? T extends { (...args: any): any; __componentData: infer D }
+    ? D
     : never
   : never;

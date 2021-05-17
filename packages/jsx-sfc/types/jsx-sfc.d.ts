@@ -1,5 +1,5 @@
 /*!
- * jsx-sfc v1.3.0
+ * jsx-sfc v1.3.1
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
@@ -87,7 +87,10 @@ declare type DefineComponent<Ref = NoRef, Props = {}, ReturnComponent = Ref exte
         } & FR, ...tmpls: Template.Render[]) => JSXElements;
         options?: OP;
     }, extensions?: EX): ReturnComponent & Origin & {
-        template: (data?: Partial<Data>) => JSXElements;
+        template: {
+            (data?: Partial<Data>): JSXElements;
+            __componentData: Data;
+        };
         styles: InferStyles;
     } & ExtractOptions<OP> & ExtractOptions<EX>;
     <InferStyles extends ExtractOptions<Styles>, InferOP extends ExtractOptions<OP>, InferEX extends ExtractOptions<EX>, FR extends {
@@ -136,7 +139,10 @@ declare type SFCExtensions = {
 };
 declare type ComponentDataType<C> = C extends {
     template: infer T;
-} ? T extends (...args: infer P) => any ? Required<P[0]> : never : never;
+} ? T extends {
+    (...args: any): any;
+    __componentData: infer D;
+} ? D : never : never;
 
 declare function createOptions(options: FuncMap, extensions?: Func | Obj, isRuntime?: boolean): Record<string, unknown>;
 declare const sfc: SFC;
