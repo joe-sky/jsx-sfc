@@ -61,7 +61,7 @@ If you prefer to use regular functional component syntax, you can take a look at
 
 - [use-templates](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-templates)
 
-It extract a core features of `jsx-sfc` and can be used independently.
+It extract a core feature of `jsx-sfc` and can be used independently.
 
 <!-- > I will continue to refine and summarize the comparison and pattern between this project and regular function components in the development of actual projects, and try to release it in the near future. -->
 

@@ -24,6 +24,7 @@
     "dist/",
     "lib/",
     "types/",
+    "vue/",
     "index.d.ts",
     "README.md"
   ],
