@@ -18,6 +18,7 @@ const Nav = defineComponent({
     // eslint-disable-next-line
     return useTemplates((profile, admin) => (
       <>
+        {/* @ts-ignore */}
         <Template name={profile}>
           {() => (
             <a id="profile" href={props.profileHref}>
@@ -26,6 +27,7 @@ const Nav = defineComponent({
           )}
         </Template>
 
+        {/* @ts-ignore */}
         <Template name={admin}>
           {() => {
             function onClick() {
@@ -43,6 +45,7 @@ const Nav = defineComponent({
           }}
         </Template>
 
+        {/* @ts-ignore */}
         <Template>
           {() => (
             <nav>

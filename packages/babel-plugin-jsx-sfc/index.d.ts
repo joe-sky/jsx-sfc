@@ -1,5 +1,5 @@
 /*!
- * babel-plugin-jsx-sfc v1.3.3
+ * babel-plugin-jsx-sfc v1.3.4
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */

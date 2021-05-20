@@ -11,5 +11,6 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "noImplicitThis": true
-  }
+  },
+  "exclude": ["packages/use-templates/vue"]
 }
