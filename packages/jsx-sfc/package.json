@@ -1,6 +1,6 @@
 {
   "name": "jsx-sfc",
-  "version": "1.3.4",
+  "version": "1.3.5",
   "description": "A tiny JSX/TSX toolkit for create React function components with separation of concerns.",
   "main": "dist/jsx-sfc.common.js",
   "module": "dist/jsx-sfc.esm.js",
