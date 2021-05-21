@@ -21,12 +21,14 @@ export default function useTemplates(defineTemplates: DefineTemplates) {
 
   let mainTemplate = noop as Template.Render['render'];
   tmplFcs.forEach(item => {
-    if (IS_PRODUCTION || (item && isTemplate(item.type))) {
-      const renderFunc = (item.children as VNodeArrayChildrenWithDefault).default;
-      if (item.props?.name) {
-        item.props.name.render = renderFunc;
-      } else {
-        mainTemplate = renderFunc;
+    if (item) {
+      if (IS_PRODUCTION || isTemplate(item.type)) {
+        const renderFunc = (item.children as VNodeArrayChildrenWithDefault).default;
+        if (item.props?.name) {
+          item.props.name.render = renderFunc;
+        } else {
+          mainTemplate = renderFunc;
+        }
       }
     }
   });

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v1.3.5] 2021.05.21
+
+- 🐛 Fix the error when `<Template>` is null.
+
 ## [v1.3.0] 2021.05.17
 
 - 🌟 Add `options`, `ComponentDataType` API for `jsx-sfc`.

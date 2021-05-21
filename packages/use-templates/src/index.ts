@@ -22,12 +22,14 @@ export default function useTemplates(defineTemplates: DefineTemplates) {
 
   let mainTemplate = noop as Template.Render['render'];
   tmplFcs.forEach(item => {
-    if (IS_PRODUCTION || (item && isTemplate(item.type))) {
-      const { name, children } = item.props;
-      if (name) {
-        name.render = children;
-      } else {
-        mainTemplate = children;
+    if (item) {
+      if (IS_PRODUCTION || isTemplate(item.type)) {
+        const { name, children } = item.props;
+        if (name) {
+          name.render = children;
+        } else {
+          mainTemplate = children;
+        }
       }
     }
   });

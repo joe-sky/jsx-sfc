@@ -43,12 +43,14 @@ export function createOptions(options: FuncMap, extensions?: Func | Obj, isRunti
 
             let mainTemplate = noop as Template.Render['render'];
             tmplFcs.forEach(item => {
-              if (IS_PRODUCTION || (item && isTemplate(item.type))) {
-                const { name, children } = item.props;
-                if (name) {
-                  name.template = name.render = children;
-                } else {
-                  mainTemplate = children;
+              if (item) {
+                if (IS_PRODUCTION || isTemplate(item.type)) {
+                  const { name, children } = item.props;
+                  if (name) {
+                    name.template = name.render = children;
+                  } else {
+                    mainTemplate = children;
+                  }
                 }
               }
             });
