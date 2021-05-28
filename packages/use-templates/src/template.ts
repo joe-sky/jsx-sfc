@@ -30,3 +30,7 @@ export namespace Template {
 
   export type EL = typeof templateElement;
 }
+
+export function createTemplate<T extends string[]>(...names: T) {
+  return Object.assign({} as Record<typeof names[number], typeof Template>, Template);
+}
