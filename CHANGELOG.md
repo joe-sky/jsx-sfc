@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v1.3.6] 2021.05.31
+
+- 🌟 Add `createTemplate` API, support both `jsx-sfc` and `use-templates`.
+
 ## [v1.3.5] 2021.05.21
 
 - 🐛 Fix the error when `<Template>` is null.

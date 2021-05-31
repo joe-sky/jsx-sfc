@@ -4,7 +4,7 @@ import { shallow, mount } from 'enzyme';
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import styled from '@emotion/styled';
-import sfc, { Template, ComponentDataType } from '../src/index';
+import sfc, { ComponentDataType, createTemplate, TemplateRender } from '../src/index';
 
 interface AppProps {
   test?: string;
@@ -75,21 +75,18 @@ describe('basic', function() {
   });
 });
 
-const AppMultiTmpls = sfc<AppProps>()({
-  template: (
-    { data, styles: { Container } },
-    header: Template.Render<string>,
-    footer: Template.Render<string>,
-    noop
-  ) => (
-    <>
-      <Template name={header}>{content => <header>{content}</header>}</Template>
+const Template = createTemplate('Region', 'Main');
 
-      <Template name={footer}>{content => <footer>{content}</footer>}</Template>
+const AppMultiTmpls = sfc<AppProps>()({
+  template: ({ data, styles: { Container } }, header: TemplateRender<string>, footer: TemplateRender<string>, noop) => (
+    <>
+      <Template.Region name={header}>{content => <header>{content}</header>}</Template.Region>
+
+      <Template.Region name={footer}>{content => <footer>{content}</footer>}</Template.Region>
 
       {false && <Template name={noop}>{() => <></>}</Template>}
 
-      <Template>
+      <Template.Main>
         {() => (
           <Container>
             {header.render(data.test)}
@@ -97,7 +94,7 @@ const AppMultiTmpls = sfc<AppProps>()({
             {footer.render(data.test)}
           </Container>
         )}
-      </Template>
+      </Template.Main>
     </>
   ),
 

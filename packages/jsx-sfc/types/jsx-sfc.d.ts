@@ -1,35 +1,37 @@
 /*!
- * jsx-sfc v1.3.5
+ * jsx-sfc v1.3.6
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
 import React, { ReactElement, PropsWithChildren, RefAttributes } from 'react';
 
 declare type Func = (...args: any) => any;
-declare type Obj = Record<string, unknown>;
-declare type FuncMap = Record<string, Func | Obj | undefined>;
-declare type JSXElements = ReactElement<any, any> | null;
 interface Noop {
     (): any;
     [key: string]: any;
 }
-
 declare const templateElement: Noop;
+
+declare type Obj = Record<string, unknown>;
+declare type FuncMap = Record<string, Func | Obj | undefined>;
+declare type JSXElements = ReactElement<any, any> | null;
+
 declare function isTemplate(templateElement: any): templateElement is Template.EL;
 declare const Template: <Arg1 = any, Arg2 = any, Arg3 = any, Arg4 = any, Arg5 = any, T extends Template.Render<Arg1, Arg2, Arg3, Arg4, Arg5> = Template.Render>(props: {
     name?: T;
     children: T['__required'];
 }) => JSXElements;
+interface TemplateRender<Arg1 = any, Arg2 = any, Arg3 = any, Arg4 = any, Arg5 = any> {
+    (arg1?: Arg1, arg2?: Arg2, arg3?: Arg3, arg4?: Arg4, arg5?: Arg5, ...args: any[]): JSXElements;
+    render: (arg1?: Arg1, arg2?: Arg2, arg3?: Arg3, arg4?: Arg4, arg5?: Arg5, ...args: any[]) => JSXElements;
+    __required(arg1: Arg1, arg2: Arg2, arg3: Arg3, arg4: Arg4, arg5: Arg5, ...args: any[]): JSXElements;
+    /**
+     * @deprecated Please use `render`
+     */
+    template: (arg1?: Arg1, arg2?: Arg2, arg3?: Arg3, arg4?: Arg4, arg5?: Arg5, ...args: any[]) => JSXElements;
+}
 declare namespace Template {
-    interface Render<Arg1 = any, Arg2 = any, Arg3 = any, Arg4 = any, Arg5 = any> {
-        (arg1?: Arg1, arg2?: Arg2, arg3?: Arg3, arg4?: Arg4, arg5?: Arg5, ...args: any[]): JSXElements;
-        render: (arg1?: Arg1, arg2?: Arg2, arg3?: Arg3, arg4?: Arg4, arg5?: Arg5, ...args: any[]) => JSXElements;
-        __required(arg1: Arg1, arg2: Arg2, arg3: Arg3, arg4: Arg4, arg5: Arg5, ...args: any[]): JSXElements;
-        /**
-         * @deprecated Please use `render`
-         */
-        template: (arg1?: Arg1, arg2?: Arg2, arg3?: Arg3, arg4?: Arg4, arg5?: Arg5, ...args: any[]) => JSXElements;
-    }
+    type Render<Arg1 = any, Arg2 = any, Arg3 = any, Arg4 = any, Arg5 = any> = TemplateRender<Arg1, Arg2, Arg3, Arg4, Arg5>;
     /**
      * @deprecated Please use `Template.Render`
      */
@@ -38,6 +40,13 @@ declare namespace Template {
     type ComponentData = Obj;
     type InternalFunc = <D extends ComponentData>(data?: D) => D;
 }
+declare const createTemplate: <U extends string[]>(...names: U) => (<Arg1 = any, Arg2 = any, Arg3 = any, Arg4 = any, Arg5 = any, T extends Template.Render<Arg1, Arg2, Arg3, Arg4, Arg5> = Template.Render<any, any, any, any, any>>(props: {
+    name?: T | undefined;
+    children: T["__required"];
+}) => JSXElements) & Record<U[number], <Arg1 = any, Arg2 = any, Arg3 = any, Arg4 = any, Arg5 = any, T extends Template.Render<Arg1, Arg2, Arg3, Arg4, Arg5> = Template.Render<any, any, any, any, any>>(props: {
+    name?: T | undefined;
+    children: T["__required"];
+}) => JSXElements>;
 
 declare type NoRef = 'noRef';
 declare type SFCProps<Props = {}, EX = {}> = PropsWithChildren<Props> & {
@@ -149,4 +158,4 @@ declare const sfc: SFC;
 declare const forwardRef: ForwardRefSFC;
 
 export default sfc;
-export { ComponentDataType, DefineComponent, ForwardRefSFC, SFC, SFCExtensions, SFCOptions, SFCProps, Template, createOptions, forwardRef, isTemplate };
+export { ComponentDataType, DefineComponent, ForwardRefSFC, SFC, SFCExtensions, SFCOptions, SFCProps, Template, TemplateRender, createOptions, createTemplate, forwardRef, isTemplate };

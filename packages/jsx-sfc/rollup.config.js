@@ -8,42 +8,47 @@ import copy from 'rollup-plugin-copy';
 
 const env = process.env.NODE_ENV;
 const type = process.env.TYPE;
-let config;
+let config = {
+  input: './src/index.ts',
+  external: ['react'],
+  plugins: [
+    resolve({
+      customResolveOptions: {
+        moduleDirectory: ['node_modules']
+      },
+      extensions: ['.js', '.jsx', '.ts', '.tsx']
+    })
+  ]
+};
 
 if (type !== 'dts') {
   config = {
-    input: './src/index.ts',
-    output: { name: 'JsxSFC' },
-    plugins: [
-      esbuild({
-        include: /\.[jt]sx?$/, // default, inferred from `loaders` option
-        exclude: /node_modules/, // default
-        sourceMap: false, // default
-        minify: process.env.NODE_ENV === 'production',
-        target: 'es2017', // default, or 'es20XX', 'esnext'
-        jsxFactory: 'React.createElement',
-        jsxFragment: 'React.Fragment',
-        // Like @rollup/plugin-replace
-        define: {
-          __VERSION__: '"x.y.z"'
-        },
-        // Add extra loaders
-        loaders: {
-          // Add .json files support
-          // require @rollup/plugin-commonjs
-          '.json': 'json',
-          // Enable JSX in .js files too
-          '.js': 'jsx'
-        }
-      }),
-      resolve({
-        customResolveOptions: {
-          moduleDirectory: 'src'
-        },
-        extensions: ['.js', '.jsx', '.ts', '.tsx']
-      })
-    ]
+    ...config,
+    output: { name: 'JsxSFC' }
   };
+  config.plugins.push(
+    esbuild({
+      include: /\.[jt]sx?$/, // default, inferred from `loaders` option
+      exclude: /node_modules/, // default
+      sourceMap: false, // default
+      minify: process.env.NODE_ENV === 'production',
+      target: 'es2017', // default, or 'es20XX', 'esnext'
+      jsxFactory: 'React.createElement',
+      jsxFragment: 'React.Fragment',
+      // Like @rollup/plugin-replace
+      define: {
+        __VERSION__: '"x.y.z"'
+      },
+      // Add extra loaders
+      loaders: {
+        // Add .json files support
+        // require @rollup/plugin-commonjs
+        '.json': 'json',
+        // Enable JSX in .js files too
+        '.js': 'jsx'
+      }
+    })
+  );
 
   if (env === 'cjs' || env === 'es') {
     config.output.format = env;
@@ -75,10 +80,10 @@ if (type !== 'dts') {
   }
 } else {
   config = {
-    input: './src/index.ts',
-    output: { format: 'es' },
-    plugins: [dts()]
+    ...config,
+    output: { format: 'es' }
   };
+  config.plugins.push(dts());
 }
 
 config.plugins.push(
