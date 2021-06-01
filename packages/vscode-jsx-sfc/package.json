@@ -1,0 +1,50 @@
+{
+  "name": "vscode-jsx-sfc",
+  "displayName": "jsx-sfc",
+  "description": "Interesting and useful editor tools for jsx-sfc",
+  "version": "0.0.1",
+  "publisher": "joe-sky",
+  "icon": "images/logo.png",
+  "engines": {
+    "vscode": "^1.29.0"
+  },
+  "categories": [
+    "Visualization"
+  ],
+  "activationEvents": [
+    "onLanguage:javascript",
+    "onLanguage:javascriptreact",
+    "onLanguage:typescript",
+    "onLanguage:typescriptreact"
+  ],
+  "main": "./out/extension",
+  "contributes": {
+    "commands": [
+      {
+        "command": "jsxSfc.action.splitEditors",
+        "title": "Split Component(), template(), styles() Editors",
+        "category": "jsx-sfc",
+        "icon": "images/split-editors.png"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joe-sky/jsx-sfc.git"
+  },
+  "keywords": [
+    "jsx-sfc",
+    "sfc",
+    "react"
+  ],
+  "devDependencies": {
+    "@types/node": "^7.0.43",
+    "@types/vscode": "^1.56.0",
+    "typescript": "^4.0.5"
+  }
+}

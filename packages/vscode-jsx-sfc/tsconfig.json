@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "module": "es2015",
+    "target": "es2019",
+    "outDir": "out",
+    "lib": ["es6"],
+    "sourceMap": true,
+    "rootDir": "src",
+    "strict": true,
+    "noUnusedLocals": false,
+    "noImplicitReturns": true,
+    "noUnusedParameters": false,
+    "typeRoots": ["./node_modules/@types"]
+  },
+  "exclude": ["node_modules", ".vscode-test"]
+}
