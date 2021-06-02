@@ -11,7 +11,7 @@ export default function useTemplates(defineTemplates: DefineTemplates) {
 
   const jsxFragment = defineTemplates(...(emptyObjs(paramsCount) as Template.Render[])) as VNode;
   if (!IS_PRODUCTION && jsxFragment?.type !== Fragment) {
-    throw new TypeError('The return of template with multiple arguments must be React.Fragment type.');
+    throw new TypeError('The return of template with multiple arguments must be Fragment type.');
   }
 
   const tmplFcs = jsxFragment.children as VNode[];

@@ -703,7 +703,7 @@ import sfc from 'jsx-sfc.macro';
 function sfc<Props, ComponentData, Styles, OP, EX>(
   options: {
     template?: (args: { data: ComponentData; styles: Styles } & OP & EX, ...tmpls: Template.Func[]) => JSX.Element;
-    Component: (props?: Props & Styles & EX & { originalProps: Props }) => ComponentData;
+    Component: (props?: Props & Styles & EX & { props: Props }) => ComponentData;
     styles?: Styles;
     options?: OP;
   },

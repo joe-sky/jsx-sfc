@@ -11,10 +11,10 @@ interface AppProps {
 }
 
 const App = sfc<AppProps>()({
-  Component: ({ styles: { Container }, originalProps }) => {
+  Component: ({ styles: { Container }, props }) => {
     return (
       <Container>
-        <div>{originalProps.test}</div>
+        <div>{props.test}</div>
       </Container>
     );
   },

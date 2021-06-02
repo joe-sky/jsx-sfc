@@ -95,8 +95,8 @@ const snapshotRedefineProps = `const Sfc_5 = props => {
   return $sfcOptions_5.template({ firstName: 'joe', styles: props.styles });
 }`;
 
-const snapshotObjectPattern = `const Sfc_5 = props => {
-  const { styles } = { ...props, ...$sfcOptions_5, originalProps: props };
+const snapshotObjectPattern = `const Sfc_5 = __props => {
+  const { styles } = { ...__props, ...$sfcOptions_5, props: __props, originalProps: __props };
   return $sfcOptions_5.template({ firstName: 'joe', styles });
 }`;
 

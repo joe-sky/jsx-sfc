@@ -6,6 +6,10 @@ type NoRef = 'noRef';
 
 export type SFCProps<Props = {}, EX = {}> = PropsWithChildren<Props> & {
   template: Template.InternalFunc;
+  props: PropsWithChildren<Props>;
+  /**
+   * @deprecated Please use `props`
+   */
   originalProps: PropsWithChildren<Props>;
 } & EX;
 

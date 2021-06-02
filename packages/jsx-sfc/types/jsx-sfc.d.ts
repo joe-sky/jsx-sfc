@@ -1,5 +1,5 @@
 /*!
- * jsx-sfc v1.3.6
+ * jsx-sfc v1.3.7
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
@@ -51,6 +51,10 @@ declare const createTemplate: <U extends string[]>(...names: U) => (<Arg1 = any,
 declare type NoRef = 'noRef';
 declare type SFCProps<Props = {}, EX = {}> = PropsWithChildren<Props> & {
     template: Template.InternalFunc;
+    props: PropsWithChildren<Props>;
+    /**
+     * @deprecated Please use `props`
+     */
     originalProps: PropsWithChildren<Props>;
 } & EX;
 declare type ExtractOptions<T> = T extends () => infer R ? (R extends Obj ? R : never) : T extends Obj ? T : unknown;

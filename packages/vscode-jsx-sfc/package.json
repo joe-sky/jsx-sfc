@@ -1,12 +1,12 @@
 {
   "name": "vscode-jsx-sfc",
   "displayName": "jsx-sfc",
-  "description": "Interesting and useful editor tools for jsx-sfc",
+  "description": "Useful and interesting editor tools for jsx-sfc.",
   "version": "0.0.1",
   "publisher": "joe-sky",
   "icon": "images/logo.png",
   "engines": {
-    "vscode": "^1.29.0"
+    "vscode": "latest"
   },
   "categories": [
     "Visualization"

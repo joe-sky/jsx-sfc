@@ -1,5 +1,5 @@
 import { ReactElement } from 'react';
-import { Func } from 'use-templates/src/share';
+import { Func } from 'use-templates/src/shared';
 
 export type Obj = Record<string, unknown>;
 
@@ -21,4 +21,4 @@ export function withOrigin(component: Func) {
   });
 }
 
-export * from 'use-templates/src/share';
+export * from 'use-templates/src/shared';

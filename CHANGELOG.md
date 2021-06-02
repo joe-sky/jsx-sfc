@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v1.3.7] 2021.06.02
+
+- 👆 `originalProps` is deprecated, use `props` instead.
+
 ## [v1.3.6] 2021.05.31
 
 - 🌟 Add `createTemplate` API, support both `jsx-sfc` and `use-templates`.

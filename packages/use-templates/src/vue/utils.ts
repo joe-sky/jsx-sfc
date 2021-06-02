@@ -1,8 +1,8 @@
 import { VNodeChild, VNodeArrayChildren } from 'vue';
-import { Func } from '../share';
+import { Func } from '../shared';
 
 export type JSXElements = VNodeChild;
 
 export type VNodeArrayChildrenWithDefault = VNodeArrayChildren & { default: Func };
 
-export * from '../share';
+export * from '../shared';

@@ -1,4 +1,4 @@
-import traverse, { Visitor, NodePath } from '@babel/traverse';
+import { Visitor, NodePath } from '@babel/traverse';
 import * as types from '@babel/types';
 import { SFC_FUNC, SFC_COMPONENT, getOptionsName, getSfcName, SFC_CREATE_OPTIONS, SFC_FORWARD_REF } from './utils';
 import * as astUtil from './utils/ast';
@@ -15,7 +15,7 @@ export default () => ({
   name: 'babel-plugin-jsx-sfc',
   visitor: {
     Program(_path, state: State) {
-      traverse(_path.node, {
+      _path.traverse({
         /*
           const App = sfc(
             {
@@ -151,8 +151,8 @@ export default () => ({
                 >;
                 if (firstPropParamPath) {
                   if (types.isObjectPattern(firstPropParamPath.node)) {
-                    // const { styles, originalProps } = { ...props, ...$sfcOptions_lineNo, originalProps: props };
-                    const propsName = 'props';
+                    // const { styles, props } = { ...__props, ...$sfcOptions_lineNo, props: __props, originalProps(deprecated): __props };
+                    const propsName = '__props';
 
                     funcBlockPath.unshiftContainer(
                       'body',
@@ -162,6 +162,7 @@ export default () => ({
                           types.objectExpression([
                             types.spreadElement(types.identifier(propsName)),
                             types.spreadElement(types.identifier(sfcOptionsName)),
+                            types.objectProperty(types.identifier('props'), types.identifier(propsName)),
                             types.objectProperty(types.identifier('originalProps'), types.identifier(propsName))
                           ])
                         )
