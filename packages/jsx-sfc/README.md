@@ -1312,6 +1312,10 @@ The compiled code of `jsx-sfc` has a few optimization space yet, which can conti
 
 If better syntax implementation details are found and if they're not compatible with v1.0 syntax, I will summarize them and arrange them to v2.0 implementation.
 
+### The vscode plugin
+
+- [vscode-jsx-sfc(WIP)](https://github.com/joe-sky/jsx-sfc/tree/main/packages/vscode-jsx-sfc)
+
 <!-- ### Support Vue v3
 
 After a preliminary study, the `jsx-sfc for Vue v3` version can basically be implemented, which is roughly the following syntax:

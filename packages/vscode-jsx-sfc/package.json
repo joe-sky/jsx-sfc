@@ -6,7 +6,7 @@
   "publisher": "joe-sky",
   "icon": "images/logo.png",
   "engines": {
-    "vscode": "latest"
+    "vscode": "^1.29.0"
   },
   "categories": [
     "Visualization"
@@ -14,24 +14,55 @@
   "activationEvents": [
     "onLanguage:javascript",
     "onLanguage:javascriptreact",
-    "onLanguage:typescript",
     "onLanguage:typescriptreact"
   ],
   "main": "./out/extension",
   "contributes": {
+    "configuration": {
+      "type": "object",
+      "title": "jsx-sfc",
+      "properties": {
+        "jsx-sfc.icon.splitEditors": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show split editor icon in title area of editor."
+        }
+      }
+    },
     "commands": [
       {
-        "command": "jsxSfc.action.splitEditors",
+        "command": "jsx-sfc.action.splitEditors",
         "title": "Split Component(), template(), styles() Editors",
         "category": "jsx-sfc",
         "icon": "images/split-editors.png"
       }
-    ]
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "jsx-sfc.action.splitEditors",
+          "when": "editorLangId == javascript && config.jsx-sfc.icon.splitEditors",
+          "group": "navigation"
+        },
+        {
+          "command": "jsx-sfc.action.splitEditors",
+          "when": "editorLangId == javascriptreact && config.jsx-sfc.icon.splitEditors",
+          "group": "navigation"
+        },
+        {
+          "command": "jsx-sfc.action.splitEditors",
+          "when": "editorLangId == typescriptreact && config.jsx-sfc.icon.splitEditors",
+          "group": "navigation"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./"
+    "watch": "tsc -watch -p ./",
+    "test": "jest --config=test/jest.config.js",
+    "jest:clear": "jest --clearCache"
   },
   "repository": {
     "type": "git",
@@ -43,8 +74,22 @@
     "react"
   ],
   "devDependencies": {
+    "@types/jest": "^26.0.23",
     "@types/node": "^7.0.43",
     "@types/vscode": "^1.56.0",
+    "jest": "^27.0.4",
     "typescript": "^4.0.5"
+  },
+  "dependencies": {
+    "@babel/core": "^7.14.3",
+    "@babel/plugin-proposal-json-strings": "^7.14.2",
+    "@babel/plugin-proposal-optional-chaining": "^7.14.2",
+    "@babel/plugin-syntax-decorators": "^7.12.13",
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
+    "@babel/plugin-syntax-import-meta": "^7.10.4",
+    "@babel/preset-env": "^7.14.4",
+    "@babel/preset-typescript": "^7.13.0",
+    "@babel/traverse": "^7.14.2",
+    "@babel/types": "^7.14.4"
   }
 }
