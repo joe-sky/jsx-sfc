@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v1.3.8] 2021.06.07
+
+- 👆 The APIs of `babel-plugin-jsx-sfc` can be exported.
+
 ## [v1.3.7] 2021.06.02
 
 - 👆 `originalProps` is deprecated, use `props` instead.

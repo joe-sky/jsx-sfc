@@ -1,10 +1,11 @@
 import { Visitor, NodePath } from '@babel/traverse';
 import * as types from '@babel/types';
 import { SFC_FUNC, SFC_COMPONENT, getOptionsName, getSfcName, SFC_CREATE_OPTIONS, SFC_FORWARD_REF } from './utils';
-import * as astUtil from './utils/ast';
+import * as astUtils from './utils/ast';
+import * as utils from './utils';
 // import generate from '@babel/generator';
 
-interface State {
+export interface State {
   opts?: {
     importedLib?: string[];
   };
@@ -73,7 +74,7 @@ export default () => ({
             let sfcType: 0 | 1 | 2 | 3 | 4 = 0;
             if (
               types.isCallExpression(callee) &&
-              astUtil.isCalleeImportedBySfc(callee.callee, path, importedLib, state?.customImportName)
+              astUtils.isCalleeImportedBySfc(callee.callee, path, importedLib, state?.customImportName)
             ) {
               if (
                 types.isMemberExpression(callee.callee) &&
@@ -84,7 +85,7 @@ export default () => ({
               } else {
                 sfcType = 1;
               }
-            } else if (astUtil.isCalleeImportedBySfc(callee, path, importedLib, state?.customImportName)) {
+            } else if (astUtils.isCalleeImportedBySfc(callee, path, importedLib, state?.customImportName)) {
               if (
                 types.isMemberExpression(callee) &&
                 types.isIdentifier(callee.property) &&
@@ -280,3 +281,5 @@ export default () => ({
     }
   } as Visitor
 });
+
+export { astUtils, utils };

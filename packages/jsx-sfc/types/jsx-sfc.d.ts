@@ -1,5 +1,5 @@
 /*!
- * jsx-sfc v1.3.7
+ * jsx-sfc v1.3.8
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
@@ -157,7 +157,7 @@ declare type ComponentDataType<C> = C extends {
     __componentData: infer D;
 } ? D : never : never;
 
-declare function createOptions(options: FuncMap, extensions?: Func | Obj, isRuntime?: boolean): Record<string, unknown>;
+declare function createOptions(options: FuncMap, extensions?: Func | Obj, isRuntime?: boolean): Obj;
 declare const sfc: SFC;
 declare const forwardRef: ForwardRefSFC;
 

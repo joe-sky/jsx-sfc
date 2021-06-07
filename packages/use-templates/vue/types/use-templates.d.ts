@@ -1,5 +1,5 @@
 /*!
- * use-templates v1.3.7
+ * use-templates v1.3.8
  * (c) 2021-present Joe_Sky
  * Released under the MIT License.
  */

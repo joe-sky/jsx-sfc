@@ -113,7 +113,7 @@ function createSfc(isForwardRef?: boolean) {
 }
 
 export const sfc: SFC = createSfc() as any;
-export const forwardRef: ForwardRefSFC = createSfc(true);
+export const forwardRef: ForwardRefSFC = createSfc(true) as any;
 
 sfc.forwardRef = forwardRef;
 sfc.createOptions = createOptions;
