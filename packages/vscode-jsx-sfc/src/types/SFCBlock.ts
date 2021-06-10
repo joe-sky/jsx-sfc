@@ -4,3 +4,9 @@ export interface SFCBlock {
 }
 
 export type Descriptor = Record<'template' | 'component' | 'styles' | 'options', SFCBlock[]>;
+
+export enum BlocksType {
+  Component = 1,
+  Template = 2,
+  Styles = 3
+}
