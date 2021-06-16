@@ -38,7 +38,7 @@
 
 <!-- - 🌟 Easy way to define function components with **separation of concerns** -->
 
-- ✨ Clearly isolate **JSX tags**, **logic**, **styles** and **any other concerns** within JSX based functional components
+- ✨ Clearly separate **JSX tags**, **logic**, **styles** and **any other concerns** within JSX based functional components
   <!-- - 🚩 New APIs for **defining and using static members** in function components -->
 - 💫 **Completely type inference** design by TypeScript
   <!-- - 🕹 Support **export internal member types** from components (Documentation to be completed) -->
@@ -48,6 +48,7 @@
 - 🔨 Support React dev tools
 - ⚡ Performance almost equivalent to regular function components
 - 🚀 No any dependencies (except compiler)
+- 💻 Support **Split Editor** similar to [Volar](https://github.com/johnsoncodehk/volar) by [vscode-jsx-sfc](https://marketplace.visualstudio.com/items?itemName=joe-sky.vscode-jsx-sfc)
 
 ## Motivation
 
@@ -1311,10 +1312,6 @@ The compiled code of `jsx-sfc` has a few optimization space yet, which can conti
 ### About better syntax
 
 If better syntax implementation details are found and if they're not compatible with v1.0 syntax, I will summarize them and arrange them to v2.0 implementation.
-
-### The vscode plugin
-
-- [vscode-jsx-sfc(WIP)](https://github.com/joe-sky/jsx-sfc/tree/main/packages/vscode-jsx-sfc)
 
 <!-- ### Support Vue v3
 
