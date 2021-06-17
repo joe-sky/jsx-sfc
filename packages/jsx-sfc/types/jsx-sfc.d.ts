@@ -1,5 +1,5 @@
 /*!
- * jsx-sfc v1.3.8
+ * jsx-sfc v1.4.0
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
@@ -97,6 +97,7 @@ declare type DefineComponent<Ref = NoRef, Props = {}, ReturnComponent = Ref exte
          */
         template: <U extends Data>(args: {
             data: U;
+            props: PropsWithChildren<Props>;
         } & FR, ...tmpls: Template.Render[]) => JSXElements;
         options?: OP;
     }, extensions?: EX): ReturnComponent & Origin & {

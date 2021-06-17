@@ -703,7 +703,7 @@ import sfc from 'jsx-sfc.macro';
 ```ts
 function sfc<Props, ComponentData, Styles, OP, EX>(
   options: {
-    template?: (args: { data: ComponentData; styles: Styles } & OP & EX, ...tmpls: Template.Func[]) => JSX.Element;
+    template?: (args: { data: ComponentData; props: Props; styles: Styles } & OP & EX, ...templates: TemplateRender[]) => JSX.Element;
     Component: (props?: Props & Styles & EX & { props: Props }) => ComponentData;
     styles?: Styles;
     options?: OP;
@@ -1103,7 +1103,9 @@ For some advanced usages of extensions, see these examples:
 
 #### Options
 
-A new API `options` that purpose is exactly the same as the `extensions` added in v1.3.0. It's just that they're in different places:
+> Added in v1.3.0
+
+A new API `options` that purpose is exactly the same as the `extensions`. It's just that they're in different places:
 
 ```tsx
 import React, { useState } from 'react';

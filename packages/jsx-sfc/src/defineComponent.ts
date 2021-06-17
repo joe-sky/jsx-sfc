@@ -65,8 +65,10 @@ export type DefineComponent<
        * });
        * ```
        */
-      template: <U extends Data>(args: { data: U } & FR, ...tmpls: Template.Render[]) => JSXElements;
-
+      template: <U extends Data>(
+        args: { data: U; props: PropsWithChildren<Props> } & FR,
+        ...tmpls: Template.Render[]
+      ) => JSXElements;
       options?: OP;
     },
     extensions?: EX
@@ -109,7 +111,6 @@ export type DefineComponent<
       Component: Ref extends NoRef
         ? (props: SFCProps<Props, FR>, context?: any) => JSXElements
         : (props: SFCProps<Props, FR>, ref: React.Ref<Ref>) => JSXElements;
-
       options?: OP;
     },
     extensions?: EX

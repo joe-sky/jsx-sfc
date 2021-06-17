@@ -92,16 +92,16 @@ export const App = sfc(
 
 const snapshotRedefineProps = `const Sfc_5 = props => {
   props = { ...props, ...$sfcOptions_5 };
-  return $sfcOptions_5.template({ firstName: 'joe', styles: props.styles });
+  return $sfcOptions_5.template({ firstName: 'joe', styles: props.styles, props: props });
 }`;
 
 const snapshotObjectPattern = `const Sfc_5 = __props => {
   const { styles } = { ...__props, ...$sfcOptions_5, props: __props, originalProps: __props };
-  return $sfcOptions_5.template({ firstName: 'joe', styles });
+  return $sfcOptions_5.template({ firstName: 'joe', styles, props: __props });
 }`;
 
-const snapshot = `const Sfc_5 = () => {
-  return $sfcOptions_5.template({ firstName: 'joe' });
+const snapshot = `const Sfc_5 = __props => {
+  return $sfcOptions_5.template({ firstName: 'joe', props: __props });
 }`;
 
 const snapshotDisplayName = `Sfc_5.displayName = 'App'`;

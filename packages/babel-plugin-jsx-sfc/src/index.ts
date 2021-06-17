@@ -1,6 +1,14 @@
 import { Visitor, NodePath } from '@babel/traverse';
 import * as types from '@babel/types';
-import { SFC_FUNC, SFC_COMPONENT, getOptionsName, getSfcName, SFC_CREATE_OPTIONS, SFC_FORWARD_REF } from './utils';
+import {
+  SFC_FUNC,
+  SFC_COMPONENT,
+  SFC_TEMPLATE,
+  getOptionsName,
+  getSfcName,
+  SFC_CREATE_OPTIONS,
+  SFC_FORWARD_REF
+} from './utils';
 import * as astUtils from './utils/ast';
 import * as utils from './utils';
 // import generate from '@babel/generator';
@@ -143,18 +151,14 @@ export default () => ({
                 }
 
                 const funcBlockPath = componentFuncPath.get('body') as NodePath<types.BlockStatement>;
-                const returnArgPath = componentFuncPath.get('body.body').find(p => p.isReturnStatement()) as NodePath<
-                  types.ReturnStatement
-                >;
-
                 const firstPropParamPath = componentFuncPath.get('params.0') as NodePath<
                   types.Identifier | types.ObjectPattern
                 >;
+
+                let propsName = '__props';
                 if (firstPropParamPath) {
                   if (types.isObjectPattern(firstPropParamPath.node)) {
                     // const { styles, props } = { ...__props, ...$sfcOptions_lineNo, props: __props, originalProps(deprecated): __props };
-                    const propsName = '__props';
-
                     funcBlockPath.unshiftContainer(
                       'body',
                       types.variableDeclaration('const', [
@@ -173,7 +177,7 @@ export default () => ({
                     firstPropParamPath.replaceWith(types.identifier(propsName));
                   } else {
                     // props = { ...props, ...$sfcOptions_lineNo };
-                    const propsName = (firstPropParamPath.node as types.Identifier).name;
+                    propsName = (firstPropParamPath.node as types.Identifier).name;
 
                     funcBlockPath.unshiftContainer(
                       'body',
@@ -189,15 +193,50 @@ export default () => ({
                       )
                     );
                   }
+                } else {
+                  if (types.isObjectMethod(componentFuncPath.node)) {
+                    componentFuncPath.replaceWith(
+                      types.objectMethod(
+                        'method',
+                        types.identifier(SFC_COMPONENT),
+                        [types.identifier(propsName)],
+                        funcBlockPath.node
+                      )
+                    );
+                  } else {
+                    componentFuncPath.replaceWith(
+                      types.arrowFunctionExpression([types.identifier(propsName)], funcBlockPath.node)
+                    );
+                  }
                 }
 
+                const returnArgPath = componentFuncPath.get('body.body').find(p => p.isReturnStatement()) as NodePath<
+                  types.ReturnStatement
+                >;
+
                 // return $sfcOptions_lineNo.template({ ... });
+                let existProps: types.ObjectProperty | null = null;
                 if (types.isObjectExpression(returnArgPath.node.argument)) {
                   returnArgPath.replaceWith(
                     types.returnStatement(
                       types.callExpression(
-                        types.memberExpression(types.identifier(sfcOptionsName), types.identifier('template')),
-                        [returnArgPath.node.argument]
+                        types.memberExpression(types.identifier(sfcOptionsName), types.identifier(SFC_TEMPLATE)),
+                        [
+                          types.objectExpression([
+                            ...returnArgPath.node.argument.properties.filter(property => {
+                              if (
+                                types.isObjectProperty(property) &&
+                                types.isIdentifier(property.key) &&
+                                property.key.name === 'props'
+                              ) {
+                                existProps = property;
+                                return false;
+                              }
+                              return true;
+                            }),
+                            existProps || types.objectProperty(types.identifier('props'), types.identifier(propsName))
+                          ])
+                        ]
                       )
                     )
                   );
@@ -225,10 +264,13 @@ export default () => ({
                 );
 
                 let actualComponentFunc: types.ArrowFunctionExpression;
-                if (componentProp) {
-                  actualComponentFunc = componentProp.value as types.ArrowFunctionExpression;
+                if (types.isArrowFunctionExpression(componentFuncPath.node)) {
+                  actualComponentFunc = componentFuncPath.node;
                 } else {
-                  actualComponentFunc = types.arrowFunctionExpression(componentMethod.params, componentMethod.body);
+                  actualComponentFunc = types.arrowFunctionExpression(
+                    componentFuncPath.node.params,
+                    componentFuncPath.node.body
+                  );
                 }
 
                 if (sfcType <= 2) {

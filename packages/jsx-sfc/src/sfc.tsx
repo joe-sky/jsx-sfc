@@ -30,7 +30,10 @@ export function createOptions(options: FuncMap, extensions?: Func | Obj, isRunti
     ret.template =
       paramsCount > 1
         ? (data?: Template.ComponentData) => {
-            const jsxFragment: ReactElement = template({ data, ...ret }, ...emptyObjs(paramsCount - 1));
+            const jsxFragment: ReactElement = template(
+              { data, props: data?.props, ...ret },
+              ...emptyObjs(paramsCount - 1)
+            );
             if (!IS_PRODUCTION && jsxFragment?.type !== Fragment) {
               throw new TypeError('The return of template with multiple arguments must be React.Fragment type.');
             }
@@ -57,7 +60,7 @@ export function createOptions(options: FuncMap, extensions?: Func | Obj, isRunti
 
             return mainTemplate();
           }
-        : (data?: Template.ComponentData) => template({ data, ...ret });
+        : (data?: Template.ComponentData) => template({ data, props: data?.props, ...ret });
   }
 
   if (!isRuntime) {
