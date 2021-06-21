@@ -7,7 +7,6 @@ module.exports = {
     '<rootDir>/packages/jsx-sfc/**/__tests__/**/*.(spec|test).{js,jsx,ts,tsx}',
     '<rootDir>/packages/use-templates/**/__tests__/**/*.(spec|test).{js,jsx,ts,tsx}'
   ],
-  testEnvironment: 'enzyme',
   transform: {
     '^.+\\.(js|jsx|ts|tsx|mjs)$': ['<rootDir>/node_modules/babel-jest', { configFile: './test/jest.compile.babelrc' }],
     '^.+\\.m\\.(less|scss)$': '<rootDir>/node_modules/jest-css-modules-transform',

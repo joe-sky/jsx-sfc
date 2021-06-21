@@ -1,7 +1,7 @@
 <h1 align="center">
   JSX Separate Function Components
   <div>
-    <a href="https://travis-ci.org/joe-sky/jsx-sfc"><img src="https://travis-ci.org/joe-sky/jsx-sfc.svg?branch=main" alt="Travis CI Status"></a>
+    <a href="https://travis-ci.com/joe-sky/jsx-sfc"><img src="https://travis-ci.com/joe-sky/jsx-sfc.svg?branch=main" alt="Travis CI Status"></a>
     <a href="https://codecov.io/gh/joe-sky/jsx-sfc"><img src="https://codecov.io/gh/joe-sky/jsx-sfc/branch/main/graph/badge.svg" alt="Codecov"></a>
     <!-- <a href="https://www.npmjs.org/package/jsx-sfc"><img src="https://img.shields.io/npm/v/jsx-sfc.svg" alt="NPM Version"></a> -->
     <!-- <a href="https://www.npmjs.org/package/jsx-sfc"><img src="https://img.shields.io/npm/dm/jsx-sfc.svg" alt="NPM Downloads"></a> -->
