@@ -7,57 +7,55 @@ interface AppProps {
   title?: string;
 }
 
-const App = sfc<AppProps>()(
-  {
-    template: ({ data }) => {
-      const { classes } = data;
+const App = sfc<AppProps>()({
+  template: ({ data }) => {
+    const { classes } = data;
 
-      return (
-        <div className={classes.App}>
-          <header className={classes.AppHeader}>
-            <img src={logo} className={classes.AppLogo} alt="logo" />
-            <p>{data.title}</p>
-            <p>
-              <button className={classes.AppButton} onClick={data.onClick}>
-                count is: {data.count}
-              </button>
-            </p>
-            <p>
-              Edit <code>App.tsx</code> and save to test HMR updates.
-            </p>
-            <p>
-              <a className={classes.AppLink} href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-                Learn React
-              </a>
-              {' | '}
-              <a
-                className={classes.AppLink}
-                href="https://vitejs.dev/guide/features.html"
-                target="_blank"
-                rel="noopener noreferrer">
-                Vite Docs
-              </a>
-            </p>
-          </header>
-        </div>
-      );
-    },
-
-    Component: ({ title, useStyles }) => {
-      const [count, setCount] = useState(0);
-      const classes = useStyles();
-
-      return {
-        title,
-        count,
-        setCount,
-        classes,
-        onClick: () => setCount(count => count + 1)
-      };
-    }
+    return (
+      <div className={classes.App}>
+        <header className={classes.AppHeader}>
+          <img src={logo} className={classes.AppLogo} alt="logo" />
+          <p>{data.title}</p>
+          <p>
+            <button className={classes.AppButton} onClick={data.onClick}>
+              count is: {data.count}
+            </button>
+          </p>
+          <p>
+            Edit <code>App.tsx</code> and save to test HMR updates.
+          </p>
+          <p>
+            <a className={classes.AppLink} href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
+              Learn React
+            </a>
+            {' | '}
+            <a
+              className={classes.AppLink}
+              href="https://vitejs.dev/guide/features.html"
+              target="_blank"
+              rel="noopener noreferrer">
+              Vite Docs
+            </a>
+          </p>
+        </header>
+      </div>
+    );
   },
 
-  {
+  Component: ({ title, useStyles }) => {
+    const [count, setCount] = useState(0);
+    const classes = useStyles();
+
+    return {
+      title,
+      count,
+      setCount,
+      classes,
+      onClick: () => setCount(count => count + 1)
+    };
+  },
+
+  options: {
     ...styles({
       App: {
         textAlign: 'center'
@@ -97,6 +95,6 @@ const App = sfc<AppProps>()(
       title: 'Hello Vite + React!'
     }
   }
-);
+});
 
 export default App;

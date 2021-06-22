@@ -4,27 +4,18 @@ import styled from 'styled-components';
 import sfc from 'jsx-sfc';
 import Todo from './Todo';
 
-const TodoList = sfc(
-  {
-    Component({ todos, onTodoClick, styles: { Wrapper } }) {
-      return (
-        <Wrapper>
-          {todos.map(todo => (
-            <Todo key={todo.id} {...todo} onClick={() => onTodoClick(todo.id)} />
-          ))}
-        </Wrapper>
-      );
-    },
-
-    styles: {
-      Wrapper: styled.ul`
-        margin: 20px 0;
-        padding: 0;
-      `
-    }
+const TodoList = sfc({
+  Component({ todos, onTodoClick, styles: { Wrapper } }) {
+    return (
+      <Wrapper>
+        {todos.map(todo => (
+          <Todo key={todo.id} {...todo} onClick={() => onTodoClick(todo.id)} />
+        ))}
+      </Wrapper>
+    );
   },
 
-  {
+  options: {
     propTypes: {
       todos: PropTypes.arrayOf(
         PropTypes.shape({
@@ -35,7 +26,14 @@ const TodoList = sfc(
       ).isRequired,
       onTodoClick: PropTypes.func.isRequired
     }
+  },
+
+  styles: {
+    Wrapper: styled.ul`
+      margin: 20px 0;
+      padding: 0;
+    `
   }
-);
+});
 
 export default TodoList;

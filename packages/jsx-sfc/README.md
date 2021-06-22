@@ -87,9 +87,9 @@ It extract a core feature of `jsx-sfc` and can be used independently.
   - [`sfc.forwardRef`](#sfcforwardRef)
   - [Template tags](#template-tags)
     - [`use-templates`](#use-templates)
-  - [Extensions](#extensions)
-    - [Options](#options)
+  - [Options](#options)
   - [Export static members](#export-static-members)
+    <!-- - [Extensions](#extensions) -->
 - [API Design Principle](#api-design-principle)
 - [Roadmap](#roadmap)
 - [Who is using](#who-is-using)
@@ -544,43 +544,26 @@ Then we use jsx-sfc to rewrite it (Click to expand)
 </summary>
 
 ```tsx
-const Todo = sfc(
-  {
-    Component({ onClick, completed, text, styles: { Wrapper }, svgProps }) {
-      return (
-        <Wrapper onClick={onClick}>
-          {completed ? (
-            <svg {...svgProps}>
-              <polyline points="9 11 12 14 23 3"></polyline>
-              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
-            </svg>
-          ) : (
-            <svg {...svgProps}>
-              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-            </svg>
-          )}
-          <span className="text">{text}</span>
-        </Wrapper>
-      );
-    },
-
-    styles: {
-      Wrapper: styled.li`
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        padding: 4px;
-        border-bottom: 1px solid #eee;
-        line-height: 24px;
-        font-size: 110%;
-
-        &:hover {
-          background: #efefef;
-        }
-      `
-    }
+const Todo = sfc({
+  Component({ onClick, completed, text, styles: { Wrapper }, svgProps }) {
+    return (
+      <Wrapper onClick={onClick}>
+        {completed ? (
+          <svg {...svgProps}>
+            <polyline points="9 11 12 14 23 3"></polyline>
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+          </svg>
+        ) : (
+          <svg {...svgProps}>
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+          </svg>
+        )}
+        <span className="text">{text}</span>
+      </Wrapper>
+    );
   },
-  {
+
+  options: {
     svgProps: {
       xmlns: 'http://www.w3.org/2000/svg',
       width: '24',
@@ -592,8 +575,24 @@ const Todo = sfc(
       strokeLinecap: 'round',
       strokeLinejoin: 'round'
     }
+  },
+
+  styles: {
+    Wrapper: styled.li`
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding: 4px;
+      border-bottom: 1px solid #eee;
+      line-height: 24px;
+      font-size: 110%;
+
+      &:hover {
+        background: #efefef;
+      }
+    `
   }
-);
+});
 
 const TodoList = sfc({
   Component({ todos, onTodoClick, styles: { Wrapper } }) {
@@ -701,15 +700,14 @@ import sfc from 'jsx-sfc.macro';
 - Type definition of `sfc`
 
 ```ts
-function sfc<Props, ComponentData, Styles, OP, EX>(
-  options: {
-    template?: (args: { data: ComponentData; props: Props; styles: Styles } & OP & EX, ...templates: TemplateRender[]) => JSX.Element;
-    Component: (props?: Props & Styles & EX & { props: Props }) => ComponentData;
+function sfc<Props, ComponentData, Styles, Options>(
+  sfcOptions: {
+    template?: (args: { data: ComponentData; props: Props; styles: Styles } & Options, ...templates: TemplateRender[]) => JSX.Element;
+    Component: (props?: Props & Styles & Options & { props: Props }) => ComponentData;
     styles?: Styles;
-    options?: OP;
-  },
-  extensions?: EX
-): React.FC<Props> & { template: (data?: ComponentData), Component: React.FC<Props> } & Styles & OP & EX;
+    options?: Options;
+  }
+): React.FC<Props> & { template: (data?: ComponentData), Component: React.FC<Props> } & Styles & Options;
 ```
 
 Only a symbolic type definition is put here for API documentation, there are many differences in the actual implementation. [Actual type definition is here.](https://github.com/joe-sky/jsx-sfc/blob/main/packages/jsx-sfc/src/defineComponent.ts)
@@ -1030,7 +1028,142 @@ We can use template tags syntax to continue to separate the responsibilities of 
 
 The multiple templates feature has a independent implementation of hooks syntax, which supports React/Vue(v3). [Please see the documentation here.](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-templates)
 
-### Extensions
+### Options
+
+The `options` function is used to create static members of a component, then you can use these static members in the `Component` or `template` function:
+
+```tsx
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import sfc from 'jsx-sfc';
+
+const App = sfc({
+  template: ({ data, styles: { Wrapper }, utils: { trimWithPrefix } }) => (
+    <Wrapper>
+      <button onClick={data.onClick}>{trimWithPrefix(data.user)}</button>
+    </Wrapper>
+  ),
+
+  Component({ constant: { foo } }) {
+    const [user, setUser] = useState(foo);
+    return { user, onClick: () => setUser('bar') };
+  },
+
+  options: () => {
+    return {
+      constant: {
+        foo: '  foo  '
+      },
+
+      utils: {
+        trimWithPrefix(str: string) {
+          return 'prefix_' + str.trim();
+        }
+      }
+    };
+  },
+
+  styles: () => {
+    const WrapperBase = styled.div`
+      background-color: #fff;
+    `;
+
+    return {
+      Wrapper: styled(WrapperBase)`
+        background-color: #fff;
+      `
+    };
+  }
+});
+```
+
+- Also can pass in a object to `options`:
+
+```tsx
+const App = sfc({
+  Component: ({ constant: { foo } }) => <>{foo}</>,
+
+  options: {
+    constant: {
+      foo: 'foo'
+    }
+  }
+});
+```
+
+- You can also use `options` to set the preset static members, such as `defaultProps`:
+
+```tsx
+const App = sfc({
+  Component: ({ props }) => <>{props.foo}</>,
+
+  options: {
+    defaultProps: {
+      foo: 'foo'
+    }
+  }
+});
+```
+
+### Export static members
+
+All members support exporting from `jsx-sfc` components:
+
+```tsx
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import sfc from 'jsx-sfc';
+
+const App = sfc({
+  template: ({ data, styles: { Wrapper }, utils: { trimWithPrefix } }) => (
+    <Wrapper>
+      <button onClick={data.onClick}>{trimWithPrefix(data.user)}</button>
+    </Wrapper>
+  ),
+
+  Component() {
+    const [user, setUser] = useState('foo');
+    return { user, onClick: () => setUser('bar') };
+  },
+
+  options: () => {
+    return {
+      utils: {
+        trimWithPrefix(str: string) {
+          return 'prefix_' + str.trim();
+        }
+      }
+    };
+  },
+
+  styles: () => {
+    const WrapperBase = styled.div`
+      background-color: #fff;
+    `;
+
+    return {
+      Wrapper: styled(WrapperBase)`
+        background-color: #fff;
+      `
+    };
+  }
+});
+
+function Test() {
+  const [user, setUser] = useState('bar');
+
+  return (
+    <>
+      {App.template({ user, onClick: () => setUser('baz') })}
+      <App.Component />
+      <App.styles.Wrapper>{user}</App.styles.Wrapper>
+      {App.utils.trimWithPrefix(user)}
+    </>
+  );
+}
+```
+
+<!-- ### Extensions
 
 Except template and styles, other extensions for `jsx-sfc` components are also supported:
 
@@ -1099,111 +1232,7 @@ For some advanced usages of extensions, see these examples:
 
 - [React-i18next locales extension](https://github.com/joe-sky/jsx-sfc/blob/main/examples/react-i18next/src/App.tsx#L73)
 
-- [Jss styles extension](https://github.com/joe-sky/jsx-sfc/blob/main/examples/counter/src/App.tsx#L60)
-
-#### Options
-
-> Added in v1.3.0
-
-A new API `options` that purpose is exactly the same as the `extensions`. It's just that they're in different places:
-
-```tsx
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import sfc from 'jsx-sfc';
-
-const App = sfc({
-  template: ({ data, styles: { Wrapper }, utils: { trimWithPrefix } }) => (
-    <Wrapper>
-      <button onClick={data.onClick}>{trimWithPrefix(data.user)}</button>
-    </Wrapper>
-  ),
-
-  Component() {
-    const [user, setUser] = useState('  foo  ');
-    return { user, onClick: () => setUser('bar') };
-  },
-
-  options: () => {
-    return {
-      utils: {
-        trimWithPrefix(str: string) {
-          return 'prefix_' + str.trim();
-        }
-      }
-    };
-  },
-
-  styles: () => {
-    const WrapperBase = styled.div`
-      background-color: #fff;
-    `;
-
-    return {
-      Wrapper: styled(WrapperBase)`
-        background-color: #fff;
-      `
-    };
-  }
-});
-```
-
-### Export static members
-
-All members support exporting from `jsx-sfc` components:
-
-```tsx
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import sfc from 'jsx-sfc';
-
-const App = sfc(
-  {
-    template: ({ data, styles: { Wrapper } }) => (
-      <Wrapper>
-        <button onClick={data.onClick}>{data.user}</button>
-      </Wrapper>
-    ),
-
-    Component() {
-      const [user, setUser] = useState('foo');
-      return { user, onClick: () => setUser('bar') };
-    },
-
-    styles: () => {
-      const WrapperBase = styled.div`
-        background-color: #fff;
-      `;
-
-      return {
-        Wrapper: styled(WrapperBase)`
-          background-color: #fff;
-        `
-      };
-    }
-  },
-  {
-    utils: {
-      trimWithPrefix(str: string) {
-        return 'prefix_' + str.trim();
-      }
-    }
-  }
-);
-
-function Test() {
-  const [user, setUser] = useState('bar');
-
-  return (
-    <>
-      {App.template({ user, onClick: () => setUser('baz') })}
-      <App.Component />
-      <App.styles.Wrapper>{user}</App.styles.Wrapper>
-      {App.utils.trimWithPrefix(user)}
-    </>
-  );
-}
-```
+- [Jss styles extension](https://github.com/joe-sky/jsx-sfc/blob/main/examples/counter/src/App.tsx#L60) -->
 
 <!-- We can use the above feature to unit test each member of the component independently, or even reuse them into other components. -->
 
@@ -1220,6 +1249,10 @@ Before I decided on `jsx-sfc v1.0 API`, I actually made a lot of different attem
 It can be explained in this way:
 
 > If the type design can match the requirements, the corresponding logic implementation can be done. -->
+
+### Can't use **this variable**
+
+The `jsx-sfc` is a syntax extension for functional components, although it uses the syntax structure of `object method`, but it's only to better reflect the visual perception. Its features are exactly the same as functional components, so there is no `this variable`.
 
 ### Why pass in TS generics like this
 
