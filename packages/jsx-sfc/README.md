@@ -73,6 +73,7 @@ It extract a core feature of `jsx-sfc` and can be used independently.
   - [Adapting Eslint Plugin](#adapting-eslint-plugin)
   - [Adapting Hot Reloading](#adapting-hot-reloading)
   - [Performance](#performance)
+    - [Benchmark](#benchmark)
 - [Examples](#examples)
 - [Benefits](#benefits)
   - [Clearer visual isolation](#clearer-visual-isolation)
@@ -271,6 +272,10 @@ Finally, `jsx-sfc` can also support [React Fast Refresh](https://github.com/face
 ### Performance
 
 `jsx-sfc` is a tool that supports compiler optimization, so it's performance is almost the same as that of normal React function components ⚡️. [Code comparison before and after compiling can refer to here.](https://github.com/joe-sky/jsx-sfc/tree/main/packages/babel-plugin-jsx-sfc#how-it-works)
+
+#### Benchmark
+
+[Here is a simple benchmark.](https://github.com/joe-sky/jsx-sfc/tree/main/examples/benchmark)
 
 ## Examples
 
@@ -1077,7 +1082,7 @@ const App = sfc({
 });
 ```
 
-- Also can pass in a object to `options`:
+- Also can pass in an object to `options`:
 
 ```tsx
 const App = sfc({

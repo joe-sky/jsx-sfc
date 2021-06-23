@@ -484,6 +484,11 @@ postcss@^8.3.4:
     nanoid "^3.1.23"
     source-map-js "^0.6.2"
 
+react-component-benchmark@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-component-benchmark/-/react-component-benchmark-1.0.0.tgz#272bd0af29042a4412f12a70e429752e2d267d36"
+  integrity sha512-YC+PPhfevw1NHYjgb8NeFXdH9gq1D0bG1zcLUxetQ1PregdBwX3t9LTU4fJviDI4IgU/bL3xR6BB3ZID59Sprw==
+
 react-dom@^17.0.0:
   version "17.0.2"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-17.0.2.tgz#ecffb6845e3ad8dbfcdc498f0d0a939736502c23"

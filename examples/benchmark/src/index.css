@@ -1,0 +1,123 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
+    'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body,
+html {
+  padding: 0;
+}
+
+html {
+  overflow-y: scroll;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.app {
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: row;
+}
+
+.content,
+.component {
+  width: 50vw;
+  height: 90vh;
+  padding: 1em;
+}
+
+.content {
+  border-right: 1px solid #eee;
+}
+
+.form {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 5px;
+}
+
+label {
+  display: block;
+  margin-right: 1em;
+  font-size: 0.8rem;
+  flex-grow: 1;
+}
+
+button {
+  display: block;
+  margin-right: 1em;
+  font-size: 16px !important;
+  cursor: pointer;
+}
+
+select {
+  display: block;
+  width: 100%;
+}
+
+input {
+  display: block;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th,
+td {
+  padding: 8px 12px;
+  text-align: right;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f9f9f9;
+  color: #444;
+}
+
+td {
+  font-family: monospace;
+}
+
+tbody th {
+  text-align: left;
+  border-bottom: 0;
+  background: transparent;
+  font-weight: normal;
+  font-size: 0.9em;
+}
+
+tbody th + th {
+  text-align: right;
+}
+
+h1 {
+  font-size: 1.6em;
+}
+
+h1 span {
+  display: block;
+  font-size: 1rem;
+}
+
+.results {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
