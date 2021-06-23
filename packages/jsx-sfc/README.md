@@ -52,7 +52,7 @@
 
 ## Motivation
 
-On the whole, the goal of `jsx-sfc` is to create a toolkit with similar syntax and useful structure for the scenario of using JSX to develop functional components, according to the `mental model of single file components like Vue/Svelte/Marko`.
+On the whole, the goal of `jsx-sfc` is to create a toolkit with similar syntax and useful structure for the scenario of using JSX to develop functional components, according to the `mental model of single file components like Vue/Svelte/Marko`. My vision is bring the **ability that divide code responsibilities** add into the existing functional component syntax, to make the code look clearer and easier to maintain.
 
 If you are already familiar with the similar SFCs development mode and understand the advantages, you will find the syntax of `jsx-sfc` so intuitive~ Of course, in addition to the syntax structure similar to SFCs, this project will also provide some additional benefits, which will be explained below.
 
@@ -86,11 +86,12 @@ It extract a core feature of `jsx-sfc` and can be used independently.
 - [Usage](#usage)
   - [`sfc`](#sfc)
   - [`sfc.forwardRef`](#sfcforwardRef)
-  - [Template tags](#template-tags)
-    - [`use-templates`](#use-templates)
+  - [Props](#props)
   - [Options](#options)
   - [Export static members](#export-static-members)
-    <!-- - [Extensions](#extensions) -->
+  - [Template tags](#template-tags)
+    - [`use-templates`](#use-templates)
+      <!-- - [Extensions](#extensions) -->
 - [API Design Principle](#api-design-principle)
 - [Roadmap](#roadmap)
 - [Who is using](#who-is-using)
@@ -931,43 +932,25 @@ function TestApp() {
 }
 ```
 
-### Template tags
+### Props
 
-In the template function of `jsx-sfc` components, we can also create reusable multiple template functions:
+#### Using Props in Component
+
+The `props` is used in the same way as regular function components, but it just includes other static members such as `styles`:
 
 ```tsx
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import sfc, { Template } from 'jsx-sfc';
-
 const App = sfc({
-  template: ({ data, styles: { Wrapper } }, btn, text: Template.Render<number>) => (
-    <>
-      <Template name={btn}>{() => <button onClick={data.onClick}>{data.user}</button>}</Template>
-
-      <Template name={text}>{num => <i key={num}>{data.user}</i>}</Template>
-
-      <Template>
-        <Wrapper>
-          {btn.render()}
-          {[1, 2, 3].map(num => text.render(num))}
-        </Wrapper>
-      </Template>
-    </>
-  ),
-
-  Component() {
-    const [user, setUser] = useState('foo');
-    return { user, onClick: () => setUser('bar') };
+  Component({ prop1, prop2, styles: { Wrapper } }) {
+    return (
+      <Wrapper>
+        {prop1}-{prop2}
+      </Wrapper>
+    );
   },
 
   styles: () => {
-    const WrapperBase = styled.div`
-      background-color: #fff;
-    `;
-
     return {
-      Wrapper: styled(WrapperBase)`
+      Wrapper: styled.div`
         background-color: #fff;
       `
     };
@@ -975,63 +958,71 @@ const App = sfc({
 });
 ```
 
-1. All parameters starting from the second parameter of the template function are template tag renders, and any number of them can be defined.
-
-2. The template function needs to return a React.Fragment tag; The template tag without name property is the entry function:
+Usually we just use `props` as above. But if you need to merge `props` into JSX tags, you can use the `inner props` parameter:
 
 ```tsx
-{
-  template: ({ data }, tmpl1, tmpl2) => (
-    <>
-      <Template name={tmpl1}>{() => <div>foo</div>}</Template>
+const App = sfc({
+  Component({ props, styles: { Wrapper } }) {
+    return <Wrapper {...props} />;
+  },
 
-      <Template name={tmpl2}>{() => <div>bar</div>}</Template>
-
-      <Template>
-        {() => (
-          <section>
-            {tmpl1.render()}
-            {tmpl2.render()}
-          </section>
-        )}
-      </Template>
-    </>
-  );
-}
+  styles: () => {
+    return {
+      Wrapper: styled.div`
+        background-color: #fff;
+      `
+    };
+  }
+});
 ```
 
-3. In TSX, we can define the parameter types of template tag render functions, this can achieve type safe:
+✖️ Otherwise, if you write like the following, you may have a type error:
 
 ```tsx
-{
-  template: ({ data }, header: Template.Render<string, number>) => (
-    <>
-      <Template name={header}>
-        {(title, count) => (
-          <nav>
-            {title} count: {count}
-          </nav>
-        )}
-      </Template>
+const App = sfc({
+  Component({ styles: { Wrapper }, ...props }) {
+    return <Wrapper {...props} />;
+  },
 
-      <Template>
-        {() => (
-          <section>
-            {header.render('posts', 100)}
-            <div>body</div>
-          </section>
-        )}
-      </Template>
-    </>
-  );
-}
+  styles: () => {
+    return {
+      Wrapper: styled.div`
+        background-color: #fff;
+      `
+    };
+  }
+});
 ```
 
-We can use template tags syntax to continue to separate the responsibilities of JSX tags, [see here for the specific benefits of template tags.](#clearer-visual-isolation)
+> You don't have to worry too much about performance. In the compiler parsing process, `styles` and `inner props` will be removed from `props` and handled separately.
 
-#### `use-templates`
+#### Using Props in template
 
-The multiple templates feature has a independent implementation of hooks syntax, which supports React/Vue(v3). [Please see the documentation here.](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-templates)
+The `props` is also used in the `template function` like this:
+
+```tsx
+const App = sfc({
+  template: ({ props, data, styles: { Wrapper } }) => (
+    <Wrapper>
+      {props.name}
+      <button onClick={data.onClick}>{data.user}</button>
+    </Wrapper>
+  ),
+
+  Component(props) {
+    const [user, setUser] = useState(props.name);
+    return { user, onClick: () => setUser('bar') };
+  },
+
+  styles: () => {
+    return {
+      Wrapper: styled.div`
+        background-color: #fff;
+      `
+    };
+  }
+});
+```
 
 ### Options
 
@@ -1167,6 +1158,108 @@ function Test() {
   );
 }
 ```
+
+### Template tags
+
+In the template function of `jsx-sfc` components, we can also create reusable multiple template functions:
+
+```tsx
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import sfc, { Template } from 'jsx-sfc';
+
+const App = sfc({
+  template: ({ data, styles: { Wrapper } }, btn, text: Template.Render<number>) => (
+    <>
+      <Template name={btn}>{() => <button onClick={data.onClick}>{data.user}</button>}</Template>
+
+      <Template name={text}>{num => <i key={num}>{data.user}</i>}</Template>
+
+      <Template>
+        <Wrapper>
+          {btn.render()}
+          {[1, 2, 3].map(num => text.render(num))}
+        </Wrapper>
+      </Template>
+    </>
+  ),
+
+  Component() {
+    const [user, setUser] = useState('foo');
+    return { user, onClick: () => setUser('bar') };
+  },
+
+  styles: () => {
+    const WrapperBase = styled.div`
+      background-color: #fff;
+    `;
+
+    return {
+      Wrapper: styled(WrapperBase)`
+        background-color: #fff;
+      `
+    };
+  }
+});
+```
+
+1. All parameters starting from the second parameter of the template function are template tag renders, and any number of them can be defined.
+
+2. The template function needs to return a React.Fragment tag; The template tag without name property is the entry function:
+
+```tsx
+{
+  template: ({ data }, tmpl1, tmpl2) => (
+    <>
+      <Template name={tmpl1}>{() => <div>foo</div>}</Template>
+
+      <Template name={tmpl2}>{() => <div>bar</div>}</Template>
+
+      <Template>
+        {() => (
+          <section>
+            {tmpl1.render()}
+            {tmpl2.render()}
+          </section>
+        )}
+      </Template>
+    </>
+  );
+}
+```
+
+3. In TSX, we can define the parameter types of template tag render functions, this can achieve type safe:
+
+```tsx
+{
+  template: ({ data }, header: Template.Render<string, number>) => (
+    <>
+      <Template name={header}>
+        {(title, count) => (
+          <nav>
+            {title} count: {count}
+          </nav>
+        )}
+      </Template>
+
+      <Template>
+        {() => (
+          <section>
+            {header.render('posts', 100)}
+            <div>body</div>
+          </section>
+        )}
+      </Template>
+    </>
+  );
+}
+```
+
+We can use template tags syntax to continue to separate the responsibilities of JSX tags, [see here for the specific benefits of template tags.](#clearer-visual-isolation)
+
+#### `use-templates`
+
+The multiple templates feature has a independent implementation of hooks syntax, which supports React/Vue(v3). [Please see the documentation here.](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-templates)
 
 <!-- ### Extensions
 

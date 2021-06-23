@@ -17,7 +17,7 @@ export async function activate(context: vscode.ExtensionContext) {
     const blocksType: BlocksType[] = [];
 
     if (descriptor) {
-      if (descriptor.component || descriptor.options) {
+      if (descriptor.component?.length || descriptor.options?.length) {
         blocksSet.push([...descriptor.component, ...descriptor.options]);
         blocksFoldSet.push([...descriptor.template, ...descriptor.styles]);
         blocksType.push(BlocksType.Component);
