@@ -36,8 +36,6 @@
 
 ## Features
 
-<!-- - 🌟 Easy way to define function components with **separation of concerns** -->
-
 - ✨ Clearly separate **JSX tags**, **logic**, **styles** and **any other concerns** within JSX based functional components
   <!-- - 🚩 New APIs for **defining and using static members** in function components -->
 - 💫 **Completely type inference** design by TypeScript
@@ -50,30 +48,16 @@
 - 🚀 No any dependencies (except compiler)
 - 💻 Support **Split Editor** similar to [Volar](https://github.com/johnsoncodehk/volar) by [vscode-jsx-sfc](https://marketplace.visualstudio.com/items?itemName=joe-sky.vscode-jsx-sfc)
 
-## Motivation
-
-On the whole, the goal of `jsx-sfc` is to create a toolkit with similar syntax and useful structure for the scenario of using JSX to develop functional components, according to the `mental model of single file components like Vue/Svelte/Marko`. My vision is bring the **ability that divide code responsibilities** add into the existing functional component syntax, to make the code look clearer and easier to maintain.
-
-If you are already familiar with the similar SFCs development mode and understand the advantages, you will find the syntax of `jsx-sfc` so intuitive~ Of course, in addition to the syntax structure similar to SFCs, this project will also provide some additional benefits, which will be explained below.
-
-### About hooks syntax
-
-If you prefer to use regular functional component syntax, you can take a look at this custom hook:
-
-- [use-templates](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-templates)
-
-It extract a core feature of `jsx-sfc` and can be used independently.
-
-<!-- > I will continue to refine and summarize the comparison and pattern between this project and regular function components in the development of actual projects, and try to release it in the near future. -->
-
 ## Table of Contents
 
-- [Inspiration](#inspiration)
-  - [Extending Function Component](#extending-function-component)
+- [Motivation](#motivation)
+  - [Inspiration](#inspiration)
+  - [API design idea](#api-design-idea)
   - [Adapting Eslint Plugin](#adapting-eslint-plugin)
   - [Adapting Hot Reloading](#adapting-hot-reloading)
   - [Performance](#performance)
     - [Benchmark](#benchmark)
+  - [About hooks API](#about-hooks-api)
 - [Examples](#examples)
 - [Benefits](#benefits)
   - [Clearer visual isolation](#clearer-visual-isolation)
@@ -87,7 +71,7 @@ It extract a core feature of `jsx-sfc` and can be used independently.
   - [`sfc`](#sfc)
   - [`sfc.forwardRef`](#sfcforwardRef)
   - [Props](#props)
-  - [Options](#options)
+  - [Static](#static)
   - [Export static members](#export-static-members)
   - [Template tags](#template-tags)
     - [`use-templates`](#use-templates)
@@ -96,22 +80,42 @@ It extract a core feature of `jsx-sfc` and can be used independently.
 - [Roadmap](#roadmap)
 - [Who is using](#who-is-using)
 
-## Inspiration
+## Motivation
 
-This project was originally inspired by [Single File Components](https://vuejs.org/v2/guide/single-file-components.html). The point of SFCs has been recognized by many people:
+On the whole, this tool can help you to write `highly cohesive React function components with clear responsibilities`, which draws on the mental model similar to single file components like `Vue/Svelte/Marko`.
 
-> Inside a component, it's template, logic and styles are inherently coupled, and collocating them actually makes the component more cohesive and maintainable.
+### Inspiration
 
-However, the **separation of concerns** idea is very rare in the JSX(React) environment, only a few implementations from community:
+It's a very interesting idea to implement the SFCs like structure for JSX based function components, I got this inspiration because I found [this project](https://github.com/egoist/jue) by accident. Then I found these interesting projects with similar ideas:
 
 - [one-loader](https://github.com/digitalie/one-loader)
 - [react-sfc-swyx](https://github.com/react-sfc/react-sfc-swyx)
 
-Overall, the above two solutions are to create a new file type for React to implement the idea similar to SFCs. But the idea of this project is quite different from the above implementations:
+Overall, the above two solutions are to create a new file type for React to implement the idea similar to SFCs. But the idea of this tool is quite different from the above implementations:
 
 _Considering that the original design principle of JSX is a syntax extension of the existing JavaScript, so I want to create a new SFC solution that is more accord with the existing JSX(React) development habits._
 
-### Extending Function Component
+### Problems to be solved
+
+And it's not just about interest. I'm trying to solve some problems:
+
+- scattered components
+
+Because React can only split code according to component or hook dimension, many scattered small components may appear in such a complete business. However the documentation of business code are always limited, which makes it difficult for a new project successor to understand the relationship between these small components.
+
+So I want to achieve the goal of reducing the number of small components at least to a certain extent by reasonably dividing the code inside the function components.
+
+- scattered styles
+
+When we use the CSS in JS framework(such as [styled-components](https://github.com/styled-components/styled-components), [Emotion](https://github.com/emotion-js/emotion)), if there is a large amount of style code, we have to extract them as separate files, which seems to be no different from the development method of importing CSS files directly.
+
+If we can have a preset location in the component code file to place styles, we can reduce the mental burden of switching between multiple styles or component files, and give full play to the features of the CSS in JS framework.
+
+<!-- On the whole, the goal of `jsx-sfc` is to create a toolkit with similar syntax and useful structure for the scenario of using JSX to develop functional components, according to the `mental model of single file components like Vue/Svelte/Marko`. My vision is bring the **ability that divide code responsibilities** add into the existing functional component syntax, to make the code look clearer and easier to maintain.
+
+If you are already familiar with the similar SFCs development mode and understand the advantages, you will find the syntax of `jsx-sfc` so intuitive~ Of course, in addition to the syntax structure similar to SFCs, this project will also provide some additional benefits, which will be explained below. -->
+
+### API design idea
 
 Since the birth of react hooks, function component has been the main way to write React components. My main idea is to create an as simple as possible extension syntax for the existing function components that conforms to the idea of **separation of concerns**, and without creating any new tool chains(e.g. IDE syntax highlight plugin).
 
@@ -255,20 +259,7 @@ const App = sfc({
 
 ### Adapting Hot Reloading
 
-Finally, `jsx-sfc` can also support [React Fast Refresh](https://github.com/facebook/react/tree/master/packages/react-refresh). Because it has a [babel-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/babel-plugin-jsx-sfc) to transform the runtime code into a format recognized by the [Babel plugin of React Fast Refresh](https://github.com/facebook/react/blob/master/packages/react-refresh/src/ReactFreshBabelPlugin.js) 😉.
-
-<!-- See the demo, the main design ideas of `jsx-sfc`:
-
-- Not single file, just separate functions.
-- Extracting a separate template function.
-- CSS in JS can be used in a separate style function.
-- Extending any separate members(stores, graphqls, etc.).
-- Exporting all separate members for reusing and testing.
-- All of above support completely type inference. -->
-
-<!-- tips: What features are needed to adapt to JSX environment -->
-
-<!-- So `jsx-sfc` is similar to Vue SFCs in the form of separation of concerns, but it was originally designed to adapt the JSX(TSX) environment! -->
+Finally, `jsx-sfc` can also support [React Fast Refresh](https://github.com/facebook/react/tree/master/packages/react-refresh). Because it has a [babel-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/babel-plugin-jsx-sfc) to transform the runtime code into a format recognized by the [Babel plugin of React Fast Refresh](https://github.com/facebook/react/blob/master/packages/react-refresh/src/ReactFreshBabelPlugin.js).
 
 ### Performance
 
@@ -277,6 +268,16 @@ Finally, `jsx-sfc` can also support [React Fast Refresh](https://github.com/face
 #### Benchmark
 
 [Here is a simple benchmark.](https://github.com/joe-sky/jsx-sfc/tree/main/examples/benchmark)
+
+### About hooks API
+
+If you prefer to use regular functional component syntax, you can take a look at this custom hook:
+
+- [use-templates](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-templates)
+
+It extract a core feature of `jsx-sfc` and can be used independently.
+
+<!-- > I will continue to refine and summarize the comparison and pattern between this project and regular function components in the development of actual projects, and try to release it in the near future. -->
 
 ## Examples
 
@@ -569,7 +570,7 @@ const Todo = sfc({
     );
   },
 
-  options: {
+  static: {
     svgProps: {
       xmlns: 'http://www.w3.org/2000/svg',
       width: '24',
@@ -624,7 +625,7 @@ const TodoList = sfc({
 
 As you can see, we can **organize codes with component granularity** to achieve better visual isolation effect.
 
-When we organize component codes, we often have to divide them into multiple files, and sometimes the file switching action will cause a little upset. At this time, `jsx-sfc` can help you make this scene much easier. **We can still organize the code clearly even without a lot of fragmented files** 😊.
+When we organize component codes, we often have to divide them into multiple files, and sometimes the file switching action will cause a little upset. At this time, `jsx-sfc` can help you make this scene much easier. **We can still organize the code clearly even without a lot of fragmented files**.
 
 <!-- ### Exportable internal state types
 
@@ -706,14 +707,14 @@ import sfc from 'jsx-sfc.macro';
 - Type definition of `sfc`
 
 ```ts
-function sfc<Props, ComponentData, Styles, Options>(
-  sfcOptions: {
-    template?: (args: { data: ComponentData; props: Props; styles: Styles } & Options, ...templates: TemplateRender[]) => JSX.Element;
-    Component: (props?: Props & Styles & Options & { props: Props }) => ComponentData;
+function sfc<Props, ComponentData, Styles, Static>(
+  options: {
+    template?: (args: { data: ComponentData; props: Props; styles: Styles } & Static, ...templates: TemplateRender[]) => JSX.Element;
+    Component: (props?: Props & Styles & Static & { props: Props }) => ComponentData;
     styles?: Styles;
-    options?: Options;
+    static?: Static;
   }
-): React.FC<Props> & { template: (data?: ComponentData), Component: React.FC<Props> } & Styles & Options;
+): React.FC<Props> & { template: (data?: ComponentData), Component: React.FC<Props> } & Styles & Static;
 ```
 
 Only a symbolic type definition is put here for API documentation, there are many differences in the actual implementation. [Actual type definition is here.](https://github.com/joe-sky/jsx-sfc/blob/main/packages/jsx-sfc/src/defineComponent.ts)
@@ -1024,9 +1025,9 @@ const App = sfc({
 });
 ```
 
-### Options
+### Static
 
-The `options` function is used to create static members of a component, then you can use these static members in the `Component` or `template` function:
+The `static` function is used to create static members of a component, then you can use these static members in the `Component` or `template` function:
 
 ```tsx
 import React, { useState } from 'react';
@@ -1045,7 +1046,7 @@ const App = sfc({
     return { user, onClick: () => setUser('bar') };
   },
 
-  options: () => {
+  static: () => {
     return {
       constant: {
         foo: '  foo  '
@@ -1073,13 +1074,13 @@ const App = sfc({
 });
 ```
 
-- Also can pass in an object to `options`:
+- Also can pass in an object to `static`:
 
 ```tsx
 const App = sfc({
   Component: ({ constant: { foo } }) => <>{foo}</>,
 
-  options: {
+  static: {
     constant: {
       foo: 'foo'
     }
@@ -1087,13 +1088,13 @@ const App = sfc({
 });
 ```
 
-- You can also use `options` to set the preset static members, such as `defaultProps`:
+- You can also use `static` to set the preset static members, such as `defaultProps`:
 
 ```tsx
 const App = sfc({
   Component: ({ props }) => <>{props.foo}</>,
 
-  options: {
+  static: {
     defaultProps: {
       foo: 'foo'
     }
@@ -1122,7 +1123,7 @@ const App = sfc({
     return { user, onClick: () => setUser('bar') };
   },
 
-  options: () => {
+  static: () => {
     return {
       utils: {
         trimWithPrefix(str: string) {
@@ -1410,7 +1411,9 @@ Compared with the React class component, the whole function body of the React fu
 
 2. Not only `string template` can be named `template`, reusable functions can be called `template` also.
 
-In order not to have doubts, I explain it specifically: The `template function` and `template tags` in `jsx-sfc` are reusable, their responsibilities are limited to returning `JSX.Element` type and support TS type safe, so I called them `template`. There are also other projects that use `template` as JSX related APIs(such as [monobase](https://github.com/framer/monobase#styled-components)).
+In order not to have doubts, I explain it specifically: The `template function` and `template tags` in `jsx-sfc` are reusable, their responsibilities are limited to returning `JSX.Element` type and support TS type safe.
+
+So the name `template` is just to conform to the SFCs model that has been widely recognized by people, and make it easier for people to remember that `template` is specially used to place tag syntax, and they can be reused.
 
 ### Why the component function be capitalized
 

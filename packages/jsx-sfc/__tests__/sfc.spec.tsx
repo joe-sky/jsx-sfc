@@ -26,7 +26,7 @@ const App = sfc<AppProps>()({
     return { a: props.test };
   },
 
-  options: () => {
+  static: () => {
     return { emptyStr: '' };
   },
 

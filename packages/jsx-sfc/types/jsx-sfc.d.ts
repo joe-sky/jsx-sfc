@@ -1,5 +1,5 @@
 /*!
- * jsx-sfc v1.4.0
+ * jsx-sfc v1.4.1
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
@@ -61,9 +61,9 @@ declare type ExtractOptions<T> = T extends () => infer R ? (R extends Obj ? R : 
 declare type DefineComponent<Ref = NoRef, Props = {}, ReturnComponent = Ref extends NoRef ? React.FC<Props> : React.ForwardRefExoticComponent<Props & RefAttributes<Ref>>, Origin = {
     Component: ReturnComponent;
 }> = {
-    <Data extends Template.ComponentData, InferStyles extends ExtractOptions<Styles>, InferOP extends ExtractOptions<OP>, InferEX extends ExtractOptions<EX>, FR extends {
+    <Data extends Template.ComponentData, InferStyles extends ExtractOptions<Styles>, InferStatic extends ExtractOptions<Static>, InferEX extends ExtractOptions<EX>, FR extends {
         styles: InferStyles;
-    } & InferOP & InferEX, Styles = {}, OP = {}, EX = {}>(options: {
+    } & InferStatic & InferEX, Styles = {}, Static = {}, EX = {}>(options: {
         /**
          * Using the `styles property or function` to define styles, you can use the most popular `CSS in JS` solutions. (e.g. `styled-components`, `Emotion`)
          */
@@ -99,17 +99,21 @@ declare type DefineComponent<Ref = NoRef, Props = {}, ReturnComponent = Ref exte
             data: U;
             props: PropsWithChildren<Props>;
         } & FR, ...tmpls: Template.Render[]) => JSXElements;
-        options?: OP;
+        static?: Static;
+        /**
+         * @deprecated Please use `static`
+         */
+        options?: Static;
     }, extensions?: EX): ReturnComponent & Origin & {
         template: {
             (data?: Partial<Data>): JSXElements;
             __componentData: Data;
         };
         styles: InferStyles;
-    } & ExtractOptions<OP> & ExtractOptions<EX>;
-    <InferStyles extends ExtractOptions<Styles>, InferOP extends ExtractOptions<OP>, InferEX extends ExtractOptions<EX>, FR extends {
+    } & ExtractOptions<Static> & ExtractOptions<EX>;
+    <InferStyles extends ExtractOptions<Styles>, InferStatic extends ExtractOptions<Static>, InferEX extends ExtractOptions<EX>, FR extends {
         styles: InferStyles;
-    } & InferOP & InferEX, Styles = {}, OP = {}, EX = {}>(options: {
+    } & InferStatic & InferEX, Styles = {}, Static = {}, EX = {}>(options: {
         /**
          * Using the `styles property or function` to define styles, you can use the most popular `CSS in JS` solutions. (e.g. `styled-components`, `emotion`)
          */
@@ -127,10 +131,14 @@ declare type DefineComponent<Ref = NoRef, Props = {}, ReturnComponent = Ref exte
          * ```
          */
         Component: Ref extends NoRef ? (props: SFCProps<Props, FR>, context?: any) => JSXElements : (props: SFCProps<Props, FR>, ref: React.Ref<Ref>) => JSXElements;
-        options?: OP;
+        static?: Static;
+        /**
+         * @deprecated Please use `static`
+         */
+        options?: Static;
     }, extensions?: EX): ReturnComponent & Origin & {
         styles: InferStyles;
-    } & ExtractOptions<OP> & ExtractOptions<EX>;
+    } & ExtractOptions<Static> & ExtractOptions<EX>;
     <InferEX extends ExtractOptions<EX>, EX = {}>(component: Ref extends NoRef ? (props: SFCProps<Props, InferEX>, context?: any) => JSXElements : (props: SFCProps<Props, InferEX>, ref: React.Ref<Ref>) => JSXElements, extensions?: EX): ReturnComponent & Origin & ExtractOptions<EX>;
 };
 interface ForwardRefSFC<Ref = unknown> extends DefineComponent<Ref> {
@@ -145,6 +153,10 @@ interface SFCOptions {
     template?: Func;
     Component: Func;
     styles?: Func | Obj;
+    static?: Func | Obj;
+    /**
+     * @deprecated Please use `static`
+     */
     options?: Func | Obj;
 }
 declare type SFCExtensions = {

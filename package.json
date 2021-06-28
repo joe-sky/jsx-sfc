@@ -8,7 +8,7 @@
     "packages/jsx-sfc.macro",
     "packages/use-templates"
   ],
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "A tiny JSX/TSX toolkit that help you to better implement separation of concerns within JSX based functional components.",
   "scripts": {
     "build": "lerna run build",

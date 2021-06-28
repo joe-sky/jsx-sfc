@@ -24,11 +24,11 @@ export type DefineComponent<
   <
     Data extends Template.ComponentData,
     InferStyles extends ExtractOptions<Styles>,
-    InferOP extends ExtractOptions<OP>,
+    InferStatic extends ExtractOptions<Static>,
     InferEX extends ExtractOptions<EX>,
-    FR extends { styles: InferStyles } & InferOP & InferEX,
+    FR extends { styles: InferStyles } & InferStatic & InferEX,
     Styles = {},
-    OP = {},
+    Static = {},
     EX = {}
   >(
     options: {
@@ -69,7 +69,11 @@ export type DefineComponent<
         args: { data: U; props: PropsWithChildren<Props> } & FR,
         ...tmpls: Template.Render[]
       ) => JSXElements;
-      options?: OP;
+      static?: Static;
+      /**
+       * @deprecated Please use `static`
+       */
+      options?: Static;
     },
     extensions?: EX
   ): ReturnComponent &
@@ -79,16 +83,16 @@ export type DefineComponent<
         __componentData: Data;
       };
       styles: InferStyles;
-    } & ExtractOptions<OP> &
+    } & ExtractOptions<Static> &
     ExtractOptions<EX>;
 
   <
     InferStyles extends ExtractOptions<Styles>,
-    InferOP extends ExtractOptions<OP>,
+    InferStatic extends ExtractOptions<Static>,
     InferEX extends ExtractOptions<EX>,
-    FR extends { styles: InferStyles } & InferOP & InferEX,
+    FR extends { styles: InferStyles } & InferStatic & InferEX,
     Styles = {},
-    OP = {},
+    Static = {},
     EX = {}
   >(
     options: {
@@ -111,10 +115,14 @@ export type DefineComponent<
       Component: Ref extends NoRef
         ? (props: SFCProps<Props, FR>, context?: any) => JSXElements
         : (props: SFCProps<Props, FR>, ref: React.Ref<Ref>) => JSXElements;
-      options?: OP;
+      static?: Static;
+      /**
+       * @deprecated Please use `static`
+       */
+      options?: Static;
     },
     extensions?: EX
-  ): ReturnComponent & Origin & { styles: InferStyles } & ExtractOptions<OP> & ExtractOptions<EX>;
+  ): ReturnComponent & Origin & { styles: InferStyles } & ExtractOptions<Static> & ExtractOptions<EX>;
 
   <InferEX extends ExtractOptions<EX>, EX = {}>(
     component: Ref extends NoRef
@@ -138,6 +146,10 @@ export interface SFCOptions {
   template?: Func;
   Component: Func;
   styles?: Func | Obj;
+  static?: Func | Obj;
+  /**
+   * @deprecated Please use `static`
+   */
   options?: Func | Obj;
 }
 

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v1.4.1] 2021.06.28
+
+- 👆 `options` is deprecated, use `static` instead.
+
 ## [v1.4.0] 2021.06.17
 
 - 🌟 Add `props` parameter in template function.

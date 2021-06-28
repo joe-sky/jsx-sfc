@@ -16,7 +16,7 @@ export function createOptions(options: FuncMap, extensions?: Func | Obj, isRunti
       template = item as Func;
     } else if (key === 'styles') {
       ret[key] = isFunc(item) ? item() : item;
-    } else if (key === 'options') {
+    } else if (key === 'options' || key === 'static') {
       const opts = isFunc(item) ? item() : item;
       opts && Object.assign(ret, opts);
     }
@@ -86,8 +86,8 @@ function createSfc(isForwardRef?: boolean) {
       if (isFunc(options)) {
         options = { Component: options };
       }
-      const { template, styles, Component, options: opts } = options;
-      const sfcOptions = createOptions({ template, styles, options: opts }, extensions, true);
+      const { template, styles, Component, static: staticPpts } = options;
+      const sfcOptions = createOptions({ template, styles, static: staticPpts }, extensions, true);
 
       let SeparateFunction: Func;
       if (!isForwardRef) {
