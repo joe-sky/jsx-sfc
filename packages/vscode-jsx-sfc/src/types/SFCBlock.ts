@@ -3,7 +3,7 @@ export interface SFCBlock {
   locEndOffset: number;
 }
 
-export type Descriptor = Record<'template' | 'component' | 'styles' | 'static' | 'options', SFCBlock[]>;
+export type Descriptor = Record<'template' | 'component' | 'styles' | 'static', SFCBlock[]>;
 
 export enum BlocksType {
   Component = 1,

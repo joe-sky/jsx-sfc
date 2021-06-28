@@ -35,25 +35,27 @@ const App = sfc({
     };
   },
 
-  options: locales({
-    en: {
-      title: 'Welcome to react using react-i18next and typescript 4.1',
-      description: {
-        part1: 'This is an example without namespaces.',
-        part2:
-          'In order to infer the appropriate type for t function, you should use type augmentation to override the Resources type.',
-        part3: 'Check out the @types/react-i18next to see an example.'
+  static: {
+    ...locales({
+      en: {
+        title: 'Welcome to react using react-i18next and typescript 4.1',
+        description: {
+          part1: 'This is an example without namespaces.',
+          part2:
+            'In order to infer the appropriate type for t function, you should use type augmentation to override the Resources type.',
+          part3: 'Check out the @types/react-i18next to see an example.'
+        }
+      },
+      ja: {
+        title: 'typescript 4.1 環境下で react-i18next を使用することを歓迎します',
+        description: {
+          part1: 'これは namespace を使用していない例である。',
+          part2: 't 関数のタイプを推定するためには、タイプ拡張を使用してリソースタイプを書き換えるべきである。',
+          part3: '@types/react-i18next で関連例を確認してください。'
+        }
       }
-    },
-    ja: {
-      title: 'typescript 4.1 環境下で react-i18next を使用することを歓迎します',
-      description: {
-        part1: 'これは namespace を使用していない例である。',
-        part2: 't 関数のタイプを推定するためには、タイプ拡張を使用してリソースタイプを書き換えるべきである。',
-        part3: '@types/react-i18next で関連例を確認してください。'
-      }
-    }
-  }),
+    })
+  },
 
   styles: {
     Wrapper: styled.div`

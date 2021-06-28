@@ -17,19 +17,19 @@ export async function activate(context: vscode.ExtensionContext) {
     const blocksType: BlocksType[] = [];
 
     if (descriptor) {
-      if (descriptor.component?.length || descriptor.options?.length) {
-        blocksSet.push([...descriptor.component, ...descriptor.options]);
+      if (descriptor.component?.length || descriptor.static?.length) {
+        blocksSet.push([...descriptor.component, ...descriptor.static]);
         blocksFoldSet.push([...descriptor.template, ...descriptor.styles]);
         blocksType.push(BlocksType.Component);
       }
       if (descriptor.template?.length) {
         blocksSet.push(descriptor.template);
-        blocksFoldSet.push([...descriptor.component, ...descriptor.options, ...descriptor.styles]);
+        blocksFoldSet.push([...descriptor.component, ...descriptor.static, ...descriptor.styles]);
         blocksType.push(BlocksType.Template);
       }
       if (descriptor.styles?.length) {
         blocksSet.push(descriptor.styles);
-        blocksFoldSet.push([...descriptor.component, ...descriptor.options, ...descriptor.template]);
+        blocksFoldSet.push([...descriptor.component, ...descriptor.static, ...descriptor.template]);
         blocksType.push(BlocksType.Styles);
       }
     }

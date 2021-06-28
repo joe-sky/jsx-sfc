@@ -25,7 +25,7 @@ const Link = sfc({
     };
   },
 
-  options: {
+  static: {
     propTypes: {
       active: PropTypes.bool.isRequired,
       children: PropTypes.node.isRequired,

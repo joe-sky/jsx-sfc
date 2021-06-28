@@ -2,7 +2,7 @@
   "name": "vscode-jsx-sfc",
   "displayName": "jsx-sfc",
   "description": "Useful and interesting editor tools for jsx-sfc.",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "publisher": "joe-sky",
   "icon": "images/react-logo.png",
   "engines": {
@@ -91,7 +91,7 @@
     "@babel/preset-env": "^7.14.4",
     "@babel/preset-typescript": "^7.13.0",
     "@vue/reactivity": "^3.0.11",
-    "babel-plugin-jsx-sfc": "^1.4.0",
+    "babel-plugin-jsx-sfc": "^1.4.2",
     "lodash": "^4.17.21"
   }
 }

@@ -15,7 +15,7 @@ const TodoList = sfc({
     );
   },
 
-  options: {
+  static: {
     propTypes: {
       todos: PropTypes.arrayOf(
         PropTypes.shape({

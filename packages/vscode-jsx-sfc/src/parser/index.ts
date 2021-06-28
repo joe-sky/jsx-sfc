@@ -5,7 +5,7 @@ import { babelConfig } from './config';
 import { SFCBlock, Descriptor } from '../types';
 import { astUtils, utils } from 'babel-plugin-jsx-sfc';
 
-const { SFC_FORWARD_REF, SFC_COMPONENT, SFC_TEMPLATE, SFC_STYLES, SFC_OPTIONS } = utils;
+const { SFC_FORWARD_REF, SFC_COMPONENT, SFC_TEMPLATE, SFC_STYLES, SFC_STATIC, SFC_OPTIONS } = utils;
 
 export function parse(code: string) {
   const ast = transformSync(code, babelConfig)?.ast;
@@ -13,8 +13,7 @@ export function parse(code: string) {
     component: [],
     template: [],
     styles: [],
-    static: [],
-    options: []
+    static: []
   };
 
   traverse(ast, {
@@ -66,8 +65,9 @@ export function parse(code: string) {
                     case SFC_STYLES:
                       descriptor.styles.push(block);
                       break;
+                    case SFC_STATIC:
                     case SFC_OPTIONS:
-                      descriptor.options.push(block);
+                      descriptor.static.push(block);
                       break;
                   }
                 }

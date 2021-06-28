@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import logo from './logo.svg';
 import sfc from 'jsx-sfc';
-import { styles } from './utils';
+import { createUseStyles } from 'react-jss';
 
 interface AppProps {
   title?: string;
@@ -42,7 +42,7 @@ const App = sfc<AppProps>()({
     );
   },
 
-  Component: ({ title, useStyles }) => {
+  Component: ({ title, styles: { useStyles } }) => {
     const [count, setCount] = useState(0);
     const classes = useStyles();
 
@@ -55,12 +55,14 @@ const App = sfc<AppProps>()({
     };
   },
 
-  options: {
+  static: {
     defaultProps: {
       title: 'Hello Vite + React!'
-    },
+    }
+  },
 
-    ...styles({
+  styles: () => ({
+    useStyles: createUseStyles({
       App: {
         textAlign: 'center'
       },
@@ -94,7 +96,7 @@ const App = sfc<AppProps>()({
         fontSize: 'calc(10px + 2vmin)'
       }
     })
-  }
+  })
 });
 
 export default App;

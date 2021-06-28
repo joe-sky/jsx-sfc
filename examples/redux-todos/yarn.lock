@@ -327,10 +327,10 @@ ansi-styles@^3.2.1:
   dependencies:
     color-convert "^1.9.0"
 
-babel-plugin-jsx-sfc@^1.4.1:
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/babel-plugin-jsx-sfc/-/babel-plugin-jsx-sfc-1.4.1.tgz#61940e1bec9c765f64b1f4ecf0371106470a996f"
-  integrity sha512-N8VjtBTi/w5DdZTIZ8JUBS3t5+X4/2LkAl15zqxrWbATDJhZ1RJQc86z5MGXpfglfnTmQoefzbzmm5QLdRPS9g==
+babel-plugin-jsx-sfc@^1.4.2:
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/babel-plugin-jsx-sfc/-/babel-plugin-jsx-sfc-1.4.2.tgz#54e1be356006e2c17a7842a318c004eb491035f9"
+  integrity sha512-wWKYEZsxLvToCrBc+vNbZziSTFOoGb+0X4UcY4bYanLMpypwTlW7RZgENH2cRR4v14Hy7cJ000sljmSRF3SN9g==
   dependencies:
     "@babel/core" "^7.7.5"
     "@babel/plugin-transform-react-jsx" "^7.7.5"
@@ -513,10 +513,10 @@ json5@^2.1.2:
   dependencies:
     minimist "^1.2.5"
 
-jsx-sfc@^1.4.1:
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/jsx-sfc/-/jsx-sfc-1.4.1.tgz#e8f9b9c69cba53c4befcc2f542ecb80a81e80b58"
-  integrity sha512-4kFyvAQJopVq9C1ewI02eJx/FRvX+yhHRPBLctd0OhFLRdQdGgYfcBVyrm5JKwHwStqkmciTfZrdcBdq/Z1p3Q==
+jsx-sfc@^1.4.2:
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/jsx-sfc/-/jsx-sfc-1.4.2.tgz#32678dde33549f815c36e727d15ee99179037ffe"
+  integrity sha512-PHWQePCmmADy7bLJ3ptqfNSf78dyqgMbcFzVSexdBfF0wLQpKLj22hpfDDBUJp12/YFV0g8BIKPrT/EwaZMlKA==
 
 lodash@^4.17.11, lodash@^4.17.19:
   version "4.17.21"
@@ -715,12 +715,12 @@ to-fast-properties@^2.0.0:
   resolved "https://registry.yarnpkg.com/to-fast-properties/-/to-fast-properties-2.0.0.tgz#dc5e698cbd079265bc73e0377681a4e4e83f616e"
   integrity sha1-3F5pjL0HkmW8c+A3doGk5Og/YW4=
 
-vite-plugin-jsx-sfc@^1.4.1:
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/vite-plugin-jsx-sfc/-/vite-plugin-jsx-sfc-1.4.1.tgz#568ad8183e157e72e14fb3092733aa7a217a0bd7"
-  integrity sha512-Eu/Ldbr4f7Rj5kn9C9jb84gGeCBnADJpMPASMyPhFuN4nmjVs/WbW4XsTxDvqWVmsERUSFMDjaDjJlJM8i8cwQ==
+vite-plugin-jsx-sfc@^1.4.2:
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/vite-plugin-jsx-sfc/-/vite-plugin-jsx-sfc-1.4.2.tgz#fbc99175592d683b70468fad7d09032882392648"
+  integrity sha512-TpA0Eq4LvyqK7lY9g2/M/WlTcISM3SmxWbzEiu1ACW2HhXPxmDxigirB7u2FmJJyNxCDNwZP/x6z8tXaLwGzsA==
   dependencies:
-    babel-plugin-jsx-sfc "^1.4.1"
+    babel-plugin-jsx-sfc "^1.4.2"
 
 vite@^2.0.5:
   version "2.0.5"

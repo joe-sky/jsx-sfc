@@ -175,7 +175,7 @@ const Nav = sfc({
     };
   },
 
-  options: {
+  static: {
     constants: {
       links: [
         { text: 'Home', to: '/' },
