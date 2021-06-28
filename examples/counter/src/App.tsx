@@ -56,6 +56,10 @@ const App = sfc<AppProps>()({
   },
 
   options: {
+    defaultProps: {
+      title: 'Hello Vite + React!'
+    },
+
     ...styles({
       App: {
         textAlign: 'center'
@@ -89,11 +93,7 @@ const App = sfc<AppProps>()({
       AppButton: {
         fontSize: 'calc(10px + 2vmin)'
       }
-    }),
-
-    defaultProps: {
-      title: 'Hello Vite + React!'
-    }
+    })
   }
 });
 

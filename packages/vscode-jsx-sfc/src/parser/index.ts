@@ -13,6 +13,7 @@ export function parse(code: string) {
     component: [],
     template: [],
     styles: [],
+    static: [],
     options: []
   };
 
