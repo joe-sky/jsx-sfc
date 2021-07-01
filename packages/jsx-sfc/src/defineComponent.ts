@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, RefAttributes } from 'react';
+import React, { PropsWithChildren, RefAttributes, WeakValidationMap, ValidationMap } from 'react';
 import { Template } from './template';
 import { Func, Obj, FuncMap, JSXElements } from './utils';
 
@@ -13,7 +13,24 @@ export type SFCProps<Props = {}, EX = {}> = PropsWithChildren<Props> & {
   originalProps: PropsWithChildren<Props>;
 } & EX;
 
-type ExtractOptions<T> = T extends () => infer R ? (R extends Obj ? R : never) : T extends Obj ? T : unknown;
+type PresetStatic<Props = {}> = Obj & {
+  propTypes?: WeakValidationMap<Props>;
+  contextTypes?: ValidationMap<any>;
+  defaultProps?: Partial<Props>;
+  displayName?: string;
+};
+
+type ExtractOptions<T, Props = null> = T extends () => infer R
+  ? R extends (Props extends null
+    ? Obj
+    : PresetStatic<Props>)
+    ? R
+    : never
+  : T extends (Props extends null
+    ? Obj
+    : PresetStatic<Props>)
+  ? T
+  : unknown;
 
 export type DefineComponent<
   Ref = NoRef,
@@ -24,8 +41,8 @@ export type DefineComponent<
   <
     Data extends Template.ComponentData,
     InferStyles extends ExtractOptions<Styles>,
-    InferStatic extends ExtractOptions<Static>,
-    InferEX extends ExtractOptions<EX>,
+    InferStatic extends ExtractOptions<Static, Props>,
+    InferEX extends ExtractOptions<EX, Props>,
     FR extends { styles: InferStyles } & InferStatic & InferEX,
     Styles = {},
     Static = {},
@@ -83,13 +100,13 @@ export type DefineComponent<
         __componentData: Data;
       };
       styles: InferStyles;
-    } & ExtractOptions<Static> &
-    ExtractOptions<EX>;
+    } & ExtractOptions<Static, Props> &
+    ExtractOptions<EX, Props>;
 
   <
     InferStyles extends ExtractOptions<Styles>,
-    InferStatic extends ExtractOptions<Static>,
-    InferEX extends ExtractOptions<EX>,
+    InferStatic extends ExtractOptions<Static, Props>,
+    InferEX extends ExtractOptions<EX, Props>,
     FR extends { styles: InferStyles } & InferStatic & InferEX,
     Styles = {},
     Static = {},
@@ -122,14 +139,14 @@ export type DefineComponent<
       options?: Static;
     },
     extensions?: EX
-  ): ReturnComponent & Origin & { styles: InferStyles } & ExtractOptions<Static> & ExtractOptions<EX>;
+  ): ReturnComponent & Origin & { styles: InferStyles } & ExtractOptions<Static, Props> & ExtractOptions<EX, Props>;
 
-  <InferEX extends ExtractOptions<EX>, EX = {}>(
+  <InferEX extends ExtractOptions<EX, Props>, EX = {}>(
     component: Ref extends NoRef
       ? (props: SFCProps<Props, InferEX>, context?: any) => JSXElements
       : (props: SFCProps<Props, InferEX>, ref: React.Ref<Ref>) => JSXElements,
     extensions?: EX
-  ): ReturnComponent & Origin & ExtractOptions<EX>;
+  ): ReturnComponent & Origin & ExtractOptions<EX, Props>;
 };
 
 export interface ForwardRefSFC<Ref = unknown> extends DefineComponent<Ref> {

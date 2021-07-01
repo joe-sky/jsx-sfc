@@ -27,7 +27,12 @@ const App = sfc<AppProps>()({
   },
 
   static: () => {
-    return { emptyStr: '' };
+    return {
+      emptyStr: '',
+      defaultProps: {
+        test: '123'
+      }
+    };
   },
 
   styles: () => ({

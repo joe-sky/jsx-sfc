@@ -1,5 +1,6 @@
 /node_modules
 /examples/**/node_modules
+/test/node_modules_local
 /packages/jsx-sfc/dist
 /packages/jsx-sfc/lib
 /packages/jsx-sfc/types/dist.definition.ts

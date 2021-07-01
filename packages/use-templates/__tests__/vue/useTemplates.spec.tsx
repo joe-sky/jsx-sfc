@@ -1,4 +1,4 @@
-// @ts-nocheck
+/* // @ts-nocheck */
 /* eslint-disable react-hooks/rules-of-hooks */
 import { mount } from '@vue/test-utils';
 /** @jsx h */
@@ -19,6 +19,7 @@ const Nav = defineComponent({
 
     return useTemplates((profile, admin) => (
       <>
+        {/* @ts-ignore */}
         <Template name={profile}>
           {() => (
             <a id="profile" href={props.profileHref}>
@@ -27,6 +28,7 @@ const Nav = defineComponent({
           )}
         </Template>
 
+        {/* @ts-ignore */}
         <Template name={admin}>
           {() => {
             function onClick() {
@@ -44,6 +46,7 @@ const Nav = defineComponent({
           }}
         </Template>
 
+        {/* @ts-ignore */}
         <Template>
           {() => (
             <nav>

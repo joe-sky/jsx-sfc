@@ -12,7 +12,7 @@ const {
   styles: { Container, hl }
 } = sfc(
   {
-    template: ({ data, styles, utils: { connectName } }) => (
+    template: ({ data, styles, utils: { connectName }, emptyStr, abc }) => (
       <Container>
         <div>{connectName(data.firstName, data.LAST_NAME)}</div>
         <input onChange={data.onChange} />
@@ -24,6 +24,16 @@ const {
         firstName: 'joe',
         LAST_NAME,
         onChange: e => console.log(e.target.value)
+      };
+    },
+
+    static: () => {
+      return {
+        emptyStr: '',
+        defaultProps: {
+          test: '123'
+        },
+        abc: a => 123
       };
     },
 
