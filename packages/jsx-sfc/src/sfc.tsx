@@ -1,18 +1,17 @@
-import React, { forwardRef as forwardRefReact, Fragment, ReactElement } from 'react';
+import { forwardRef as forwardRefReact, Fragment, ReactElement } from 'react';
 import { SFC, ForwardRefSFC, SFCOptions, SFCExtensions } from './defineComponent';
 import { Template, isTemplate } from './template';
 import { isFunc, noop, getFuncParams, emptyObjs, withOrigin, Func, Obj, FuncMap } from './utils';
 
-const COMPILED_SIGN = '__cs';
 const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
-export function createOptions(options: FuncMap, extensions?: Func | Obj, isRuntime?: boolean) {
+export function createOptions(options: FuncMap, extensions?: SFCExtensions) {
   const ret: Obj = {};
   let template: Func = noop;
 
   Object.keys(options).forEach(key => {
     const item = options[key];
-    if (key === 'template') {
+    if (key === 'template' || key === 'render') {
       template = item as Func;
     } else if (key === 'styles') {
       ret[key] = isFunc(item) ? item() : item;
@@ -63,52 +62,28 @@ export function createOptions(options: FuncMap, extensions?: Func | Obj, isRunti
         : (data?: Template.ComponentData) => template({ data, props: data?.props, ...ret });
   }
 
-  if (!isRuntime) {
-    ret[COMPILED_SIGN] = true;
-  }
-
   return ret;
 }
 
-function assignToComponent(component: Func, extensions: Obj) {
-  return Object.assign(withOrigin(component), extensions);
-}
-
 function createSfc(isForwardRef?: boolean) {
-  function defineSfc(options: SFCOptions, extensions?: SFCExtensions) {
-    if (extensions?.[COMPILED_SIGN]) {
-      delete extensions[COMPILED_SIGN];
-      const Component = (options as any) as Func;
-      const component = !isForwardRef ? Component : forwardRefReact(Component);
+  function defineSfc(component: Func, options: SFCOptions) {
+    const Component = !isForwardRef ? component : forwardRefReact(component);
+    const opts: Obj = {};
 
-      return assignToComponent(component, extensions);
-    } else {
-      if (isFunc(options)) {
-        options = { Component: options };
-      }
-      const { template, styles, Component, static: staticPpts } = options;
-      const sfcOptions = createOptions({ template, styles, static: staticPpts }, extensions, true);
-
-      let SeparateFunction: Func;
-      if (!isForwardRef) {
-        const InnerComponent: React.FC = Component;
-        SeparateFunction = innerProps => {
-          return <InnerComponent {...innerProps} {...sfcOptions} />;
-        };
+    Object.keys(options).forEach(key => {
+      if (key === 'render') {
+        opts.Render = options[key];
       } else {
-        const InnerComponentWithRef = forwardRefReact(Component);
-        SeparateFunction = forwardRefReact((innerProps, ref) => {
-          return <InnerComponentWithRef {...innerProps} {...sfcOptions} ref={ref} />;
-        });
+        opts[key] = options[key as keyof SFCOptions];
       }
+    });
 
-      return assignToComponent(SeparateFunction, sfcOptions);
-    }
+    return Object.assign(withOrigin(Component), opts);
   }
 
-  return (options?: any, extensions?: any) => {
+  return (component: Func, options: SFCOptions) => {
     if (options) {
-      return defineSfc(options, extensions);
+      return defineSfc(component, options);
     } else {
       return defineSfc;
     }

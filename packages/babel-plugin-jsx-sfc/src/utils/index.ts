@@ -6,6 +6,8 @@ export const SFC_COMPONENT = 'Component';
 
 export const SFC_TEMPLATE = 'template';
 
+export const SFC_RENDER = 'render';
+
 export const SFC_STYLES = 'styles';
 
 export const SFC_STATIC = 'static';

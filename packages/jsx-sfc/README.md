@@ -1401,7 +1401,7 @@ const App = (
 
 But unfortunately, the return value type of JSX tags can always be `JSX.Element`, only in this type can it be legally recognized as JSX tag by TS compiler. At this way, we will not be able to achieve type inference and type safe 😰.
 
-### Why JSX tags function named template
+<!-- ### Why JSX tags function named template
 
 I named the JSX tags function of `jsx-sfc` to `template`, mainly because of the following points:
 
@@ -1413,7 +1413,7 @@ Compared with the React class component, the whole function body of the React fu
 
 In order not to have doubts, I explain it specifically: The `template function` and `template tags` in `jsx-sfc` are reusable, their responsibilities are limited to returning `JSX.Element` type and support TS type safe.
 
-So the name `template` is just to conform to the SFCs model that has been widely recognized by people, and make it easier for people to remember that `template` is specially used to place tag syntax, and they can be reused.
+So the name `template` is just to conform to the SFCs model that has been widely recognized by people, and make it easier for people to remember that `template` is specially used to place tag syntax, and they can be reused. -->
 
 ### Why the component function be capitalized
 

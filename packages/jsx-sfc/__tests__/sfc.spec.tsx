@@ -83,7 +83,11 @@ describe('basic', function() {
 const Template = createTemplate('Region', 'Main');
 
 const AppMultiTmpls = sfc<AppProps>()({
-  template: ({ data, styles: { Container } }, header: TemplateRender<string>, footer: TemplateRender<string>, noop) => (
+  Component(props) {
+    return { test: props.test };
+  },
+
+  render: ({ data, styles: { Container } }, header: TemplateRender<string>, footer: TemplateRender<string>, noop) => (
     <>
       <Template.Region name={header}>{content => <header>{content}</header>}</Template.Region>
 
@@ -102,10 +106,6 @@ const AppMultiTmpls = sfc<AppProps>()({
       </Template.Main>
     </>
   ),
-
-  Component(props) {
-    return { test: props.test };
-  },
 
   styles: () => ({
     Container: styled.section`

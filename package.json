@@ -8,15 +8,14 @@
     "packages/jsx-sfc.macro",
     "packages/use-templates"
   ],
-  "version": "1.4.2",
+  "version": "1.5.0",
   "description": "A tiny JSX/TSX toolkit that help you to better implement separation of concerns within JSX based functional components.",
   "scripts": {
     "build": "lerna run build",
-    "test": "yarn run jest:clear && jest --config=test/jest.config.compile.js",
-    "test:runtime": "jest --config=test/jest.config.js",
+    "test": "yarn run jest:clear && jest --config=test/jest.config.js",
     "test:babel": "yarn run jest:clear && jest --config=test/jest.config.babel.js",
     "jest:clear": "jest --clearCache",
-    "cover": "yarn run jest:clear && jest --coverage --config=test/jest.config.compile.js",
+    "cover": "yarn run jest:clear && jest --coverage --config=test/jest.config.js",
     "ci": "yarn run build && yarn run cover && codecov",
     "release": "lerna publish",
     "release:next": "lerna publish --dist-tag next"

@@ -50,10 +50,6 @@ export type DefineComponent<
   >(
     options: {
       /**
-       * Using the `styles property or function` to define styles, you can use the most popular `CSS in JS` solutions. (e.g. `styled-components`, `Emotion`)
-       */
-      styles?: Styles;
-      /**
        * Using the `Component function` to define actual component, example:
        * ```tsx
        * const App = sfc<{ user: string }>()({
@@ -69,6 +65,7 @@ export type DefineComponent<
       Component: Ref extends NoRef
         ? (props: SFCProps<Props, FR>, context?: any) => Data
         : (props: SFCProps<Props, FR>, ref: React.Ref<Ref>) => Data;
+
       /**
        * Using the `template function` to return JSX elements, example:
        * ```tsx
@@ -82,11 +79,36 @@ export type DefineComponent<
        * });
        * ```
        */
-      template: <U extends Data>(
+      template?: <U extends Data>(
         args: { data: U; props: PropsWithChildren<Props> } & FR,
         ...tmpls: Template.Render[]
       ) => JSXElements;
+
+      /**
+       * Using the `render function` to return JSX elements, example:
+       * ```tsx
+       * const App = sfc<{ user: string }>()({
+       *   Component: (props) => {
+       *     useEffect(() => console.log(props.user), []);
+       *     return { user: props.user };
+       *   },
+       *   render: ({ data, styles: { Wrapper } }) => <Wrapper>{data.user}</Wrapper>,
+       *   styles: { Wrapper: styled.div`font-size:14px` }
+       * });
+       * ```
+       */
+      render?: <U extends Data>(
+        args: { data: U; props: PropsWithChildren<Props> } & FR,
+        ...tmpls: Template.Render[]
+      ) => JSXElements;
+
+      /**
+       * Using the `styles property or function` to define styles, you can use the most popular `CSS in JS` solutions. (e.g. `styled-components`, `Emotion`)
+       */
+      styles?: Styles;
+
       static?: Static;
+
       /**
        * @deprecated Please use `static`
        */
@@ -99,6 +121,7 @@ export type DefineComponent<
         (data?: Partial<Data>): JSXElements;
         __componentData: Data;
       };
+      Render: (data?: Partial<Data>) => JSXElements;
       styles: InferStyles;
     } & ExtractOptions<Static, Props> &
     ExtractOptions<EX, Props>;
@@ -114,10 +137,6 @@ export type DefineComponent<
   >(
     options: {
       /**
-       * Using the `styles property or function` to define styles, you can use the most popular `CSS in JS` solutions. (e.g. `styled-components`, `emotion`)
-       */
-      styles?: Styles;
-      /**
        * Using the `Component function` to define actual component, example:
        * ```tsx
        * const App = sfc<{ user: string }>()({
@@ -132,7 +151,14 @@ export type DefineComponent<
       Component: Ref extends NoRef
         ? (props: SFCProps<Props, FR>, context?: any) => JSXElements
         : (props: SFCProps<Props, FR>, ref: React.Ref<Ref>) => JSXElements;
+
+      /**
+       * Using the `styles property or function` to define styles, you can use the most popular `CSS in JS` solutions. (e.g. `styled-components`, `emotion`)
+       */
+      styles?: Styles;
+
       static?: Static;
+
       /**
        * @deprecated Please use `static`
        */
@@ -161,6 +187,7 @@ export interface SFC extends DefineComponent {
 
 export interface SFCOptions {
   template?: Func;
+  render?: Func;
   Component: Func;
   styles?: Func | Obj;
   static?: Func | Obj;
@@ -170,10 +197,7 @@ export interface SFCOptions {
   options?: Func | Obj;
 }
 
-export type SFCExtensions = {
-  __cs?: boolean;
-  [key: string]: any;
-};
+export type SFCExtensions = Func | Obj;
 
 export type ComponentDataType<C> = C extends { template: infer T }
   ? T extends { (...args: any): any; __componentData: infer D }

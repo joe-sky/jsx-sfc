@@ -313,6 +313,7 @@ export default () => ({
                   );
                 }
 
+                /* You can use @babel/generator here when debugging */
                 // console.log(generate(path.node).code);
                 // console.log(generate(sfcOptionsPath[0].node).code);
               }

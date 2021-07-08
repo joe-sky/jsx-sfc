@@ -1,5 +1,5 @@
 /*!
- * babel-plugin-jsx-sfc v1.4.2
+ * babel-plugin-jsx-sfc v1.5.0
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
@@ -22,6 +22,7 @@ declare const SFC_LIB = "jsx-sfc";
 declare const SFC_FUNC = "sfc";
 declare const SFC_COMPONENT = "Component";
 declare const SFC_TEMPLATE = "template";
+declare const SFC_RENDER = "render";
 declare const SFC_STYLES = "styles";
 declare const SFC_STATIC = "static";
 declare const SFC_OPTIONS = "options";
@@ -34,6 +35,7 @@ declare const index_SFC_LIB: typeof SFC_LIB;
 declare const index_SFC_FUNC: typeof SFC_FUNC;
 declare const index_SFC_COMPONENT: typeof SFC_COMPONENT;
 declare const index_SFC_TEMPLATE: typeof SFC_TEMPLATE;
+declare const index_SFC_RENDER: typeof SFC_RENDER;
 declare const index_SFC_STYLES: typeof SFC_STYLES;
 declare const index_SFC_STATIC: typeof SFC_STATIC;
 declare const index_SFC_OPTIONS: typeof SFC_OPTIONS;
@@ -47,6 +49,7 @@ declare namespace index {
     index_SFC_FUNC as SFC_FUNC,
     index_SFC_COMPONENT as SFC_COMPONENT,
     index_SFC_TEMPLATE as SFC_TEMPLATE,
+    index_SFC_RENDER as SFC_RENDER,
     index_SFC_STYLES as SFC_STYLES,
     index_SFC_STATIC as SFC_STATIC,
     index_SFC_OPTIONS as SFC_OPTIONS,

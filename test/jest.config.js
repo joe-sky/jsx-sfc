@@ -4,7 +4,7 @@ module.exports = {
   setupFiles: ['<rootDir>/test/setup.js'],
   setupFilesAfterEnv: ['<rootDir>/node_modules/jest-enzyme/lib/index.js'],
   testMatch: [
-    '<rootDir>/packages/jsx-sfc/**/__tests__/runtime/**/*.(spec|test).{js,jsx,ts,tsx}',
+    '<rootDir>/packages/jsx-sfc/**/__tests__/**/*.(spec|test).{js,jsx,ts,tsx}',
     '<rootDir>/packages/use-templates/**/__tests__/**/*.(spec|test).{js,jsx,ts,tsx}'
   ],
   transform: {
