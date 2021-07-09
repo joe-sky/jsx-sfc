@@ -5,7 +5,6 @@ import { Func, Obj, FuncMap, JSXElements } from './utils';
 type NoRef = 'noRef';
 
 export type SFCProps<Props = {}, EX = {}> = PropsWithChildren<Props> & {
-  template: Template.InternalFunc;
   props: PropsWithChildren<Props>;
   /**
    * @deprecated Please use `props`
@@ -39,7 +38,7 @@ export type DefineComponent<
   Origin = { Component: ReturnComponent }
 > = {
   <
-    Data extends Template.ComponentData,
+    Data extends Obj,
     InferStyles extends ExtractOptions<Styles>,
     InferStatic extends ExtractOptions<Static, Props>,
     InferEX extends ExtractOptions<EX, Props>,

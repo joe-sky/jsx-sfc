@@ -4,7 +4,7 @@ import { shallow, mount } from 'enzyme';
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import styled from '@emotion/styled';
-import sfc, { Template } from '../src/index';
+import sfc from '../src/index';
 
 interface AppProps {
   test?: string;
@@ -41,21 +41,21 @@ const App = sfc.forwardRef<AppRef, AppProps>()({
   })
 });
 
-const AppNoGeneric = sfc.forwardRef({
-  template({ styles: { Container } }) {
+const AppHasRender = sfc.forwardRef({
+  Component(props, ref) {
+    useImperativeHandle(ref, () => ({
+      getName: () => 'test'
+    }));
+
+    return {};
+  },
+
+  render({ styles: { Container } }) {
     return (
       <Container>
         <div>test</div>
       </Container>
     );
-  },
-
-  Component({ template }, ref) {
-    useImperativeHandle(ref, () => ({
-      getName: () => 'test'
-    }));
-
-    return template();
   },
 
   styles: () => ({
@@ -76,9 +76,9 @@ describe('forward ref basic', function() {
     expect(ref.current?.getName()).toEqual('test');
   });
 
-  const appNoGeneric = mount(<AppNoGeneric />);
+  const appHasRender = mount(<AppHasRender />);
 
-  it('no generic', () => {
-    expect(appNoGeneric.html()).toContain('<div>test</div>');
+  it('has render', () => {
+    expect(appHasRender.html()).toContain('<div>test</div>');
   });
 });

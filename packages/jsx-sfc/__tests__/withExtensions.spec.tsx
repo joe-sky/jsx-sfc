@@ -10,28 +10,18 @@ const {
   Component: App,
   utils: { connectName },
   styles: { Container, hl }
-} = sfc(
-  {
-    template: ({ data, styles, utils: { connectName } }) => (
-      <Container>
-        <div>{connectName(data.firstName, data.LAST_NAME)}</div>
-      </Container>
-    ),
+} = sfc({
+  template: ({ data, styles, utils: { connectName } }) => (
+    <Container>
+      <div>{connectName(data.firstName, data.LAST_NAME)}</div>
+    </Container>
+  ),
 
-    Component: ({ constant: { LAST_NAME } }) => {
-      return { firstName: 'joe', LAST_NAME };
-    },
-
-    styles: () => ({
-      Container: styled.section`
-        color: #fff;
-      `,
-      hl: css`
-        width: 50px;
-      `
-    })
+  Component: ({ constant: { LAST_NAME } }) => {
+    return { firstName: 'joe', LAST_NAME };
   },
-  {
+
+  static: {
     constant: {
       LAST_NAME: 'sky'
     },
@@ -39,8 +29,17 @@ const {
     utils: {
       connectName: (firstName: string, lastName: string) => `${firstName}_${lastName}`
     }
-  }
-);
+  },
+
+  styles: () => ({
+    Container: styled.section`
+      color: #fff;
+    `,
+    hl: css`
+      width: 50px;
+    `
+  })
+});
 
 describe('component basic', function() {
   const app = mount(<App />);
@@ -54,35 +53,34 @@ describe('component basic', function() {
   });
 });
 
-const WithHooks = sfc(
-  {
-    template: ({ data, styles }) => (
-      <Container css={styles.hl}>
-        <i>{data.count}</i>
-        <button className="add" onClick={data.onClickAdd}>
-          Add
-        </button>
-        <button className="reset" onClick={data.onClickReset}>
-          Reset
-        </button>
-      </Container>
-    ),
+const WithHooks = sfc({
+  template: ({ data, styles }) => (
+    <Container css={styles.hl}>
+      <i>{data.count}</i>
+      <button className="add" onClick={data.onClickAdd}>
+        Add
+      </button>
+      <button className="reset" onClick={data.onClickReset}>
+        Reset
+      </button>
+    </Container>
+  ),
 
-    Component: ({ useCount }) => {
-      const { count, increase, reset } = useCount(0);
+  Component: ({ useCount }) => {
+    const { count, increase, reset } = useCount(0);
 
-      return {
-        count,
-        onClickAdd() {
-          increase();
-        },
-        onClickReset() {
-          reset();
-        }
-      };
-    }
+    return {
+      count,
+      onClickAdd() {
+        increase();
+      },
+      onClickReset() {
+        reset();
+      }
+    };
   },
-  () => {
+
+  static: () => {
     const INCREASE_NUM = 1;
 
     return {
@@ -111,7 +109,7 @@ const WithHooks = sfc(
       }
     };
   }
-);
+});
 
 describe('with custom hooks', function() {
   const app = mount(<WithHooks />);

@@ -10,44 +10,32 @@ const {
   Component: App,
   utils: { connectName },
   styles: { Container, hl }
-} = sfc(
-  {
-    template: ({ data, styles, utils: { connectName }, emptyStr, abc }) => (
-      <Container>
-        <div>{connectName(data.firstName, data.LAST_NAME)}</div>
-        <input onChange={data.onChange} />
-      </Container>
-    ),
+} = sfc({
+  template: ({ data, styles, utils: { connectName }, emptyStr, abc }) => (
+    <Container>
+      <div>{connectName(data.firstName, data.LAST_NAME)}</div>
+      <input onChange={data.onChange} />
+    </Container>
+  ),
 
-    Component({ utils, constant: { LAST_NAME } }) {
-      return {
-        firstName: 'joe',
-        LAST_NAME,
-        onChange: e => console.log(e.target.value)
-      };
-    },
-
-    static: () => {
-      return {
-        emptyStr: '',
-        defaultProps: {
-          test: '123'
-        },
-        abc: a => 123
-      };
-    },
-
-    styles: () => ({
-      Container: styled.section`
-        color: #fff;
-      `,
-      hl: css`
-        width: 50px;
-      `
-    })
-  },
-  () => {
+  Component({ utils, constant: { LAST_NAME } }) {
     return {
+      firstName: 'joe',
+      LAST_NAME,
+      onChange: e => console.log(e.target.value)
+    };
+  },
+
+  static: () => {
+    return {
+      emptyStr: '',
+
+      defaultProps: {
+        test: '123'
+      },
+
+      abc: a => 123,
+
       constant: {
         LAST_NAME: 'sky'
       },
@@ -56,8 +44,17 @@ const {
         connectName: (firstName, lastName) => `${firstName}_${lastName}`
       }
     };
-  }
-);
+  },
+
+  styles: () => ({
+    Container: styled.section`
+      color: #fff;
+    `,
+    hl: css`
+      width: 50px;
+    `
+  })
+});
 
 describe('component basic in jsx environment', function() {
   const app = mount(<App />);
@@ -71,35 +68,34 @@ describe('component basic in jsx environment', function() {
   });
 });
 
-const WithHooks = sfc(
-  {
-    template: ({ data, styles }) => (
-      <Container css={styles.hl}>
-        <i>{data.count}</i>
-        <button className="add" onClick={data.onClickAdd}>
-          Add
-        </button>
-        <button className="reset" onClick={data.onClickReset}>
-          Reset
-        </button>
-      </Container>
-    ),
+const WithHooks = sfc({
+  template: ({ data, styles }) => (
+    <Container css={styles.hl}>
+      <i>{data.count}</i>
+      <button className="add" onClick={data.onClickAdd}>
+        Add
+      </button>
+      <button className="reset" onClick={data.onClickReset}>
+        Reset
+      </button>
+    </Container>
+  ),
 
-    Component({ useCount }) {
-      const { count, increase, reset } = useCount(0);
+  Component({ useCount }) {
+    const { count, increase, reset } = useCount(0);
 
-      return {
-        count,
-        onClickAdd() {
-          increase();
-        },
-        onClickReset() {
-          reset();
-        }
-      };
-    }
+    return {
+      count,
+      onClickAdd() {
+        increase();
+      },
+      onClickReset() {
+        reset();
+      }
+    };
   },
-  () => {
+
+  static: () => {
     const INCREASE_NUM = 1;
 
     return {
@@ -128,7 +124,7 @@ const WithHooks = sfc(
       }
     };
   }
-);
+});
 
 describe('with custom hooks in jsx environment', function() {
   const app = mount(<WithHooks />);

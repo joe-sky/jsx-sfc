@@ -41,10 +41,6 @@ export namespace Template {
   export type Func<Arg1 = any, Arg2 = any, Arg3 = any, Arg4 = any, Arg5 = any> = Render<Arg1, Arg2, Arg3, Arg4, Arg5>;
 
   export type EL = typeof templateElement;
-
-  export type ComponentData = Obj;
-
-  export type InternalFunc = <D extends ComponentData>(data?: D) => D;
 }
 
 export const createTemplate = buildCreateTemplate(Template);

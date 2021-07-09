@@ -127,7 +127,7 @@ const AppButton = sfc({
   },
 
   Component() {
-    return {} as { name: string; age?: number; onClick: () => void };
+    return { name: 'joe', lastName: 'sky', onClick() {} };
   }
 });
 
@@ -136,18 +136,42 @@ type ComponentData = ComponentDataType<typeof AppButton>;
 const AppButton1: React.FC = () => AppButton.template({ name: 'joe_sky', onClick: () => console.log('click!') });
 
 const AppButton2: React.FC = () => {
-  const [user, setUser] = useState('joe_sky');
+  const [user, setUser] = useState<ComponentData['name']>('joe_sky');
 
   return (
     <ul>
-      <li>{AppButton.template({ name: user, onClick: () => setUser(`${user} click!`) })}</li>
+      <li>
+        <AppButton.template name={user} onClick={() => setUser(`${user} click!`)} />
+      </li>
     </ul>
   );
 };
 
+const AppButton4 = sfc({
+  Component() {
+    return { name: 'joe', lastName: 'sky', onClick() {} };
+  },
+
+  render({ data }) {
+    return <button onClick={data.onClick}>{data.name}</button>;
+  }
+});
+
+const AppButton5: React.FC = () => <AppButton4.Render name="joe_sky" onClick={() => console.log('click!')} />;
+
 describe('reusing template', function() {
+  const appButton1 = mount(<AppButton1 />);
+  it('execute function', () => {
+    expect(appButton1.html()).toContain('joe_sky');
+  });
+
   const appButton2 = mount(<AppButton2 />);
-  it('simple', () => {
+  it('render component', () => {
     expect(appButton2.html()).toContain('joe_sky');
+  });
+
+  const appButton5 = mount(<AppButton5 />);
+  it('has render', () => {
+    expect(appButton5.html()).toContain('joe_sky');
   });
 });

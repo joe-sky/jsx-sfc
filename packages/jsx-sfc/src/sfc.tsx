@@ -28,7 +28,7 @@ export function createOptions(options: FuncMap, extensions?: SFCExtensions) {
     const paramsCount = getFuncParams(template).length;
     ret.template =
       paramsCount > 1
-        ? (data?: Template.ComponentData) => {
+        ? (data?: Obj) => {
             const jsxFragment: ReactElement = template(
               { data, props: data?.props, ...ret },
               ...emptyObjs(paramsCount - 1)
@@ -59,7 +59,7 @@ export function createOptions(options: FuncMap, extensions?: SFCExtensions) {
 
             return mainTemplate();
           }
-        : (data?: Template.ComponentData) => template({ data, props: data?.props, ...ret });
+        : (data?: Obj) => template({ data, props: data?.props, ...ret });
   }
 
   return ret;
@@ -71,8 +71,8 @@ function createSfc(isForwardRef?: boolean) {
     const opts: Obj = {};
 
     Object.keys(options).forEach(key => {
-      if (key === 'render') {
-        opts.Render = options[key];
+      if (key === 'template') {
+        opts.template = opts.Render = options[key];
       } else {
         opts[key] = options[key as keyof SFCOptions];
       }

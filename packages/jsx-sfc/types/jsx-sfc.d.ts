@@ -37,8 +37,6 @@ declare namespace Template {
      */
     type Func<Arg1 = any, Arg2 = any, Arg3 = any, Arg4 = any, Arg5 = any> = Render<Arg1, Arg2, Arg3, Arg4, Arg5>;
     type EL = typeof templateElement;
-    type ComponentData = Obj;
-    type InternalFunc = <D extends ComponentData>(data?: D) => D;
 }
 declare const createTemplate: <U extends string[]>(...names: U) => (<Arg1 = any, Arg2 = any, Arg3 = any, Arg4 = any, Arg5 = any, T extends Template.Render<Arg1, Arg2, Arg3, Arg4, Arg5> = Template.Render<any, any, any, any, any>>(props: {
     name?: T | undefined;
@@ -50,7 +48,6 @@ declare const createTemplate: <U extends string[]>(...names: U) => (<Arg1 = any,
 
 declare type NoRef = 'noRef';
 declare type SFCProps<Props = {}, EX = {}> = PropsWithChildren<Props> & {
-    template: Template.InternalFunc;
     props: PropsWithChildren<Props>;
     /**
      * @deprecated Please use `props`
@@ -67,7 +64,7 @@ declare type ExtractOptions<T, Props = null> = T extends () => infer R ? R exten
 declare type DefineComponent<Ref = NoRef, Props = {}, ReturnComponent = Ref extends NoRef ? React.FC<Props> : React.ForwardRefExoticComponent<Props & RefAttributes<Ref>>, Origin = {
     Component: ReturnComponent;
 }> = {
-    <Data extends Template.ComponentData, InferStyles extends ExtractOptions<Styles>, InferStatic extends ExtractOptions<Static, Props>, InferEX extends ExtractOptions<EX, Props>, FR extends {
+    <Data extends Obj, InferStyles extends ExtractOptions<Styles>, InferStatic extends ExtractOptions<Static, Props>, InferEX extends ExtractOptions<EX, Props>, FR extends {
         styles: InferStyles;
     } & InferStatic & InferEX, Styles = {}, Static = {}, EX = {}>(options: {
         /**

@@ -26,39 +26,37 @@ export default () => ({
     Program(_path, state: State) {
       _path.traverse({
         /*
-          const App = sfc(
-            {
-              template({ data }) {
-                ...
-              },
-          
-              Component: (props) => {
-                ...
-              },
-          
-              styles: () => { ... }
+          const App = sfc({
+            template({ data }) {
+              ...
             },
-            () => ({
+          
+            Component: (props) => {
+              ...
+            },
+
+            static: () => ({
               utils: { ... }
-            })
-          );
+            }),
+          
+            styles: () => { ... }
+          });
 
           ↓ ↓ ↓ ↓ ↓ ↓
 
-          const $sfcOptions_lineNo = sfc.createOptions(
-            {
-              template({ data }) {
-                ...
-              },
-          
-              styles: () => ({
-                ...
-              })
+          const $sfcOptions_lineNo = sfc.createOptions({
+            template({ data }) {
+              ...
             },
-            () => ({
+
+            static: () => ({
               utils: { ... }
+            }),
+        
+            styles: () => ({
+              ...
             })
-          );
+          });
 
           const Sfc_lineNo = (props) => {
             ...
@@ -125,8 +123,6 @@ export default () => ({
                 );
                 const lineNo = path?.node?.loc?.start.line;
                 const sfcOptionsName = getOptionsName(lineNo);
-
-                // todo: has template?
 
                 /*
                   Component: props => {
