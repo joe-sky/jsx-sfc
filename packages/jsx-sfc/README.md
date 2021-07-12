@@ -24,19 +24,15 @@
 
 ## Introduction
 
-`jsx-sfc`(JSX Separate Function Components) is a tiny toolkit(~1kb) that help you to better implement **separation of concerns** within JSX based functional components. It can be seen as a JSX/TSX syntax or type tool, very simple to use🧙🏼‍♂️.
+`jsx-sfc`(JSX Separate Function Components) is a tiny compiler tool for managing React function components and their related members by categories. It's written by TypeScript and has completely type safety, very easy to use🧙🏼‍♂️.
 
 [Live Demo is here](https://codesandbox.io/s/jsx-sfc-demo-wwgd4) (Experience **Typings/Hot reloading/Dev tools** by Codesandbox).
 
-<!-- [Live Demo is here.](https://codesandbox.io/s/jsx-sfc-demo-jr2z0?file=/src/App.tsx) -->
-
-<!-- > I'm sorting out the hooks syntax tools for separation of concerns: [use-templates](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-templates) and [use-view-data](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-view-data), they can be used with jsx-sfc or alone. Now it's experimenting in the actual project. -->
-
-<!-- > The v1.3 version will be released soon, there are some new features and documentation to be completed. There is no breaking API change this time, but this version will include the more in-depth reflections on the problems that this project solves. -->
+> A new version of documentation is being prepared and will be completed soon.
 
 ## Features
 
-- ✨ Clearly separate **JSX tags**, **logic**, **styles** and **any other concerns** within JSX based functional components
+- ✨ Clearly separate **JSX tags**, **logic**, **styles** and **any other members** within React function components
   <!-- - 🚩 New APIs for **defining and using static members** in function components -->
 - 💫 **Completely type inference** design by TypeScript
   <!-- - 🕹 Support **export internal member types** from components (Documentation to be completed) -->
@@ -57,12 +53,12 @@
   - [Adapting Hot Reloading](#adapting-hot-reloading)
   - [Performance](#performance)
     - [Benchmark](#benchmark)
-  - [About hooks API](#about-hooks-api)
+      <!-- - [About hooks API](#about-hooks-api) -->
 - [Examples](#examples)
-- [Benefits](#benefits)
-  - [Clearer visual isolation](#clearer-visual-isolation)
-  - [Better single file experience](#better-single-file-experience)
-    <!-- - [Exportable internal state types](#exportable-internal-state-types) -->
+  <!--- [Benefits](#benefits)
+    - [Clearer visual isolation](#clearer-visual-isolation)
+    - [Better single file experience](#better-single-file-experience)
+    - [Exportable internal state types](#exportable-internal-state-types) -->
 - [Installation](#installation)
   - [Using with Babel](#using-with-babel)
   - [Using with Vite](#using-with-vite)
@@ -82,409 +78,9 @@
 
 ## Motivation
 
-On the whole, this tool can help you to write `highly cohesive React function components with clear responsibilities`, which draws on the mental model similar to single file components like `Vue/Svelte/Marko`.
+### The problem want to solve
 
-### Inspiration
-
-It's a very interesting idea to implement the SFCs like structure for JSX based function components, I got this inspiration because I found [this project](https://github.com/egoist/jue) by accident. Then I found these interesting projects with similar ideas:
-
-- [one-loader](https://github.com/digitalie/one-loader)
-- [react-sfc-swyx](https://github.com/react-sfc/react-sfc-swyx)
-
-Overall, the above two solutions are to create a new file type for React to implement the idea similar to SFCs. But the idea of this tool is quite different from the above implementations:
-
-_Considering that the original design principle of JSX is a syntax extension of the existing JavaScript, so I want to create a new SFC solution that is more accord with the existing JSX(React) development habits._
-
-### Problems to be solved
-
-And it's not just about interest. I'm trying to solve some problems:
-
-- scattered components
-
-Because React can only split code according to component or hook dimension, many scattered small components may appear in such a complete business. However the documentation of business code are always limited, which makes it difficult for a new project successor to understand the relationship between these small components.
-
-So I want to achieve the goal of reducing the number of small components at least to a certain extent by reasonably dividing the code inside the function components.
-
-- scattered styles
-
-When we use the CSS in JS framework(such as [styled-components](https://github.com/styled-components/styled-components), [Emotion](https://github.com/emotion-js/emotion)), if there is a large amount of style code, we have to extract them as separate files, which seems to be no different from the development method of importing CSS files directly.
-
-If we can have a preset location in the component code file to place styles, we can reduce the mental burden of switching between multiple styles or component files, and give full play to the features of the CSS in JS framework.
-
-<!-- On the whole, the goal of `jsx-sfc` is to create a toolkit with similar syntax and useful structure for the scenario of using JSX to develop functional components, according to the `mental model of single file components like Vue/Svelte/Marko`. My vision is bring the **ability that divide code responsibilities** add into the existing functional component syntax, to make the code look clearer and easier to maintain.
-
-If you are already familiar with the similar SFCs development mode and understand the advantages, you will find the syntax of `jsx-sfc` so intuitive~ Of course, in addition to the syntax structure similar to SFCs, this project will also provide some additional benefits, which will be explained below. -->
-
-### API design idea
-
-Since the birth of react hooks, function component has been the main way to write React components. My main idea is to create an as simple as possible extension syntax for the existing function components that conforms to the idea of **separation of concerns**, and without creating any new tool chains(e.g. IDE syntax highlight plugin).
-
-So I named it:
-
-`Separate Function Components` (npm package named `jsx-sfc`, abbreviated as SFC also)
-
-It's implementation makes full use of **TypeScript generic inference**, and support the use of all React existing tool chains(e.g. CSS-in-JS/Eslint/HMR).
-
-> Why not named react-sfc? In fact, the npm package name of react-sfc has been occupied([react-sfc-swyx](https://github.com/react-sfc/react-sfc-swyx)). But more importantly, the idea of this project can be extended to other frameworks that support JSX(e.g. using JSX in Vue).
-
-A simple demo, when we write a React function component module(with CSS-in-JS) like this:
-
-```tsx
-import React, { useState, useEffect } from 'react';
-import styled from '@emotion/styled';
-import { css } from '@emotion/react';
-
-const App = props => {
-  const [user, setUser] = useState(props.user);
-
-  useEffect(() => {
-    setUser('joe-sky');
-  }, []);
-
-  return (
-    <Wrapper>
-      <i
-        className={css`
-          width: 50px;
-        `}>
-        {user}
-      </i>
-    </Wrapper>
-  );
-};
-
-const Wrapper = styled.section`
-  color: #fff;
-`;
-```
-
-Now, we can use `jsx-sfc` to rewrite it with **separation of concerns**, and TypeScript will inferred all types correctly:
-
-```tsx
-import sfc from 'jsx-sfc';
-
-const App = sfc({
-  template: ({ data, styles: { Wrapper, hl } }) => (
-    <Wrapper>
-      <i className={hl}>{data.user}</i>
-    </Wrapper>
-  ),
-
-  Component(props) {
-    const [user, setUser] = useState(props.user);
-
-    useEffect(() => {
-      setUser('joe-sky');
-    }, []);
-
-    return { user };
-  },
-
-  styles: {
-    Wrapper: styled.section`
-      color: #fff;
-    `,
-    hl: css`
-      width: 50px;
-    `
-  }
-});
-```
-
-Such this component structure at first glance, we can immediately distinguish the responsibilities of each part of the code. From this syntax structure, we can easily extract the TS type of internal state of a component, like this:
-
-```tsx
-import sfc, { ComponentDataType } from 'jsx-sfc';
-
-const App = sfc({
-  template: ({ data }) => (
-    <>
-      <i>{data.count}</i>
-      <AddCount {...data} />
-    </>
-  ),
-
-  Component() {
-    const [count, setCount] = useState({ value: 0 });
-    return { count, setCount };
-  }
-});
-
-const AddCount: React.FC<ComponentDataType<typeof App>> = ({ count, setCount }) => (
-  // Note that TS can easily infer the internal state type of the parent component in the child component, even very complex types.
-  <button onClick={() => setCount({ value: count.value + 1 })}>Add count</button>
-);
-```
-
-[See here for specific advantages compared with regular components.](#benefits)
-
-### Adapting Eslint Plugin
-
-And if you configure the [eslint-plugin-react-hooks](https://github.com/facebook/react/tree/master/packages/eslint-plugin-react-hooks), it also can check where you can use hooks:
-
-```tsx
-import sfc from 'jsx-sfc';
-
-const App = sfc({
-  template: ({ data, styles: { Wrapper, hl } }) => {
-    // Eslint check error, hooks can't appear inside the template function.
-    useEffect(() => ...);
-
-    return (
-      <Wrapper>
-        <i className={hl}>{data.user}</i>
-      </Wrapper>
-    );
-  },
-
-  Component(props) {
-    const [user, setUser] = useState(props.user);
-
-    useEffect(
-      () => console.log(user),
-      // Eslint check warning, missing deps.
-      []
-    );
-
-    useEffect(() => {
-      setUser('joe-sky');
-    }, []);
-
-    return { user };
-  }
-
-  ...
-});
-```
-
-### Adapting Hot Reloading
-
-Finally, `jsx-sfc` can also support [React Fast Refresh](https://github.com/facebook/react/tree/master/packages/react-refresh). Because it has a [babel-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/babel-plugin-jsx-sfc) to transform the runtime code into a format recognized by the [Babel plugin of React Fast Refresh](https://github.com/facebook/react/blob/master/packages/react-refresh/src/ReactFreshBabelPlugin.js).
-
-### Performance
-
-`jsx-sfc` is a tool that supports compiler optimization, so it's performance is almost the same as that of normal React function components ⚡️. [Code comparison before and after compiling can refer to here.](https://github.com/joe-sky/jsx-sfc/tree/main/packages/babel-plugin-jsx-sfc#how-it-works)
-
-#### Benchmark
-
-[Here is a simple benchmark.](https://github.com/joe-sky/jsx-sfc/tree/main/examples/benchmark)
-
-### About hooks API
-
-If you prefer to use regular functional component syntax, you can take a look at this custom hook:
-
-- [use-templates](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-templates)
-
-It extract a core feature of `jsx-sfc` and can be used independently.
-
-<!-- > I will continue to refine and summarize the comparison and pattern between this project and regular function components in the development of actual projects, and try to release it in the near future. -->
-
-## Examples
-
-Here are some examples of **using different CSS in JS Solutions**, which basically cover all the current usage of `jsx-sfc`:
-
-- [Redux Todo List (styles use Styled-Components)](https://github.com/joe-sky/jsx-sfc/tree/main/examples/redux-todos)
-- [React-i18next Example (styles use Emotion)](https://github.com/joe-sky/jsx-sfc/tree/main/examples/react-i18next)
-- [Simple Counter (styles use Jss)](https://github.com/joe-sky/jsx-sfc/tree/main/examples/counter)
-- [TailwindCss Starter (styles use TailwindCss)](https://github.com/joe-sky/jsx-sfc/tree/main/examples/tailwind-starter)
-
-## Benefits
-
-<!-- tips: Use large code components examples, collapse code in md; like .vue, more cohesive components but can separate export members yet.; Compound components tree -->
-
-Compared with the original React function components, `jsx-sfc` has these benefits:
-
-### Clearer visual isolation
-
-<details>
-<summary>
-For example: Components with complex logic (Click to expand)
-</summary>
-
-```tsx
-const QueryForm: React.FC = () => {
-  const store = useStore();
-
-  const getTypes = () => {
-    return store.typeList.map((element, index) => (
-      <Option key={index} value={element.value} label={element.label}>
-        {element.label}
-      </Option>
-    ));
-  };
-
-  const getStatus = () => {
-    return store.statusList.map((el, index) => (
-      <Option key={index} value={el.value} label={el.label}>
-        {el.label}
-      </Option>
-    ));
-  };
-
-  const typesData = getTypes();
-  const statusData = getStatus();
-
-  if (typesData.length < 1) {
-    return <div className="empty">No type data</div>;
-  } else if (statusData.length < 1) {
-    return <div className="empty">No status data</div>;
-  }
-
-  const onTypeChange = (value: number) => {
-    store.setQueryFormItem({ type: value });
-  };
-
-  const onStatusChange = (value: number) => {
-    store.setQueryFormItem({ status: value });
-  };
-
-  const onQuery = () => {
-    store.setPaginationItem({ pageNum: 1 });
-    store.getList();
-  };
-
-  const onReset = () => {
-    store.resetQueryForm();
-  };
-
-  return (
-    <div>
-      <Row className="item-list">
-        <Col span={8}>
-          <Select value={store.queryForm.type} onChange={onTypeChange}>
-            {typesData}
-          </Select>
-        </Col>
-        <Col span={8}>
-          <Select value={store.queryForm.status} onChange={onStatusChange}>
-            {statusData}
-          </Select>
-        </Col>
-      </Row>
-      <div className="item-buttons">
-        <Button onClick={onQuery}>Search</Button>
-        <Button onClick={onReset}>Reset</Button>
-      </div>
-    </div>
-  );
-};
-```
-
-</details>
-
-Undeniably, components like the above are very common in actual development.
-
-<details>
-<summary>
-We can use jsx-sfc to rewrite it (Click to expand)
-</summary>
-
-```tsx
-const QueryForm = sfc({
-  template: ({ data }, types, status) => (
-    <>
-      <Template name={types}>
-        {() =>
-          data.store.typeList.map((element, index) => (
-            <Option key={index} value={element.value} label={element.label}>
-              {element.label}
-            </Option>
-          ))
-        }
-      </Template>
-
-      <Template name={status}>
-        {() =>
-          data.store.statusList.map((el, index) => {
-            return (
-              <Option key={index} value={el.value} label={el.label}>
-                {el.label}
-              </Option>
-            );
-          })
-        }
-      </Template>
-
-      <Template>
-        {() => {
-          const typesData = types.render();
-          const statusData = status.render();
-
-          if (typesData.length < 1) {
-            return <div className="empty">No type data</div>;
-          } else if (statusData.length < 1) {
-            return <div className="empty">No status data</div>;
-          }
-
-          return (
-            <div>
-              <Row className="item-list">
-                <Col span={8}>
-                  <Select value={data.store.queryForm.type} onChange={data.events.onTypeChange}>
-                    {typesData}
-                  </Select>
-                </Col>
-                <Col span={8}>
-                  <Select value={data.store.queryForm.status} onChange={data.events.onStatusChange}>
-                    {statusData}
-                  </Select>
-                </Col>
-              </Row>
-              <div className="item-buttons">
-                <Button onClick={data.events.onQuery}>Search</Button>
-                <Button onClick={data.events.onReset}>Reset</Button>
-              </div>
-            </div>
-          );
-        }}
-      </Template>
-    </>
-  ),
-
-  Component() {
-    const store = useStore();
-
-    return {
-      store,
-
-      events: {
-        onTypeChange(value: number) {
-          store.setQueryFormItem({ type: value });
-        },
-
-        onStatusChange(value: number) {
-          store.setQueryFormItem({ status: value });
-        },
-
-        onQuery() {
-          store.setPaginationItem({ pageNum: 1 });
-          store.getList();
-        },
-
-        onReset() {
-          store.resetQueryForm();
-        }
-      }
-    };
-  }
-});
-```
-
-</details>
-
-In this way:
-
-- We can put all the logic codes into the `Component function` and manage it separately;
-- Then we can put all the JSX codes into the `template function`, and support `template tags` to manage JSX codes that need to be reused.
-
-**When the component code is large and the logic is complex, the benefits of visual isolation are obvious.**
-
-### Better single file experience
-
-<details>
-<summary>
-For example: Multiple components in a single file (Click to expand)
-</summary>
+For example(with CSS in JS), when we write React components like this:
 
 ```tsx
 const svgProps = {
@@ -543,93 +139,252 @@ const TodoListWrapper = styled.ul`
 `;
 ```
 
-</details>
+See above code, in addition to two React function components, there are also some global members. In fact, this is the regular way to write react components, and React does not have any limits on how to organize the code.
 
-<details>
-<summary>
-Then we use jsx-sfc to rewrite it (Click to expand)
-</summary>
+_However, when we first take over the components written by others, we often see that such code may not be able to distinguish the relationship between these global members and each React component at the first time, especially when there is more code_. If we want to make their corresponding relationship clearer through refactoring, we may think of dividing them into multiple files, it's a great regular solution. But if each component code is not too much, we are often used to writing them in the a single file, which can save some time for file switching operation in the editor.
+
+So in addition to separating files, we can try do this:
 
 ```tsx
-const Todo = sfc({
-  Component({ onClick, completed, text, styles: { Wrapper }, svgProps }) {
-    return (
-      <Wrapper onClick={onClick}>
-        {completed ? (
-          <svg {...svgProps}>
-            <polyline points="9 11 12 14 23 3"></polyline>
-            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
-          </svg>
-        ) : (
-          <svg {...svgProps}>
-            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-          </svg>
-        )}
-        <span className="text">{text}</span>
-      </Wrapper>
-    );
+const Todo = ({ onClick, completed, text }) => (
+  <svg {...Todo.svgProps}>
+    <polyline points="9 11 12 14 23 3"></polyline>
+    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+  </svg>
+);
+
+Todo.svgProps = {
+  ...
+};
+
+Todo.Wrapper = styled.li`
+  ...
+`;
+
+const TodoList = ({ todos, onTodoClick }) => (
+  <Todo key={todo.id} {...todo} onClick={() => onTodoClick(todo.id)} />
+);
+
+TodoList.Wrapper = styled.ul`
+  ...
+`;
+```
+
+In the above code, we set up the corresponding relationship between each global member and component in the way of static member convention, which at least describes the relationship from the code.
+
+This writing method is very simple, but it will report an error in TS, because `svgProps` and `Wrapper` properties don't exist in `Todo` component's type definition. Next, let's try `Object.assign`:
+
+```tsx
+const Todo = Object.assign(({ onClick, completed, text }) => (
+  <svg {...Todo.svgProps}>
+    <polyline points="9 11 12 14 23 3"></polyline>
+    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+  </svg>
+), {
+  svgProps: {
+    ...
+  },
+  Wrapper: styled.li`
+    ...
+  `
+});
+```
+
+In this way, the type errors in TS are solved, it's really great. But if we pass in a generic to a component in this way, we will report a type error about `svgProps` and `Wrapper` don't exist:
+
+```tsx
+const Todo: React.FC<TodoProps> = Object.assign(...);
+```
+
+In short, each implementation seems to have its own advantages and disadvantages.
+
+### A new implementation
+
+Here I created a new implementation, which can solve the above problem, and try to achieve all the features of the current React function component, and also has its own features.
+
+<!-- On the whole, this tool can help you to write `highly cohesive React function components with clear responsibilities`, which draws on the mental model similar to single file components like `Vue/Svelte/Marko`. -->
+
+### Inspiration
+
+It's a very interesting idea to implement the SFCs like structure for JSX based function components, I got this inspiration because I found [this project](https://github.com/egoist/jue) by accident. Then I found these interesting projects with similar ideas:
+
+- [one-loader](https://github.com/digitalie/one-loader)
+- [react-sfc-swyx](https://github.com/react-sfc/react-sfc-swyx)
+
+Overall, the above two solutions are to create a new file type for React to implement the idea similar to SFCs. But the idea of this tool is quite different from the above implementations:
+
+_Considering that the original design principle of JSX is a syntax extension of the existing JavaScript, so I want to create a new SFC solution that is more accord with the existing JSX(React) development habits._
+
+### API design idea
+
+Since the birth of react hooks, function component has been the main way to write React components. My main idea is to create an as simple as possible extension syntax for the existing function components that conforms to the mental model of SFCs, and without creating any new tool chains(e.g. IDE syntax highlight plugin).
+
+<!-- > Why not named react-sfc? In fact, the npm package name of react-sfc has been occupied([react-sfc-swyx](https://github.com/react-sfc/react-sfc-swyx)). But more importantly, the idea of this project can be extended to other frameworks that support JSX(e.g. using JSX in Vue). -->
+
+Take a simple demo, when we write a React function component module(with CSS-in-JS) like this:
+
+```tsx
+import React, { useState, useEffect } from 'react';
+import styled from '@emotion/styled';
+import { css } from '@emotion/react';
+
+const App = props => {
+  const [user, setUser] = useState(props.user);
+
+  useEffect(() => {
+    setUser('joe-sky');
+  }, []);
+
+  return (
+    <Wrapper>
+      <i
+        className={css`
+          width: 50px;
+        `}>
+        {user}
+      </i>
+    </Wrapper>
+  );
+};
+
+const Wrapper = styled.section`
+  color: #fff;
+`;
+```
+
+We can use SFCs like structure of code division according to responsibilities to design, which is as follows:
+
+```tsx
+import sfc from 'jsx-sfc';
+
+const App = sfc({
+  template: ({ data, styles: { Wrapper, hl } }) => (
+    <Wrapper>
+      <i className={hl}>{data.user}</i>
+    </Wrapper>
+  ),
+
+  Component(props) {
+    const [user, setUser] = useState(props.user);
+
+    useEffect(() => {
+      setUser('joe-sky');
+    }, []);
+
+    return { user };
   },
 
-  static: {
-    svgProps: {
-      xmlns: 'http://www.w3.org/2000/svg',
-      width: '24',
-      height: '24',
-      viewBox: '0 0 24 24',
-      fill: 'none',
-      stroke: 'currentColor',
-      strokeWidth: '2',
-      strokeLinecap: 'round',
-      strokeLinejoin: 'round'
-    }
-  },
-
-  styles: {
-    Wrapper: styled.li`
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      padding: 4px;
-      border-bottom: 1px solid #eee;
-      line-height: 24px;
-      font-size: 110%;
-
-      &:hover {
-        background: #efefef;
-      }
+  styles: () => ({
+    Wrapper: styled.section`
+      color: #fff;
+    `,
+    hl: css`
+      width: 50px;
     `
+  })
+});
+```
+
+Because multiple functions are used, so named it: `Separate Function Components` (npm package named `jsx-sfc`, abbreviated as SFC also).
+
+And it's implementation makes full use of **TypeScript generic inference**, and support the use of all React existing tool chains(e.g. CSS-in-JS/Eslint/HMR).
+
+[For more specific design ideas, please see here](#api-design-principle)
+
+Such this component structure at first glance, we can immediately distinguish the responsibilities of each part of the code. From this syntax structure, we can easily extract the TS type of internal state of a component, like this:
+
+```tsx
+import sfc, { ComponentDataType } from 'jsx-sfc';
+
+const App = sfc({
+  template: ({ data }) => (
+    <>
+      <i>{data.count}</i>
+      <AddCount {...data} />
+    </>
+  ),
+
+  Component() {
+    const [count, setCount] = useState({ value: 0 });
+    return { count, setCount };
   }
 });
 
-const TodoList = sfc({
-  Component({ todos, onTodoClick, styles: { Wrapper } }) {
+const AddCount: React.FC<ComponentDataType<typeof App>> = ({ count, setCount }) => (
+  // Note that TS can easily infer the internal state type of the parent component in the child component, even very complex types.
+  <button onClick={() => setCount({ value: count.value + 1 })}>Add count</button>
+);
+```
+
+[See here for specific advantages compared with regular components.](#benefits)
+
+### Adapting Eslint Plugin
+
+If you configure the [eslint-plugin-react-hooks](https://github.com/facebook/react/tree/master/packages/eslint-plugin-react-hooks), it also can check where you can use hooks:
+
+```tsx
+import sfc from 'jsx-sfc';
+
+const App = sfc({
+  template: ({ data, styles: { Wrapper, hl } }) => {
+    // Eslint check error, hooks can't appear inside the template function.
+    useEffect(() => ...);
+
     return (
       <Wrapper>
-        {todos.map(todo => (
-          <Todo key={todo.id} {...todo} onClick={() => onTodoClick(todo.id)} />
-        ))}
+        <i className={hl}>{data.user}</i>
       </Wrapper>
     );
   },
 
-  styles: {
-    Wrapper: styled.ul`
-      margin: 20px 0;
-      padding: 0;
-    `
+  Component(props) {
+    const [user, setUser] = useState(props.user);
+
+    useEffect(
+      () => console.log(user),
+      // Eslint check warning, missing deps.
+      []
+    );
+
+    useEffect(() => {
+      setUser('joe-sky');
+    }, []);
+
+    return { user };
   }
 });
 ```
 
-</details>
+### Adapting Hot Reloading
 
-As you can see, we can **organize codes with component granularity** to achieve better visual isolation effect.
+It can also support [React Fast Refresh](https://github.com/facebook/react/tree/master/packages/react-refresh). Here I developed a compiler plugin: [babel-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/babel-plugin-jsx-sfc), because it has to transform the runtime code into a format recognized by the [Babel plugin of React Fast Refresh](https://github.com/facebook/react/blob/master/packages/react-refresh/src/ReactFreshBabelPlugin.js).
 
-When we organize component codes, we often have to divide them into multiple files, and sometimes the file switching action will cause a little upset. At this time, `jsx-sfc` can help you make this scene much easier. **We can still organize the code clearly even without a lot of fragmented files**.
+### Performance
 
-<!-- ### Exportable internal state types
+Another purpose of compiler [babel-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/babel-plugin-jsx-sfc) is performance optimization. This can make its performance similar to regular React components ⚡️. [Code comparison before and after compiling can refer to here.](https://github.com/joe-sky/jsx-sfc/tree/main/packages/babel-plugin-jsx-sfc#how-it-works)
 
-> Documentation to be completed. -->
+#### Benchmark
+
+[Here is a simple benchmark.](https://github.com/joe-sky/jsx-sfc/tree/main/examples/benchmark)
+
+<!-- ### About hooks API
+
+If you prefer to use regular functional component syntax, you can take a look at this custom hook:
+
+- [use-templates](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-templates)
+
+It extract a core feature of `jsx-sfc` and can be used independently. -->
+
+<!-- > I will continue to refine and summarize the comparison and pattern between this project and regular function components in the development of actual projects, and try to release it in the near future. -->
+
+## Examples
+
+Here are some examples of **using different CSS in JS Solutions**, which basically cover all the current usage of `jsx-sfc`:
+
+- [Redux Todo List (styles use Styled-Components)](https://github.com/joe-sky/jsx-sfc/tree/main/examples/redux-todos)
+- [React-i18next Example (styles use Emotion)](https://github.com/joe-sky/jsx-sfc/tree/main/examples/react-i18next)
+- [Simple Counter (styles use Jss)](https://github.com/joe-sky/jsx-sfc/tree/main/examples/counter)
+- [TailwindCss Starter (styles use TailwindCss)](https://github.com/joe-sky/jsx-sfc/tree/main/examples/tailwind-starter)
 
 ## Installation
 
