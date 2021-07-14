@@ -14,51 +14,55 @@
   <img alt="jsx-sfc demo" src="https://user-images.githubusercontent.com/12705724/113466739-a75bee80-9470-11eb-8139-6aa54550a754.gif" width="500" />
 </p>
 
-| Package                                                                                            | Badges                                                                                                                                                                                                                                                                                                                                                                                                                                                  | Supported frameworks |
-| -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
-| [jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/jsx-sfc)                           | <a href="https://www.npmjs.org/package/jsx-sfc"><img src="https://img.shields.io/npm/v/jsx-sfc.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/jsx-sfc"><img src="https://img.shields.io/npm/dm/jsx-sfc.svg" alt="NPM Downloads"></a> <a href="https://bundlephobia.com/result?p=jsx-sfc"><img src="https://img.shields.io/bundlephobia/minzip/jsx-sfc.svg?style=flat" alt="Minzipped Size"></a>                                     | React                |
-| [babel-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/babel-plugin-jsx-sfc) | <a href="https://www.npmjs.org/package/babel-plugin-jsx-sfc"><img src="https://img.shields.io/npm/v/babel-plugin-jsx-sfc.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/babel-plugin-jsx-sfc"><img src="https://img.shields.io/npm/dm/babel-plugin-jsx-sfc.svg" alt="NPM Downloads"></a>                                                                                                                                            | React                |
-| [vite-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/vite-plugin-jsx-sfc)   | <a href="https://www.npmjs.org/package/vite-plugin-jsx-sfc"><img src="https://img.shields.io/npm/v/vite-plugin-jsx-sfc.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/vite-plugin-jsx-sfc"><img src="https://img.shields.io/npm/dm/vite-plugin-jsx-sfc.svg" alt="NPM Downloads"></a>                                                                                                                                                | React                |
-| [jsx-sfc.macro](https://github.com/joe-sky/jsx-sfc/tree/main/packages/jsx-sfc.macro)               | <a href="https://www.npmjs.org/package/jsx-sfc.macro"><img src="https://img.shields.io/npm/v/jsx-sfc.macro.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/jsx-sfc.macro"><img src="https://img.shields.io/npm/dm/jsx-sfc.macro.svg" alt="NPM Downloads"></a>                                                                                                                                                                        | React                |
-| [use-templates](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-templates)               | <a href="https://www.npmjs.org/package/use-templates"><img src="https://img.shields.io/npm/v/use-templates.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/use-templates"><img src="https://img.shields.io/npm/dm/use-templates.svg" alt="NPM Downloads"></a> <a href="https://bundlephobia.com/result?p=use-templates"><img src="https://img.shields.io/bundlephobia/minzip/use-templates.svg?style=flat" alt="Minzipped Size"></a> | React/Vue(v3)        |
+| Package                                                                                            | Badges                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/jsx-sfc)                           | <a href="https://www.npmjs.org/package/jsx-sfc"><img src="https://img.shields.io/npm/v/jsx-sfc.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/jsx-sfc"><img src="https://img.shields.io/npm/dm/jsx-sfc.svg" alt="NPM Downloads"></a> <a href="https://bundlephobia.com/result?p=jsx-sfc"><img src="https://img.shields.io/bundlephobia/minzip/jsx-sfc.svg?style=flat" alt="Minzipped Size"></a>                                                                                                                                                                                                 |
+| [babel-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/babel-plugin-jsx-sfc) | <a href="https://www.npmjs.org/package/babel-plugin-jsx-sfc"><img src="https://img.shields.io/npm/v/babel-plugin-jsx-sfc.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/babel-plugin-jsx-sfc"><img src="https://img.shields.io/npm/dm/babel-plugin-jsx-sfc.svg" alt="NPM Downloads"></a>                                                                                                                                                                                                                                                                                                        |
+| [vite-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/vite-plugin-jsx-sfc)   | <a href="https://www.npmjs.org/package/vite-plugin-jsx-sfc"><img src="https://img.shields.io/npm/v/vite-plugin-jsx-sfc.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/vite-plugin-jsx-sfc"><img src="https://img.shields.io/npm/dm/vite-plugin-jsx-sfc.svg" alt="NPM Downloads"></a>                                                                                                                                                                                                                                                                                                            |
+| [jsx-sfc.macro](https://github.com/joe-sky/jsx-sfc/tree/main/packages/jsx-sfc.macro)               | <a href="https://www.npmjs.org/package/jsx-sfc.macro"><img src="https://img.shields.io/npm/v/jsx-sfc.macro.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/jsx-sfc.macro"><img src="https://img.shields.io/npm/dm/jsx-sfc.macro.svg" alt="NPM Downloads"></a>                                                                                                                                                                                                                                                                                                                                    |
+| [vscode-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/vscode-jsx-sfc)             | <a href="https://marketplace.visualstudio.com/items?itemName=joe-sky.vscode-jsx-sfc"><img src="https://vsmarketplacebadge.apphb.com/version/joe-sky.vscode-jsx-sfc.svg" /></a> <a href="https://marketplace.visualstudio.com/items?itemName=joe-sky.vscode-jsx-sfc"><img alt="VS Code Marketplace Downloads" src="https://img.shields.io/visual-studio-marketplace/d/joe-sky.vscode-jsx-sfc"></a> <a href="https://marketplace.visualstudio.com/items?itemName=joe-sky.vscode-jsx-sfc"><img alt="VS Code Marketplace Installs" src="https://img.shields.io/visual-studio-marketplace/i/joe-sky.vscode-jsx-sfc"></a> |
 
 ## Introduction
 
-`jsx-sfc`(JSX Separate Function Components) is a tiny compiler tool for managing React function components and their related members by categories. It's written by TypeScript and has completely type safety, very easy to use🧙🏼‍♂️.
+`jsx-sfc`(JSX Separate Function Components) is a SFCs like API for managing React function components and their related members by categories. It's written by TypeScript and has completely type safety, very easy to use🧙🏼‍♂️.
 
 [Live Demo is here](https://codesandbox.io/s/jsx-sfc-demo-wwgd4) (Experience **Typings/Hot reloading/Dev tools** by Codesandbox).
 
-> A new version of documentation is being prepared and will be completed soon.
+> A new version documentation(v1.5.0) is being prepared and will be completed soon. There are still no changes to the old API in this version.
 
 ## Features
 
 - ✨ Clearly separate **JSX tags**, **logic**, **styles** and **any other members** within React function components
-  <!-- - 🚩 New APIs for **defining and using static members** in function components -->
 - 💫 **Completely type inference** design by TypeScript
-  <!-- - 🕹 Support **export internal member types** from components (Documentation to be completed) -->
 - 🎉 Support all React hooks
 - 🔥 Support [React Fast Refresh](https://github.com/facebook/react/tree/master/packages/react-refresh)
 - 🔧 Support React Eslint plugins
 - 🔨 Support React dev tools
 - ⚡ Performance almost equivalent to regular function components
-- 🚀 No any dependencies (except compiler)
-- 💻 Support **Split Editor** similar to [Volar](https://github.com/johnsoncodehk/volar) by [vscode-jsx-sfc](https://marketplace.visualstudio.com/items?itemName=joe-sky.vscode-jsx-sfc)
+- 🚀 No dependencies (except compiler)
+- 💻 Support **Split Editors** similar to [Volar](https://github.com/johnsoncodehk/volar) by [vscode-jsx-sfc](https://marketplace.visualstudio.com/items?itemName=joe-sky.vscode-jsx-sfc), here is demo:
+
+<p>
+  <img alt="jsx-sfc demo" src="https://user-images.githubusercontent.com/12705724/121485542-dbb8d180-ca02-11eb-984a-d9da7d31ce17.gif" width="800" />
+</p>
 
 ## Table of Contents
 
 - [Motivation](#motivation)
-  - [Inspiration](#inspiration)
-  - [API design idea](#api-design-idea)
-  - [Adapting Eslint Plugin](#adapting-eslint-plugin)
-  - [Adapting Hot Reloading](#adapting-hot-reloading)
-  - [Performance](#performance)
-    - [Benchmark](#benchmark)
-      <!-- - [About hooks API](#about-hooks-api) -->
+  - [The problem want to solve](#the-problem-want-to-solve)
+  - [A new API like SFCs](#a-new-api-like-sfcs)
+  - [Split editors experience](#split-editors-experience)
+- [API design details](#api-design-details)
+  - [Adapting Eslint plugin](#adapting-eslint-plugin)
+  - [Adapting hot reloading](#adapting-hot-reloading)
+  - [How about the performance](#how-about-the-performance)
+  - [How about the testable](#how-about-the-testable)
+  - [What is the compiled code](#what-is-the-compiled-code)
 - [Examples](#examples)
-  <!--- [Benefits](#benefits)
-    - [Clearer visual isolation](#clearer-visual-isolation)
-    - [Better single file experience](#better-single-file-experience)
-    - [Exportable internal state types](#exportable-internal-state-types) -->
+  - [With Styled-Components](#with-styled-components)
+  - [With Emotion](#with-emotion)
+  - [With Jss](#with-jss)
+  - [With Tailwind](#with-tailwind)
 - [Installation](#installation)
   - [Using with Babel](#using-with-babel)
   - [Using with Vite](#using-with-vite)
@@ -70,8 +74,6 @@
   - [Static](#static)
   - [Export static members](#export-static-members)
   - [Template tags](#template-tags)
-    - [`use-templates`](#use-templates)
-      <!-- - [Extensions](#extensions) -->
 - [API Design Principle](#api-design-principle)
 - [Roadmap](#roadmap)
 - [Who is using](#who-is-using)
@@ -80,7 +82,7 @@
 
 ### The problem want to solve
 
-For example(with CSS in JS), when we write React components like this:
+For example(with CSS-in-JS), when we write React components like this:
 
 ```tsx
 const svgProps = {
@@ -141,16 +143,20 @@ const TodoListWrapper = styled.ul`
 
 See above code, in addition to two React function components, there are also some global members. In fact, this is the regular way to write react components, and React does not have any limits on how to organize the code.
 
-_However, when we first take over the components written by others, we often see that such code may not be able to distinguish the relationship between these global members and each React component at the first time, especially when there is more code_. If we want to make their corresponding relationship clearer through refactoring, we may think of dividing them into multiple files, it's a great regular solution. But if each component code is not too much, we are often used to writing them in the a single file, which can save some time for file switching operation in the editor.
+_However, when we first take over the components written by others, we often see that such code may not be able to distinguish the relationship between these global members and each React component at the first time, especially when there is more code_.
+
+If we want to make their corresponding relationship clearer through refactoring, we may think of dividing them into multiple files, it's a great regular solution. But if each component code is not too much, we are often used to writing them in the a single file, which can save some time for file switching operation in the editor.
 
 So in addition to separating files, we can try do this:
 
 ```tsx
 const Todo = ({ onClick, completed, text }) => (
-  <svg {...Todo.svgProps}>
-    <polyline points="9 11 12 14 23 3"></polyline>
-    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
-  </svg>
+  <Todo.Wrapper>
+    <svg {...Todo.svgProps}>
+      <polyline points="9 11 12 14 23 3"></polyline>
+      <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+    </svg>
+  </Todo.Wrapper>
 );
 
 Todo.svgProps = {
@@ -176,10 +182,12 @@ This writing method is very simple, but it will report an error in TS, because `
 
 ```tsx
 const Todo = Object.assign(({ onClick, completed, text }) => (
-  <svg {...Todo.svgProps}>
-    <polyline points="9 11 12 14 23 3"></polyline>
-    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
-  </svg>
+  <Todo.Wrapper>
+    <svg {...Todo.svgProps}>
+      <polyline points="9 11 12 14 23 3"></polyline>
+      <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+    </svg>
+  </Todo.Wrapper>
 ), {
   svgProps: {
     ...
@@ -198,72 +206,113 @@ const Todo: React.FC<TodoProps> = Object.assign(...);
 
 In short, each implementation seems to have its own advantages and disadvantages.
 
-### A new implementation
+### A new API like SFCs
 
-Here I created a new implementation, which can solve the above problem, and try to achieve all the features of the current React function component, and also has its own features.
+In order to solve the above problems, I decided to design a new API, which can retain all the features and ecology adaptability of function components, and is more suitable for organizing complex code in a single file.
 
-<!-- On the whole, this tool can help you to write `highly cohesive React function components with clear responsibilities`, which draws on the mental model similar to single file components like `Vue/Svelte/Marko`. -->
-
-### Inspiration
-
-It's a very interesting idea to implement the SFCs like structure for JSX based function components, I got this inspiration because I found [this project](https://github.com/egoist/jue) by accident. Then I found these interesting projects with similar ideas:
+Before this project was created, I found [this interesting project](https://github.com/egoist/jue) by accident, it's component structure is similar to SFCs([single-file-component](https://v3.vuejs.org/guide/single-file-component.html)). And then I found these interesting projects with similar ideas:
 
 - [one-loader](https://github.com/digitalie/one-loader)
 - [react-sfc-swyx](https://github.com/react-sfc/react-sfc-swyx)
 
-Overall, the above two solutions are to create a new file type for React to implement the idea similar to SFCs. But the idea of this tool is quite different from the above implementations:
+It inspired me to think of such a design:
 
-_Considering that the original design principle of JSX is a syntax extension of the existing JavaScript, so I want to create a new SFC solution that is more accord with the existing JSX(React) development habits._
+_Bring the scattered global members to aggregate to the React component function in the form of static members._
 
-### API design idea
-
-Since the birth of react hooks, function component has been the main way to write React components. My main idea is to create an as simple as possible extension syntax for the existing function components that conforms to the mental model of SFCs, and without creating any new tool chains(e.g. IDE syntax highlight plugin).
-
-<!-- > Why not named react-sfc? In fact, the npm package name of react-sfc has been occupied([react-sfc-swyx](https://github.com/react-sfc/react-sfc-swyx)). But more importantly, the idea of this project can be extended to other frameworks that support JSX(e.g. using JSX in Vue). -->
-
-Take a simple demo, when we write a React function component module(with CSS-in-JS) like this:
-
-```tsx
-import React, { useState, useEffect } from 'react';
-import styled from '@emotion/styled';
-import { css } from '@emotion/react';
-
-const App = props => {
-  const [user, setUser] = useState(props.user);
-
-  useEffect(() => {
-    setUser('joe-sky');
-  }, []);
-
-  return (
-    <Wrapper>
-      <i
-        className={css`
-          width: 50px;
-        `}>
-        {user}
-      </i>
-    </Wrapper>
-  );
-};
-
-const Wrapper = styled.section`
-  color: #fff;
-`;
-```
-
-We can use SFCs like structure of code division according to responsibilities to design, which is as follows:
+This API uses multiple function design, so named it: `Separate Function Components` (npm package named `jsx-sfc`, abbreviated as SFC also). And it's implementation makes full use of **TypeScript generic inference**, and support the use of all React existing tool chains(e.g. CSS-in-JS/Eslint/HMR). The structure is designed like this:
 
 ```tsx
 import sfc from 'jsx-sfc';
 
-const App = sfc({
-  template: ({ data, styles: { Wrapper, hl } }) => (
-    <Wrapper>
-      <i className={hl}>{data.user}</i>
-    </Wrapper>
-  ),
+const Todo = sfc({
+  Component({ onClick, completed, text, styles: { Wrapper }, svgProps }) {
+    return (
+      <Wrapper>
+        <svg {...svgProps}>
+          <polyline points="9 11 12 14 23 3"></polyline>
+          <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+        </svg>
+      </Wrapper>
+    );
+  },
 
+  static: () => {
+    return {
+      svgProps: {
+        xmlns: 'http://www.w3.org/2000/svg',
+        width: '24',
+        height: '24',
+        viewBox: '0 0 24 24',
+        fill: 'none',
+        stroke: 'currentColor',
+        strokeWidth: '2',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round'
+      }
+    };
+  },
+
+  styles: () => {
+    return {
+      Wrapper: styled.li`
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 4px;
+        border-bottom: 1px solid #eee;
+        line-height: 24px;
+        font-size: 110%;
+
+        &:hover {
+          background: #efefef;
+        }
+      `
+    };
+  }
+});
+
+const TodoList = sfc({
+  Component({ todos, onTodoClick, styles: { Wrapper } }) {
+    return (
+      <Wrapper>
+        {todos.map(todo => (
+          <Todo key={todo.id} {...todo} onClick={() => onTodoClick(todo.id)} />
+        ))}
+      </Wrapper>
+    );
+  },
+
+  styles: () => {
+    return {
+      Wrapper: styled.ul`
+        margin: 20px 0;
+        padding: 0;
+      `
+    };
+  }
+});
+```
+
+[For more specific design ideas, please see here.](#api-design-principle)
+
+See above code, global members such as `svgProps` and `styled components` are aggregated into related components, so at least it's easier to see the relationship between them. And each static member can be exported from the component:
+
+```tsx
+const {
+  svgProps,
+  styles: { Wrapper }
+} = Todo;
+const {
+  styles: { Wrapper as ListWrapper }
+} = TodoList;
+```
+
+In addition, I also refer to the mental model of SFCs, which can separate the render part of components(this is optional):
+
+```tsx
+import sfc from 'jsx-sfc';
+
+const Test = sfc({
   Component(props) {
     const [user, setUser] = useState(props.user);
 
@@ -273,6 +322,12 @@ const App = sfc({
 
     return { user };
   },
+
+  render: ({ data, styles: { Wrapper, hl } }) => (
+    <Wrapper>
+      <i className={hl}>{data.user}</i>
+    </Wrapper>
+  ),
 
   styles: () => ({
     Wrapper: styled.section`
@@ -285,58 +340,51 @@ const App = sfc({
 });
 ```
 
-Because multiple functions are used, so named it: `Separate Function Components` (npm package named `jsx-sfc`, abbreviated as SFC also).
-
-And it's implementation makes full use of **TypeScript generic inference**, and support the use of all React existing tool chains(e.g. CSS-in-JS/Eslint/HMR).
-
-[For more specific design ideas, please see here](#api-design-principle)
-
-Such this component structure at first glance, we can immediately distinguish the responsibilities of each part of the code. From this syntax structure, we can easily extract the TS type of internal state of a component, like this:
+Render function can also be exported for reuse like component:
 
 ```tsx
-import sfc, { ComponentDataType } from 'jsx-sfc';
-
-const App = sfc({
-  template: ({ data }) => (
-    <>
-      <i>{data.count}</i>
-      <AddCount {...data} />
-    </>
-  ),
-
-  Component() {
-    const [count, setCount] = useState({ value: 0 });
-    return { count, setCount };
-  }
-});
-
-const AddCount: React.FC<ComponentDataType<typeof App>> = ({ count, setCount }) => (
-  // Note that TS can easily infer the internal state type of the parent component in the child component, even very complex types.
-  <button onClick={() => setCount({ value: count.value + 1 })}>Add count</button>
-);
+const App = () => <Test.Render user="joe" />;
 ```
 
-[See here for specific advantages compared with regular components.](#benefits)
+If you are also used to using Vue, you can replace `render` with `template` function and place it above `Component`. The effect is exactly the same:
+
+```tsx
+import sfc from 'jsx-sfc';
+
+const Test = sfc({
+  template: ({ data, styles: { Wrapper } }) => (
+    <Wrapper>
+      <i>{data.user}</i>
+    </Wrapper>
+  ),
+
+  Component(props) {
+    const [user, setUser] = useState(props.user);
+    return { user };
+  },
+
+  styles: () => ({
+    Wrapper: styled.section`
+      color: #fff;
+    `
+  })
+});
+```
+
+### Split editors experience
+
+> Documentation to be completed
+
+## API design details
 
 ### Adapting Eslint Plugin
 
-If you configure the [eslint-plugin-react-hooks](https://github.com/facebook/react/tree/master/packages/eslint-plugin-react-hooks), it also can check where you can use hooks:
+If you configure the [eslint-plugin-react-hooks](https://github.com/facebook/react/tree/master/packages/eslint-plugin-react-hooks), this API also can check where you can use hooks:
 
 ```tsx
 import sfc from 'jsx-sfc';
 
 const App = sfc({
-  template: ({ data, styles: { Wrapper, hl } }) => {
-    // Eslint check error, hooks can't appear inside the template function.
-    useEffect(() => ...);
-
-    return (
-      <Wrapper>
-        <i className={hl}>{data.user}</i>
-      </Wrapper>
-    );
-  },
-
   Component(props) {
     const [user, setUser] = useState(props.user);
 
@@ -351,40 +399,62 @@ const App = sfc({
     }, []);
 
     return { user };
+  },
+
+  render: ({ data, styles: { Wrapper, hl } }) => {
+    // Eslint check error, hooks can't appear inside the render function, .
+    useEffect(() => ...);
+
+    return (
+      <Wrapper>
+        <i className={hl}>{data.user}</i>
+      </Wrapper>
+    );
   }
 });
 ```
 
+In this API, the `render` function is only used for rendering, and the data logic part of the component should be written in the `Component` function.
+
 ### Adapting Hot Reloading
 
-It can also support [React Fast Refresh](https://github.com/facebook/react/tree/master/packages/react-refresh). Here I developed a compiler plugin: [babel-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/babel-plugin-jsx-sfc), because it has to transform the runtime code into a format recognized by the [Babel plugin of React Fast Refresh](https://github.com/facebook/react/blob/master/packages/react-refresh/src/ReactFreshBabelPlugin.js).
+This API can also support [React Fast Refresh](https://github.com/facebook/react/tree/master/packages/react-refresh). Here I developed a compiler plugin: [babel-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/babel-plugin-jsx-sfc), because it has to transform the runtime code into a format recognized by the [Babel plugin of React Fast Refresh](https://github.com/facebook/react/blob/master/packages/react-refresh/src/ReactFreshBabelPlugin.js).
 
-### Performance
+### How about the performance
 
 Another purpose of compiler [babel-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/babel-plugin-jsx-sfc) is performance optimization. This can make its performance similar to regular React components ⚡️. [Code comparison before and after compiling can refer to here.](https://github.com/joe-sky/jsx-sfc/tree/main/packages/babel-plugin-jsx-sfc#how-it-works)
 
 #### Benchmark
 
-[Here is a simple benchmark.](https://github.com/joe-sky/jsx-sfc/tree/main/examples/benchmark)
+[Here is a simple benchmark compared with regular React function components](https://github.com/joe-sky/jsx-sfc/tree/main/examples/benchmark), you can run it and have a try.
 
-<!-- ### About hooks API
+### How about the testable
 
-If you prefer to use regular functional component syntax, you can take a look at this custom hook:
+> Documentation to be completed
 
-- [use-templates](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-templates)
+### What is the compiled code
 
-It extract a core feature of `jsx-sfc` and can be used independently. -->
-
-<!-- > I will continue to refine and summarize the comparison and pattern between this project and regular function components in the development of actual projects, and try to release it in the near future. -->
+> Documentation to be completed
 
 ## Examples
 
 Here are some examples of **using different CSS in JS Solutions**, which basically cover all the current usage of `jsx-sfc`:
 
-- [Redux Todo List (styles use Styled-Components)](https://github.com/joe-sky/jsx-sfc/tree/main/examples/redux-todos)
-- [React-i18next Example (styles use Emotion)](https://github.com/joe-sky/jsx-sfc/tree/main/examples/react-i18next)
-- [Simple Counter (styles use Jss)](https://github.com/joe-sky/jsx-sfc/tree/main/examples/counter)
-- [TailwindCss Starter (styles use TailwindCss)](https://github.com/joe-sky/jsx-sfc/tree/main/examples/tailwind-starter)
+### With Styled-Components
+
+[Redux Todo List (styles use Styled-Components)](https://github.com/joe-sky/jsx-sfc/tree/main/examples/redux-todos)
+
+### With Emotion
+
+[React-i18next Example (styles use Emotion)](https://github.com/joe-sky/jsx-sfc/tree/main/examples/react-i18next)
+
+### With Jss
+
+[Simple Counter (styles use Jss)](https://github.com/joe-sky/jsx-sfc/tree/main/examples/counter)
+
+### With Tailwind
+
+[TailwindCss Starter (styles use TailwindCss)](https://github.com/joe-sky/jsx-sfc/tree/main/examples/tailwind-starter)
 
 ## Installation
 
@@ -466,6 +536,7 @@ function sfc<Props, ComponentData, Styles, Static>(
   options: {
     template?: (args: { data: ComponentData; props: Props; styles: Styles } & Static, ...templates: TemplateRender[]) => JSX.Element;
     Component: (props?: Props & Styles & Static & { props: Props }) => ComponentData;
+    render?: (args: { data: ComponentData; props: Props; styles: Styles } & Static, ...templates: TemplateRender[]) => JSX.Element;
     styles?: Styles;
     static?: Static;
   }
@@ -474,7 +545,33 @@ function sfc<Props, ComponentData, Styles, Static>(
 
 Only a symbolic type definition is put here for API documentation, there are many differences in the actual implementation. [Actual type definition is here.](https://github.com/joe-sky/jsx-sfc/blob/main/packages/jsx-sfc/src/defineComponent.ts)
 
-#### With separate template function
+#### With separate render(template) function
+
+```tsx
+import React, { useState } from 'react';
+import sfc from 'jsx-sfc';
+
+const App = sfc({
+  Component() {
+    const [user, setUser] = useState('foo');
+    return { user, onClick: () => setUser('bar') };
+  },
+
+  render: ({ data }) => (
+    <div>
+      <button onClick={data.onClick}>{data.user}</button>
+    </div>
+  )
+});
+```
+
+- `Component function` is the actual React component function. It requires to return an object that pass to the `render function` for rendering;
+
+- The data object in the first parameter of the `render function` is the return value of the `Component function`. And their types are consistent via dynamic inference.
+
+> The type inferences are also type safe in TSX. For example, if you don't return an object from `Component function`, you will receive a type error.
+
+If you have ever used Vue, you will be familiar with the habit of placing the template tag at the top of the component in SFCs. `jsx-sfc` also provides a `template function`, which has the same function as `render function`:
 
 ```tsx
 import React, { useState } from 'react';
@@ -494,11 +591,7 @@ const App = sfc({
 });
 ```
 
-- `Component function` is the actual React component function. It requires to return an object that pass to the `template function` for rendering;
-
-- The data object in the first parameter of the `template function` is the return value of the `Component function`. And their types are consistent via dynamic inference.
-
-> The type inferences are also type safe in TSX. For example, if you don't return an object from `Component function`, you will receive a type error.
+You can put the `template function` at the top according to Vue's habit.
 
 #### With styles
 
@@ -510,16 +603,16 @@ import styled from 'styled-components';
 import sfc from 'jsx-sfc';
 
 const App = sfc({
-  template: ({ data, styles: { Wrapper } }) => (
-    <Wrapper>
-      <button onClick={data.onClick}>{data.user}</button>
-    </Wrapper>
-  ),
-
   Component() {
     const [user, setUser] = useState('foo');
     return { user, onClick: () => setUser('bar') };
   },
+
+  render: ({ data, styles: { Wrapper } }) => (
+    <Wrapper>
+      <button onClick={data.onClick}>{data.user}</button>
+    </Wrapper>
+  ),
 
   styles: {
     Wrapper: styled.div`
@@ -539,16 +632,16 @@ import styled from 'styled-components';
 import sfc from 'jsx-sfc';
 
 const App = sfc({
-  template: ({ data, styles: { Wrapper } }) => (
-    <Wrapper>
-      <button onClick={data.onClick}>{data.user}</button>
-    </Wrapper>
-  ),
-
   Component() {
     const [user, setUser] = useState('foo');
     return { user, onClick: () => setUser('bar') };
   },
+
+  render: ({ data, styles: { Wrapper } }) => (
+    <Wrapper>
+      <button onClick={data.onClick}>{data.user}</button>
+    </Wrapper>
+  ),
 
   styles: () => {
     const WrapperBase = styled.div`
@@ -564,9 +657,9 @@ const App = sfc({
 });
 ```
 
-#### Without template function
+#### Without render(template) function
 
-If you don't like to use the `separate template function` to write JSX tags, you still can also use the `Component function` directly to return the JSX tags:
+If you don't like to use the `separate render function` to write JSX tags, you still can also use the `Component function` directly to return the JSX tags:
 
 ```tsx
 import React, { useState } from 'react';
@@ -615,16 +708,16 @@ interface AppProps {
 
 // Notice: there's a pair of extra brackets after the generics!
 const App = sfc<AppProps>()({
-  template: ({ data, styles: { Wrapper } }) => (
-    <Wrapper>
-      <button onClick={data.onClick}>{data.user}</button>
-    </Wrapper>
-  ),
-
   Component(props) {
     const [user, setUser] = useState(props.userName);
     return { user, onClick: () => setUser('bar') };
   },
+
+  render: ({ data, styles: { Wrapper } }) => (
+    <Wrapper>
+      <button onClick={data.onClick}>{data.user}</button>
+    </Wrapper>
+  ),
 
   styles: {
     Wrapper: styled.div`
@@ -653,12 +746,6 @@ interface AppRef {
 
 // If you pass in TS generics, there's a pair of extra brackets after the generics; Otherwise, it's not necessary.
 const App = sfc.forwardRef<AppRef, AppProps>()({
-  template: ({ data, styles: { Wrapper } }) => (
-    <Wrapper>
-      <button onClick={data.onClick}>{data.user}</button>
-    </Wrapper>
-  ),
-
   Component(props, ref) {
     const [user, setUser] = useState(props.userName);
 
@@ -668,6 +755,12 @@ const App = sfc.forwardRef<AppRef, AppProps>()({
 
     return { user, onClick: () => setUser('bar') };
   },
+
+  render: ({ data, styles: { Wrapper } }) => (
+    <Wrapper>
+      <button onClick={data.onClick}>{data.user}</button>
+    </Wrapper>
+  ),
 
   styles: {
     Wrapper: styled.div`
@@ -752,23 +845,23 @@ const App = sfc({
 
 > You don't have to worry too much about performance. In the compiler parsing process, `styles` and `inner props` will be removed from `props` and handled separately.
 
-#### Using Props in template
+#### Using Props in render(template)
 
-The `props` is also used in the `template function` like this:
+The `props` is also used in the `render(template) function` like this:
 
 ```tsx
 const App = sfc({
-  template: ({ props, data, styles: { Wrapper } }) => (
+  Component(props) {
+    const [user, setUser] = useState(props.name);
+    return { user, onClick: () => setUser('bar') };
+  },
+
+  render: ({ props, data, styles: { Wrapper } }) => (
     <Wrapper>
       {props.name}
       <button onClick={data.onClick}>{data.user}</button>
     </Wrapper>
   ),
-
-  Component(props) {
-    const [user, setUser] = useState(props.name);
-    return { user, onClick: () => setUser('bar') };
-  },
 
   styles: () => {
     return {
@@ -782,7 +875,7 @@ const App = sfc({
 
 ### Static
 
-The `static` function is used to create static members of a component, then you can use these static members in the `Component` or `template` function:
+The `static` function is used to create static members of a component, then you can use these static members in the `Component` or `render(template)` function:
 
 ```tsx
 import React, { useState } from 'react';
@@ -790,16 +883,16 @@ import styled from 'styled-components';
 import sfc from 'jsx-sfc';
 
 const App = sfc({
-  template: ({ data, styles: { Wrapper }, utils: { trimWithPrefix } }) => (
-    <Wrapper>
-      <button onClick={data.onClick}>{trimWithPrefix(data.user)}</button>
-    </Wrapper>
-  ),
-
   Component({ constant: { foo } }) {
     const [user, setUser] = useState(foo);
     return { user, onClick: () => setUser('bar') };
   },
+
+  render: ({ data, styles: { Wrapper }, utils: { trimWithPrefix } }) => (
+    <Wrapper>
+      <button onClick={data.onClick}>{trimWithPrefix(data.user)}</button>
+    </Wrapper>
+  ),
 
   static: () => {
     return {
@@ -867,16 +960,16 @@ import styled from 'styled-components';
 import sfc from 'jsx-sfc';
 
 const App = sfc({
-  template: ({ data, styles: { Wrapper }, utils: { trimWithPrefix } }) => (
-    <Wrapper>
-      <button onClick={data.onClick}>{trimWithPrefix(data.user)}</button>
-    </Wrapper>
-  ),
-
   Component() {
     const [user, setUser] = useState('foo');
     return { user, onClick: () => setUser('bar') };
   },
+
+  render: ({ data, styles: { Wrapper }, utils: { trimWithPrefix } }) => (
+    <Wrapper>
+      <button onClick={data.onClick}>{trimWithPrefix(data.user)}</button>
+    </Wrapper>
+  ),
 
   static: () => {
     return {
@@ -907,6 +1000,7 @@ function Test() {
   return (
     <>
       {App.template({ user, onClick: () => setUser('baz') })}
+      <App.Render user={user} onClick={() => setUser('baz')} />
       <App.Component />
       <App.styles.Wrapper>{user}</App.styles.Wrapper>
       {App.utils.trimWithPrefix(user)}
@@ -917,7 +1011,9 @@ function Test() {
 
 ### Template tags
 
-In the template function of `jsx-sfc` components, we can also create reusable multiple template functions:
+> This is an optional feature. We can use `Template tags` syntax to continue to separate the responsibilities of JSX tags.
+
+In the render(template) function of `jsx-sfc` components, you can use `Template tags` to define some reusable JSX logic:
 
 ```tsx
 import React, { useState } from 'react';
@@ -925,7 +1021,12 @@ import styled from 'styled-components';
 import sfc, { Template } from 'jsx-sfc';
 
 const App = sfc({
-  template: ({ data, styles: { Wrapper } }, btn, text: Template.Render<number>) => (
+  Component() {
+    const [user, setUser] = useState('foo');
+    return { user, onClick: () => setUser('bar') };
+  },
+
+  render: ({ data, styles: { Wrapper } }, btn, text: Template.Render<number>) => (
     <>
       <Template name={btn}>{() => <button onClick={data.onClick}>{data.user}</button>}</Template>
 
@@ -939,11 +1040,6 @@ const App = sfc({
       </Template>
     </>
   ),
-
-  Component() {
-    const [user, setUser] = useState('foo');
-    return { user, onClick: () => setUser('bar') };
-  },
 
   styles: () => {
     const WrapperBase = styled.div`
@@ -959,13 +1055,13 @@ const App = sfc({
 });
 ```
 
-1. All parameters starting from the second parameter of the template function are template tag renders, and any number of them can be defined.
+1. All parameters starting from the second parameter of the render(template) function are `Template tag renders`, and any number of them can be defined.
 
-2. The template function needs to return a React.Fragment tag; The template tag without name property is the entry function:
+2. The render(template) function needs to return a React.Fragment tag; The `Template tag` without name property is the entry function:
 
 ```tsx
 {
-  template: ({ data }, tmpl1, tmpl2) => (
+  render: ({ data }, tmpl1, tmpl2) => (
     <>
       <Template name={tmpl1}>{() => <div>foo</div>}</Template>
 
@@ -984,11 +1080,11 @@ const App = sfc({
 }
 ```
 
-3. In TSX, we can define the parameter types of template tag render functions, this can achieve type safe:
+3. In TSX, we can define the parameter types of `Template tag render functions`, this can achieve type safe:
 
 ```tsx
 {
-  template: ({ data }, header: Template.Render<string, number>) => (
+  render: ({ data }, header: Template.Render<string, number>) => (
     <>
       <Template name={header}>
         {(title, count) => (
@@ -1011,98 +1107,13 @@ const App = sfc({
 }
 ```
 
-We can use template tags syntax to continue to separate the responsibilities of JSX tags, [see here for the specific benefits of template tags.](#clearer-visual-isolation)
-
 #### `use-templates`
 
-The multiple templates feature has a independent implementation of hooks syntax, which supports React/Vue(v3). [Please see the documentation here.](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-templates)
-
-<!-- ### Extensions
-
-Except template and styles, other extensions for `jsx-sfc` components are also supported:
-
-```tsx
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import sfc from 'jsx-sfc';
-
-const App = sfc(
-  {
-    template: ({ data, styles: { Wrapper }, utils: { trimWithPrefix } }) => (
-      <Wrapper>
-        <button onClick={data.onClick}>{trimWithPrefix(data.user)}</button>
-      </Wrapper>
-    ),
-
-    Component() {
-      const [user, setUser] = useState('  foo  ');
-      return { user, onClick: () => setUser('bar') };
-    },
-
-    styles: () => {
-      const WrapperBase = styled.div`
-        background-color: #fff;
-      `;
-
-      return {
-        Wrapper: styled(WrapperBase)`
-          background-color: #fff;
-        `
-      };
-    }
-  },
-  // You need to pass in the second parameter
-  {
-    utils: {
-      trimWithPrefix(str: string) {
-        return 'prefix_' + str.trim();
-      }
-    }
-  }
-);
-```
-
-And also can pass in a function like styles:
-
-```tsx
-const App = sfc(
-  {
-    template: ({ data, utils: { trimWithPrefix } }) => ...,
-    ...
-  },
-  () => {
-    return {
-      utils: {
-        trimWithPrefix(str: string) {
-          return 'prefix_' + str.trim();
-        }
-      }
-    }
-  }
-);
-```
-
-For some advanced usages of extensions, see these examples:
-
-- [React-i18next locales extension](https://github.com/joe-sky/jsx-sfc/blob/main/examples/react-i18next/src/App.tsx#L73)
-
-- [Jss styles extension](https://github.com/joe-sky/jsx-sfc/blob/main/examples/counter/src/App.tsx#L60) -->
-
-<!-- We can use the above feature to unit test each member of the component independently, or even reuse them into other components. -->
-
-<!-- ### Using with TypeScript -->
-
-<!-- todo: difference in strict mode -->
+The `Template tags` feature has a independent implementation of hooks syntax, which supports React/Vue(v3). [Please see the documentation here.](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-templates)
 
 ## API Design Principle
 
 Before I decided on `jsx-sfc v1.0 API`, I actually made a lot of different attempts. Here are some of my summaries:
-
-<!-- ### Why Type First
-
-It can be explained in this way:
-
-> If the type design can match the requirements, the corresponding logic implementation can be done. -->
 
 ### Can't use **this variable**
 
@@ -1156,125 +1167,23 @@ const App = (
 
 But unfortunately, the return value type of JSX tags can always be `JSX.Element`, only in this type can it be legally recognized as JSX tag by TS compiler. At this way, we will not be able to achieve type inference and type safe 😰.
 
-<!-- ### Why JSX tags function named template
-
-I named the JSX tags function of `jsx-sfc` to `template`, mainly because of the following points:
-
-1. If it is named `render`, it's not accurate for the rendering flow of the React function component.
-
-Compared with the React class component, the whole function body of the React function component is the render process, which includes hooks, inline functions, and so on. Rendering JSX tags is only a part of it.
-
-2. Not only `string template` can be named `template`, reusable functions can be called `template` also.
-
-In order not to have doubts, I explain it specifically: The `template function` and `template tags` in `jsx-sfc` are reusable, their responsibilities are limited to returning `JSX.Element` type and support TS type safe.
-
-So the name `template` is just to conform to the SFCs model that has been widely recognized by people, and make it easier for people to remember that `template` is specially used to place tag syntax, and they can be reused. -->
-
 ### Why the component function be capitalized
 
 We know that in the world of React, functions that start with capital letters are defined as components, and the React ecosystem tools(e.g. Eslint) will be the same standard. So the `jsx-sfc` also follows this standard, it can adapt to the existing ecosystem tools only in this way.
 
-<!-- todo: ts limitation based -->
-
-<!-- ## FAQ -->
-
-<!-- todo: { data: { xxx } } -->
-
-<!-- todo: defferent from class component -->
-
 ## Puzzle of Types
 
-There are many strange TS types problems encountered in the development of this project. Fortunately, these problems can be solved at present. [I recorded them in this issue.](https://github.com/joe-sky/jsx-sfc/issues/1)
+There are many strange TS types problems encountered in the development of `jsx-sfc`, some may be the current limitation of TS. Fortunately, these problems can be solved at present. [I recorded them in this issue.](https://github.com/joe-sky/jsx-sfc/issues/1)
 
 ## Roadmap
-
-### Optimize runtime size
-
-At present, `jsx-sfc` supports working without compiler, it's just that the syntax will be slightly different([See the test cases for details](https://github.com/joe-sky/jsx-sfc/tree/main/packages/jsx-sfc/__tests__/runtime)).
-
-However, there is no version of the package which removes the runtime part yet. So I will optimize it here later, and the size of 1KB can be reduced a lot in the compiled version.
 
 ### Optimize compiled code
 
 The compiled code of `jsx-sfc` has a few optimization space yet, which can continue to improve the runtime performance. I will gradually start to optimize it.
 
-<!-- At present only React is supported. However, other framework versions will not be excluded in the future(e.g. Vue v3). -->
-
 ### About better syntax
 
 If better syntax implementation details are found and if they're not compatible with v1.0 syntax, I will summarize them and arrange them to v2.0 implementation.
-
-<!-- ### Support Vue v3
-
-After a preliminary study, the `jsx-sfc for Vue v3` version can basically be implemented, which is roughly the following syntax:
-
-```tsx
-// Not yet implemented
-import { ref } from 'vue';
-import { css } from '@emotion/css';
-import sfc from 'jsx-sfc-vue';
-
-const App = sfc({
-  template: ({ data, styles }) => (
-    <section class={styles.wrapper}>
-      <input value={data.count.value} onClick={data.onClick} />
-    </section>
-  ),
-
-  setup() {
-    const count = ref(0);
-
-    return {
-      count,
-      onClick() {
-        count.value++;
-      }
-    };
-  },
-
-  styles: {
-    wrapper: css`
-      font-size: 16px;
-      color: #000;
-    `
-  }
-});
-```
-
-The above is written in the regular way:
-
-```tsx
-import { defineComponent, ref } from 'vue';
-import { css } from '@emotion/css';
-
-const App = defineComponent(() => {
-  const count = ref(0);
-
-  return () => (
-    <section
-      class={css`
-        font-size: 16px;
-        color: #000;
-      `}>
-      <input value={count.value} />
-    </section>
-  );
-});
-```
-
-It can be predicted that there will inevitably be problems in the process of implementation, and I will continue to try in the near future.
-
-> The biggest difficulty lies in the processing of TS type. The return value [type of defineComponent API](https://github.com/vuejs/vue-next/blob/master/packages/runtime-core/src/apiDefineComponent.ts) is much more complex than React, and some types are not exported from Vue package. -->
-
-<!-- ### Add hooks syntax
-
-These are currently being experimented. With hooks, they will be easier to integrate the concept of `separation of concerns` into the existing JSX based functional component development. I will sort out the relevant documentation soon:
-
-- [use-templates](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-templates)
-
-- [use-view-data](https://github.com/joe-sky/jsx-sfc/tree/main/packages/use-view-data)
-
-Moreover, at present Vue composition API can also support syntax similar to hooks, so I will also consider developing Vue version, and this process should not be too difficult. -->
 
 ## Change Logs
 
@@ -1284,24 +1193,6 @@ Moreover, at present Vue composition API can also support syntax similar to hook
 
 The author `Joe_Sky` and his front-end team in jd.com. It has been used in more than 3 production systems.
 
-<!-- todo: set some large code blocks -->
-
 ## License
 
 MIT
-
-<!-- ## Introduction of separate members
-
-### Strong Type template
-
-### Optional CSS in JS styles
-
-todo: styled-components, emotion, jss example
-
-### More Cohesive components
-
-todo: custom hooks, utils, gql example
-
-### Why no side effects
-
-todo: compiler, component members can be tested individually -->
