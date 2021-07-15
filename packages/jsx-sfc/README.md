@@ -24,11 +24,11 @@
 
 ## Introduction
 
-`jsx-sfc`(JSX Separate Function Components) is a SFCs like API for managing React function components and their related members by categories. It's written by TypeScript and has completely type safety, very easy to use🧙🏼‍♂️.
+`jsx-sfc`(JSX Separate Function Components) is a [SFCs](https://v3.vuejs.org/guide/single-file-component.html) like API for managing React function components and their related codes by categories. It's written by TypeScript and has completely type safety, very easy to use🧙🏼‍♂️.
 
 [Live Demo is here](https://codesandbox.io/s/jsx-sfc-demo-wwgd4) (Experience **Typings/Hot reloading/Dev tools** by Codesandbox).
 
-> A new version documentation(v1.5.0) is being prepared and will be completed soon. There are still no changes to the old API in this version.
+> The v1.5.0 will be released in the near future, and related documentation and examples are being updated.
 
 ## Features
 
@@ -56,7 +56,7 @@
   - [Adapting Eslint plugin](#adapting-eslint-plugin)
   - [Adapting hot reloading](#adapting-hot-reloading)
   - [How about the performance](#how-about-the-performance)
-  - [How about the testable](#how-about-the-testable)
+  - [How about the testability](#how-about-the-testability)
   - [What is the compiled code](#what-is-the-compiled-code)
 - [Examples](#examples)
   - [With Styled-Components](#with-styled-components)
@@ -215,9 +215,9 @@ Before this project was created, I found [this interesting project](https://gith
 - [one-loader](https://github.com/digitalie/one-loader)
 - [react-sfc-swyx](https://github.com/react-sfc/react-sfc-swyx)
 
-It inspired me to think of such a design:
+The separation of SFCs by code category inspired me to think of such a design:
 
-_Bring the scattered global members to aggregate to the React component function in the form of static members._
+_Bring the scattered global members to aggregate to the React component function in the form of static members by categories._
 
 This API uses multiple function design, so named it: `Separate Function Components` (npm package named `jsx-sfc`, abbreviated as SFC also). And it's implementation makes full use of **TypeScript generic inference**, and support the use of all React existing tool chains(e.g. CSS-in-JS/Eslint/HMR). The structure is designed like this:
 
@@ -439,15 +439,17 @@ It's not just that, next let's look at another feature.
 
 ### Split editors experience
 
-What is a `Split Editors`? This is an interesting feature of a new vscode plugin for Vue [Volar](https://github.com/johnsoncodehk/volar), you can [install Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar) and experience it in Vue project. Here is a Volar demo:
+What is `Split Editors`? This is an interesting feature of a new vscode plugin for Vue called [Volar](https://github.com/johnsoncodehk/volar), you can [install Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar) and experience it in Vue projects. Here is a Volar demo:
 
 <p>
   <img alt="volar demo" src="https://user-images.githubusercontent.com/12705724/125753697-6957efee-61ef-4cd3-ab4c-803003a30256.gif" width="800" />
 </p>
 
-I think this idea is not just interesting, and also useful:
+In the demo, click the "Split Editors" button in the upper right corner to generate 3 sub editors according to the `template`/`style`/`script` code in SFCs, and then each editor folds the unrelated code.
 
-_It not only enables us to focus more on developing a certain category of code in each component, and also makes it easy for us to scan and control the overall code of the component and deal with the relationship between them._
+At the beginning, I just found it interesting. But after thinking and experimenting, I found it useful:
+
+_It not only enables us to focus more on developing a certain category of code in each component, and also makes it easy for us to scan and control the overall code of the component to deal with the relationship between different category codes._
 
 So I made a vscode plugin with a similar idea: [vscode-jsx-sfc](https://marketplace.visualstudio.com/items?itemName=joe-sky.vscode-jsx-sfc). It needs to be used with `jsx-sfc`, here is the demo:
 
@@ -457,15 +459,15 @@ So I made a vscode plugin with a similar idea: [vscode-jsx-sfc](https://marketpl
 
 See from the demo, after [install vscode-jsx-sfc](https://marketplace.visualstudio.com/items?itemName=joe-sky.vscode-jsx-sfc), click the "Split Editors" button in the upper right corner to automatically process all the components created by `sfc` in the current file:
 
-- If you do not use render(template) function, it will be split into two editors: `component` and `styles`. In the editor of each category, fold the code of other categories, and each editor will automatically position the cursor to the first line of the part;
+- If you do not use render(template) function, it will be split into 2 editors: `component and static`/`styles`. In the editor of each category, fold the code of other categories, and each editor will automatically position the cursor to the first line of the part;
 
-- If you use the render(template) function, it splits into three editors: `component`, `render(template)` and `styles`;
+- If you use the render(template) function, it splits into 3 editors: `component and static`/`render(template)`/`styles`;
 
 - If there are multiple components created by `sfc` in a single file, the corresponding part of each component will be fold and the cursor will be positioned to the corresponding part of the first component;
 
 - When there are syntax errors in the code, there will be fault tolerant processing. And when the code is saved, there will be a mechanism of refolding.
 
-Next let's look at some design details.
+In this way, we can also use this interesting way when developing React components. Next let's look at some design details of this API.
 
 ## API design details
 
@@ -514,19 +516,19 @@ This API can also support [React Fast Refresh](https://github.com/facebook/react
 
 ### How about the performance
 
-Another purpose of compiler [babel-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/babel-plugin-jsx-sfc) is performance optimization. This can make its performance similar to regular React components ⚡️. [Code comparison before and after compiling can refer to here.](https://github.com/joe-sky/jsx-sfc/tree/main/packages/babel-plugin-jsx-sfc#how-it-works)
+Another purpose of compiler [babel-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/babel-plugin-jsx-sfc) is performance optimization. This can make its performance similar to regular React components.
 
 #### Benchmark
 
 [Here is a simple benchmark compared with regular React function components](https://github.com/joe-sky/jsx-sfc/tree/main/examples/benchmark), you can run it and have a try.
 
-### How about the testable
+### How about the testability
 
-> Documentation to be completed
+Because each static member can support exporting from a component, so it's testability is the same as the regular function component.
 
 ### What is the compiled code
 
-> Documentation to be completed
+[Code comparison before and after compiling can refer to here.](https://github.com/joe-sky/jsx-sfc/tree/main/packages/babel-plugin-jsx-sfc#how-it-works)
 
 ## Examples
 
@@ -1103,7 +1105,7 @@ function Test() {
 
 ### Template tags
 
-> This is an optional feature. We can use `Template tags` syntax to continue to separate the responsibilities of JSX tags.
+> This is an optional feature. We can use `Template tags` syntax to separate the code of JSX tags in render(template) function.
 
 In the render(template) function of `jsx-sfc` components, you can use `Template tags` to define some reusable JSX logic:
 
@@ -1267,15 +1269,17 @@ We know that in the world of React, functions that start with capital letters ar
 
 There are many strange TS types problems encountered in the development of `jsx-sfc`, some may be the current limitation of TS. Fortunately, these problems can be solved at present. [I recorded them in this issue.](https://github.com/joe-sky/jsx-sfc/issues/1)
 
+> Some of the problems mentioned above should be the limitation of TS itself. You can also refer to the description of the [Vue v3 documentation in the TS adaptation section](https://v3.vuejs.org/guide/typescript-support.html).
+
 ## Roadmap
 
 ### Optimize compiled code
 
-The compiled code of `jsx-sfc` has a few optimization space yet, which can continue to improve the runtime performance. I will gradually start to optimize it.
+The compiled code of `jsx-sfc` has a few optimization space yet, which can continue to improve the runtime performance. I will gradually start to optimize it. [Here is an optimization idea to be implement in the future.](https://github.com/joe-sky/jsx-sfc/projects/1#card-64682275)
 
 ### About better syntax
 
-If better syntax implementation details are found and if they're not compatible with v1.0 syntax, I will summarize them and arrange them to v2.0 implementation.
+If better syntax implementation details are found and if they're not compatible with v1.0 syntax, I will summarize them and arrange them to v2.0 implementation. This [new syntax](https://github.com/joe-sky/jsx-sfc/projects/1#card-64518964) may be added in the future, we can use TS function overload to implement it, so that the existing API of 1.x will not be break.
 
 ## Change Logs
 
@@ -1283,7 +1287,7 @@ If better syntax implementation details are found and if they're not compatible 
 
 ## Who is using
 
-The author `Joe_Sky` and his front-end team in jd.com. It has been used in more than 3 production systems.
+The author `Joe_Sky` and his front-end team in jd.com. It has been used in more than 4 production systems.
 
 ## License
 
