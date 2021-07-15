@@ -40,7 +40,7 @@
 - 🔨 Support React dev tools
 - ⚡ Performance almost equivalent to regular function components
 - 🚀 No dependencies (except compiler)
-- 💻 Support **Split Editors** similar to [Volar](https://github.com/johnsoncodehk/volar) by [vscode-jsx-sfc](https://marketplace.visualstudio.com/items?itemName=joe-sky.vscode-jsx-sfc), here is demo:
+- 💻 Support **Split Editors** similar to [Volar](https://github.com/johnsoncodehk/volar) by [vscode-jsx-sfc](https://marketplace.visualstudio.com/items?itemName=joe-sky.vscode-jsx-sfc), here is a demo:
 
 <p>
   <img alt="jsx-sfc demo" src="https://user-images.githubusercontent.com/12705724/121485542-dbb8d180-ca02-11eb-984a-d9da7d31ce17.gif" width="800" />
@@ -178,7 +178,7 @@ TodoList.Wrapper = styled.ul`
 
 In the above code, we set up the corresponding relationship between each global member and component in the way of static member convention, which at least describes the relationship from the code.
 
-This writing method is very simple, but it will report an error in TS, because `svgProps` and `Wrapper` properties don't exist in `Todo` component's type definition. Next, let's try `Object.assign`:
+This writing form is very simple, but it will report an error in TS, because `svgProps` and `Wrapper` properties don't exist in `Todo` component's type definition. Next, let's try `Object.assign`:
 
 ```tsx
 const Todo = Object.assign(({ onClick, completed, text }) => (
@@ -225,7 +225,7 @@ This API uses multiple function design, so named it: `Separate Function Componen
 import sfc from 'jsx-sfc';
 
 const Todo = sfc({
-  Component({ onClick, completed, text, styles: { Wrapper }, svgProps }) {
+  Component({ onClick, completed, text, styles: { Wrapper }, constant: { svgProps } }) {
     return (
       <Wrapper>
         <svg {...svgProps}>
@@ -238,16 +238,18 @@ const Todo = sfc({
 
   static: () => {
     return {
-      svgProps: {
-        xmlns: 'http://www.w3.org/2000/svg',
-        width: '24',
-        height: '24',
-        viewBox: '0 0 24 24',
-        fill: 'none',
-        stroke: 'currentColor',
-        strokeWidth: '2',
-        strokeLinecap: 'round',
-        strokeLinejoin: 'round'
+      constant: {
+        svgProps: {
+          xmlns: 'http://www.w3.org/2000/svg',
+          width: '24',
+          height: '24',
+          viewBox: '0 0 24 24',
+          fill: 'none',
+          stroke: 'currentColor',
+          strokeWidth: '2',
+          strokeLinecap: 'round',
+          strokeLinejoin: 'round'
+        }
       }
     };
   },
@@ -293,21 +295,81 @@ const TodoList = sfc({
 });
 ```
 
-[For more specific design ideas, please see here.](#api-design-principle)
+> [The TS type of the component returned by the sfc function is shown here.](#sfc)
 
-See above code, global members such as `svgProps` and `styled components` are aggregated into related components, so at least it's easier to see the relationship between them. And each static member can be exported from the component:
+See above code, the idea of this API is to organize code according to the category of members related to the components. It is mainly divided into `components`, `styles` and `other static members`. The `styles` are created in the form of function return values, so that some calculations can be processed in the function:
+
+```tsx
+{
+  styles: () => {
+    const WrapperBase = styled.div`
+      background-color: #fff;
+    `;
+
+    return {
+      Wrapper: styled(WrapperBase)`
+        background-color: #fff;
+      `
+    };
+  };
+}
+```
+
+After the `styles` be created, you can use them in component functions like this:
+
+```tsx
+{
+  Component({ styles: { Wrapper } }) {
+    ...
+  }
+}
+```
+
+The `static` function is used in the same way as styles. You can return more layer objects by categories in static, as follows:
+
+```tsx
+{
+  static: () => {
+    return {
+      constant: {
+        foo: ...,
+        bar: ...
+      },
+
+      utils: {
+        foo: () => ...,
+        bar: () => ...
+      }
+    };
+  }
+}
+```
+
+Then use them in the component functions:
+
+```tsx
+{
+  Component({ constant: { foo, bar }, utils }) {
+    ...
+  }
+}
+```
+
+And each static member can be exported from the component:
 
 ```tsx
 const {
-  svgProps,
-  styles: { Wrapper }
+  styles: { Wrapper },
+  constant: { svgProps }
 } = Todo;
 const {
-  styles: { Wrapper as ListWrapper }
+  styles: { Wrapper: ListWrapper }
 } = TodoList;
 ```
 
-In addition, I also refer to the mental model of SFCs, which can separate the render part of components(this is optional):
+> [For more specific design ideas, please see here.](#api-design-principle)
+
+In addition, I also refer to the mental model of SFCs, which can separate the `render` part of components(this is optional):
 
 ```tsx
 import sfc from 'jsx-sfc';
@@ -340,7 +402,7 @@ const Test = sfc({
 });
 ```
 
-Render function can also be exported for reuse like component:
+`render function` can also be exported for reuse like components, it's list of parameters is the return value of the `component function`:
 
 ```tsx
 const App = () => <Test.Render user="joe" />;
@@ -371,9 +433,39 @@ const Test = sfc({
 });
 ```
 
+On the whole, all global members are aggregated into related components, so at least it's easier to see the relationship between them when there are multiple components in a single file.
+
+It's not just that, next let's look at another feature.
+
 ### Split editors experience
 
-> Documentation to be completed
+What is a `Split Editors`? This is an interesting feature of a new vscode plugin for Vue [Volar](https://github.com/johnsoncodehk/volar), you can [install Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar) and experience it in Vue project. Here is a Volar demo:
+
+<p>
+  <img alt="volar demo" src="https://user-images.githubusercontent.com/12705724/125753697-6957efee-61ef-4cd3-ab4c-803003a30256.gif" width="800" />
+</p>
+
+I think this idea is not just interesting, and also useful:
+
+_It not only enables us to focus more on developing a certain category of code in each component, and also makes it easy for us to scan and control the overall code of the component and deal with the relationship between them._
+
+So I made a vscode plugin with a similar idea: [vscode-jsx-sfc](https://marketplace.visualstudio.com/items?itemName=joe-sky.vscode-jsx-sfc). It needs to be used with `jsx-sfc`, here is the demo:
+
+<p>
+  <img alt="jsx-sfc demo" src="https://user-images.githubusercontent.com/12705724/121485542-dbb8d180-ca02-11eb-984a-d9da7d31ce17.gif" width="800" />
+</p>
+
+See from the demo, after [install vscode-jsx-sfc](https://marketplace.visualstudio.com/items?itemName=joe-sky.vscode-jsx-sfc), click the "Split Editors" button in the upper right corner to automatically process all the components created by `sfc` in the current file:
+
+- If you do not use render(template) function, it will be split into two editors: `component` and `styles`. In the editor of each category, fold the code of other categories, and each editor will automatically position the cursor to the first line of the part;
+
+- If you use the render(template) function, it splits into three editors: `component`, `render(template)` and `styles`;
+
+- If there are multiple components created by `sfc` in a single file, the corresponding part of each component will be fold and the cursor will be positioned to the corresponding part of the first component;
+
+- When there are syntax errors in the code, there will be fault tolerant processing. And when the code is saved, there will be a mechanism of refolding.
+
+Next let's look at some design details.
 
 ## API design details
 
