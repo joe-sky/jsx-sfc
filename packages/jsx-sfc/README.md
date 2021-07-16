@@ -28,8 +28,6 @@
 
 [Live Demo is here](https://codesandbox.io/s/jsx-sfc-demo-wwgd4) (Experience **Typings/Hot reloading/Dev tools** by Codesandbox).
 
-> The v1.5.0 will be released in the near future, and related documentation and examples are being updated.
-
 ## Features
 
 - ✨ Clearly separate **JSX tags**, **logic**, **styles** and **any other members** within React function components

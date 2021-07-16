@@ -7,22 +7,6 @@ import { css } from '@emotion/react';
 import { locales } from './utils';
 
 const App = sfc({
-  template: ({ data, styles: { Wrapper, ...styles } }) => (
-    <Wrapper>
-      <header className="App-header">
-        <img src={logo} css={styles.appLogo} alt="logo" />
-        <select value={data.i18n.language} onChange={data.onSelectChange}>
-          <option value="en">English</option>
-          <option value="ja">日本語</option>
-        </select>
-        <h2>{data.t('title')}</h2>
-        <p>{data.t('description.part1')}</p>
-        <p>{data.t('description.part2')}</p>
-        <p>{data.t('description.part3')}</p>
-      </header>
-    </Wrapper>
-  ),
-
   Component() {
     const { t, i18n } = useTranslation();
 
@@ -35,8 +19,8 @@ const App = sfc({
     };
   },
 
-  static: {
-    ...locales({
+  static: () => {
+    return locales({
       en: {
         title: 'Welcome to react using react-i18next and typescript 4.1',
         description: {
@@ -54,8 +38,24 @@ const App = sfc({
           part3: '@types/react-i18next で関連例を確認してください。'
         }
       }
-    })
+    });
   },
+
+  render: ({ data, styles: { Wrapper, ...styles } }) => (
+    <Wrapper>
+      <header className="App-header">
+        <img src={logo} css={styles.appLogo} alt="logo" />
+        <select value={data.i18n.language} onChange={data.onSelectChange}>
+          <option value="en">English</option>
+          <option value="ja">日本語</option>
+        </select>
+        <h2>{data.t('title')}</h2>
+        <p>{data.t('description.part1')}</p>
+        <p>{data.t('description.part2')}</p>
+        <p>{data.t('description.part3')}</p>
+      </header>
+    </Wrapper>
+  ),
 
   styles: {
     Wrapper: styled.div`

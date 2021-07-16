@@ -3,7 +3,32 @@ import { Link, useLocation } from 'react-router-dom';
 import sfc from 'jsx-sfc';
 
 const Nav = sfc({
-  template: ({ data, styles, constants: { links } }) => (
+  Component: () => {
+    const [showProfileMenu, setShowProfileMenu] = useState(false);
+    const [showMenu, setShowMenu] = useState(false);
+    const location = useLocation();
+
+    return {
+      showProfileMenu,
+      setShowProfileMenu,
+      showMenu,
+      setShowMenu,
+      location,
+      onDropdownClick: () => setShowProfileMenu(!showProfileMenu),
+      onMenuClick: () => setShowMenu(!showMenu)
+    };
+  },
+
+  static: {
+    constants: {
+      links: [
+        { text: 'Home', to: '/' },
+        { text: 'About', to: '/about' }
+      ]
+    }
+  },
+
+  render: ({ data, styles, constants: { links } }) => (
     <nav className="bg-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
@@ -158,31 +183,6 @@ const Nav = sfc({
       </div>
     </nav>
   ),
-
-  Component: () => {
-    const [showProfileMenu, setShowProfileMenu] = useState(false);
-    const [showMenu, setShowMenu] = useState(false);
-    const location = useLocation();
-
-    return {
-      showProfileMenu,
-      setShowProfileMenu,
-      showMenu,
-      setShowMenu,
-      location,
-      onDropdownClick: () => setShowProfileMenu(!showProfileMenu),
-      onMenuClick: () => setShowMenu(!showMenu)
-    };
-  },
-
-  static: {
-    constants: {
-      links: [
-        { text: 'Home', to: '/' },
-        { text: 'About', to: '/about' }
-      ]
-    }
-  },
 
   styles: {
     activeClass: 'text-white bg-gray-900',

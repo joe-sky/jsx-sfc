@@ -4,18 +4,6 @@ import styled, { css } from 'styled-components';
 import sfc from 'jsx-sfc';
 
 const Link = sfc({
-  template({ data, props, styles: { Active, Normal } }) {
-    if (props.active) {
-      return <Active>{props.children}</Active>;
-    }
-
-    return (
-      <Normal href="#" onClick={data.onClick}>
-        {props.children}
-      </Normal>
-    );
-  },
-
   Component({ onClick }) {
     return {
       onClick: e => {
@@ -31,6 +19,18 @@ const Link = sfc({
       children: PropTypes.node.isRequired,
       onClick: PropTypes.func.isRequired
     }
+  },
+
+  render({ data, props, styles: { Active, Normal } }) {
+    if (props.active) {
+      return <Active>{props.children}</Active>;
+    }
+
+    return (
+      <Normal href="#" onClick={data.onClick}>
+        {props.children}
+      </Normal>
+    );
   },
 
   styles: () => {

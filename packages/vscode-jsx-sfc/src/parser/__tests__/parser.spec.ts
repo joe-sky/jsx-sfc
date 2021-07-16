@@ -22,15 +22,15 @@ const App = sfc(
 
 const App2 = sfc(
   {
-    template: ({ data, styles: { Container } }) => (
+    Component: props => {
+      return { firstName: 'joe', styles: props.styles };
+    },
+
+    render: ({ data, styles: { Container } }) => (
       <Container>
         <div>{connectName(data.firstName, LAST_NAME)}</div>
       </Container>
     ),
-
-    Component: props => {
-      return { firstName: 'joe', styles: props.styles };
-    },
 
     styles: () => ({})
   }
@@ -42,14 +42,14 @@ test('parse', async () => {
 
   expect(blocks.component).toEqual([
     { locStartOffset: 288, locEndOffset: 372 },
-    { locStartOffset: 590, locEndOffset: 674 }
+    { locStartOffset: 432, locEndOffset: 516 }
   ]);
   expect(blocks.template).toEqual([
     { locStartOffset: 130, locEndOffset: 281 },
-    { locStartOffset: 432, locEndOffset: 583 }
+    { locStartOffset: 523, locEndOffset: 672 }
   ]);
   expect(blocks.styles).toEqual([
     { locStartOffset: 379, locEndOffset: 397 },
-    { locStartOffset: 681, locEndOffset: 699 }
+    { locStartOffset: 679, locEndOffset: 697 }
   ]);
 });

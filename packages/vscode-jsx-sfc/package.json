@@ -2,7 +2,7 @@
   "name": "vscode-jsx-sfc",
   "displayName": "jsx-sfc",
   "description": "Useful and interesting editor tools for jsx-sfc.",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "publisher": "joe-sky",
   "icon": "images/react-logo.png",
   "engines": {
@@ -32,7 +32,7 @@
     "commands": [
       {
         "command": "jsx-sfc.action.splitEditors",
-        "title": "Split Component(), template(), styles() Editors",
+        "title": "Split Component(), render(), styles() Editors",
         "category": "jsx-sfc",
         "icon": "images/split-editors.png"
       }
@@ -76,6 +76,7 @@
   ],
   "devDependencies": {
     "@types/jest": "^26.0.23",
+    "@types/lodash": "^4.14.171",
     "@types/node": "^7.0.43",
     "@types/vscode": "^1.56.0",
     "jest": "^27.0.4",
@@ -91,7 +92,7 @@
     "@babel/preset-env": "^7.14.4",
     "@babel/preset-typescript": "^7.13.0",
     "@vue/reactivity": "^3.0.11",
-    "babel-plugin-jsx-sfc": "^1.4.2",
+    "babel-plugin-jsx-sfc": "^1.5.0",
     "lodash": "^4.17.21"
   }
 }

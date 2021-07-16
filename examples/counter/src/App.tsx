@@ -8,7 +8,26 @@ interface AppProps {
 }
 
 const App = sfc<AppProps>()({
-  template: ({ data }) => {
+  Component: ({ title, styles: { useStyles } }) => {
+    const [count, setCount] = useState(0);
+    const classes = useStyles();
+
+    return {
+      title,
+      count,
+      setCount,
+      classes,
+      onClick: () => setCount(count => count + 1)
+    };
+  },
+
+  static: {
+    defaultProps: {
+      title: 'Hello Vite + React!'
+    }
+  },
+
+  render: ({ data }) => {
     const { classes } = data;
 
     return (
@@ -40,25 +59,6 @@ const App = sfc<AppProps>()({
         </header>
       </div>
     );
-  },
-
-  Component: ({ title, styles: { useStyles } }) => {
-    const [count, setCount] = useState(0);
-    const classes = useStyles();
-
-    return {
-      title,
-      count,
-      setCount,
-      classes,
-      onClick: () => setCount(count => count + 1)
-    };
-  },
-
-  static: {
-    defaultProps: {
-      title: 'Hello Vite + React!'
-    }
   },
 
   styles: () => ({

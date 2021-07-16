@@ -5,7 +5,17 @@ import { babelConfig } from './config';
 import { SFCBlock, Descriptor } from '../types';
 import { astUtils, utils } from 'babel-plugin-jsx-sfc';
 
-const { SFC_FORWARD_REF, SFC_COMPONENT, SFC_TEMPLATE, SFC_STYLES, SFC_STATIC, SFC_OPTIONS } = utils;
+const {
+  SFC_FORWARD_REF,
+  SFC_COMPONENT,
+  SFC_TEMPLATE,
+  SFC_RENDER,
+  SFC_STYLES,
+  SFC_STATIC,
+  SFC_OPTIONS,
+  SFC_LIB
+} = utils;
+const SFC_LIBS = [SFC_LIB, `${SFC_LIB}.macro`];
 
 export function parse(code: string) {
   const ast = transformSync(code, babelConfig)?.ast;
@@ -22,7 +32,7 @@ export function parse(code: string) {
         const { callee } = path.node;
 
         let sfcType: 0 | 1 | 2 | 3 | 4 = 0;
-        if (types.isCallExpression(callee) && astUtils.isCalleeImportedBySfc(callee.callee, path)) {
+        if (types.isCallExpression(callee) && astUtils.isCalleeImportedBySfc(callee.callee, path, SFC_LIBS)) {
           if (
             types.isMemberExpression(callee.callee) &&
             types.isIdentifier(callee.callee.property) &&
@@ -32,7 +42,7 @@ export function parse(code: string) {
           } else {
             sfcType = 1;
           }
-        } else if (astUtils.isCalleeImportedBySfc(callee, path)) {
+        } else if (astUtils.isCalleeImportedBySfc(callee, path, SFC_LIBS)) {
           if (
             types.isMemberExpression(callee) &&
             types.isIdentifier(callee.property) &&
@@ -59,6 +69,7 @@ export function parse(code: string) {
                     case SFC_COMPONENT:
                       descriptor.component.push(block);
                       break;
+                    case SFC_RENDER:
                     case SFC_TEMPLATE:
                       descriptor.template.push(block);
                       break;

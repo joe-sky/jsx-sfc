@@ -4,7 +4,31 @@ import styled from 'styled-components';
 import sfc, { Template } from 'jsx-sfc';
 
 const Todo = sfc({
-  template: ({ data, styles: { Wrapper }, svgProps }, icon) => (
+  Component(props) {
+    return { ...props };
+  },
+
+  static: {
+    svgProps: {
+      xmlns: 'http://www.w3.org/2000/svg',
+      width: '24',
+      height: '24',
+      viewBox: '0 0 24 24',
+      fill: 'none',
+      stroke: 'currentColor',
+      strokeWidth: '2',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round'
+    },
+
+    propTypes: {
+      onClick: PropTypes.func.isRequired,
+      completed: PropTypes.bool.isRequired,
+      text: PropTypes.string.isRequired
+    }
+  },
+
+  render: ({ data, styles: { Wrapper }, svgProps }, icon) => (
     <>
       <Template name={icon}>
         {() =>
@@ -31,30 +55,6 @@ const Todo = sfc({
       </Template>
     </>
   ),
-
-  Component(props) {
-    return { ...props };
-  },
-
-  static: {
-    svgProps: {
-      xmlns: 'http://www.w3.org/2000/svg',
-      width: '24',
-      height: '24',
-      viewBox: '0 0 24 24',
-      fill: 'none',
-      stroke: 'currentColor',
-      strokeWidth: '2',
-      strokeLinecap: 'round',
-      strokeLinejoin: 'round'
-    },
-
-    propTypes: {
-      onClick: PropTypes.func.isRequired,
-      completed: PropTypes.bool.isRequired,
-      text: PropTypes.string.isRequired
-    }
-  },
 
   styles: {
     Wrapper: styled.li`

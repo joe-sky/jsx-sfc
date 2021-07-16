@@ -3,14 +3,6 @@ import styled from 'styled-components';
 import sfc from 'jsx-sfc';
 
 const AddTodo = sfc({
-  template: ({ data, styles: { Wrapper } }) => (
-    <Wrapper>
-      <form onSubmit={data.onSubmit}>
-        <input ref={data.input} placeholder="Add a task..." />
-      </form>
-    </Wrapper>
-  ),
-
   Component({ onSubmit }) {
     const input = useRef();
 
@@ -26,6 +18,14 @@ const AddTodo = sfc({
       }
     };
   },
+
+  render: ({ data, styles: { Wrapper } }) => (
+    <Wrapper>
+      <form onSubmit={data.onSubmit}>
+        <input ref={data.input} placeholder="Add a task..." />
+      </form>
+    </Wrapper>
+  ),
 
   styles: {
     Wrapper: styled.div`

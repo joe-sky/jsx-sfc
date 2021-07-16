@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import { ref, computed } from '@vue/reactivity';
+import debounce from 'lodash/debounce';
 import { parse } from './parser';
 import { SFCBlock, BlocksType } from './types';
 
@@ -48,48 +49,50 @@ export async function activate(context: vscode.ExtensionContext) {
   /**
    * Refold when saving here, because syntax errors may occur during user input and editing, resulting in some collapsed code being expanded.
    */
-  vscode.workspace.onDidSaveTextDocument(doc => {
-    const currentEditor = vscode.window.activeTextEditor;
-    const currentSplit = splits.find(split => split.editor === currentEditor);
-    if (!currentSplit) {
-      return;
-    }
+  vscode.workspace.onDidSaveTextDocument(
+    debounce(doc => {
+      const currentEditor = vscode.window.activeTextEditor;
+      const currentSplit = splits.find(split => split.editor === currentEditor);
+      if (!currentSplit) {
+        return;
+      }
 
-    const { blocksSet, blocksFoldSet } = createBlocks(doc.getText());
-    if (!blocksSet.length) {
-      return;
-    }
+      const { blocksSet, blocksFoldSet } = createBlocks(doc.getText());
+      if (!blocksSet.length) {
+        return;
+      }
 
-    async function refold() {
-      for (let i = 0; i < splits.length; i++) {
-        const split = splits[i];
-        if (split.editor === currentEditor) {
-          continue;
+      async function refold() {
+        for (let i = 0; i < splits.length; i++) {
+          const split = splits[i];
+          if (split.editor === currentEditor) {
+            continue;
+          }
+
+          const { editor } = split;
+          const range = editor.visibleRanges;
+          const blockFolds = blocksFoldSet[i];
+
+          await vscode.window.showTextDocument(editor.document, editor.viewColumn);
+          await vscode.commands.executeCommand('editor.unfoldAll');
+          const positions = blockFolds.map(block => doc.positionAt(block.locStartOffset));
+          await vscode.commands.executeCommand('editor.fold', {
+            levels: 1,
+            direction: 'up',
+            selectionLines: positions.map(position => position.line)
+          });
+
+          editor.revealRange(range[0]);
         }
 
-        const { editor } = split;
-        const range = editor.visibleRanges;
-        const blockFolds = blocksFoldSet[i];
-
-        await vscode.window.showTextDocument(editor.document, editor.viewColumn);
-        await vscode.commands.executeCommand('editor.unfoldAll');
-        const positions = blockFolds.map(block => doc.positionAt(block.locStartOffset));
-        await vscode.commands.executeCommand('editor.fold', {
-          levels: 1,
-          direction: 'up',
-          selectionLines: positions.map(position => position.line)
-        });
-
-        editor.revealRange(range[0]);
+        if (currentEditor) {
+          await vscode.window.showTextDocument(currentEditor.document, currentEditor.viewColumn);
+        }
       }
 
-      if (currentEditor) {
-        await vscode.window.showTextDocument(currentEditor.document, currentEditor.viewColumn);
-      }
-    }
-
-    refold();
-  });
+      refold();
+    }, 300)
+  );
 
   async function onSplit() {
     splits.length = 0;

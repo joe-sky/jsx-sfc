@@ -2698,10 +2698,10 @@ babel-plugin-jest-hoist@^26.6.2:
     "@types/babel__core" "^7.0.0"
     "@types/babel__traverse" "^7.0.6"
 
-babel-plugin-jsx-sfc@^1.4.2:
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/babel-plugin-jsx-sfc/-/babel-plugin-jsx-sfc-1.4.2.tgz#54e1be356006e2c17a7842a318c004eb491035f9"
-  integrity sha512-wWKYEZsxLvToCrBc+vNbZziSTFOoGb+0X4UcY4bYanLMpypwTlW7RZgENH2cRR4v14Hy7cJ000sljmSRF3SN9g==
+babel-plugin-jsx-sfc@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-jsx-sfc/-/babel-plugin-jsx-sfc-1.5.0.tgz#ef10c89debcbf425a73fcfde38cde025de7776c2"
+  integrity sha512-rZpYsRfcsy2dMRKmX7he4p93jSHvlIGz7GIwN3yEwR6Kzd5Dz1LzcR/9cfrfat08pRvS7AILX6hmtDMlfbcV7g==
   dependencies:
     "@babel/core" "^7.7.5"
     "@babel/plugin-transform-react-jsx" "^7.7.5"
@@ -6916,10 +6916,10 @@ jsprim@^1.2.2:
     array-includes "^3.1.2"
     object.assign "^4.1.2"
 
-jsx-sfc@^1.4.2:
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/jsx-sfc/-/jsx-sfc-1.4.2.tgz#32678dde33549f815c36e727d15ee99179037ffe"
-  integrity sha512-PHWQePCmmADy7bLJ3ptqfNSf78dyqgMbcFzVSexdBfF0wLQpKLj22hpfDDBUJp12/YFV0g8BIKPrT/EwaZMlKA==
+jsx-sfc@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/jsx-sfc/-/jsx-sfc-1.5.0.tgz#5c65cf494b985199769d5d2f7abc571900c717a4"
+  integrity sha512-oTIdH0msXjpeQNHjrtN+mbjbI4PC63/rg1iewfoL5D41zcs1Dx3SXnk6YpnRekqAIiDfZzPS3dmPJgsy+0XE9g==
 
 killable@^1.0.1:
   version "1.0.1"

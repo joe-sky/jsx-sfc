@@ -10,6 +10,7 @@
     "noUnusedLocals": false,
     "noImplicitReturns": true,
     "noUnusedParameters": false,
+    "esModuleInterop": true,
     "typeRoots": ["./node_modules/@types"]
   },
   "exclude": ["node_modules", ".vscode-test", "src/**/__tests__"]

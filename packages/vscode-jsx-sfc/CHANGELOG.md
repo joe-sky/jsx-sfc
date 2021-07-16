@@ -1,8 +1,14 @@
 # CHANGELOG
 
+## [v0.2.0] 2021.07.16
+
+- 🐛 Support `jsx-sfc.macro`.
+- 👆 Support folding `render`.
+- ⚡️ Refolding performance optimization on save.
+
 ## [v0.1.2] 2021.06.28
 
-- 👆 Support fold `static` .
+- 👆 Support folding `static`.
 
 ## [v0.1.1] 2021.06.23
 

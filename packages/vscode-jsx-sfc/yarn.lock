@@ -1219,6 +1219,11 @@
     jest-diff "^26.0.0"
     pretty-format "^26.0.0"
 
+"@types/lodash@^4.14.171":
+  version "4.14.171"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.171.tgz#f01b3a5fe3499e34b622c362a46a609fdb23573b"
+  integrity sha512-7eQ2xYLLI/LsicL2nejW9Wyko3lcpN6O/z0ZLHrEQsg280zIdCv1t/0m6UtBjUHokCGBQ3gYTbHzDkZ1xOBwwg==
+
 "@types/node@*":
   version "15.12.0"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-15.12.0.tgz#6a459d261450a300e6865faeddb5af01c3389bb3"
@@ -1403,10 +1408,10 @@ babel-plugin-jest-hoist@^27.0.1:
     "@types/babel__core" "^7.0.0"
     "@types/babel__traverse" "^7.0.6"
 
-babel-plugin-jsx-sfc@^1.4.2:
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/babel-plugin-jsx-sfc/-/babel-plugin-jsx-sfc-1.4.2.tgz#54e1be356006e2c17a7842a318c004eb491035f9"
-  integrity sha512-wWKYEZsxLvToCrBc+vNbZziSTFOoGb+0X4UcY4bYanLMpypwTlW7RZgENH2cRR4v14Hy7cJ000sljmSRF3SN9g==
+babel-plugin-jsx-sfc@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-jsx-sfc/-/babel-plugin-jsx-sfc-1.5.0.tgz#ef10c89debcbf425a73fcfde38cde025de7776c2"
+  integrity sha512-rZpYsRfcsy2dMRKmX7he4p93jSHvlIGz7GIwN3yEwR6Kzd5Dz1LzcR/9cfrfat08pRvS7AILX6hmtDMlfbcV7g==
   dependencies:
     "@babel/core" "^7.7.5"
     "@babel/plugin-transform-react-jsx" "^7.7.5"
