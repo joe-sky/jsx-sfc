@@ -9,7 +9,7 @@
 
 ## Introduction
 
-`use-templates` is a tiny custom hook(~600b) that help you to better implement **separation of concerns** within JSX based functional components.
+`use-templates` is a tiny custom hook(~600b) for managing React/Vue JSX tag by blocks. It's written by TypeScript and has completely type safety.
 
 ## Features
 

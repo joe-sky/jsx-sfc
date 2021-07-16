@@ -1,7 +1,7 @@
 {
   "name": "jsx-sfc",
   "version": "1.4.2",
-  "description": "A tiny JSX/TSX toolkit that help you to better implement separation of concerns within JSX based functional components.",
+  "description": "A SFCs like API for managing React function components and their related codes by categories.",
   "main": "dist/jsx-sfc.common.js",
   "module": "dist/jsx-sfc.esm.js",
   "unpkg": "dist/jsx-sfc.js",

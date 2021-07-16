@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## [v1.5.0] 2021.07.16
+
+- 🌟 Add `render` function. And the `template` function remains, you can choose to use one of them.
+- 👆 Remove the `runtime mode`, this will reduce the size of the package. The `runtime mode` is the earliest usage of `jsx-sfc`. In fact, this mode has not been disclosed in the documentation, because it's performance and ecological adaptability will have many limitations.
+
 ## [v1.4.2] 2021.06.28
 
 - 👆 `options` is deprecated, use `static` instead.

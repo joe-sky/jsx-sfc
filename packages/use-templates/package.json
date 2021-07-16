@@ -1,7 +1,7 @@
 {
   "name": "use-templates",
   "version": "1.4.2",
-  "description": "A tiny custom hook for render JSX tags of components with separation of concerns.",
+  "description": "A tiny custom hook for managing React/Vue JSX tag by blocks.",
   "main": "dist/use-templates.common.js",
   "module": "dist/use-templates.esm.js",
   "unpkg": "dist/use-templates.js",
