@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v1.5.1] 2021.07.19
+
+- 🎨 Add TS type comment for `static`.
+
 ## [v1.5.0] 2021.07.16
 
 - 🌟 Add `render` function. And the `template` function remains, you can choose to use one of them.

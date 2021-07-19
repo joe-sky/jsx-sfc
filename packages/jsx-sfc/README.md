@@ -47,7 +47,7 @@
 ## Table of Contents
 
 - [Motivation](#motivation)
-  - [The problem want to solve](#the-problem-want-to-solve)
+  - [Why](#why)
   - [A new API like SFCs](#a-new-api-like-sfcs)
   - [Split editors experience](#split-editors-experience)
 - [API design details](#api-design-details)
@@ -74,11 +74,11 @@
   - [Template tags](#template-tags)
 - [API Design Principle](#api-design-principle)
 - [Roadmap](#roadmap)
-- [Who is using](#who-is-using)
+  <!-- - [Who is using](#who-is-using) -->
 
 ## Motivation
 
-### The problem want to solve
+### Why
 
 For example(with CSS-in-JS), when we write React components like this:
 
@@ -1279,9 +1279,21 @@ The compiled code of `jsx-sfc` has a few optimization space yet, which can conti
 
 If better syntax implementation details are found and if they're not compatible with v1.0 syntax, I will summarize them and arrange them to v2.0 implementation. This [new syntax](https://github.com/joe-sky/jsx-sfc/projects/1#card-64518964) may be added in the future, we can use TS function overload to implement it, so that the existing API of 1.x will not be break.
 
+### vscode-jsx-sfc support regular syntax
+
+I plan to make `Split Editors` feature of `vscode-jsx-sfc` support regular React function components syntax in the future, which is currently being explored and designed.
+
 ## Change Logs
 
 [Check here.](https://github.com/joe-sky/jsx-sfc/blob/main/CHANGELOG.md)
+
+## Contributing
+
+1. Fork it
+2. Create your feature branch: `git checkout -b my-new-feature`
+3. Commit your changes: `git commit -am 'Add some feature'`
+4. Push to the branch: `git push origin my-new-feature`
+5. Submit a pull request
 
 ## Who is using
 

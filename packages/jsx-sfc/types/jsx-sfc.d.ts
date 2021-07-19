@@ -1,5 +1,5 @@
 /*!
- * jsx-sfc v1.5.0
+ * jsx-sfc v1.5.1
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
@@ -119,6 +119,20 @@ declare type DefineComponent<Ref = NoRef, Props = {}, ReturnComponent = Ref exte
          * Using the `styles property or function` to define styles, you can use the most popular `CSS in JS` solutions. (e.g. `styled-components`, `Emotion`)
          */
         styles?: Styles;
+        /**
+         * Using the `static property or function` to define any static members of a component, example:
+         * ```tsx
+         * const App = sfc<{ user: string }>()({
+         *   Component: (props) => {
+         *     useEffect(() => console.log(props.user), []);
+         *     return { user: props.user || props.initialValue };
+         *   },
+         *   static: { initialValue: 'test user', defaultProps: { user: 'test' } },
+         *   render: ({ data, styles: { Wrapper } }) => <Wrapper>{data.user}</Wrapper>,
+         *   styles: { Wrapper: styled.div`font-size:14px` }
+         * });
+         * ```
+         */
         static?: Static;
         /**
          * @deprecated Please use `static`
@@ -152,6 +166,20 @@ declare type DefineComponent<Ref = NoRef, Props = {}, ReturnComponent = Ref exte
          * Using the `styles property or function` to define styles, you can use the most popular `CSS in JS` solutions. (e.g. `styled-components`, `emotion`)
          */
         styles?: Styles;
+        /**
+         * Using the `static property or function` to define any static members of a component, example:
+         * ```tsx
+         * const App = sfc<{ user: string }>()({
+         *   Component: (props) => {
+         *     useEffect(() => console.log(props.user), []);
+         *     return { user: props.user || props.initialValue };
+         *   },
+         *   static: { initialValue: 'test user', defaultProps: { user: 'test' } },
+         *   render: ({ data, styles: { Wrapper } }) => <Wrapper>{data.user}</Wrapper>,
+         *   styles: { Wrapper: styled.div`font-size:14px` }
+         * });
+         * ```
+         */
         static?: Static;
         /**
          * @deprecated Please use `static`

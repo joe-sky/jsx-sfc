@@ -106,6 +106,20 @@ export type DefineComponent<
        */
       styles?: Styles;
 
+      /**
+       * Using the `static property or function` to define any static members of a component, example:
+       * ```tsx
+       * const App = sfc<{ user: string }>()({
+       *   Component: (props) => {
+       *     useEffect(() => console.log(props.user), []);
+       *     return { user: props.user || props.initialValue };
+       *   },
+       *   static: { initialValue: 'test user', defaultProps: { user: 'test' } },
+       *   render: ({ data, styles: { Wrapper } }) => <Wrapper>{data.user}</Wrapper>,
+       *   styles: { Wrapper: styled.div`font-size:14px` }
+       * });
+       * ```
+       */
       static?: Static;
 
       /**
@@ -156,6 +170,20 @@ export type DefineComponent<
        */
       styles?: Styles;
 
+      /**
+       * Using the `static property or function` to define any static members of a component, example:
+       * ```tsx
+       * const App = sfc<{ user: string }>()({
+       *   Component: (props) => {
+       *     useEffect(() => console.log(props.user), []);
+       *     return { user: props.user || props.initialValue };
+       *   },
+       *   static: { initialValue: 'test user', defaultProps: { user: 'test' } },
+       *   render: ({ data, styles: { Wrapper } }) => <Wrapper>{data.user}</Wrapper>,
+       *   styles: { Wrapper: styled.div`font-size:14px` }
+       * });
+       * ```
+       */
       static?: Static;
 
       /**
