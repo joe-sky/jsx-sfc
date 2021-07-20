@@ -24,9 +24,9 @@
 
 ## Introduction
 
-`jsx-sfc`(JSX Separate Function Components) is a [SFCs](https://v3.vuejs.org/guide/single-file-component.html) like API for managing React function components and their related codes by categories. It's written by TypeScript and has completely type safety, very easy to use🧙🏼‍♂️.
+`jsx-sfc`(JSX Separate Function Components) is a [SFCs](https://v3.vuejs.org/guide/single-file-component.html) like API for managing React function components and their related codes by categories. It's written by TypeScript and has completely type safety, and based on compiler optimization, it's also easy to use🧙🏼‍♂️.
 
-[Live Demo is here](https://codesandbox.io/s/jsx-sfc-demo-wwgd4) (Experience **Typings/Hot reloading/Dev tools** by Codesandbox).
+[Live Demo is here](https://codesandbox.io/s/jsx-sfc-demo-wwgd4) (with [twin.macro](https://github.com/ben-rogerson/twin.macro)(a CSS in JS tool using Tailwind syntax), can experience **Typings/Hot reloading/Dev tools** by Codesandbox).
 
 ## Features
 
@@ -36,8 +36,8 @@
 - 🔥 Support [React Fast Refresh](https://github.com/facebook/react/tree/master/packages/react-refresh)
 - 🔧 Support React Eslint plugins
 - 🔨 Support React dev tools
-- ⚡ Performance almost equivalent to regular function components
-- 🚀 No dependencies (except compiler)
+- ⚡ Rendering performance is similar to regular function components
+- 🚀 Runtime code size less than 1KB and no dependencies
 - 💻 Support **Split Editors** similar to [Volar](https://github.com/johnsoncodehk/volar) by [vscode-jsx-sfc](https://marketplace.visualstudio.com/items?itemName=joe-sky.vscode-jsx-sfc), here is a demo:
 
 <p>
@@ -54,6 +54,7 @@
   - [Adapting Eslint plugin](#adapting-eslint-plugin)
   - [Adapting hot reloading](#adapting-hot-reloading)
   - [How about the performance](#how-about-the-performance)
+    - [Benchmark](#benchmark)
   - [How about the testability](#how-about-the-testability)
   - [What is the compiled code](#what-is-the-compiled-code)
 - [Examples](#examples)
@@ -74,7 +75,6 @@
   - [Template tags](#template-tags)
 - [API Design Principle](#api-design-principle)
 - [Roadmap](#roadmap)
-  <!-- - [Who is using](#who-is-using) -->
 
 ## Motivation
 
@@ -469,6 +469,8 @@ In this way, we can also use this interesting way when developing React componen
 
 ## API design details
 
+`jsx-sfc` is an API that must use compiler, this is the way after full consideration and practical experience.
+
 ### Adapting Eslint Plugin
 
 If you configure the [eslint-plugin-react-hooks](https://github.com/facebook/react/tree/master/packages/eslint-plugin-react-hooks), this API also can check where you can use hooks:
@@ -510,11 +512,11 @@ In this API, the `render` function is only used for rendering, and the data logi
 
 ### Adapting Hot Reloading
 
-This API can also support [React Fast Refresh](https://github.com/facebook/react/tree/master/packages/react-refresh). Here I developed a compiler plugin: [babel-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/babel-plugin-jsx-sfc), because it has to transform the runtime code into a format recognized by the [Babel plugin of React Fast Refresh](https://github.com/facebook/react/blob/master/packages/react-refresh/src/ReactFreshBabelPlugin.js).
+This API can also support [React Fast Refresh](https://github.com/facebook/react/tree/master/packages/react-refresh). It has a compiler plugin: [babel-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/babel-plugin-jsx-sfc), because it has to transform the runtime code into a format recognized by the [Babel plugin of React Fast Refresh](https://github.com/facebook/react/blob/master/packages/react-refresh/src/ReactFreshBabelPlugin.js).
 
 ### How about the performance
 
-Another purpose of compiler [babel-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/babel-plugin-jsx-sfc) is performance optimization. This can make its performance similar to regular React components.
+Another purpose of the compiler [babel-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/babel-plugin-jsx-sfc) is performance optimization. This can make its performance similar to regular React components.
 
 #### Benchmark
 
