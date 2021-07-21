@@ -6,6 +6,7 @@
   "files": [
     "lib/",
     "index.d.ts",
+    "LICENSE",
     "README.md"
   ],
   "scripts": {

@@ -11,12 +11,6 @@ const {
   utils: { connectName },
   styles: { Container, hl }
 } = sfc({
-  template: ({ data, styles, utils: { connectName } }) => (
-    <Container>
-      <div>{connectName(data.firstName, data.LAST_NAME)}</div>
-    </Container>
-  ),
-
   Component: ({ constant: { LAST_NAME } }) => {
     return { firstName: 'joe', LAST_NAME };
   },
@@ -30,6 +24,12 @@ const {
       connectName: (firstName: string, lastName: string) => `${firstName}_${lastName}`
     }
   },
+
+  render: ({ data, styles, utils: { connectName } }) => (
+    <Container>
+      <div>{connectName(data.firstName, data.LAST_NAME)}</div>
+    </Container>
+  ),
 
   styles: () => ({
     Container: styled.section`
@@ -54,18 +54,6 @@ describe('component basic', function() {
 });
 
 const WithHooks = sfc({
-  template: ({ data, styles }) => (
-    <Container css={styles.hl}>
-      <i>{data.count}</i>
-      <button className="add" onClick={data.onClickAdd}>
-        Add
-      </button>
-      <button className="reset" onClick={data.onClickReset}>
-        Reset
-      </button>
-    </Container>
-  ),
-
   Component: ({ useCount }) => {
     const { count, increase, reset } = useCount(0);
 
@@ -108,7 +96,19 @@ const WithHooks = sfc({
         hl
       }
     };
-  }
+  },
+
+  render: ({ data, styles }) => (
+    <Container css={styles.hl}>
+      <i>{data.count}</i>
+      <button className="add" onClick={data.onClickAdd}>
+        Add
+      </button>
+      <button className="reset" onClick={data.onClickReset}>
+        Reset
+      </button>
+    </Container>
+  )
 });
 
 describe('with custom hooks', function() {

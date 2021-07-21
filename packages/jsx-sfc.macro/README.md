@@ -32,3 +32,7 @@ const App = sfc({
 ## How it works
 
 [The same as babel-plugin-jsx-sfc.](https://github.com/joe-sky/jsx-sfc/blob/main/packages/babel-plugin-jsx-sfc/README.md)
+
+## License
+
+MIT

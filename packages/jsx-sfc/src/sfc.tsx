@@ -7,12 +7,12 @@ const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
 export function createOptions(options: FuncMap, extensions?: SFCExtensions) {
   const ret: Obj = {};
-  let template: Func = noop;
+  let render: Func = noop;
 
   Object.keys(options).forEach(key => {
     const item = options[key];
     if (key === 'template' || key === 'render') {
-      template = item as Func;
+      render = item as Func;
     } else if (key === 'styles') {
       ret[key] = isFunc(item) ? item() : item;
     } else if (key === 'options' || key === 'static') {
@@ -24,12 +24,12 @@ export function createOptions(options: FuncMap, extensions?: SFCExtensions) {
   const ex = isFunc(extensions) ? extensions() : extensions;
   ex && Object.assign(ret, ex);
 
-  if (template) {
-    const paramsCount = getFuncParams(template).length;
-    ret.template =
+  if (render) {
+    const paramsCount = getFuncParams(render).length;
+    ret.render =
       paramsCount > 1
         ? (data?: Obj) => {
-            const jsxFragment: ReactElement = template(
+            const jsxFragment: ReactElement = render(
               { data, props: data?.props, ...ret },
               ...emptyObjs(paramsCount - 1)
             );
@@ -59,7 +59,7 @@ export function createOptions(options: FuncMap, extensions?: SFCExtensions) {
 
             return mainTemplate();
           }
-        : (data?: Obj) => template({ data, props: data?.props, ...ret });
+        : (data?: Obj) => render({ data, props: data?.props, ...ret });
   }
 
   return ret;
@@ -71,7 +71,7 @@ function createSfc(isForwardRef?: boolean) {
     const opts: Obj = {};
 
     Object.keys(options).forEach(key => {
-      if (key === 'template') {
+      if (key === 'render') {
         opts.template = opts.Render = options[key];
       } else {
         opts[key] = options[key as keyof SFCOptions];

@@ -61,42 +61,44 @@ const App = sfc<AppProps>()({
     );
   },
 
-  styles: () => ({
-    useStyles: createUseStyles({
-      App: {
-        textAlign: 'center'
-      },
-      AppLogo: {
-        height: '40vmin',
-        pointerEvents: 'none',
-        animation: '$App-logo-spin infinite 20s linear'
-      },
-      '@keyframes App-logo-spin': {
-        from: {
-          transform: 'rotate(0deg)'
+  styles: () => {
+    return {
+      useStyles: createUseStyles({
+        App: {
+          textAlign: 'center'
         },
-        to: {
-          transform: 'rotate(360deg)'
+        AppLogo: {
+          height: '40vmin',
+          pointerEvents: 'none',
+          animation: '$App-logo-spin infinite 20s linear'
+        },
+        '@keyframes App-logo-spin': {
+          from: {
+            transform: 'rotate(0deg)'
+          },
+          to: {
+            transform: 'rotate(360deg)'
+          }
+        },
+        AppHeader: {
+          backgroundColor: '#282c34',
+          minHeight: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: 'calc(10px + 2vmin)',
+          color: 'white'
+        },
+        AppLink: {
+          color: '#61dafb'
+        },
+        AppButton: {
+          fontSize: 'calc(10px + 2vmin)'
         }
-      },
-      AppHeader: {
-        backgroundColor: '#282c34',
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        fontSize: 'calc(10px + 2vmin)',
-        color: 'white'
-      },
-      AppLink: {
-        color: '#61dafb'
-      },
-      AppButton: {
-        fontSize: 'calc(10px + 2vmin)'
-      }
-    })
-  })
+      })
+    };
+  }
 });
 
 export default App;

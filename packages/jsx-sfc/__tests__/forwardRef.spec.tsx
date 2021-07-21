@@ -15,20 +15,20 @@ interface AppRef {
 }
 
 const App = sfc.forwardRef<AppRef, AppProps>()({
-  template({ data, styles: { Container } }) {
-    return (
-      <Container>
-        <div>{data.a}</div>
-      </Container>
-    );
-  },
-
   Component: ({ test }, ref) => {
     useImperativeHandle(ref, () => ({
       getName: () => 'test'
     }));
 
     return { a: test };
+  },
+
+  render({ data, styles: { Container } }) {
+    return (
+      <Container>
+        <div>{data.a}</div>
+      </Container>
+    );
   },
 
   styles: () => ({

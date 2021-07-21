@@ -5,12 +5,6 @@ import React, { Fragment, useState, useEffect } from 'react';
 import sfc from 'jsx-sfc';
 
 const App = sfc({
-  template: ({ data, styles: { Container }, constant: { LAST_NAME }, utils: { connectName } }) => (
-    <Container>
-      <div>{connectName(data.firstName, LAST_NAME)}</div>
-    </Container>
-  ),
-
   Component: props => {
     return { firstName: 'joe', styles: props.styles };
   },
@@ -27,6 +21,12 @@ const App = sfc({
     };
   },
 
+  render: ({ data, styles: { Container }, constant: { LAST_NAME }, utils: { connectName } }) => (
+    <Container>
+      <div>{connectName(data.firstName, LAST_NAME)}</div>
+    </Container>
+  ),
+
   style: () => ({})
 });
 `;
@@ -36,12 +36,6 @@ import React, { Fragment, useState, useEffect } from 'react';
 import sfc, { Template } from 'jsx-sfc';
 
 export default sfc({
-  template: ({ data, styles: { Container }, constant: { LAST_NAME }, utils: { connectName } }) => (
-    <Container>
-      <div>{connectName(data.firstName, LAST_NAME)}</div>
-    </Container>
-  ),
-
   Component({ styles }) {
     return { firstName: 'joe', styles };
   },
@@ -58,6 +52,12 @@ export default sfc({
     };
   },
 
+  render: ({ data, styles: { Container }, constant: { LAST_NAME }, utils: { connectName } }) => (
+    <Container>
+      <div>{connectName(data.firstName, LAST_NAME)}</div>
+    </Container>
+  ),
+
   style: () => ({})
 });
 `;
@@ -67,12 +67,6 @@ import React, { Fragment, useState, useEffect } from 'react';
 import sfc, { Template } from 'jsx-sfc';
 
 export const App = sfc({
-  template: ({ data, styles: { Container }, constant: { LAST_NAME }, utils: { connectName } }) => (
-    <Container>
-      <div>{connectName(data.firstName, LAST_NAME)}</div>
-    </Container>
-  ),
-
   Component() {
     return { firstName: 'joe' };
   },
@@ -89,22 +83,28 @@ export const App = sfc({
     };
   },
 
+  render: ({ data, styles: { Container }, constant: { LAST_NAME }, utils: { connectName } }) => (
+    <Container>
+      <div>{connectName(data.firstName, LAST_NAME)}</div>
+    </Container>
+  ),
+
   style: () => ({})
 });
 `;
 
 const snapshotRedefineProps = `const Sfc_5 = props => {
   props = { ...props, ...$sfcOptions_5 };
-  return $sfcOptions_5.template({ firstName: 'joe', styles: props.styles, props: props });
+  return $sfcOptions_5.render({ firstName: 'joe', styles: props.styles, props: props });
 }`;
 
 const snapshotObjectPattern = `const Sfc_5 = __props => {
   const { styles } = { ...__props, ...$sfcOptions_5, props: __props, originalProps: __props };
-  return $sfcOptions_5.template({ firstName: 'joe', styles, props: __props });
+  return $sfcOptions_5.render({ firstName: 'joe', styles, props: __props });
 }`;
 
 const snapshot = `const Sfc_5 = __props => {
-  return $sfcOptions_5.template({ firstName: 'joe', props: __props });
+  return $sfcOptions_5.render({ firstName: 'joe', props: __props });
 }`;
 
 const snapshotDisplayName = `Sfc_5.displayName = 'App'`;

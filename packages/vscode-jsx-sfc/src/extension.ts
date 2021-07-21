@@ -4,6 +4,10 @@ import debounce from 'lodash/debounce';
 import { parse } from './parser';
 import { SFCBlock, BlocksType } from './types';
 
+/**
+ * This code file is developed with reference to the original author's code:
+ * https://github.com/johnsoncodehk/volar/blob/master/packages/vscode-client/src/features/splitEditors.ts
+ */
 export async function activate(context: vscode.ExtensionContext) {
   const getDocDescriptor = useDocDescriptor();
   let splits: {

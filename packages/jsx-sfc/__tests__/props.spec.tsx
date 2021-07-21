@@ -42,20 +42,20 @@ describe('props in Component', function() {
 });
 
 const App2 = sfc<AppProps>()({
-  template: ({ data, props, styles: { Container } }) => (
-    <Container>
-      <div>
-        {data.no}-{props.test}
-      </div>
-    </Container>
-  ),
-
   Component: props => {
     return {
       no: 0,
       test: props.test
     };
   },
+
+  render: ({ data, props, styles: { Container } }) => (
+    <Container>
+      <div>
+        {data.no}-{props.test}
+      </div>
+    </Container>
+  ),
 
   styles: () => ({
     Container: styled.section`

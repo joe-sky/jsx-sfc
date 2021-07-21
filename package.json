@@ -9,7 +9,7 @@
     "packages/use-templates"
   ],
   "version": "1.5.1",
-  "description": "A SFCs like API for managing React function components and their related codes by categories.",
+  "description": "A SFC like API for managing React function components and their related codes by categories.",
   "scripts": {
     "build": "lerna run build",
     "test": "yarn run jest:clear && jest --config=test/jest.config.js",

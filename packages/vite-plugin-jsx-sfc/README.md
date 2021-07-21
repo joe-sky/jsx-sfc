@@ -32,3 +32,7 @@ const config = {
   plugins: [sfcPlugin, reactPlugin]
 }
 ```
+
+## License
+
+MIT

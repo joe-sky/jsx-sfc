@@ -24,9 +24,9 @@
 
 ## Introduction
 
-`jsx-sfc`(JSX Separate Function Components) is a [SFCs](https://v3.vuejs.org/guide/single-file-component.html) like API for managing React function components and their related codes by categories. It's written by TypeScript and has completely type safety, and based on compiler optimization, it's also easy to use🧙🏼‍♂️.
+`jsx-sfc`(JSX Separate Function Components) is a [SFC](https://v3.vuejs.org/guide/single-file-component.html) like API for managing React function components and their related codes by categories. It's written by TypeScript and has completely type safety, and based on compiler optimization, it's also easy to use🧙🏼‍♂️.
 
-[Live Demo is here](https://codesandbox.io/s/jsx-sfc-demo-wwgd4) (with [twin.macro](https://github.com/ben-rogerson/twin.macro)(a CSS in JS tool using Tailwind syntax), can experience **Typings/Hot reloading/Dev tools** by Codesandbox).
+[Live Demo is here](https://codesandbox.io/s/jsx-sfc-demo-wwgd4) (**CSS in JS** use [twin.macro](https://github.com/ben-rogerson/twin.macro), can experience **Typings/Hot reloading/Dev tools** by Codesandbox).
 
 ## Features
 
@@ -48,11 +48,12 @@
 
 - [Motivation](#motivation)
   - [Why](#why)
-  - [A new API like SFCs](#a-new-api-like-sfcs)
+  - [A new function component API like SFC](#a-new-function-component-api-like-sfc)
   - [Split editors experience](#split-editors-experience)
 - [API design details](#api-design-details)
   - [Adapting Eslint plugin](#adapting-eslint-plugin)
   - [Adapting hot reloading](#adapting-hot-reloading)
+  - [Adapting React DevTools](#adapting-react-devtools)
   - [How about the performance](#how-about-the-performance)
     - [Benchmark](#benchmark)
   - [How about the testability](#how-about-the-testability)
@@ -204,16 +205,16 @@ const Todo: React.FC<TodoProps> = Object.assign(...);
 
 In short, each implementation seems to have its own advantages and disadvantages.
 
-### A new API like SFCs
+### A new function component API like SFC
 
 In order to solve the above problems, I decided to design a new API, which can retain all the features and ecology adaptability of function components, and is more suitable for organizing complex code in a single file.
 
-Before this project was created, I found [this interesting project](https://github.com/egoist/jue) by accident, it's component structure is similar to SFCs([single-file-component](https://v3.vuejs.org/guide/single-file-component.html)). And then I found these interesting projects with similar ideas:
+Before this project was created, I found [this interesting project](https://github.com/egoist/jue) by accident, it's component structure is similar to SFC([single-file-components](https://v3.vuejs.org/guide/single-file-component.html)). And then I found these interesting projects with similar ideas:
 
 - [one-loader](https://github.com/digitalie/one-loader)
 - [react-sfc-swyx](https://github.com/react-sfc/react-sfc-swyx)
 
-The separation of SFCs by code category inspired me to think of such a design:
+The separation of SFC by code category inspired me to think of such a design:
 
 _Bring the scattered global members to aggregate to the React component function in the form of static members by categories._
 
@@ -367,7 +368,7 @@ const {
 
 > [For more specific design ideas, please see here.](#api-design-principle)
 
-In addition, I also refer to the mental model of SFCs, which can separate the `render` part of components(this is optional):
+In addition, I also refer to the mental model of SFC, which can separate the `render` part of components(this is optional):
 
 ```tsx
 import sfc from 'jsx-sfc';
@@ -400,7 +401,7 @@ const Test = sfc({
 });
 ```
 
-`render function` can also be exported for reuse like components, it's list of parameters is the return value of the `component function`:
+With this feature, we can only define hooks, events, etc. in the `Component function`, and let `render function` only focus on rendering JSX. And `render function` can also be exported for reuse like components, it's list of parameters is the return value of the `Component function`:
 
 ```tsx
 const App = () => <Test.Render user="joe" />;
@@ -443,7 +444,7 @@ What is `Split Editors`? This is an interesting feature of a new vscode plugin f
   <img alt="volar demo" src="https://user-images.githubusercontent.com/12705724/125753697-6957efee-61ef-4cd3-ab4c-803003a30256.gif" width="800" />
 </p>
 
-In the demo, click the "Split Editors" button in the upper right corner to generate 3 sub editors according to the `template`/`style`/`script` code in SFCs, and then each editor folds the unrelated code.
+In the demo, click the "Split Editors" button in the upper right corner to generate 3 sub editors according to the `template`/`style`/`script` code in SFC, and then each editor folds the unrelated code.
 
 At the beginning, I just found it interesting. But after thinking and experimenting, I found it useful:
 
@@ -457,9 +458,9 @@ So I made a vscode plugin with a similar idea: [vscode-jsx-sfc](https://marketpl
 
 See from the demo, after [install vscode-jsx-sfc](https://marketplace.visualstudio.com/items?itemName=joe-sky.vscode-jsx-sfc), click the "Split Editors" button in the upper right corner to automatically process all the components created by `sfc` in the current file:
 
-- If you do not use render(template) function, it will be split into 2 editors: `component and static`/`styles`. In the editor of each category, fold the code of other categories, and each editor will automatically position the cursor to the first line of the part;
+- If you do not use render function, it will be split into 2 editors: `component and static`/`styles`. In the editor of each category, fold the code of other categories, and each editor will automatically position the cursor to the first line of the part;
 
-- If you use the render(template) function, it splits into 3 editors: `component and static`/`render(template)`/`styles`;
+- If you use the render function, it splits into 3 editors: `component and static`/`render`/`styles`;
 
 - If there are multiple components created by `sfc` in a single file, the corresponding part of each component will be fold and the cursor will be positioned to the corresponding part of the first component;
 
@@ -508,11 +509,15 @@ const App = sfc({
 });
 ```
 
-In this API, the `render` function is only used for rendering, and the data logic part of the component should be written in the `Component` function.
+In this API, the `render` function is only used for rendering JSX, and the `data logic part`(hooks) of the component should be written in the `Component` function, the `eslint-plugin-react-hooks` can effectively constrain this feature.
 
 ### Adapting Hot Reloading
 
 This API can also support [React Fast Refresh](https://github.com/facebook/react/tree/master/packages/react-refresh). It has a compiler plugin: [babel-plugin-jsx-sfc](https://github.com/joe-sky/jsx-sfc/tree/main/packages/babel-plugin-jsx-sfc), because it has to transform the runtime code into a format recognized by the [Babel plugin of React Fast Refresh](https://github.com/facebook/react/blob/master/packages/react-refresh/src/ReactFreshBabelPlugin.js).
+
+### Adapting React DevTools
+
+After compiling components written with `jsx-sfc`, you will see the same component tree and state structure as regular function components in `React DevTools`. So it can fully adapt to `React DevTools` without extra side effects(such as more component tree levels), [you can see the specific effect in this demo](https://codesandbox.io/s/jsx-sfc-demo-wwgd4).
 
 ### How about the performance
 
@@ -634,12 +639,12 @@ function sfc<Props, ComponentData, Styles, Static>(
     styles?: Styles;
     static?: Static;
   }
-): React.FC<Props> & { template: (data?: ComponentData), Component: React.FC<Props> } & Styles & Static;
+): React.FC<Props> & { Render: (data?: ComponentData), Component: React.FC<Props> } & Styles & Static;
 ```
 
 Only a symbolic type definition is put here for API documentation, there are many differences in the actual implementation. [Actual type definition is here.](https://github.com/joe-sky/jsx-sfc/blob/main/packages/jsx-sfc/src/defineComponent.ts)
 
-#### With separate render(template) function
+#### With separate render function
 
 ```tsx
 import React, { useState } from 'react';
@@ -665,7 +670,7 @@ const App = sfc({
 
 > The type inferences are also type safe in TSX. For example, if you don't return an object from `Component function`, you will receive a type error.
 
-If you have ever used Vue, you will be familiar with the habit of placing the template tag at the top of the component in SFCs. `jsx-sfc` also provides a `template function`, which has the same function as `render function`:
+If you have ever used Vue, you will be familiar with the habit of placing the template tag at the top of the component in SFC. `jsx-sfc` also provides a `template function`, which has the same function as `render function`:
 
 ```tsx
 import React, { useState } from 'react';
@@ -751,7 +756,7 @@ const App = sfc({
 });
 ```
 
-#### Without render(template) function
+#### Without render function
 
 If you don't like to use the `separate render function` to write JSX tags, you still can also use the `Component function` directly to return the JSX tags:
 
@@ -785,7 +790,7 @@ const App = sfc({
 });
 ```
 
-`jsx-sfc` uses `TS function overload feature` to ensure that it is still type safe without template function. If the component function does not return JSX tags, the type error will occurs.
+`jsx-sfc` uses `TS function overload feature` to ensure that it is still type safe without `render function`. If the `Component function` does not return JSX tags, the type error will occurs.
 
 #### With TS generics
 
@@ -939,9 +944,9 @@ const App = sfc({
 
 > You don't have to worry too much about performance. In the compiler parsing process, `styles` and `inner props` will be removed from `props` and handled separately.
 
-#### Using Props in render(template)
+#### Using Props in render
 
-The `props` is also used in the `render(template) function` like this:
+The `props` is also used in the `render function` like this:
 
 ```tsx
 const App = sfc({
@@ -969,7 +974,7 @@ const App = sfc({
 
 ### Static
 
-The `static` function is used to create static members of a component, then you can use these static members in the `Component` or `render(template)` function:
+The `static` function is used to create static members of a component, then you can use these static members in the `Component` or `render` function:
 
 ```tsx
 import React, { useState } from 'react';
@@ -1093,7 +1098,6 @@ function Test() {
 
   return (
     <>
-      {App.template({ user, onClick: () => setUser('baz') })}
       <App.Render user={user} onClick={() => setUser('baz')} />
       <App.Component />
       <App.styles.Wrapper>{user}</App.styles.Wrapper>
@@ -1105,9 +1109,9 @@ function Test() {
 
 ### Template tags
 
-> This is an optional feature. We can use `Template tags` syntax to separate the code of JSX tags in render(template) function.
+> This is an optional feature. We can use `Template tags` syntax to separate the code of JSX tags in render function.
 
-In the render(template) function of `jsx-sfc` components, you can use `Template tags` to define some reusable JSX logic:
+In the `render function` of `jsx-sfc` components, you can use `Template tags` to define some reusable JSX logic:
 
 ```tsx
 import React, { useState } from 'react';
@@ -1149,9 +1153,9 @@ const App = sfc({
 });
 ```
 
-1. All parameters starting from the second parameter of the render(template) function are `Template tag renders`, and any number of them can be defined.
+1. All parameters starting from the second parameter of the `render function` are `Template tag renders`, and any number of them can be defined.
 
-2. The render(template) function needs to return a React.Fragment tag; The `Template tag` without name property is the entry function:
+2. The `render function` needs to return a React.Fragment tag; The `Template tag` without name property is the entry function:
 
 ```tsx
 {
@@ -1223,13 +1227,13 @@ interface Props {
 }
 
 const App = sfc<Props>({
-  template: ({ data, styles }) => ...,
   Component: (props) => ...,
+  render: ({ data, styles }) => ...,
   styles: ...
 });
 ```
 
-However, this doesn't work because the parameters of template and Component contain dynamically inferred generics(e.g. `data` and `styles`). If they are defined in the same function together with `Props` generic, then you pass in `Props` generic manually, the type inference errors will appear.
+However, this doesn't work because the parameters of `render or Component function` contain dynamically inferred generics(e.g. `data` and `styles`). If they are defined in the same function together with `Props` generic, then you pass in `Props` generic manually, the type inference errors will appear.
 
 This is limited to the fact that TS is not yet implemented **Partial Type Argument Inference**, you can refer to the following information for details: https://stackoverflow.com/questions/60377365/typescript-infer-type-of-generic-after-optional-first-generic. So I can only define `Props` generic in a separate function, and the API changes like this:
 
@@ -1239,15 +1243,15 @@ interface Props {
 }
 
 const App = sfc<Props>()({ // There's a pair of extra brackets after the generics
-  template: ({ data, styles }) => ...,
   Component: (props) => ...,
+  render: ({ data, styles }) => ...,
   styles: ...
 });
 ```
 
 ### Why not use JSX tags as wrapper
 
-If we use JSX Tags Wrapper like Vue SFCs, we can get better visual isolation effect(such as [jue](https://github.com/egoist/jue)):
+If we use JSX Tags Wrapper like Vue SFC, we can get better visual isolation effect(such as [jue](https://github.com/egoist/jue)):
 
 ```tsx
 const App = (
@@ -1296,10 +1300,6 @@ I plan to make `Split Editors` feature of `vscode-jsx-sfc` support regular React
 3. Commit your changes: `git commit -am 'Add some feature'`
 4. Push to the branch: `git push origin my-new-feature`
 5. Submit a pull request
-
-## Who is using
-
-The author `Joe_Sky` and his front-end team in jd.com. It has been used in more than 4 production systems.
 
 ## License
 

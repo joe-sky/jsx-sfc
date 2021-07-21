@@ -3,7 +3,7 @@ import * as types from '@babel/types';
 import {
   SFC_FUNC,
   SFC_COMPONENT,
-  SFC_TEMPLATE,
+  SFC_RENDER,
   getOptionsName,
   getSfcName,
   SFC_CREATE_OPTIONS,
@@ -27,10 +27,6 @@ export default () => ({
       _path.traverse({
         /*
           const App = sfc({
-            template({ data }) {
-              ...
-            },
-          
             Component: (props) => {
               ...
             },
@@ -38,6 +34,10 @@ export default () => ({
             static: () => ({
               utils: { ... }
             }),
+
+            render({ data }) {
+              ...
+            },
           
             styles: () => { ... }
           });
@@ -45,13 +45,13 @@ export default () => ({
           ↓ ↓ ↓ ↓ ↓ ↓
 
           const $sfcOptions_lineNo = sfc.createOptions({
-            template({ data }) {
-              ...
-            },
-
             static: () => ({
               utils: { ... }
             }),
+
+            render({ data }) {
+              ...
+            },
         
             styles: () => ({
               ...
@@ -60,7 +60,7 @@ export default () => ({
 
           const Sfc_lineNo = (props) => {
             ...
-            return $sfcOptions_lineNo.template({ ... });
+            return $sfcOptions_lineNo.render({ ... });
           };
 
           const App = sfc(Sfc_lineNo, $sfcOptions_lineNo);
@@ -132,7 +132,7 @@ export default () => ({
                   ↓ ↓ ↓ ↓ ↓ ↓ 
 
                   Component: props => {
-                    return $sfcOptions_lineNo.template({ firstName: 'joe' });
+                    return $sfcOptions_lineNo.render({ firstName: 'joe' });
                   }
                 */
                 let componentFuncPath: NodePath<types.ArrowFunctionExpression> | NodePath<types.ObjectMethod>;
@@ -210,13 +210,13 @@ export default () => ({
                   types.ReturnStatement
                 >;
 
-                // return $sfcOptions_lineNo.template({ ... });
+                // return $sfcOptions_lineNo.render({ ... });
                 let existProps: types.ObjectProperty | null = null;
                 if (types.isObjectExpression(returnArgPath.node.argument)) {
                   returnArgPath.replaceWith(
                     types.returnStatement(
                       types.callExpression(
-                        types.memberExpression(types.identifier(sfcOptionsName), types.identifier(SFC_TEMPLATE)),
+                        types.memberExpression(types.identifier(sfcOptionsName), types.identifier(SFC_RENDER)),
                         [
                           types.objectExpression([
                             ...returnArgPath.node.argument.properties.filter(property => {

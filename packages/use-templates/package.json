@@ -26,6 +26,7 @@
     "types/",
     "vue/",
     "index.d.ts",
+    "LICENSE",
     "README.md"
   ],
   "scripts": {

@@ -38,7 +38,18 @@ function ReactFc({ no }: { no: number }) {
 }
 
 const JsxSfc = sfc<{ no: number }>()({
-  template: ({ data, props }) => (
+  Component() {
+    const [count, setCount] = useState(0);
+
+    return {
+      count,
+      onClick() {
+        setCount(count => count + 1);
+      }
+    };
+  },
+
+  render: ({ data, props }) => (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
@@ -66,18 +77,7 @@ const JsxSfc = sfc<{ no: number }>()({
         </p>
       </header>
     </div>
-  ),
-
-  Component() {
-    const [count, setCount] = useState(0);
-
-    return {
-      count,
-      onClick() {
-        setCount(count => count + 1);
-      }
-    };
-  }
+  )
 });
 
 export default {

@@ -11,17 +11,6 @@ interface AppProps {
 }
 
 const App = sfc<AppProps>()({
-  template({ data, styles: { Container }, emptyStr }) {
-    return (
-      <Container>
-        <div>
-          {data.a}
-          {emptyStr}
-        </div>
-      </Container>
-    );
-  },
-
   Component: props => {
     return { a: props.test };
   },
@@ -33,6 +22,17 @@ const App = sfc<AppProps>()({
         test: '123'
       }
     };
+  },
+
+  render({ data, styles: { Container }, emptyStr }) {
+    return (
+      <Container>
+        <div>
+          {data.a}
+          {emptyStr}
+        </div>
+      </Container>
+    );
   },
 
   styles: () => ({
