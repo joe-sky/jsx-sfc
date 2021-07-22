@@ -24,7 +24,7 @@
 
 ## Introduction
 
-`jsx-sfc`(JSX Separate Function Components) is a [SFC](https://v3.vuejs.org/guide/single-file-component.html) like API for managing React function components and their related codes by categories. It's written by TypeScript and has completely type safety, and based on compiler optimization, it's also easy to use🧙🏼‍♂️.
+`jsx-sfc`(JSX Separate Function Components) is a [SFC](https://v3.vuejs.org/guide/single-file-component.html) like React function component API for managing CSS-in-JS and static members. It's written by TypeScript and has completely type safety, and based on compiler optimization, it's also easy to use🧙🏼‍♂️.
 
 [Live Demo is here](https://codesandbox.io/s/jsx-sfc-demo-wwgd4) (**CSS in JS** use [twin.macro](https://github.com/ben-rogerson/twin.macro), can experience **Typings/Hot reloading/Dev tools** by Codesandbox).
 
@@ -69,6 +69,10 @@
   - [Using with CRA](#using-with-cra)
 - [Usage](#usage)
   - [`sfc`](#sfc)
+    - [With separate render function](#with-separate-render-function)
+    - [With styles](#with-styles)
+    - [Without render function](#without-render-function)
+    - [With TS generics](#with-ts-generics)
   - [`sfc.forwardRef`](#sfcforwardRef)
   - [Props](#props)
   - [Static](#static)
@@ -176,7 +180,9 @@ TodoList.Wrapper = styled.ul`
 `;
 ```
 
-In the above code, we set up the corresponding relationship between each global member and component in the way of static member convention, which at least describes the relationship from the code.
+In the above code, we set up the corresponding relationship between each global member and component in the way of `static member` convention, which at least describes the relationship from the code.
+
+> What are static members of a function component? [You can refer to here.](https://stackoverflow.com/questions/57712682/react-functional-component-static-property)
 
 This writing form is very simple, but it will report an error in TS, because `svgProps` and `Wrapper` properties don't exist in `Todo` component's type definition. Next, let's try `Object.assign`:
 
@@ -337,8 +343,8 @@ The `static` function is used in the same way as styles. You can return more lay
       },
 
       utils: {
-        foo: () => ...,
-        bar: () => ...
+        func1: () => ...,
+        func2: () => ...
       }
     };
   }
@@ -349,7 +355,7 @@ Then use them in the component functions:
 
 ```tsx
 {
-  Component({ constant: { foo, bar }, utils }) {
+  Component({ constant: { foo, bar }, utils: { func1, func2 } }) {
     ...
   }
 }
@@ -360,11 +366,18 @@ And each static member can be exported from the component:
 ```tsx
 const {
   styles: { Wrapper },
-  constant: { svgProps }
+  constant: { foo, bar },
+  utils: { func1, func2 }
 } = Todo;
 const {
   styles: { Wrapper: ListWrapper }
 } = TodoList;
+
+// or
+console.log(Todo.styles.Wrapper);
+console.log(Todo.constant.foo);
+console.log(Todo.utils.func1);
+console.log(TodoList.styles.Wrapper);
 ```
 
 > [For more specific design ideas, please see here.](#api-design-principle)
