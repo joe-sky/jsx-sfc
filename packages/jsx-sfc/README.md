@@ -73,6 +73,7 @@
   - [Props](#props)
   - [Static](#static)
   - [Export static members](#export-static-members)
+  - [Export component data type](#export-component-data-type)
   - [Template tags](#template-tags)
 - [API Design Principle](#api-design-principle)
 - [Roadmap](#roadmap)
@@ -1107,6 +1108,38 @@ function Test() {
 }
 ```
 
+### Export component data type
+
+Using `jsx-sfc` to define components, we can easily extract the TS type of internal state of a component, like this:
+
+```tsx
+import sfc, { ComponentDataType } from 'jsx-sfc';
+
+const App = sfc({
+  Component() {
+    const [count, setCount] = useState({ value: 0 });
+    return { count, setCount };
+  },
+
+  render: ({ data }) => (
+    <>
+      <i>{data.count}</i>
+      <AddCount {...data} />
+    </>
+  )
+});
+
+// Get the return value type of the Component function
+type AppDataType = ComponentDataType<typeof App>;
+
+const AddCount: React.FC<AppDataType> = ({ count, setCount }) => (
+  // Note that TS can easily infer the internal state type of the parent component in the child component, even very complex types.
+  <button onClick={() => setCount({ value: count.value + 1 })}>Add count</button>
+);
+```
+
+With this feature, we can directly pass the internal state type of the parent component to the child component, or reuse it in other forms. This is useful in some scenarios, such as above.
+
 ### Template tags
 
 > This is an optional feature. We can use `Template tags` syntax to separate the code of JSX tags in render function.
@@ -1203,6 +1236,40 @@ const App = sfc({
     </>
   );
 }
+```
+
+#### Categorize Template tags
+
+You can use `createTemplate` to categorize the `Template tags`:
+
+```tsx
+import sfc, { createTemplate, TemplateRender } from 'jsx-sfc';
+
+// Create the Template tag with "Region" and "Main" sub tags, and it supports type inference in TS.
+const Template = createTemplate('Region', 'Main');
+
+const App = sfc({
+  Component(props) {
+    return { test: props.test };
+  },
+
+  render: ({ data, styles: { Container } }, header: TemplateRender<string>, footer: TemplateRender<string>) => (
+    <>
+      <Template.Region name={header}>{content => <header>{content}</header>}</Template.Region>
+
+      <Template.Region name={footer}>{content => <footer>{content}</footer>}</Template.Region>
+
+      <Template.Main>
+        {() => (
+          <>
+            {header.render(data.test)}
+            {footer.render(data.test)}
+          </>
+        )}
+      </Template.Main>
+    </>
+  )
+});
 ```
 
 #### `use-templates`
