@@ -86,7 +86,7 @@ export async function activate(context: vscode.ExtensionContext) {
             selectionLines: positions.map(position => position.line)
           });
 
-          editor.revealRange(range[0]);
+          editor.revealRange(range[0], vscode.TextEditorRevealType.AtTop);
         }
 
         if (currentEditor) {

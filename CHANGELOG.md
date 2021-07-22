@@ -1,8 +1,8 @@
 # CHANGELOG
 
-## [v1.5.1] 2021.07.21
+## [v1.5.1] 2021.07.22
 
-- 🎨 Add TS type comment for `static`.
+- 🎨 Optimization TS type comments.
 
 ## [v1.5.0] 2021.07.16
 

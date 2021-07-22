@@ -11,7 +11,7 @@
 </h1>
 
 <p align="center">
-  <img alt="jsx-sfc demo" src="https://user-images.githubusercontent.com/12705724/113466739-a75bee80-9470-11eb-8139-6aa54550a754.gif" width="500" />
+  <img alt="jsx-sfc demo" src="https://user-images.githubusercontent.com/12705724/126588176-3092a2f6-87fd-44e3-b97a-b1e43ee4716d.gif" width="500" />
 </p>
 
 | Package                                                                                            | Badges                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
@@ -41,7 +41,7 @@
 - 💻 Support **Split Editors** similar to [Volar](https://github.com/johnsoncodehk/volar) by [vscode-jsx-sfc](https://marketplace.visualstudio.com/items?itemName=joe-sky.vscode-jsx-sfc), here is a demo:
 
 <p>
-  <img alt="jsx-sfc demo" src="https://user-images.githubusercontent.com/12705724/121485542-dbb8d180-ca02-11eb-984a-d9da7d31ce17.gif" width="800" />
+  <img alt="jsx-sfc demo" src="https://user-images.githubusercontent.com/12705724/126590775-1aa77a24-1cda-4ac6-a761-04d57b2ddb07.gif" width="800" />
 </p>
 
 ## Table of Contents
@@ -453,7 +453,7 @@ _It not only enables us to focus more on developing a certain category of code i
 So I made a vscode plugin with a similar idea: [vscode-jsx-sfc](https://marketplace.visualstudio.com/items?itemName=joe-sky.vscode-jsx-sfc). It needs to be used with `jsx-sfc`, here is the demo:
 
 <p>
-  <img alt="jsx-sfc demo" src="https://user-images.githubusercontent.com/12705724/121485542-dbb8d180-ca02-11eb-984a-d9da7d31ce17.gif" width="800" />
+  <img alt="jsx-sfc demo" src="https://user-images.githubusercontent.com/12705724/126590775-1aa77a24-1cda-4ac6-a761-04d57b2ddb07.gif" width="800" />
 </p>
 
 See from the demo, after [install vscode-jsx-sfc](https://marketplace.visualstudio.com/items?itemName=joe-sky.vscode-jsx-sfc), click the "Split Editors" button in the upper right corner to automatically process all the components created by `sfc` in the current file:

@@ -52,11 +52,11 @@ export type DefineComponent<
        * Using the `Component function` to define actual component, example:
        * ```tsx
        * const App = sfc<{ user: string }>()({
-       *   template: ({ data, styles: { Wrapper } }) => <Wrapper>{data.user}</Wrapper>,
        *   Component: (props) => {
        *     useEffect(() => console.log(props.user), []);
        *     return { user: props.user };
        *   },
+       *   render: ({ data, styles: { Wrapper } }) => <Wrapper>{data.user}</Wrapper>,
        *   styles: { Wrapper: styled.div`font-size:14px` }
        * });
        * ```

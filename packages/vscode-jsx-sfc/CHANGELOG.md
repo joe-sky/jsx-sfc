@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v0.2.1] 2021.07.22
+
+- 🐛 Fix visible range positioning error of editors after refold.
+
 ## [v0.2.0] 2021.07.16
 
 - 🐛 Support `jsx-sfc.macro`.
