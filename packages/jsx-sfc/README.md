@@ -36,7 +36,7 @@
 - 🔥 Support [React Fast Refresh](https://github.com/facebook/react/tree/master/packages/react-refresh)
 - 🔧 Support React Eslint plugins
 - 🔨 Support React dev tools
-- ⚡ Rendering performance is similar to regular function components
+- ⚡ Rendering performance is similar to regular function components, [there is a simple benchmark](https://github.com/joe-sky/jsx-sfc/tree/main/examples/benchmark)
 - 🚀 Runtime code size less than 1KB and no dependencies
 - 💻 Support **Split Editors** similar to [Volar](https://github.com/johnsoncodehk/volar) by [vscode-jsx-sfc](https://marketplace.visualstudio.com/items?itemName=joe-sky.vscode-jsx-sfc), here is a demo:
 
@@ -1367,7 +1367,7 @@ If better syntax implementation details are found and if they're not compatible 
 
 ### vscode-jsx-sfc support regular syntax
 
-I plan to make `Split Editors` feature of `vscode-jsx-sfc` support regular React function components syntax in the future, which is currently being explored and designed.
+I want to think about how to make `Split Editors` feature of `vscode-jsx-sfc` support regular React function components syntax.
 
 ## Change Logs
 
