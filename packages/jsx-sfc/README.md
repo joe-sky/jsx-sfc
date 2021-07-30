@@ -647,7 +647,6 @@ import sfc from 'jsx-sfc.macro';
 ```ts
 function sfc<Props, ComponentData, Styles, Static>(
   options: {
-    template?: (args: { data: ComponentData; props: Props; styles: Styles } & Static, ...templates: TemplateRender[]) => JSX.Element;
     Component: (props?: Props & Styles & Static & { props: Props }) => ComponentData;
     render?: (args: { data: ComponentData; props: Props; styles: Styles } & Static, ...templates: TemplateRender[]) => JSX.Element;
     styles?: Styles;

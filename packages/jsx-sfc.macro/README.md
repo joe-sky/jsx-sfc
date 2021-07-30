@@ -10,16 +10,16 @@ import styled from 'styled-components';
 import sfc from 'jsx-sfc.macro';
 
 const App = sfc({
-  template: ({ data, styles: { Wrapper } }) => (
-    <Wrapper>
-      <button onClick={data.onClick}>{data.user}</button>
-    </Wrapper>
-  ),
-
   Component() {
     const [user, setUser] = useState('foo');
     return { user, onClick: () => setUser('bar') };
   },
+
+  render: ({ data, styles: { Wrapper } }) => (
+    <Wrapper>
+      <button onClick={data.onClick}>{data.user}</button>
+    </Wrapper>
+  ),
 
   styles: {
     Wrapper: styled.div`
