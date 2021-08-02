@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v0.2.2] 2021.08.02
+
+- 🐛 Fix the bug of refolding when saving after opening multiple tabs.
+
 ## [v0.2.1] 2021.07.22
 
 - 🐛 Fix visible range positioning error of editors after refold.

@@ -6,7 +6,7 @@ import { SFCBlock, BlocksType } from './types';
 
 /**
  * This code file is developed with reference to the original author's code:
- * https://github.com/johnsoncodehk/volar/blob/master/packages/vscode-client/src/features/splitEditors.ts
+ * https://github.com/johnsoncodehk/volar/blob/master/packages/client/src/features/splitEditors.ts
  */
 export async function activate(context: vscode.ExtensionContext) {
   const getDocDescriptor = useDocDescriptor();
@@ -47,7 +47,22 @@ export async function activate(context: vscode.ExtensionContext) {
   });
 
   vscode.window.onDidChangeVisibleTextEditors(editors => {
-    splits = splits.filter(split => editors.find(ed => split.editor === ed));
+    splits = splits.map(split => {
+      const editor = editors.find(
+        ed =>
+          ed.viewColumn === split.editor.viewColumn &&
+          ed.document.uri.toString() === split.editor.document.uri.toString()
+      ) as vscode.TextEditor;
+
+      if (editor) {
+        return {
+          ...split,
+          editor
+        };
+      }
+
+      return split;
+    });
   });
 
   /**
