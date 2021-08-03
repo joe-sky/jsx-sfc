@@ -47,6 +47,10 @@ export async function activate(context: vscode.ExtensionContext) {
   });
 
   vscode.window.onDidChangeVisibleTextEditors(editors => {
+    if (editors.length < splits.length) {
+      splits = splits.filter(split => editors.find(ed => ed.viewColumn === split.editor.viewColumn));
+    }
+
     splits = splits.map(split => {
       const editor = editors.find(
         ed =>

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v0.2.3] 2021.08.03
+
+- 🐛 Fix the bug of refolding when saving after closed tabs.
+
 ## [v0.2.2] 2021.08.02
 
 - 🐛 Fix the bug of refolding when saving after opening multiple tabs.
