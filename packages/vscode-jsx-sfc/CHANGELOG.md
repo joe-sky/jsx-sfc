@@ -1,12 +1,17 @@
 # CHANGELOG
 
+## [v0.2.5] 2021.08.04
+
+- 🐛 Fix the bug of refolding when saving after closing tabs and there are multiple tabs.
+- 👆 Change the behavior of current editor to will be refolded when saving.
+
 ## [v0.2.4] 2021.08.04
 
 - 🐛 Fix a folding bug when a category code has only 1 line.
 
 ## [v0.2.3] 2021.08.03
 
-- 🐛 Fix the bug of refolding when saving after closed tabs.
+- 🐛 Fix the bug of refolding when saving after closing tabs.
 
 ## [v0.2.2] 2021.08.02
 

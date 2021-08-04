@@ -46,34 +46,38 @@ export async function activate(context: vscode.ExtensionContext) {
     splits = splits.filter(split => split.editor.document.uri.toString() !== doc.uri.toString());
   });
 
-  vscode.window.onDidChangeVisibleTextEditors(editors => {
-    if (editors.length < splits.length) {
-      splits = splits.filter(split => editors.find(ed => ed.viewColumn === split.editor.viewColumn));
-    }
-
-    splits = splits.map(split => {
-      const editor = editors.find(
-        ed =>
-          ed.viewColumn === split.editor.viewColumn &&
-          ed.document.uri.toString() === split.editor.document.uri.toString()
-      ) as vscode.TextEditor;
-
-      if (editor) {
-        return {
-          ...split,
-          editor
-        };
+  vscode.window.onDidChangeVisibleTextEditors(
+    debounce((editors: vscode.TextEditor[]) => {
+      // Delete the reference after closing a split editor.
+      if (editors.length < splits.length) {
+        splits = splits.filter(split => editors.find(ed => ed.viewColumn === split.editor.viewColumn));
       }
 
-      return split;
-    });
-  });
+      // Reset the reference of each editor correctly when switching the tabs of the editor.
+      splits = splits.map(split => {
+        const editor = editors.find(
+          ed =>
+            ed.viewColumn === split.editor.viewColumn &&
+            ed.document.uri.toString() === split.editor.document.uri.toString()
+        ) as vscode.TextEditor;
+
+        if (editor) {
+          return {
+            ...split,
+            editor
+          };
+        }
+
+        return split;
+      });
+    }, 300)
+  );
 
   /**
    * Refold when saving here, because syntax errors may occur during user input and editing, resulting in some collapsed code being expanded.
    */
   vscode.workspace.onDidSaveTextDocument(
-    debounce(doc => {
+    debounce((doc: vscode.TextDocument) => {
       const currentEditor = vscode.window.activeTextEditor;
       const currentSplit = splits.find(split => split.editor === currentEditor);
       if (!currentSplit) {
@@ -88,9 +92,14 @@ export async function activate(context: vscode.ExtensionContext) {
       async function refold() {
         for (let i = 0; i < splits.length; i++) {
           const split = splits[i];
-          if (split.editor === currentEditor) {
-            continue;
-          }
+          /**
+           * After removing the comments here, the current editor will not be refolded when saving.
+           * However, it was later found that the current editor still needs to be folded,
+           * because users may add a new SFC component to the current file.
+           */
+          // if (split.editor === currentEditor) {
+          //   continue;
+          // }
 
           const { editor } = split;
           const range = editor.visibleRanges;
