@@ -21,7 +21,7 @@ export function parse(code: string) {
   const ast = transformSync(code, babelConfig)?.ast;
   const descriptor: Descriptor = {
     component: [],
-    template: [],
+    render: [],
     styles: [],
     static: []
   };
@@ -71,7 +71,7 @@ export function parse(code: string) {
                       break;
                     case SFC_RENDER:
                     case SFC_TEMPLATE:
-                      descriptor.template.push(block);
+                      descriptor.render.push(block);
                       break;
                     case SFC_STYLES:
                       descriptor.styles.push(block);

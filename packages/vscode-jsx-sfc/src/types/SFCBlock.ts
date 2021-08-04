@@ -3,10 +3,10 @@ export interface SFCBlock {
   locEndOffset: number;
 }
 
-export type Descriptor = Record<'template' | 'component' | 'styles' | 'static', SFCBlock[]>;
+export type Descriptor = Record<'component' | 'render' | 'styles' | 'static', SFCBlock[]>;
 
 export enum BlocksType {
   Component = 1,
-  Template = 2,
+  Render = 2,
   Styles = 3
 }

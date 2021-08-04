@@ -24,17 +24,17 @@ export async function activate(context: vscode.ExtensionContext) {
     if (descriptor) {
       if (descriptor.component?.length || descriptor.static?.length) {
         blocksSet.push([...descriptor.component, ...descriptor.static]);
-        blocksFoldSet.push([...descriptor.template, ...descriptor.styles]);
+        blocksFoldSet.push([...descriptor.render, ...descriptor.styles]);
         blocksType.push(BlocksType.Component);
       }
-      if (descriptor.template?.length) {
-        blocksSet.push(descriptor.template);
+      if (descriptor.render?.length) {
+        blocksSet.push(descriptor.render);
         blocksFoldSet.push([...descriptor.component, ...descriptor.static, ...descriptor.styles]);
-        blocksType.push(BlocksType.Template);
+        blocksType.push(BlocksType.Render);
       }
       if (descriptor.styles?.length) {
         blocksSet.push(descriptor.styles);
-        blocksFoldSet.push([...descriptor.component, ...descriptor.static, ...descriptor.template]);
+        blocksFoldSet.push([...descriptor.component, ...descriptor.static, ...descriptor.render]);
         blocksType.push(BlocksType.Styles);
       }
     }
@@ -99,10 +99,13 @@ export async function activate(context: vscode.ExtensionContext) {
           await vscode.window.showTextDocument(editor.document, editor.viewColumn);
           await vscode.commands.executeCommand('editor.unfoldAll');
           const positions = blockFolds.map(block => doc.positionAt(block.locStartOffset));
+          const endPositions = blockFolds.map(block => doc.positionAt(block.locEndOffset));
           await vscode.commands.executeCommand('editor.fold', {
             levels: 1,
             direction: 'up',
-            selectionLines: positions.map(position => position.line)
+            selectionLines: positions
+              .filter((pos, index) => pos.line < endPositions[index].line)
+              .map(position => position.line)
           });
 
           editor.revealRange(range[0], vscode.TextEditorRevealType.AtTop);
@@ -147,10 +150,13 @@ export async function activate(context: vscode.ExtensionContext) {
 
       await vscode.commands.executeCommand('editor.unfoldAll');
       const positions = blockFolds.map(block => doc.positionAt(block.locStartOffset));
+      const endPositions = blockFolds.map(block => doc.positionAt(block.locEndOffset));
       await vscode.commands.executeCommand('editor.fold', {
         levels: 1,
         direction: 'up',
-        selectionLines: positions.map(position => position.line)
+        selectionLines: positions
+          .filter((pos, index) => pos.line < endPositions[index].line)
+          .map(position => position.line)
       });
 
       editor.revealRange(

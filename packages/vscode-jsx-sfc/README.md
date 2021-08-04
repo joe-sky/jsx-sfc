@@ -8,7 +8,7 @@ Useful editor tools for [jsx-sfc](https://github.com/joe-sky/jsx-sfc).
 
 Search for `jsx-sfc` and click install
 
-## Split Editor development
+## Split Editors development
 
 What is `Split Editors`? This is an interesting feature of a new vscode plugin for Vue called [Volar](https://github.com/johnsoncodehk/volar), you can [install Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar) and experience it in Vue projects. Here is a Volar demo:
 
