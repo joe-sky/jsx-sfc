@@ -3,6 +3,7 @@ import { ref, computed } from '@vue/reactivity';
 import debounce from 'lodash/debounce';
 import { parse } from './parser';
 import { SFCBlock, BlocksType } from './types';
+import { sleep } from './utils';
 
 /**
  * This code file is developed with reference to the original author's code:
@@ -151,6 +152,9 @@ export async function activate(context: vscode.ExtensionContext) {
       if (i !== 0 && i % 2 === 0) {
         await vscode.commands.executeCommand('workbench.action.splitEditorDown');
       }
+
+      // Here must pause for a while in Mac, otherwise the current active editor reference will be inaccurate and cause problems.
+      await sleep(200);
 
       const editor = vscode.window.activeTextEditor;
       if (!editor) {

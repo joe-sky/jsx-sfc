@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v0.2.6] 2021.08.09
+
+- 🐛 Fix the active editor reference problem in Mac.
+
 ## [v0.2.5] 2021.08.04
 
 - 🐛 Fix the bug of refolding when saving after closing tabs and there are multiple tabs.
