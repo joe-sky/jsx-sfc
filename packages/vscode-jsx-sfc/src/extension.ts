@@ -79,6 +79,10 @@ export async function activate(context: vscode.ExtensionContext) {
    */
   vscode.workspace.onDidSaveTextDocument(
     debounce((doc: vscode.TextDocument) => {
+      if (splits.length < 2) {
+        return;
+      }
+
       const currentEditor = vscode.window.activeTextEditor;
       const currentSplit = splits.find(split => split.editor === currentEditor);
       if (!currentSplit) {

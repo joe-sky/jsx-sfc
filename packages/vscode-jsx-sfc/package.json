@@ -2,7 +2,7 @@
   "name": "vscode-jsx-sfc",
   "displayName": "jsx-sfc",
   "description": "Useful editor tools for jsx-sfc.",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "publisher": "joe-sky",
   "icon": "images/react-logo.png",
   "engines": {

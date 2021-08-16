@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v0.2.7] 2021.08.16
+
+- 🐛 Don't refold when saving after closed right split editors.
+
 ## [v0.2.6] 2021.08.09
 
 - 🐛 Fix the active editor reference problem in Mac.
