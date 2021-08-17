@@ -425,13 +425,15 @@ If you are also used to using Vue, you can replace `render` with `template` func
 
 ```tsx
 import sfc from 'jsx-sfc';
+import { html } from 'htm/react';
+import { css } from '@emotion/css';
 
 const Test = sfc({
-  template: ({ data, styles: { Wrapper } }) => (
-    <Wrapper>
-      <i>{data.user}</i>
-    </Wrapper>
-  ),
+  template: ({ data, styles }) => html`
+    <section class=${styles.wrapper}>
+      <i>${data.user}</i>
+    </section>
+  `,
 
   Component(props) {
     const [user, setUser] = useState(props.user);
@@ -439,7 +441,7 @@ const Test = sfc({
   },
 
   styles: () => ({
-    Wrapper: styled.section`
+    wrapper: css`
       color: #fff;
     `
   })
@@ -688,13 +690,14 @@ If you have ever used Vue, you will be familiar with the habit of placing the te
 ```tsx
 import React, { useState } from 'react';
 import sfc from 'jsx-sfc';
+import { html } from 'htm/react';
 
 const App = sfc({
-  template: ({ data }) => (
+  template: ({ data }) => html`
     <div>
-      <button onClick={data.onClick}>{data.user}</button>
+      <button onClick=${data.onClick}>${data.user}</button>
     </div>
-  ),
+  `,
 
   Component() {
     const [user, setUser] = useState('foo');
