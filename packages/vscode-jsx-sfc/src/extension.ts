@@ -10,6 +10,9 @@ import { sleep } from './utils';
  * https://github.com/johnsoncodehk/volar/blob/master/packages/client/src/features/splitEditors.ts
  */
 export async function activate(context: vscode.ExtensionContext) {
+  const config = vscode.workspace.getConfiguration('jsx-sfc');
+  const enableSplitEditors = config.get('icon.splitEditors') as boolean;
+
   const getDocDescriptor = useDocDescriptor();
   let splits: {
     editor: vscode.TextEditor;
@@ -94,13 +97,20 @@ export async function activate(context: vscode.ExtensionContext) {
         return;
       }
 
+      const increaseViewSize = config.get('splitEditors.increaseViewSize') as number;
+      if (increaseViewSize < 1) {
+        return;
+      }
+
       async function changeViewSize() {
         isChangingViewSize = true;
 
         const increasedSplit = splits.find(split => split.viewSizeIncreased);
         if (increasedSplit) {
           await vscode.window.showTextDocument(increasedSplit.editor.document, increasedSplit.editor.viewColumn);
-          await vscode.commands.executeCommand('workbench.action.decreaseViewSize');
+          for (let i = 0; i < increaseViewSize; i++) {
+            await vscode.commands.executeCommand('workbench.action.decreaseViewSize');
+          }
           increasedSplit.viewSizeIncreased = false;
         }
 
@@ -108,7 +118,9 @@ export async function activate(context: vscode.ExtensionContext) {
 
         if (currentSplit) {
           await vscode.window.showTextDocument(currentSplit.editor.document, currentSplit.editor.viewColumn);
-          await vscode.commands.executeCommand('workbench.action.increaseViewSize');
+          for (let i = 0; i < increaseViewSize; i++) {
+            await vscode.commands.executeCommand('workbench.action.increaseViewSize');
+          }
           currentSplit.viewSizeIncreased = true;
         }
 
@@ -240,7 +252,9 @@ export async function activate(context: vscode.ExtensionContext) {
     }
   }
 
-  context.subscriptions.push(vscode.commands.registerCommand('jsx-sfc.action.splitEditors', onSplit));
+  if (enableSplitEditors) {
+    context.subscriptions.push(vscode.commands.registerCommand('jsx-sfc.action.splitEditors', onSplit));
+  }
 }
 
 function useDocDescriptor() {

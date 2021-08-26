@@ -26,6 +26,11 @@
           "type": "boolean",
           "default": true,
           "description": "Show split editor icon in title area of editor."
+        },
+        "jsx-sfc.splitEditors.increaseViewSize": {
+          "type": "number",
+          "default": 0,
+          "description": "After each split editor obtains the focus, the horizontal visual area will increase alternately and automatically."
         }
       }
     },

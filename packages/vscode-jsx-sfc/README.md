@@ -30,12 +30,30 @@ However, [vscode-jsx-sfc](https://marketplace.visualstudio.com/items?itemName=jo
 
 When the code syntax is incomplete or there are errors, sometimes the region folding effect will be invalid. But this plugin has the feature of refolding when saving, which can effectively avoid the such problems.
 
+### Automatically increase the editor size after obtaining focus
+
+This gives you more visual space when writing code, here is the demo:
+
+<p>
+  <img alt="jsx-sfc demo" src="https://user-images.githubusercontent.com/12705724/130918552-37619be0-11b7-4438-8d23-701a272895bc.gif" width="600" />
+</p>
+
 ## Options
 
-- show/hide split editor icon:
+- Set each split editor to automatically increase the size of the visible area after obtaining the focus. When the value is 0, the original editor size is maintained:
 
 ```json
-{ "jsx-sfc.icon.splitEditors": true }
+{
+  "jsx-sfc.splitEditors.increaseViewSize": 1 // Default value: 0
+}
+```
+
+- Show/Hide split editors icon:
+
+```json
+{
+  "jsx-sfc.icon.splitEditors": false // Default value: true
+}
 ```
 
 ## Inspiration
