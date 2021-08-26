@@ -14,6 +14,7 @@ export async function activate(context: vscode.ExtensionContext) {
   let splits: {
     editor: vscode.TextEditor;
     type: BlocksType;
+    viewSizeIncreased: boolean;
   }[] = [];
 
   function createBlocks(text: string) {
@@ -47,8 +48,12 @@ export async function activate(context: vscode.ExtensionContext) {
     splits = splits.filter(split => split.editor.document.uri.toString() !== doc.uri.toString());
   });
 
-  vscode.window.onDidChangeVisibleTextEditors(
-    debounce((editors: vscode.TextEditor[]) => {
+  let isChangingVisible = false;
+
+  vscode.window.onDidChangeVisibleTextEditors((...args) => {
+    isChangingVisible = true;
+
+    return debounce((editors: vscode.TextEditor[]) => {
       // Delete the reference after closing a split editor.
       if (editors.length < splits.length) {
         splits = splits.filter(split => editors.find(ed => ed.viewColumn === split.editor.viewColumn));
@@ -71,8 +76,50 @@ export async function activate(context: vscode.ExtensionContext) {
 
         return split;
       });
-    }, 300)
+
+      isChangingVisible = false;
+    }, 300)(...args);
+  });
+
+  let isChangingViewSize = false;
+
+  vscode.window.onDidChangeActiveTextEditor(
+    debounce((currentEditor?: vscode.TextEditor) => {
+      if (splits.length < 2 || isChangingViewSize || isChangingVisible || isSaving) {
+        return;
+      }
+
+      const currentSplit = splits.find(split => split.editor === currentEditor && !split.viewSizeIncreased);
+      if (!currentSplit) {
+        return;
+      }
+
+      async function changeViewSize() {
+        isChangingViewSize = true;
+
+        const increasedSplit = splits.find(split => split.viewSizeIncreased);
+        if (increasedSplit) {
+          await vscode.window.showTextDocument(increasedSplit.editor.document, increasedSplit.editor.viewColumn);
+          await vscode.commands.executeCommand('workbench.action.decreaseViewSize');
+          increasedSplit.viewSizeIncreased = false;
+        }
+
+        await sleep(100);
+
+        if (currentSplit) {
+          await vscode.window.showTextDocument(currentSplit.editor.document, currentSplit.editor.viewColumn);
+          await vscode.commands.executeCommand('workbench.action.increaseViewSize');
+          currentSplit.viewSizeIncreased = true;
+        }
+
+        isChangingViewSize = false;
+      }
+
+      changeViewSize();
+    }, 50)
   );
+
+  let isSaving = false;
 
   /**
    * Refold when saving here, because syntax errors may occur during user input and editing, resulting in some collapsed code being expanded.
@@ -93,6 +140,8 @@ export async function activate(context: vscode.ExtensionContext) {
       if (!blocksSet.length) {
         return;
       }
+
+      isSaving = true;
 
       async function refold() {
         for (let i = 0; i < splits.length; i++) {
@@ -128,6 +177,8 @@ export async function activate(context: vscode.ExtensionContext) {
         if (currentEditor) {
           await vscode.window.showTextDocument(currentEditor.document, currentEditor.viewColumn);
         }
+
+        isSaving = false;
       }
 
       refold();
@@ -183,7 +234,8 @@ export async function activate(context: vscode.ExtensionContext) {
 
       splits.push({
         editor,
-        type: blocksType[i]
+        type: blocksType[i],
+        viewSizeIncreased: false
       });
     }
   }

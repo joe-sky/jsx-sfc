@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v0.3.0] 2021.08.26
+
+- 👆 After each split editor obtains the focus, the horizontal visual area will increase alternately and automatically.
+
 ## [v0.2.7] 2021.08.16
 
 - 🐛 Don't refold when saving after closed right split editors.
