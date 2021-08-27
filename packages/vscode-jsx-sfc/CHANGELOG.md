@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v0.3.1] 2021.08.27
+
+- 🐛 Fix there may be a mismatch between `currentSplit` and `splits`.
+
 ## [v0.3.0] 2021.08.26
 
 - 👆 After each split editor obtains the focus, the horizontal visual area will increase alternately and automatically.

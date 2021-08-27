@@ -121,7 +121,12 @@ export async function activate(context: vscode.ExtensionContext) {
           for (let i = 0; i < increaseViewSize; i++) {
             await vscode.commands.executeCommand('workbench.action.increaseViewSize');
           }
-          currentSplit.viewSizeIncreased = true;
+
+          // Here must get currentSplit from splits dynamically again, otherwise there may be a mismatch between currentSplit and splits.
+          const _currentSplit = splits.find(split => split.type === currentSplit.type);
+          if (_currentSplit) {
+            _currentSplit.viewSizeIncreased = true;
+          }
         }
 
         isChangingViewSize = false;
