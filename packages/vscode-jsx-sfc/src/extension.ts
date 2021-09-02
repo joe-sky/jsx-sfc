@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import { ref, computed } from '@vue/reactivity';
 import debounce from 'lodash/debounce';
 import { parse } from './parser';
-import { SFCBlock, BlocksType } from './types';
+import { SFCBlock, BlocksType, Split } from './types';
 import { sleep } from './utils';
 
 /**
@@ -14,11 +14,7 @@ export async function activate(context: vscode.ExtensionContext) {
   const enableSplitEditors = config.get('icon.splitEditors') as boolean;
 
   const getDocDescriptor = useDocDescriptor();
-  let splits: {
-    editor: vscode.TextEditor;
-    type: BlocksType;
-    viewSizeIncreased: boolean;
-  }[] = [];
+  let splits: Split[] = [];
 
   function createBlocks(text: string) {
     const descriptor = getDocDescriptor(text);
