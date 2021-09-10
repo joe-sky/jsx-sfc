@@ -1,7 +1,7 @@
 <h1 align="center">
   JSX Separate Function Components
   <div>
-    <a href="https://travis-ci.com/joe-sky/jsx-sfc"><img src="https://travis-ci.com/joe-sky/jsx-sfc.svg?branch=main" alt="Travis CI Status"></a>
+    <a href="https://app.travis-ci.com/github/joe-sky/jsx-sfc"><img src="https://travis-ci.com/joe-sky/jsx-sfc.svg?branch=main" alt="Travis CI Status"></a>
     <a href="https://codecov.io/gh/joe-sky/jsx-sfc"><img src="https://codecov.io/gh/joe-sky/jsx-sfc/branch/main/graph/badge.svg" alt="Codecov"></a>
     <!-- <a href="https://www.npmjs.org/package/jsx-sfc"><img src="https://img.shields.io/npm/v/jsx-sfc.svg" alt="NPM Version"></a> -->
     <!-- <a href="https://www.npmjs.org/package/jsx-sfc"><img src="https://img.shields.io/npm/dm/jsx-sfc.svg" alt="NPM Downloads"></a> -->
@@ -27,6 +27,8 @@
 `jsx-sfc`(JSX Separate Function Components) is a [SFC](https://v3.vuejs.org/guide/single-file-component.html) like React function component API for managing CSS-in-JS and static members. It's written by TypeScript and has completely type safety, and based on compiler optimization, it's also easy to use🧙🏼‍♂️.
 
 [Live Demo is here](https://codesandbox.io/s/jsx-sfc-demo-wwgd4) (**CSS in JS** use [twin.macro](https://github.com/ben-rogerson/twin.macro), can experience **Typings/Hot reloading/Dev tools** by Codesandbox).
+
+> At present I am planning to develop v2.0, [please see here for main specific features](https://github.com/joe-sky/jsx-sfc/projects/1#card-66880335). I will try my best to make less breaking changes.
 
 ## Features
 
