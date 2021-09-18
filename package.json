@@ -8,8 +8,8 @@
     "packages/jsx-sfc.macro",
     "packages/use-templates"
   ],
-  "version": "1.5.1",
-  "description": "A SFC like API for managing React function components and their related codes by categories.",
+  "version": "1.5.2",
+  "description": "A SFC like React function component API for managing CSS-in-JS and static members.",
   "scripts": {
     "build": "lerna run build",
     "test": "yarn run jest:clear && jest --config=test/jest.config.js",

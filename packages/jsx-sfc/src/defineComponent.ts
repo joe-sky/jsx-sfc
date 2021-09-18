@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, RefAttributes, WeakValidationMap, ValidationMap } from 'react';
+import React, { PropsWithChildren, PropsWithoutRef, RefAttributes, WeakValidationMap, ValidationMap } from 'react';
 import { Template } from './template';
 import { Func, Obj, FuncMap, JSXElements } from './utils';
 
@@ -34,7 +34,9 @@ type ExtractOptions<T, Props = null> = T extends () => infer R
 export type DefineComponent<
   Ref = NoRef,
   Props = {},
-  ReturnComponent = Ref extends NoRef ? React.FC<Props> : React.ForwardRefExoticComponent<Props & RefAttributes<Ref>>,
+  ReturnComponent = Ref extends NoRef
+    ? React.FC<Props>
+    : React.ForwardRefExoticComponent<PropsWithoutRef<Props> & RefAttributes<Ref>>,
   Origin = { Component: ReturnComponent }
 > = {
   <

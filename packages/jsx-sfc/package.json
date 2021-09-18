@@ -1,7 +1,7 @@
 {
   "name": "jsx-sfc",
   "version": "1.5.1",
-  "description": "A SFC like API for managing React function components and their related codes by categories.",
+  "description": "A SFC like React function component API for managing CSS-in-JS and static members.",
   "main": "dist/jsx-sfc.common.js",
   "module": "dist/jsx-sfc.esm.js",
   "unpkg": "dist/jsx-sfc.js",
