@@ -1,6 +1,6 @@
 {
   "name": "use-templates",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "description": "A tiny custom hook for managing React/Vue JSX tag by blocks.",
   "main": "dist/use-templates.common.js",
   "module": "dist/use-templates.esm.js",
