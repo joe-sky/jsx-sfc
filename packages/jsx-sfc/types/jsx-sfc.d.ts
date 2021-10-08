@@ -1,9 +1,9 @@
 /*!
- * jsx-sfc v1.5.1
+ * jsx-sfc v1.5.2
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
-import React, { ReactElement, PropsWithChildren, RefAttributes, WeakValidationMap, ValidationMap } from 'react';
+import React, { ReactElement, PropsWithChildren, PropsWithoutRef, RefAttributes, WeakValidationMap, ValidationMap } from 'react';
 
 declare type Func = (...args: any) => any;
 interface Noop {
@@ -61,7 +61,7 @@ declare type PresetStatic<Props = {}> = Obj & {
     displayName?: string;
 };
 declare type ExtractOptions<T, Props = null> = T extends () => infer R ? R extends (Props extends null ? Obj : PresetStatic<Props>) ? R : never : T extends (Props extends null ? Obj : PresetStatic<Props>) ? T : unknown;
-declare type DefineComponent<Ref = NoRef, Props = {}, ReturnComponent = Ref extends NoRef ? React.FC<Props> : React.ForwardRefExoticComponent<Props & RefAttributes<Ref>>, Origin = {
+declare type DefineComponent<Ref = NoRef, Props = {}, ReturnComponent = Ref extends NoRef ? React.FC<Props> : React.ForwardRefExoticComponent<PropsWithoutRef<Props> & RefAttributes<Ref>>, Origin = {
     Component: ReturnComponent;
 }> = {
     <Data extends Obj, InferStyles extends ExtractOptions<Styles>, InferStatic extends ExtractOptions<Static, Props>, InferEX extends ExtractOptions<EX, Props>, FR extends {
