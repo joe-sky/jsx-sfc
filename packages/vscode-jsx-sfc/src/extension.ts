@@ -100,9 +100,16 @@ export async function activate(context: vscode.ExtensionContext) {
 
       async function changeViewSize() {
         isChangingViewSize = true;
+        const { activeTerminal } = vscode.window;
+        let isHidePanel = false;
 
         const increasedSplit = splits.find(split => split.viewSizeIncreased);
         if (increasedSplit) {
+          if (splits.length > 2 && increasedSplit.type === BlocksType.Component) {
+            activeTerminal?.hide();
+            isHidePanel = true;
+          }
+
           await vscode.window.showTextDocument(increasedSplit.editor.document, increasedSplit.editor.viewColumn);
           for (let i = 0; i < increaseViewSize; i++) {
             await vscode.commands.executeCommand('workbench.action.decreaseViewSize');
@@ -117,6 +124,7 @@ export async function activate(context: vscode.ExtensionContext) {
           for (let i = 0; i < increaseViewSize; i++) {
             await vscode.commands.executeCommand('workbench.action.increaseViewSize');
           }
+          isHidePanel && activeTerminal?.show();
 
           // Here must get currentSplit from splits dynamically again, otherwise there may be a mismatch between currentSplit and splits.
           const _currentSplit = splits.find(split => split.type === currentSplit.type);
