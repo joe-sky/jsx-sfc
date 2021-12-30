@@ -8,7 +8,19 @@ Vite plugin for compile and enhance the limitation of `jsx-sfc` runtime code.
 npm install jsx-sfc vite-plugin-jsx-sfc
 ```
 
-- Configure Vite(v2.x):
+- Configure Vite(v2.x with `@vitejs/plugin-react`):
+
+```js
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import jsxSfc from 'vite-plugin-jsx-sfc';
+
+export default defineConfig({
+  plugins: [jsxSfc({ transformJsx: false }), react()]
+});
+```
+
+- Configure Vite(v2.x with `@vitejs/plugin-react-refresh`):
 
 ```js
 import { defineConfig } from 'vite';

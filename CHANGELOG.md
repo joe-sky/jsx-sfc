@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v1.6.0] 2021.12.30
+
+- 👆 `vite-plugin-jsx-sfc` added a `transformJsx` parameter to adapt to the `@vitejs/plugin-react`.
+
 ## [v1.5.1] 2021.07.22
 
 - 🎨 Optimization TS type comments.

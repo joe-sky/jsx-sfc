@@ -5,9 +5,17 @@ import babelPluginTransformReactJsx from '@babel/plugin-transform-react-jsx';
 
 export interface Options {
   parserPlugins?: ParserOptions['plugins'];
+  transformJsx?: boolean;
 }
 
 export default function jsxSfcPlugin(opts?: Options) {
+  if (!opts) {
+    opts = {};
+  }
+  if (opts.transformJsx == null) {
+    opts.transformJsx = true;
+  }
+
   return {
     name: 'jsx-sfc',
 
@@ -54,7 +62,7 @@ export default function jsxSfcPlugin(opts?: Options) {
           allowAwaitOutsideFunction: true,
           plugins: parserPlugins
         },
-        plugins: [babelPluginTransformReactJsx, babelPluginJsxSfc],
+        plugins: opts?.transformJsx ? [babelPluginTransformReactJsx, babelPluginJsxSfc] : [babelPluginJsxSfc],
         sourceMaps: true,
         sourceFileName: id
       });

@@ -1,5 +1,5 @@
 /*!
- * vite-plugin-jsx-sfc v1.5.2
+ * vite-plugin-jsx-sfc v1.6.0
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
@@ -8,6 +8,7 @@ import { ParserOptions } from '@babel/core';
 
 interface Options {
     parserPlugins?: ParserOptions['plugins'];
+    transformJsx?: boolean;
 }
 declare function jsxSfcPlugin(opts?: Options): Plugin;
 
