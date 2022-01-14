@@ -12,8 +12,71 @@ import { sleep } from './utils';
 export async function activate(context: vscode.ExtensionContext) {
   const config = vscode.workspace.getConfiguration('jsx-sfc');
   const enableSplitEditors = config.get('icon.splitEditors') as boolean;
-
+  const splitEditorsInGroup = config.get('splitEditors.inGroup') as boolean;
   const getDocDescriptor = useDocDescriptor();
+
+  function createBlocksInGroup(text: string) {
+    const descriptor = getDocDescriptor(text);
+    const blocksSet: SFCBlock[][] = [];
+    const blocksFoldSet: SFCBlock[][] = [];
+
+    if (descriptor) {
+      if (descriptor.component?.length || descriptor.styles?.length) {
+        blocksSet.push([...descriptor.component, ...descriptor.styles]);
+        blocksFoldSet.push([...descriptor.render, ...descriptor.static]);
+      }
+      if (descriptor.render?.length || descriptor.static?.length) {
+        blocksSet.push([...descriptor.render, ...descriptor.static]);
+        blocksFoldSet.push([...descriptor.component, ...descriptor.styles]);
+      }
+    }
+
+    return { blocksSet, blocksFoldSet };
+  }
+
+  async function onSplitInGroup() {
+    const editor = vscode.window.activeTextEditor;
+    if (!editor) return;
+
+    const doc = editor.document;
+    const { blocksSet, blocksFoldSet } = createBlocksInGroup(doc.getText());
+
+    await foldingBlocks(blocksSet[0], blocksFoldSet[0]);
+    await vscode.commands.executeCommand('workbench.action.toggleSplitEditorInGroup');
+    await sleep(200);
+    await foldingBlocks(blocksSet[1], blocksFoldSet[1]);
+
+    async function foldingBlocks(blocks: SFCBlock[], blockFolds: SFCBlock[]) {
+      const firstBlock = blocks.sort((a, b) => a.locStartOffset - b.locStartOffset)[0];
+
+      const editor = vscode.window.activeTextEditor;
+      if (!editor) {
+        return;
+      }
+
+      await vscode.commands.executeCommand('editor.unfoldAll');
+      const positions = blockFolds.map(block => doc.positionAt(block.locStartOffset));
+      const endPositions = blockFolds.map(block => doc.positionAt(block.locEndOffset));
+      await vscode.commands.executeCommand('editor.fold', {
+        levels: 1,
+        direction: 'up',
+        selectionLines: positions
+          .filter((pos, index) => pos.line < endPositions[index].line)
+          .map(position => position.line)
+      });
+
+      editor.revealRange(
+        new vscode.Range(doc.positionAt(firstBlock.locStartOffset), new vscode.Position(editor.document.lineCount, 0)),
+        vscode.TextEditorRevealType.AtTop
+      );
+    }
+  }
+
+  if (enableSplitEditors && splitEditorsInGroup) {
+    context.subscriptions.push(vscode.commands.registerCommand('jsx-sfc.action.splitEditors', onSplitInGroup));
+    return;
+  }
+
   let splits: Split[] = [];
 
   function createBlocks(text: string) {

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v0.4.0] 2022.01.14
+
+- 👆 Add `jsx-sfc.splitEditors.inGroup`.
+
 ## [v0.3.2] 2021.11.18
 
 - 🎨 Optimization automatically increases the editor size.

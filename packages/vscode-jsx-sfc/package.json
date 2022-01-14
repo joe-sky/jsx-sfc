@@ -2,7 +2,7 @@
   "name": "vscode-jsx-sfc",
   "displayName": "jsx-sfc",
   "description": "Useful editor tools for jsx-sfc.",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "publisher": "joe-sky",
   "icon": "images/react-logo.png",
   "engines": {
@@ -31,6 +31,11 @@
           "type": "number",
           "default": 0,
           "description": "After each split editor obtains the focus, the horizontal visual area will increase alternately and automatically."
+        },
+        "jsx-sfc.splitEditors.inGroup": {
+          "type": "boolean",
+          "default": false,
+          "description": "Set the split editors using \"togglespliteditoringroup\"."
         }
       }
     },
@@ -43,6 +48,20 @@
       }
     ],
     "menus": {
+      "commandPalette": [
+        {
+          "command": "jsx-sfc.action.splitEditors",
+          "when": "editorLangId == javascript && config.jsx-sfc.icon.splitEditors"
+        },
+        {
+          "command": "jsx-sfc.action.splitEditors",
+          "when": "editorLangId == javascriptreact && config.jsx-sfc.icon.splitEditors"
+        },
+        {
+          "command": "jsx-sfc.action.splitEditors",
+          "when": "editorLangId == typescriptreact && config.jsx-sfc.icon.splitEditors"
+        }
+      ],
       "editor/title": [
         {
           "command": "jsx-sfc.action.splitEditors",
