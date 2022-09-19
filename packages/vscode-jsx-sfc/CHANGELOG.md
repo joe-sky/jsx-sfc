@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v0.4.1] 2022.09.19
+
+- 🐛 Fixed icon button will disappear when switching split editors.
+
 ## [v0.4.0] 2022.01.14
 
 - 👆 Add `jsx-sfc.splitEditors.inGroup`.

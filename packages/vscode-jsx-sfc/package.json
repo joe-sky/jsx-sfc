@@ -2,7 +2,7 @@
   "name": "vscode-jsx-sfc",
   "displayName": "jsx-sfc",
   "description": "Useful editor tools for jsx-sfc.",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "publisher": "joe-sky",
   "icon": "images/react-logo.png",
   "engines": {
@@ -65,17 +65,17 @@
       "editor/title": [
         {
           "command": "jsx-sfc.action.splitEditors",
-          "when": "editorLangId == javascript && config.jsx-sfc.icon.splitEditors",
+          "when": "resourceLangId == javascript && config.jsx-sfc.icon.splitEditors",
           "group": "navigation"
         },
         {
           "command": "jsx-sfc.action.splitEditors",
-          "when": "editorLangId == javascriptreact && config.jsx-sfc.icon.splitEditors",
+          "when": "resourceLangId == javascriptreact && config.jsx-sfc.icon.splitEditors",
           "group": "navigation"
         },
         {
           "command": "jsx-sfc.action.splitEditors",
-          "when": "editorLangId == typescriptreact && config.jsx-sfc.icon.splitEditors",
+          "when": "resourceLangId == typescriptreact && config.jsx-sfc.icon.splitEditors",
           "group": "navigation"
         }
       ]

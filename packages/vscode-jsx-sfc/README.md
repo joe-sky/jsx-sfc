@@ -56,6 +56,14 @@ This gives you more visual space when writing code, here is the demo:
 }
 ```
 
+- Open split editors in group:
+
+```json
+{
+  "jsx-sfc.splitEditors.inGroup": true // Default value: false
+}
+```
+
 ## Inspiration
 
 Inspired by [Volar](https://github.com/johnsoncodehk/volar).

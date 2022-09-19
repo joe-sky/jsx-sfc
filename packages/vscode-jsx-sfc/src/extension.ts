@@ -21,13 +21,13 @@ export async function activate(context: vscode.ExtensionContext) {
     const blocksFoldSet: SFCBlock[][] = [];
 
     if (descriptor) {
-      if (descriptor.component?.length || descriptor.styles?.length) {
-        blocksSet.push([...descriptor.component, ...descriptor.styles]);
-        blocksFoldSet.push([...descriptor.render, ...descriptor.static]);
-      }
       if (descriptor.render?.length || descriptor.static?.length) {
         blocksSet.push([...descriptor.render, ...descriptor.static]);
         blocksFoldSet.push([...descriptor.component, ...descriptor.styles]);
+      }
+      if (descriptor.component?.length || descriptor.styles?.length) {
+        blocksSet.push([...descriptor.component, ...descriptor.styles]);
+        blocksFoldSet.push([...descriptor.render, ...descriptor.static]);
       }
     }
 
