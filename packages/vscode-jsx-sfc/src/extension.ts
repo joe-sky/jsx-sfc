@@ -14,6 +14,7 @@ export async function activate(context: vscode.ExtensionContext) {
   const enableSplitEditors = config.get('icon.splitEditors') as boolean;
   const splitEditorsInGroup = config.get('splitEditors.inGroup') as boolean;
   const getDocDescriptor = useDocDescriptor();
+  let splits: Split[] = [];
 
   function createBlocksInGroup(text: string) {
     const descriptor = getDocDescriptor(text);
@@ -38,12 +39,21 @@ export async function activate(context: vscode.ExtensionContext) {
     const editor = vscode.window.activeTextEditor;
     if (!editor) return;
 
+    const split = splits.find(item => item.editor.document.uri === editor.document.uri);
+    if (split) {
+      await vscode.commands.executeCommand('workbench.action.joinEditorInGroup');
+      await sleep(100);
+      await vscode.commands.executeCommand('editor.unfoldAll');
+      splits.splice(splits.indexOf(split), 1);
+      return;
+    }
+
     const doc = editor.document;
     const { blocksSet, blocksFoldSet } = createBlocksInGroup(doc.getText());
 
     await foldingBlocks(blocksSet[0], blocksFoldSet[0]);
     await vscode.commands.executeCommand('workbench.action.toggleSplitEditorInGroup');
-    await sleep(200);
+    await sleep(100);
     await foldingBlocks(blocksSet[1], blocksFoldSet[1]);
 
     async function foldingBlocks(blocks: SFCBlock[], blockFolds: SFCBlock[]) {
@@ -70,14 +80,16 @@ export async function activate(context: vscode.ExtensionContext) {
         vscode.TextEditorRevealType.AtTop
       );
     }
+
+    splits.push({
+      editor
+    });
   }
 
   if (enableSplitEditors && splitEditorsInGroup) {
     context.subscriptions.push(vscode.commands.registerCommand('jsx-sfc.action.splitEditors', onSplitInGroup));
     return;
   }
-
-  let splits: Split[] = [];
 
   function createBlocks(text: string) {
     const descriptor = getDocDescriptor(text);
@@ -112,7 +124,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
   let isChangingVisible = false;
 
-  vscode.window.onDidChangeVisibleTextEditors((...args) => {
+  vscode.window.onDidChangeVisibleTextEditors(e => {
     isChangingVisible = true;
 
     return debounce((editors: vscode.TextEditor[]) => {
@@ -140,7 +152,7 @@ export async function activate(context: vscode.ExtensionContext) {
       });
 
       isChangingVisible = false;
-    }, 300)(...args);
+    }, 300)(e as vscode.TextEditor[]);
   });
 
   let isChangingViewSize = false;
