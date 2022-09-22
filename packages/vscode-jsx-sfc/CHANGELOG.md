@@ -1,12 +1,16 @@
 # CHANGELOG
 
+## [v0.4.3] 2022.09.22
+
+- 👆 [In Group]Change the behavior of current editor to will be refolded when saving.
+
 ## [v0.4.2] 2022.09.20
 
-- 👆 Expand all folds when the split editors is closed.
+- 👆 [In Group]Expand all folds when the split editors is closed.
 
 ## [v0.4.1] 2022.09.19
 
-- 🐛 Fixed icon button will disappear when switching split editors.
+- 🐛 [In Group]Fixed icon button will disappear when switching split editors.
 
 ## [v0.4.0] 2022.01.14
 

@@ -39,20 +39,23 @@ export async function activate(context: vscode.ExtensionContext) {
     const editor = vscode.window.activeTextEditor;
     if (!editor) return;
 
-    const split = splits.find(item => item.editor.document.uri === editor.document.uri);
+    const split = splits.find(item => item.editor.document.uri.toString() === editor.document.uri.toString());
     if (split) {
       await vscode.commands.executeCommand('workbench.action.joinEditorInGroup');
       await sleep(100);
       await vscode.commands.executeCommand('editor.unfoldAll');
-      splits.splice(splits.indexOf(split), 1);
+      splits = splits.filter(split => split.editor.document.uri.toString() !== editor.document.uri.toString());
       return;
     }
 
     const doc = editor.document;
     const { blocksSet, blocksFoldSet } = createBlocksInGroup(doc.getText());
 
-    await foldingBlocks(blocksSet[0], blocksFoldSet[0]);
     await vscode.commands.executeCommand('workbench.action.toggleSplitEditorInGroup');
+    await vscode.commands.executeCommand('workbench.action.focusFirstSideEditor');
+    await sleep(100);
+    await foldingBlocks(blocksSet[0], blocksFoldSet[0]);
+    await vscode.commands.executeCommand('workbench.action.focusSecondSideEditor');
     await sleep(100);
     await foldingBlocks(blocksSet[1], blocksFoldSet[1]);
 
@@ -79,15 +82,68 @@ export async function activate(context: vscode.ExtensionContext) {
         new vscode.Range(doc.positionAt(firstBlock.locStartOffset), new vscode.Position(editor.document.lineCount, 0)),
         vscode.TextEditorRevealType.AtTop
       );
-    }
 
-    splits.push({
-      editor
-    });
+      splits.push({
+        editor
+      });
+    }
   }
+
+  vscode.workspace.onDidCloseTextDocument(doc => {
+    splits = splits.filter(split => split.editor.document.uri.toString() !== doc.uri.toString());
+  });
 
   if (enableSplitEditors && splitEditorsInGroup) {
     context.subscriptions.push(vscode.commands.registerCommand('jsx-sfc.action.splitEditors', onSplitInGroup));
+
+    vscode.workspace.onDidSaveTextDocument(
+      debounce(async (doc: vscode.TextDocument) => {
+        const currentEditor = vscode.window.activeTextEditor;
+        const currentSplit =
+          currentEditor &&
+          splits.find(split => split.editor.document.uri.toString() === currentEditor.document.uri.toString());
+        if (!currentSplit) {
+          return;
+        }
+
+        const currentSplits = splits.filter(split => split.editor.document.uri.toString() === doc.uri.toString());
+        const { blocksSet, blocksFoldSet } = createBlocksInGroup(doc.getText());
+
+        async function refold() {
+          for (let i = 0; i < currentSplits.length; i++) {
+            const split = currentSplits[i];
+            const { editor } = split;
+            const range = editor.visibleRanges;
+            const blockFolds = blocksFoldSet[i];
+
+            await vscode.commands.executeCommand(
+              `workbench.action.${editor.viewColumn == 1 ? 'focusSecondSideEditor' : 'focusFirstSideEditor'}`
+            );
+            await vscode.commands.executeCommand('editor.unfoldAll');
+            const positions = blockFolds.map(block => doc.positionAt(block.locStartOffset));
+            const endPositions = blockFolds.map(block => doc.positionAt(block.locEndOffset));
+            await vscode.commands.executeCommand('editor.fold', {
+              levels: 1,
+              direction: 'up',
+              selectionLines: positions
+                .filter((pos, index) => pos.line < endPositions[index].line)
+                .map(position => position.line)
+            });
+
+            editor.revealRange(range[0], vscode.TextEditorRevealType.AtTop);
+          }
+
+          if (currentEditor) {
+            await vscode.commands.executeCommand(
+              `workbench.action.${currentEditor.viewColumn == 1 ? 'focusSecondSideEditor' : 'focusFirstSideEditor'}`
+            );
+          }
+        }
+
+        refold();
+      }, 300)
+    );
+
     return;
   }
 
@@ -117,10 +173,6 @@ export async function activate(context: vscode.ExtensionContext) {
 
     return { blocksSet, blocksFoldSet, blocksType };
   }
-
-  vscode.workspace.onDidCloseTextDocument(doc => {
-    splits = splits.filter(split => split.editor.document.uri.toString() !== doc.uri.toString());
-  });
 
   let isChangingVisible = false;
 
