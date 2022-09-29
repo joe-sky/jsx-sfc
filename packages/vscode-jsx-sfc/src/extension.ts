@@ -54,6 +54,9 @@ export async function activate(context: vscode.ExtensionContext) {
 
       const doc = editor.document;
       const { blocksSet, blocksFoldSet } = createBlocksInGroup(doc.getText());
+      if (blocksSet.length < 2) {
+        return;
+      }
 
       await vscode.commands.executeCommand('workbench.action.joinEditorInGroup');
       await vscode.commands.executeCommand('workbench.action.splitEditorInGroup');
