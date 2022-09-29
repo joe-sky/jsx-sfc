@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v0.4.5] 2022.09.29
+
+- 🐛 [In Group]Prevent switch split editors when folding functions are not enough.
+
 ## [v0.4.3] 2022.09.22
 
 - 👆 [In Group]Change the behavior of current editor to will be refolded when saving.
