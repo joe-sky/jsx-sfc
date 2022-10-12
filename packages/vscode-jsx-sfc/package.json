@@ -2,7 +2,7 @@
   "name": "vscode-jsx-sfc",
   "displayName": "jsx-sfc",
   "description": "Useful editor tools for jsx-sfc.",
-  "version": "0.4.5",
+  "version": "0.5.0",
   "publisher": "joe-sky",
   "icon": "images/react-logo.png",
   "engines": {
@@ -79,7 +79,21 @@
           "group": "navigation"
         }
       ]
-    }
+    },
+    "snippets": [
+      {
+        "language": "javascript",
+        "path": "./snippets/sfc.snippets.json"
+      },
+      {
+        "language": "javascriptreact",
+        "path": "./snippets/sfc.snippets.json"
+      },
+      {
+        "language": "typescriptreact",
+        "path": "./snippets/sfc.snippets.json"
+      }
+    ]
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",

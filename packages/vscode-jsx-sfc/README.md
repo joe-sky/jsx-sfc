@@ -64,6 +64,12 @@ This gives you more visual space when writing code, here is the demo:
 }
 ```
 
+## Code Snippets
+
+| trigger | snippet                                              |
+| ------- | ---------------------------------------------------- |
+| `#sfc`  | Defines a sfc({ render, Component, static, styles }) |
+
 ## Inspiration
 
 Inspired by [Volar](https://github.com/johnsoncodehk/volar).

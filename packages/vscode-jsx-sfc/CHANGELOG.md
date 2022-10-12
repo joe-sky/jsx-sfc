@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v0.5.0] 2022.10.12
+
+- 👆 Add snippets for create sfc components.
+
 ## [v0.4.5] 2022.09.29
 
 - 🐛 [In Group]Prevent switch split editors when folding functions are not enough.

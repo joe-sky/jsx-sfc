@@ -1,0 +1,26 @@
+{
+  "#sfc": {
+    "prefix": "#sfc({ render, Component, static, styles })",
+    "body": [
+      "const ${1:ComponentName} = sfc({",
+      "  render: ({ data }) => {",
+      "    return <>$2</>;",
+      "  },",
+      "",
+      "  Component() {",
+      "    return {};",
+      "  },",
+      "",
+      "  static: () => {",
+      "    return {};",
+      "  },",
+      "",
+      "  styles: () => {",
+      "    return {};",
+      "  }",
+      "});"
+    ],
+    "description": "jsx-sfc - Defines a sfc component",
+    "scope": "jsx-sfc"
+  }
+}
