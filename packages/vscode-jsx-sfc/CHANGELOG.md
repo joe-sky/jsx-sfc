@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v0.5.1] 2022.10.19
+
+- 👆 Support sfc without render function.
+
 ## [v0.5.0] 2022.10.12
 
 - 👆 Add snippets for create sfc components.
