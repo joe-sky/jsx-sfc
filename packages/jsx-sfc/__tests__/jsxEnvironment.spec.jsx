@@ -20,6 +20,10 @@ const {
   },
 
   static: () => {
+    const abc = a => 123;
+
+    const connectName = (firstName, lastName) => `${firstName}_${lastName}`;
+
     return {
       emptyStr: '',
 
@@ -27,14 +31,14 @@ const {
         test: '123'
       },
 
-      abc: a => 123,
+      abc,
 
       constant: {
         LAST_NAME: 'sky'
       },
 
       utils: {
-        connectName: (firstName, lastName) => `${firstName}_${lastName}`
+        connectName
       }
     };
   },
@@ -86,26 +90,27 @@ const WithHooks = sfc({
   static: () => {
     const INCREASE_NUM = 1;
 
+    function useCount(initial = 0) {
+      const [count, setCount] = useState(initial);
+
+      useEffect(() => {
+        setCount(count + INCREASE_NUM);
+      }, []);
+
+      return {
+        count,
+        increase() {
+          setCount(count + INCREASE_NUM);
+        },
+        reset() {
+          setCount(initial);
+        }
+      };
+    }
+
     return {
       INCREASE_NUM,
-
-      useCount: (initial = 0) => {
-        const [count, setCount] = useState(initial);
-
-        useEffect(() => {
-          setCount(count + INCREASE_NUM);
-        }, []);
-
-        return {
-          count,
-          increase() {
-            setCount(count + INCREASE_NUM);
-          },
-          reset() {
-            setCount(initial);
-          }
-        };
-      },
+      useCount,
 
       styles: {
         hl
