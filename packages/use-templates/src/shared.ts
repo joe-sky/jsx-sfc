@@ -41,7 +41,7 @@ function createTemplateElement() {
 
 export const templateElement = createTemplateElement();
 
-export function buildCreateTemplate<T>(Template: T) {
+export function buildCreateTemplate<T extends {}>(Template: T) {
   return function createTemplate<U extends string[]>(...names: U) {
     type TemplateType = typeof Template;
     const subs: Record<string, TemplateType> = {};

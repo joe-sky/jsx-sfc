@@ -71,26 +71,27 @@ const WithHooks = sfc({
   static: () => {
     const INCREASE_NUM = 1;
 
+    function useCount(initial = 0) {
+      const [count, setCount] = useState(initial);
+
+      useEffect(() => {
+        setCount(count + INCREASE_NUM);
+      }, []);
+
+      return {
+        count,
+        increase() {
+          setCount(count + INCREASE_NUM);
+        },
+        reset() {
+          setCount(initial);
+        }
+      };
+    }
+
     return {
       INCREASE_NUM,
-
-      useCount: (initial = 0) => {
-        const [count, setCount] = useState(initial);
-
-        useEffect(() => {
-          setCount(count + INCREASE_NUM);
-        }, []);
-
-        return {
-          count,
-          increase() {
-            setCount(count + INCREASE_NUM);
-          },
-          reset() {
-            setCount(initial);
-          }
-        };
-      },
+      useCount,
 
       styles: {
         hl
