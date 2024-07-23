@@ -9,11 +9,15 @@ type CheckType<T> = T extends string
     ? '🄽'
     : T extends boolean
       ? '🄱'
-      : T extends Obj
-        ? '🄾'
-        : T extends Func
-          ? '🄵'
-          : '';
+      : T extends Func & { withComponent: Func }
+        ? '🅂🄲'
+        : T extends { name: string; styles: string; map?: string }
+          ? '🄲'
+          : T extends Obj
+            ? '🄾'
+            : T extends Func
+              ? '🄵'
+              : '';
 
 export type BuildOverview<
   Length extends number,

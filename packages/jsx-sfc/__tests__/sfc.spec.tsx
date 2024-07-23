@@ -25,7 +25,13 @@ const App = sfc<AppProps>()({
       emptyStr3: '',
       defaultProps: {
         test: '123'
-      }
+      },
+      sss: styled.section`
+        color: #fff;
+      `,
+      hl: css`
+        width: 50px;
+      `
     };
   },
 
