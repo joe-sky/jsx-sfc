@@ -11,13 +11,18 @@ interface AppProps {
 }
 
 const App = sfc<AppProps>()({
-  Component: props => {
+  Component: (props) => {
     return { a: props.test };
   },
 
   static: () => {
     return {
+      fn1: () => {},
       emptyStr: '',
+      emptyStr1: '',
+      emptyStr2: '',
+      num1: 1,
+      emptyStr3: '',
       defaultProps: {
         test: '123'
       }
@@ -64,7 +69,7 @@ const AppNoTmpl = sfc<AppProps>()({
   })
 });
 
-describe('basic', function() {
+describe('basic', function () {
   const app = mount(<App test="1" />);
   it('simple', () => {
     expect(app.html()).toContain('<div>1</div>');
@@ -89,9 +94,9 @@ const AppMultiTmpls = sfc<AppProps>()({
 
   render: ({ data, styles: { Container } }, header: TemplateRender<string>, footer: TemplateRender<string>, noop) => (
     <>
-      <Template.Region name={header}>{content => <header>{content}</header>}</Template.Region>
+      <Template.Region name={header}>{(content) => <header>{content}</header>}</Template.Region>
 
-      <Template.Region name={footer}>{content => <footer>{content}</footer>}</Template.Region>
+      <Template.Region name={footer}>{(content) => <footer>{content}</footer>}</Template.Region>
 
       {false && <Template name={noop}>{() => <></>}</Template>}
 
@@ -114,7 +119,7 @@ const AppMultiTmpls = sfc<AppProps>()({
   })
 });
 
-describe('with multiple templates', function() {
+describe('with multiple templates', function () {
   const appMultiTmpls = mount(<AppMultiTmpls test="1" />);
   it('simple', () => {
     expect(appMultiTmpls.html()).toContain('<header>1</header>');
@@ -159,7 +164,7 @@ const AppButton4 = sfc({
 
 const AppButton5: React.FC = () => <AppButton4.Render name="joe_sky" onClick={() => console.log('click!')} />;
 
-describe('reusing template', function() {
+describe('reusing template', function () {
   const appButton1 = mount(<AppButton1 />);
   it('execute function', () => {
     expect(appButton1.html()).toContain('joe_sky');

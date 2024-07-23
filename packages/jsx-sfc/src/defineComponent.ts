@@ -1,6 +1,7 @@
 import React, { PropsWithChildren, PropsWithoutRef, RefAttributes, WeakValidationMap, ValidationMap } from 'react';
-import { Template } from './template';
 import { Func, Obj, FuncMap, JSXElements } from './utils';
+import { Template } from './template';
+import { BuildOverview } from './overview';
 
 type NoRef = 'noRef';
 
@@ -20,16 +21,12 @@ type PresetStatic<Props = {}> = Obj & {
 };
 
 type ExtractOptions<T, Props = null> = T extends () => infer R
-  ? R extends (Props extends null
-    ? Obj
-    : PresetStatic<Props>)
+  ? R extends (Props extends null ? Obj : PresetStatic<Props>)
     ? R
     : never
-  : T extends (Props extends null
-    ? Obj
-    : PresetStatic<Props>)
-  ? T
-  : unknown;
+  : T extends (Props extends null ? Obj : PresetStatic<Props>)
+    ? T
+    : never;
 
 export type DefineComponent<
   Ref = NoRef,
@@ -47,7 +44,11 @@ export type DefineComponent<
     FR extends { styles: InferStyles } & InferStatic & InferEX,
     Styles = {},
     Static = {},
-    EX = {}
+    EX = {},
+    BO = BuildOverview<40, Data, InferStyles, InferStatic>,
+    Overview = {
+      [key in keyof BO]: BO[key];
+    }
   >(
     options: {
       /**
@@ -130,7 +131,23 @@ export type DefineComponent<
       options?: Static;
     },
     extensions?: EX
-  ): ReturnComponent &
+  ): {
+    overview: Overview;
+    // overview1: {
+    //   '01|': ' total(6)  | parts          ';
+    //   '02|': '-----------|----------------';
+    //   '03|': ' data(2)   | 🅅 a            ';
+    //   '04|': '           | 🄵 onChange     ';
+    //   '05|': '-----------|----------------';
+    //   '06|': ' style(2)  | 🅂 Container    ';
+    //   '07|': '           | 🄲 hl           ';
+    //   '08|': '-----------|----------------';
+    //   '09|': ' static(3) | 🅅 emptyStr     ';
+    //   '10|': '           | 🄾 defaultProps ';
+    //   '11|': '           | 🅅 test         ';
+    //   '12|': '-----------|----------------';
+    // };
+  } & ReturnComponent &
     Origin & {
       template: {
         (data?: Partial<Data>): JSXElements;
@@ -148,7 +165,11 @@ export type DefineComponent<
     FR extends { styles: InferStyles } & InferStatic & InferEX,
     Styles = {},
     Static = {},
-    EX = {}
+    EX = {},
+    BO = BuildOverview<40, {}, InferStyles, InferStatic>,
+    Overview = {
+      [key in keyof BO]: BO[key];
+    }
   >(
     options: {
       /**
@@ -194,7 +215,11 @@ export type DefineComponent<
       options?: Static;
     },
     extensions?: EX
-  ): ReturnComponent & Origin & { styles: InferStyles } & ExtractOptions<Static, Props> & ExtractOptions<EX, Props>;
+  ): {
+    overview: Overview;
+  } & ReturnComponent &
+    Origin & { styles: InferStyles } & ExtractOptions<Static, Props> &
+    ExtractOptions<EX, Props>;
 
   <InferEX extends ExtractOptions<EX, Props>, EX = {}>(
     component: Ref extends NoRef

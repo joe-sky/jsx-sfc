@@ -26,7 +26,6 @@
     "es6": true
   },
   "rules": {
-    "prettier/prettier": ["error"],
     "no-undef": [0, "never"],
     "jsx-quotes": [1, "prefer-double"],
     "camelcase": [
@@ -78,6 +77,7 @@
     "@typescript-eslint/triple-slash-reference": 0,
     "@typescript-eslint/no-namespace": 0,
     "@typescript-eslint/ban-ts-ignore": 0,
+    "@typescript-eslint/ban-types": 0,
     "react/jsx-curly-spacing": 0,
     "react/jsx-indent-props": 0,
     "react/jsx-indent": [0, 2],
