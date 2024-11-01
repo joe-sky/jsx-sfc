@@ -22,6 +22,8 @@ const App = sfc<AppProps>()({
       emptyStr1: '',
       emptyStr2: '',
       num1: 1,
+      num2: 2,
+      num3: 3,
       emptyStr3: '',
       defaultProps: {
         test: '123'
