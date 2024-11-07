@@ -1,4 +1,4 @@
-import { Func, Obj, FuncMap, JSXElements, UnionToTuple, GreaterThan, Add } from './utils';
+import { Func, Obj, FuncMap, JSXElements, UnionToTuple, GreaterThan, Add, Subtract } from './utils';
 
 type SplitParts<Parts> =
   UnionToTuple<keyof Parts> extends [...infer Arr] ? (Arr extends string[] ? Arr : never) : never;
@@ -34,8 +34,8 @@ export type BuildOverview<
   DataCount extends unknown[] = [],
   StylesCount extends unknown[] = [],
   StaticCount extends unknown[] = [],
-  DataLineRendered extends boolean = false,
-  StylesLineRendered extends boolean = false,
+  DataLineRendering extends boolean = false,
+  StylesLineRendering extends boolean = false,
   AllRendered extends boolean = false
 > = AllRendered extends true
   ? Table
@@ -51,20 +51,22 @@ export type BuildOverview<
         StaticRows,
         Table & {
           [key in `${GreaterThan<Count['length'], 8> extends false ? 0 : ''}${Add<Count['length'], 1>}|`]: Count['length'] extends 0
-            ? '-----------|----------------'
+            ? '------------|----------------'
             : DataCount['length'] extends DataRows['length']
-              ? StylesCount['length'] extends StylesRows['length']
-                ? StaticCount['length'] extends StaticRows['length']
-                  ? '-----------|----------------'
-                  : ` ${StaticCount['length'] extends 0 ? `static(${StaticRows['length']})` : '         '} | ${Static[StaticRows[StaticCount['length']]] extends infer R
-                      ? CheckType<R>
-                      : never} ${StaticRows[StaticCount['length']]}`
-                : DataLineRendered extends true
-                  ? '-----------|----------------'
-                  : ` ${StylesCount['length'] extends 0 ? `style(${StylesRows['length']})` : '        '}  | ${Styles[StylesRows[StylesCount['length']]] extends infer R
+              ? DataLineRendering extends true
+                ? '------------|----------------'
+                : StylesCount['length'] extends StylesRows['length']
+                  ? StylesLineRendering extends true
+                    ? '------------|----------------'
+                    : StaticCount['length'] extends StaticRows['length']
+                      ? '------------|----------------'
+                      : ` ${StaticCount['length'] extends 0 ? `static(${StaticRows['length']})` : '          '}${GreaterThan<StaticRows['length'], 9> extends false ? ' ' : ''} | ${Static[StaticRows[StaticCount['length']]] extends infer R
+                          ? CheckType<R>
+                          : never} ${StaticRows[StaticCount['length']]}`
+                  : ` ${StylesCount['length'] extends 0 ? `style(${StylesRows['length']})` : '        '}   | ${Styles[StylesRows[StylesCount['length']]] extends infer R
                       ? CheckType<R>
                       : never} ${StylesRows[StylesCount['length']]}`
-              : ` ${DataCount['length'] extends 0 ? `data(${DataRows['length']})` : '         '}   | ${Data[DataRows[DataCount['length']]] extends infer R
+              : ` ${DataCount['length'] extends 0 ? `data(${DataRows['length']})` : '         '}    | ${Data[DataRows[DataCount['length']]] extends infer R
                   ? CheckType<R>
                   : never} ${DataRows[DataCount['length']]}`;
         },
@@ -77,7 +79,7 @@ export type BuildOverview<
         StylesCount['length'] extends StylesRows['length']
           ? StylesCount
           : DataCount['length'] extends DataRows['length']
-            ? DataLineRendered extends true
+            ? DataLineRendering extends true
               ? StylesCount
               : [...StylesCount, unknown]
             : StylesCount,
@@ -85,15 +87,13 @@ export type BuildOverview<
           ? StaticCount
           : DataCount['length'] extends DataRows['length']
             ? StylesCount['length'] extends StylesRows['length']
-              ? [...StaticCount, unknown]
+              ? StylesLineRendering extends true
+                ? StaticCount
+                : [...StaticCount, unknown]
               : StaticCount
             : StaticCount,
-        DataLineRendered extends true
-          ? false
-          : DataCount['length'] extends DataRows['length']
-            ? true
-            : DataLineRendered,
-        StylesCount['length'] extends 0 ? false : true,
+        DataCount['length'] extends Subtract<DataRows['length'], 1> ? true : false,
+        StylesCount['length'] extends Subtract<StylesRows['length'], 1> ? true : false,
         DataCount['length'] extends DataRows['length']
           ? StylesCount['length'] extends StylesRows['length']
             ? StaticCount['length'] extends StaticRows['length']
