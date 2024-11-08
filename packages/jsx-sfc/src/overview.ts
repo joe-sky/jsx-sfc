@@ -1,28 +1,32 @@
 import { Func, Obj, UnionToTuple, Defined, GreaterThan, Add, Subtract } from './utils';
 
-type RowBorderLine = '------------|----------------';
+type RowBorderLine = '------------|--------------------------';
 
 type SplitParts<Parts> =
   UnionToTuple<keyof Parts> extends [...infer Arr] ? (Arr extends string[] ? Arr : never) : never;
 
 type CheckType<T, U = unknown> =
-  Defined<T> extends string
-    ? '🅂'
-    : Defined<T> extends number
-      ? '🄽'
-      : Defined<T> extends boolean
-        ? '🄱'
-        : Defined<T> extends Func & { withComponent: Func }
-          ? '🅂🄲'
-          : Defined<T> extends { name: string; styles: string; map?: string }
-            ? '🄲'
-            : Defined<T> extends Obj
-              ? '🄾'
-              : Defined<T> extends Func
-                ? '🄵'
-                : Defined<T> extends Array<U>
-                  ? '🄰'
-                  : '�';
+  Defined<T> extends Obj & { withComponent: Func }
+    ? '🅂🄲'
+    : Defined<T> extends string
+      ? '🅂'
+      : Defined<T> extends number
+        ? '🄽'
+        : Defined<T> extends boolean
+          ? '🄱'
+          : Defined<T> extends Func & { withComponent: Func }
+            ? '🅂🄲'
+            : Defined<T> extends { name: string; styles: string; map?: string }
+              ? '🄲'
+              : Defined<T> extends Obj
+                ? '🄾'
+                : Defined<T> extends Func
+                  ? '🄵'
+                  : Defined<T> extends Array<U>
+                    ? '🄰'
+                    : Defined<T> extends ReadonlyArray<U>
+                      ? '🄰'
+                      : '�';
 
 export type BuildOverview<
   Length extends number,
