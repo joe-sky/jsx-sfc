@@ -8,7 +8,7 @@
     "packages/jsx-sfc.macro",
     "packages/use-templates"
   ],
-  "version": "1.6.1",
+  "version": "1.7.0",
   "description": "A SFC like React function component API for managing CSS-in-JS and static members.",
   "scripts": {
     "build": "lerna run build",
@@ -85,7 +85,7 @@
     "react-dom": "^17.0.1",
     "rollup": "^1.26.3",
     "rollup-plugin-copy": "^3.3.0",
-    "rollup-plugin-dts": "^1.1.12",
+    "rollup-plugin-dts": "^6.1.1",
     "rollup-plugin-esbuild": "^2.5.0",
     "rollup-plugin-filesize": "^6.0.1",
     "rollup-plugin-license": "^0.8.1",

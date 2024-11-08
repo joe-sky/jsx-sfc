@@ -12,7 +12,9 @@ interface AppProps {
 
 const App = sfc<AppProps>()({
   Component: (props) => {
-    return { a: props.test };
+    return {
+      a: props.test
+    };
   },
 
   static: () => {
@@ -27,13 +29,7 @@ const App = sfc<AppProps>()({
       emptyStr3: '',
       defaultProps: {
         test: '123'
-      },
-      sss: styled.section`
-        color: #fff;
-      `,
-      hl: css`
-        width: 50px;
-      `
+      }
     };
   },
 

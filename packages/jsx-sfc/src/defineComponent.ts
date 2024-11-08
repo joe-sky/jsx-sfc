@@ -1,9 +1,11 @@
 import React, { PropsWithChildren, PropsWithoutRef, RefAttributes, WeakValidationMap, ValidationMap } from 'react';
-import { Func, Obj, FuncMap, JSXElements } from './utils';
+import { Func, Obj, FuncMap, JSXElements, UnionToTuple } from './utils';
 import { Template } from './template';
 import { BuildOverview } from './overview';
 
 type NoRef = 'noRef';
+
+type OverviewMaxRows = 100;
 
 export type SFCProps<Props = {}, EX = {}> = PropsWithChildren<Props> & {
   props: PropsWithChildren<Props>;
@@ -45,10 +47,14 @@ export type DefineComponent<
     Styles = {},
     Static = {},
     EX = {},
-    BO = BuildOverview<40, Data, InferStyles, InferStatic>,
-    Overview = {
-      [key in keyof BO]: BO[key];
-    }
+    BO = BuildOverview<OverviewMaxRows, Data, InferStyles, InferStatic>,
+    Overview = UnionToTuple<keyof BO>['length'] extends 1
+      ? {}
+      : {
+          overview: {
+            [key in keyof BO]: BO[key];
+          };
+        }
   >(
     options: {
       /**
@@ -131,23 +137,8 @@ export type DefineComponent<
       options?: Static;
     },
     extensions?: EX
-  ): {
-    overview: Overview;
-    // overview1: {
-    //   '01|': ' total(6)  | parts          ';
-    //   '02|': '-----------|----------------';
-    //   '03|': ' data(2)   | 🅅 a            ';
-    //   '04|': '           | 🄵 onChange     ';
-    //   '05|': '-----------|----------------';
-    //   '06|': ' style(2)  | 🅂 Container    ';
-    //   '07|': '           | 🄲 hl           ';
-    //   '08|': '-----------|----------------';
-    //   '09|': ' static(3) | 🅅 emptyStr     ';
-    //   '10|': '           | 🄾 defaultProps ';
-    //   '11|': '           | 🅅 test         ';
-    //   '12|': '-----------|----------------';
-    // };
-  } & ReturnComponent &
+  ): Overview &
+    ReturnComponent &
     Origin & {
       template: {
         (data?: Partial<Data>): JSXElements;
@@ -166,10 +157,14 @@ export type DefineComponent<
     Styles = {},
     Static = {},
     EX = {},
-    BO = BuildOverview<40, {}, InferStyles, InferStatic>,
-    Overview = {
-      [key in keyof BO]: BO[key];
-    }
+    BO = BuildOverview<OverviewMaxRows, {}, InferStyles, InferStatic>,
+    Overview = UnionToTuple<keyof BO>['length'] extends 1
+      ? {}
+      : {
+          overview: {
+            [key in keyof BO]: BO[key];
+          };
+        }
   >(
     options: {
       /**
@@ -215,9 +210,8 @@ export type DefineComponent<
       options?: Static;
     },
     extensions?: EX
-  ): {
-    overview: Overview;
-  } & ReturnComponent &
+  ): Overview &
+    ReturnComponent &
     Origin & { styles: InferStyles } & ExtractOptions<Static, Props> &
     ExtractOptions<EX, Props>;
 

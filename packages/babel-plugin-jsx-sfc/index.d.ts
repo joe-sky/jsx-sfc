@@ -1,5 +1,5 @@
 /*!
- * babel-plugin-jsx-sfc v1.6.1
+ * babel-plugin-jsx-sfc v1.7.0
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
@@ -12,10 +12,7 @@ declare function isCalleeImportedBySfc(callee: CallExpression['callee'], path: N
 declare const ast_isImportedByLib: typeof isImportedByLib;
 declare const ast_isCalleeImportedBySfc: typeof isCalleeImportedBySfc;
 declare namespace ast {
-  export {
-    ast_isImportedByLib as isImportedByLib,
-    ast_isCalleeImportedBySfc as isCalleeImportedBySfc,
-  };
+  export { ast_isImportedByLib as isImportedByLib, ast_isCalleeImportedBySfc as isCalleeImportedBySfc };
 }
 
 declare const SFC_LIB = "jsx-sfc";
@@ -44,20 +41,7 @@ declare const index_SFC_FORWARD_REF: typeof SFC_FORWARD_REF;
 declare const index_getOptionsName: typeof getOptionsName;
 declare const index_getSfcName: typeof getSfcName;
 declare namespace index {
-  export {
-    index_SFC_LIB as SFC_LIB,
-    index_SFC_FUNC as SFC_FUNC,
-    index_SFC_COMPONENT as SFC_COMPONENT,
-    index_SFC_TEMPLATE as SFC_TEMPLATE,
-    index_SFC_RENDER as SFC_RENDER,
-    index_SFC_STYLES as SFC_STYLES,
-    index_SFC_STATIC as SFC_STATIC,
-    index_SFC_OPTIONS as SFC_OPTIONS,
-    index_SFC_CREATE_OPTIONS as SFC_CREATE_OPTIONS,
-    index_SFC_FORWARD_REF as SFC_FORWARD_REF,
-    index_getOptionsName as getOptionsName,
-    index_getSfcName as getSfcName,
-  };
+  export { index_SFC_LIB as SFC_LIB, index_SFC_FUNC as SFC_FUNC, index_SFC_COMPONENT as SFC_COMPONENT, index_SFC_TEMPLATE as SFC_TEMPLATE, index_SFC_RENDER as SFC_RENDER, index_SFC_STYLES as SFC_STYLES, index_SFC_STATIC as SFC_STATIC, index_SFC_OPTIONS as SFC_OPTIONS, index_SFC_CREATE_OPTIONS as SFC_CREATE_OPTIONS, index_SFC_FORWARD_REF as SFC_FORWARD_REF, index_getOptionsName as getOptionsName, index_getSfcName as getSfcName };
 }
 
 interface State {
@@ -68,8 +52,8 @@ interface State {
 }
 declare const _default: () => {
     name: string;
-    visitor: Visitor<{}>;
+    visitor: Visitor;
 };
 
 export default _default;
-export { State, ast as astUtils, index as utils };
+export { type State, ast as astUtils, index as utils };

@@ -49,6 +49,8 @@ export type GreaterThan<Num1 extends number, Num2 extends number, CountArr exten
       ? false
       : GreaterThan<Num1, Num2, [...CountArr, unknown]>;
 
+export type Defined<T> = T extends undefined ? never : T;
+
 export function isFunc(value: any): value is Func {
   return typeof value === 'function';
 }
