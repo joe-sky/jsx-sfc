@@ -1,5 +1,5 @@
 /*!
- * vite-plugin-jsx-sfc v1.6.1
+ * vite-plugin-jsx-sfc v1.7.0
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
@@ -13,4 +13,4 @@ interface Options {
 declare function jsxSfcPlugin(opts?: Options): Plugin;
 
 export default jsxSfcPlugin;
-export { Options };
+export type { Options };

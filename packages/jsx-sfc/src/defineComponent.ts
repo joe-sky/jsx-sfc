@@ -1,8 +1,11 @@
 import React, { PropsWithChildren, PropsWithoutRef, RefAttributes, WeakValidationMap, ValidationMap } from 'react';
+import { Func, Obj, FuncMap, JSXElements, UnionToTuple } from './utils';
 import { Template } from './template';
-import { Func, Obj, FuncMap, JSXElements } from './utils';
+import { BuildOverview } from './overview';
 
 type NoRef = 'noRef';
+
+type OverviewMaxRows = 100;
 
 export type SFCProps<Props = {}, EX = {}> = PropsWithChildren<Props> & {
   props: PropsWithChildren<Props>;
@@ -20,16 +23,12 @@ type PresetStatic<Props = {}> = Obj & {
 };
 
 type ExtractOptions<T, Props = null> = T extends () => infer R
-  ? R extends (Props extends null
-    ? Obj
-    : PresetStatic<Props>)
+  ? R extends (Props extends null ? Obj : PresetStatic<Props>)
     ? R
     : never
-  : T extends (Props extends null
-    ? Obj
-    : PresetStatic<Props>)
-  ? T
-  : unknown;
+  : T extends (Props extends null ? Obj : PresetStatic<Props>)
+    ? T
+    : never;
 
 export type DefineComponent<
   Ref = NoRef,
@@ -47,7 +46,15 @@ export type DefineComponent<
     FR extends { styles: InferStyles } & InferStatic & InferEX,
     Styles = {},
     Static = {},
-    EX = {}
+    EX = {},
+    BO = BuildOverview<OverviewMaxRows, Data, InferStyles, InferStatic>,
+    Overview = UnionToTuple<keyof BO>['length'] extends 1
+      ? {}
+      : {
+          overview: {
+            [key in keyof BO]: BO[key];
+          };
+        }
   >(
     options: {
       /**
@@ -130,7 +137,8 @@ export type DefineComponent<
       options?: Static;
     },
     extensions?: EX
-  ): ReturnComponent &
+  ): Overview &
+    ReturnComponent &
     Origin & {
       template: {
         (data?: Partial<Data>): JSXElements;
@@ -148,7 +156,15 @@ export type DefineComponent<
     FR extends { styles: InferStyles } & InferStatic & InferEX,
     Styles = {},
     Static = {},
-    EX = {}
+    EX = {},
+    BO = BuildOverview<OverviewMaxRows, {}, InferStyles, InferStatic>,
+    Overview = UnionToTuple<keyof BO>['length'] extends 1
+      ? {}
+      : {
+          overview: {
+            [key in keyof BO]: BO[key];
+          };
+        }
   >(
     options: {
       /**
@@ -194,7 +210,10 @@ export type DefineComponent<
       options?: Static;
     },
     extensions?: EX
-  ): ReturnComponent & Origin & { styles: InferStyles } & ExtractOptions<Static, Props> & ExtractOptions<EX, Props>;
+  ): Overview &
+    ReturnComponent &
+    Origin & { styles: InferStyles } & ExtractOptions<Static, Props> &
+    ExtractOptions<EX, Props>;
 
   <InferEX extends ExtractOptions<EX, Props>, EX = {}>(
     component: Ref extends NoRef
