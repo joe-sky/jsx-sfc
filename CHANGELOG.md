@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v1.7.0] 2024.11.11
+
+- 🌟 Add the `Component Overview` built with TypeScript types.
+
 ## [v1.6.1] 2023.11.08
 
 - 🐛 Fix `<Template>` type error.
